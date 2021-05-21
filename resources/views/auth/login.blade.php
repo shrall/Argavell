@@ -14,15 +14,15 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12">
-                                    <input id="username" type="text"
-                                        class="form-control @error('username') is-invalid @enderror" name="username"
-                                        value="{{ old('username') }}" required autocomplete="username"
-                                        placeholder="Enter your username">
-                                    @error('username')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
+                                    <input id="login" type="text"
+                                        class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}"
+                                        name="login" value="{{ old('username') ?: old('email') }}" required autofocus
+                                        placeholder="Enter your username/email">
+                                    @if ($errors->has('username') || $errors->has('email'))
+                                        <span class="invalid-feedback">
+                                            <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
                                         </span>
-                                    @enderror
+                                    @endif
                                 </div>
                             </div>
                             <div class="row font-weight-bold">
@@ -45,7 +45,8 @@
                                 </div>
                             </div>
                             <div class="row py-2">
-                                <a class="text-argavell text-end text-decoration-none font-weight-bold" href="{{ route('password.request') }}">
+                                <a class="text-argavell text-end text-decoration-none font-weight-bold"
+                                    href="{{ route('password.request') }}">
                                     {{ __('Forgot Password?') }}
                                 </a>
                             </div>
