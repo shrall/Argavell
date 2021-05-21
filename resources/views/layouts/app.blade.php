@@ -32,7 +32,7 @@
 
 <body>
     <div id="app">
-        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login')
+        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -68,7 +68,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                             document.getElementById('logout-form').submit();">
+                                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -82,7 +82,7 @@
             </nav>
         @endif
 
-        @if (Route::current()->getName() == 'register' || Route::current()->getName() == 'login')
+        @if (Route::current()->getName() == 'register' || Route::current()->getName() == 'login' || Route::current()->getName() == 'password.request' || Route::current()->getName() == 'password.reset')
             <main class="auth-background">
                 @yield('content')
             </main>
