@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            <img src="{{ asset('images/ArgavellLogo.png') }}" alt="" width="50" height="50"
+            <img src="{{ asset('images/logo-argavell.png') }}" alt="" width="50" height="50"
                 class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

@@ -45,6 +45,9 @@
                 @yield('content')
             </main>
         @endif
+        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
+        @include('inc.footer')
+        @endif
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"

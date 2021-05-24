@@ -26,6 +26,12 @@
     font-weight: bold;
 }
 
+/* background colors */
+.bg-footer {
+    background-color: #caac7b;
+}
+
+/* font settings */
 .font-bauer {
     font-family: "Bauer";
 }
@@ -39,9 +45,10 @@
 }
 
 .font-weight-bold {
-    font-weight: 800;
+    font-weight: 800 !important;
 }
 
+/* text settings */
 .text-argavell {
     color: #8a5b32;
 }
@@ -49,23 +56,58 @@
     color: #8a5b32;
 }
 
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.text-8xl {
+    font-size: 6rem;
+    line-height: 1;
+}
+
+/* button settings */
 .btn-argavell {
     background-color: #8a5b32;
     color: #fff;
     border-radius: 50px;
 }
 
-.text-decoration-none{
-    text-decoration: none;
+.btn-argavell-light {
+    background-color: #bb9164;
+    color: #fff;
+    border-radius: 50px;
 }
 
-.cursor-pointer{
+/* other */
+
+.cursor-pointer {
     cursor: pointer;
 }
 
+/* custom */
+/* set background for auth pages */
 .auth-background {
     background-image: url(../images/auth-background.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center top;
+}
+/* landing page mid showcase */
+.landing-showcase-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+}
+
+/* landing page product show case */
+.landing-product {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    height: 50vh;
+}
+
+.landing-product .sale-alert {
+    border-bottom-right-radius: 0.75rem;
+    color: #fff;
 }
