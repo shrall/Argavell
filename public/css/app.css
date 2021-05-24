@@ -45,6 +45,9 @@
 .text-argavell {
     color: #8a5b32;
 }
+.text-argavell:hover {
+    color: #8a5b32;
+}
 
 .btn-argavell {
     background-color: #8a5b32;
@@ -54,6 +57,10 @@
 
 .text-decoration-none{
     text-decoration: none;
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
 
 .auth-background {
