@@ -77,7 +77,7 @@
 </nav>
 
 {{-- navbar mobile --}}
-<div id="navbar-mobile" class="vw-100 vh-100 bg-navbar-mobile position-absolute d-none" style="z-index: 20000">
+<div id="navbar-mobile" class="vw-100 vh-100 bg-navbar-mobile position-fixed d-none" style="z-index: 20000">
     <div class="col-12 text-center py-5">
         <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
     </div>
