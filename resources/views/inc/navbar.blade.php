@@ -51,7 +51,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -77,10 +77,31 @@
 </nav>
 
 {{-- navbar mobile --}}
+<div id="navbar-mobile" class="vw-100 vh-100 bg-navbar-mobile position-absolute d-none" style="z-index: 20000">
+    <div class="col-12 text-center py-5">
+        <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
+    </div>
+    <div class="col-12 text-center my-3">
+        <a href="#" class="text-decoration-none text-white font-gotham">Argan Oil</a>
+    </div>
+    <div class="col-12 text-center my-3">
+        <a href="#" class="text-decoration-none text-white font-gotham">Argan Shampoo</a>
+    </div>
+    <div class="col-12 text-center my-3">
+        <a href="#" class="text-decoration-none text-white font-gotham">Kleanse</a>
+    </div>
+    <div class="col-12 text-center my-3">
+        <a href="#" class="text-decoration-none text-white font-gotham">Contact Us</a>
+    </div>
+    <div class="col-12 text-center my-3">
+        <a href="#" class="text-decoration-none text-white font-gotham">My Account</a>
+    </div>
+    <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;" onclick="closeNavbarMobile()"></span>
+</div>
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top d-block d-sm-none">
     <div class="container px-0">
         <div class="w-25 text-center">
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" onclick="openNavbarMobile()"
                 data-target="#navbarSupportedContentMobile" aria-controls="navbarSupportedContentMobile"
                 aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
@@ -136,7 +157,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -148,3 +169,15 @@
         </div>
     </div>
 </nav>
+
+<script>
+    function openNavbarMobile() {
+        $("#navbar-mobile").removeClass('d-none');
+        $("#navbar-mobile").addClass('d-block');
+    }
+    function closeNavbarMobile() {
+        $("#navbar-mobile").removeClass('d-block');
+        $("#navbar-mobile").addClass('d-none');
+    }
+
+</script>

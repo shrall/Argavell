@@ -78,6 +78,5 @@
                 $(".eyeToggle").addClass('fa-eye');
             }
         }
-
     </script>
 @endsection
