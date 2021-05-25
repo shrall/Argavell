@@ -1,5 +1,5 @@
 {{-- footer desktop --}}
-<div class="row vw-100 text-center bg-footer px-5 d-none d-sm-block">
+<div class="row w-100 text-center bg-footer px-5 pb-5 m-0 d-none d-sm-block">
     <img src="{{ asset('images/logo-argavell-white.png') }}" style="width: 125px;" class="mx-auto mt-5">
     <div class="container px-5 mx-5 mt-5">
         <div class="row px-5 mx-5">
