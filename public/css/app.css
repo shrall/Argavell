@@ -60,6 +60,14 @@
     text-decoration: none;
 }
 
+.text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+}
+.text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+}
 .text-8xl {
     font-size: 6rem;
     line-height: 1;
@@ -110,4 +118,10 @@
 .landing-product .sale-alert {
     border-bottom-right-radius: 0.75rem;
     color: #fff;
+}
+
+/* mobile landing page */
+
+.horizontal-scrollable > .row {
+    overflow-x: scroll;
 }
