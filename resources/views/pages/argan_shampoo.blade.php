@@ -7,7 +7,7 @@
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
             <h1 class="text-argavell font-bauer font-weight-bold">Argan Shampoo Benefits</h1>
-            <div class="pe-4"><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong>It also
+            <div class="pe-4"><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong> It also
                 contains aloe vera & olive oil that will nourish your hair with
                 vitamin E to moisturise & strengthen your hair all day long. Daily use of
                 the shampoo will restore the hair’s natural protective layer that will
@@ -89,7 +89,7 @@
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
             <h1 class="text-argavell font-bauer font-weight-bold">Argan Shampoo Benefits</h1>
-            <div><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong>It also
+            <div><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong> It also
                 contains aloe vera & olive oil that will nourish your hair with
                 vitamin E to moisturise & strengthen your hair all day long. Daily use of
                 the shampoo will restore the hair’s natural protective layer that will

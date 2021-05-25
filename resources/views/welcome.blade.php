@@ -225,8 +225,11 @@
     <div class="row w-100 landing-showcase-background text-center py-5 m-0"
         style="background-image: url({{ asset('images/landing-argan-oil.jpg') }})">
         <h1 class="font-bauer text-white my-5">Which Argavell Product Made<br>You Fall In Love?</h1>
-        <a href="#" class="text-decoration-none">
+        <a href="#" class="text-decoration-none d-none d-sm-block">
             <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
+        </a>
+        <a href="#" class="text-decoration-none d-block d-sm-none">
+            <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
         </a>
     </div>
     <div class="container py-5 text-center">

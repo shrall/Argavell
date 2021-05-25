@@ -58,6 +58,18 @@
 .text-argavell:hover {
     color: #8a5b32;
 }
+.text-kleanse {
+    color: #4ac8e2;
+}
+.text-kleanse:hover {
+    color: #4ac8e2;
+}
+.text-kleanse-dark {
+    color: #177dbf;
+}
+.text-kleanse-dark:hover {
+    color: #177dbf;
+}
 
 .text-decoration-none {
     text-decoration: none;
@@ -75,6 +87,10 @@
     font-size: 6rem;
     line-height: 1;
 }
+.text-9xl {
+    font-size: 8rem;
+    line-height: 1;
+}
 
 /* button settings */
 .btn-argavell {
@@ -89,6 +105,11 @@
     border-radius: 50px;
 }
 
+.btn-kleanse {
+    background-color: #4ac8e2;
+    color: #fff;
+    border-radius: 50px;
+}
 /* other */
 
 .cursor-pointer {
