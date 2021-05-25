@@ -231,7 +231,7 @@
     </div>
     <div class="container py-5 text-center">
         <h1 class="text-argavell font-weight-bold font-bauer text-center mt-5">Find us at</h1>
-        <img src="{{ asset('images/find-us.png') }}" class="w-50 mb-5 d-none d-sm-block">
+        <img src="{{ asset('images/find-us.png') }}" class="w-50 mb-5 d-none d-sm-block mx-auto">
         <img src="{{ asset('images/find-us.png') }}" class="w-100 mb-5 d-block d-sm-none">
     </div>
 @endsection
