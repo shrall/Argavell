@@ -6,7 +6,7 @@
         <div class="col-md-3">
             <div class="w-100 product-detail" style="background-image: url({{ asset('images/argan-oil.jpg') }})"></div>
         </div>
-        <div class="col-md-5 ps-5">
+        <div class="col-md-5">
             <h1 class="text-argavell font-bauer font-weight-bold">Argan Oil</h1>
             <h2 class="text-argavell font-proxima-nova mb-4">IDR 130.000</h2>
             <p class="font-proxima-nova font-weight-bold">Description</p>
@@ -23,7 +23,7 @@
                 <li><span class="fa fa-fw fa-tint text-argavell me-2"></span>Non-Comedogenic Certified</li>
             </ul>
             <div class="row mb-3">
-                <div class="col-md-8">
+                <div class="col-8">
                     <p class="font-proxima-nova font-weight-bold">Size</p>
                     <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size" name="size">
                         <option value="20">20 ml</option>
@@ -31,15 +31,15 @@
                         <option value="40">40 ml</option>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-4">
                     <p class="font-proxima-nova font-weight-bold">Quantity</p>
                     <div class="d-flex align-items-center fs-2">
-                        <span class="col-md-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
+                        <span class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
                             id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                            onclick="addQuantity()"></span>
-                        <div class="col-md-4 font-proxima-nova text-argavell text-center ps-0 fs-4" id="quantity-counter">0
+                            onclick="subtractQuantity()"></span>
+                        <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4" id="quantity-counter">0
                         </div>
-                        <span class="col-md-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
+                        <span class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
                             id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                             onclick="addQuantity()"></span>
                         <input type="hidden" name="quantity" id="quantity" value=0>
@@ -121,6 +121,44 @@
             </div>
         </div>
     </div>
+    {{-- product showcase mobile --}}
+    <div class="container d-block d-sm-none text-center">
+        <h1 class="col-8 mx-auto text-argavell font-bauer font-weight-bold text-center text-4xl">Let's Take Our Bundle of
+            Love</h1>
+        <span class="mb-5 text-center text-secondary">Buy the bundle with special price</span>
+    </div>
+    <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
+        <div class="row px-3 gap-3 flex-nowrap text-start">
+            <div class="col-10 p-0">
+                <div class="landing-product position-relative w-100 mb-3"
+                    style="background-image: url({{ asset('images/argan-oil-argan-shampoo.jpg') }})">
+                </div>
+                <div class="mb-3">
+                    <div class="w-100" style="height: 50px">
+                        <p class="w-100 font-weight-bold font-gotham text-break">ARGAN OIL + ARGAN SHAMPOO</p>
+                    </div>
+                    <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
+                            class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
+                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                </div>
+            </div>
+            <div class="col-10 p-0">
+                <div class="landing-product position-relative w-100 mb-3"
+                    style="background-image: url({{ asset('images/argan-oil-argan-shampoo-argan-kids-shampoo.jpg') }})">
+                    <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
+                </div>
+                <div class="mb-3">
+                    <div class="w-100" style="height: 50px">
+                        <p class="w-100 font-weight-bold font-gotham text-break">ARGAN OIL + ARGAN SHAMPOO+ ARGAN KIDS
+                            SHAMPOO</p>
+                    </div>
+                    <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
+                            class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
+                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function overQuantity(button) {
             $(button).removeClass('far');
@@ -135,7 +173,13 @@
         function addQuantity() {
             $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
             $('#quantity').get(0).value++
-            console.log($('#quantity').val())
+        }
+
+        function subtractQuantity() {
+            if (parseInt($('#quantity-counter').html()) > 0) {
+                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
+                $('#quantity').get(0).value--
+            }
         }
 
     </script>
