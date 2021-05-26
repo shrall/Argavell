@@ -161,8 +161,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0"
-                        data-bs-toggle="modal" data-bs-target="#returnModal">Submit</button>
+                    <button type="submit" class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Submit</button>
                 </div>
             </div>
         </div>

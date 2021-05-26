@@ -51,7 +51,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -61,7 +61,8 @@
                 @endguest
                 <li class="nav-item mx-4">
                     <a href="#"
-                        class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
+                        class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer"
+                        data-bs-toggle="modal" data-bs-target="#cartModal">
                         <span class="fa fa-fw fa-shopping-cart"></span>
                     </a>
                 </li>
@@ -75,6 +76,70 @@
         </div>
     </div>
 </nav>
+{{-- cart modal desktop --}}
+<div class="modal fade p-0" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-cart">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel"><span
+                        class="text-argavell font-bauer fs-3 me-2">Cart</span><span class="text-secondary fs-6">1
+                        item(s)</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row align-items-stretch py-2">
+                    <div class="col-md-4">
+                        <img src="{{ asset('images/argan-oil.jpg') }}" width="100px" class="rounded-3">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-10 pe-0">
+                                <p class="font-proxima-nova font-weight-bold mb-1">Argan Oil</p>
+                                <p class="font-proxima-nova">IDR 130.000</p>
+                            </div>
+                            <div class="col-1">
+                                <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end fs-2">
+                            <span
+                                class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                onclick="subtractQuantity()"></span>
+                            <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
+                                id="quantity-counter">0
+                            </div>
+                            <span
+                                class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                onclick="addQuantity()"></span>
+                            <input type="hidden" name="quantity" id="quantity" value=0>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <div class="col-12 px-3 font-proxima-nova">
+                    <div class="d-flex justify-content-between">
+                        <div>Subtotal <span class="text-secondary">1 item(s)</span></div>
+                        <div>IDR 1.000.000</div>
+                    </div>
+                    <div class="d-flex justify-content-between text-argavell">
+                        <div>Discount</div>
+                        <div>-IDR 200.000</div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between font-weight-bold">
+                        <div>Total</div>
+                        <div>IDR 800.000</div>
+                    </div>
+                </div>
+                <button type="submit"
+                    class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{-- navbar mobile --}}
 <div id="navbar-mobile" class="vw-100 vh-100 bg-navbar-mobile position-fixed d-none" style="z-index: 20000">
@@ -96,7 +161,8 @@
     <div class="col-12 text-center my-3">
         <a href="#" class="text-decoration-none text-white font-gotham">My Account</a>
     </div>
-    <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;" onclick="closeNavbarMobile()"></span>
+    <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;"
+        onclick="closeNavbarMobile()"></span>
 </div>
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm fixed-top d-block d-sm-none">
     <div class="container px-0">
@@ -157,7 +223,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                                                         document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -175,9 +241,33 @@
         $("#navbar-mobile").removeClass('d-none');
         $("#navbar-mobile").addClass('d-block');
     }
+
     function closeNavbarMobile() {
         $("#navbar-mobile").removeClass('d-block');
         $("#navbar-mobile").addClass('d-none');
     }
 
 </script>
+    <script>
+        function overQuantity(button) {
+            $(button).removeClass('far');
+            $(button).addClass('fa');
+        }
+
+        function outQuantity(button) {
+            $(button).removeClass('fa');
+            $(button).addClass('far');
+        }
+
+        function addQuantity() {
+            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
+            $('#quantity').get(0).value++
+        }
+
+        function subtractQuantity() {
+            if (parseInt($('#quantity-counter').html()) > 0) {
+                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
+                $('#quantity').get(0).value--
+            }
+        }
+    </script>

@@ -160,30 +160,6 @@
         </div>
     </div>
     <script>
-        function overQuantity(button) {
-            $(button).removeClass('far');
-            $(button).addClass('fa');
-        }
-
-        function outQuantity(button) {
-            $(button).removeClass('fa');
-            $(button).addClass('far');
-        }
-
-        function addQuantity() {
-            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
-            $('#quantity').get(0).value++
-        }
-
-        function subtractQuantity() {
-            if (parseInt($('#quantity-counter').html()) > 0) {
-                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
-                $('#quantity').get(0).value--
-            }
-        }
-
-    </script>
-    <script>
         var triggerTabList = [].slice.call(document.querySelectorAll('#detailTab a'))
         triggerTabList.forEach(function(triggerEl) {
             var tabTrigger = new bootstrap.Tab(triggerEl)
