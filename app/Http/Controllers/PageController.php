@@ -25,4 +25,8 @@ class PageController extends Controller
     public function authorizedreseller(){
         return view('pages.authorized_reseller');
     }
+
+    public function faq(){
+        return view('pages.faq');
+    }
 }

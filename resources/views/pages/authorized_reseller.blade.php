@@ -11,13 +11,13 @@
             </div>
         </div>
         <div class="col-md-5 p-0">
-            <img src="{{ asset('images/authorized-resller.jpg') }}" class="w-100">
+            <img src="{{ asset('images/authorized-reseller.jpg') }}" class="w-100">
         </div>
     </div>
     {{-- mobile header --}}
     <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
         <div class="col-12 p-0 py-4">
-            <img src="{{ asset('images/authorized-resller.jpg') }}" class="w-100">
+            <img src="{{ asset('images/authorized-reseller.jpg') }}" class="w-100">
         </div>
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
