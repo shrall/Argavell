@@ -17,4 +17,8 @@ class PageController extends Controller
     public function kleanse(){
         return view('pages.kleanse');
     }
+
+    public function termsconditions(){
+        return view('pages.terms_conditions');
+    }
 }
