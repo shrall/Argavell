@@ -6,31 +6,43 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function arganoil(){
+    public function arganoil()
+    {
         return view('pages.argan_oil');
     }
 
-    public function arganshampoo(){
+    public function arganshampoo()
+    {
         return view('pages.argan_shampoo');
     }
 
-    public function kleanse(){
+    public function kleanse()
+    {
         return view('pages.kleanse');
     }
 
-    public function termsconditions(){
+    public function termsconditions()
+    {
         return view('pages.terms_conditions');
     }
 
-    public function authorizedreseller(){
+    public function authorizedreseller()
+    {
         return view('pages.authorized_reseller');
     }
 
-    public function faq(){
+    public function faq()
+    {
         return view('pages.faq');
     }
 
-    public function returnpolicy(){
+    public function returnpolicy()
+    {
         return view('pages.return_policy');
+    }
+
+    public function productdetail()
+    {
+        return view('pages.product_detail');
     }
 }

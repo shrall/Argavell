@@ -25,7 +25,6 @@
             <div class="px-2 text-start">You can find answers to some of the most frequently asked questions.</div>
         </div>
     </div>
-
     <div class="row py-4 align-items-center justify-content-center">
         <div class="col-12 col-lg-10 col-xl-8">
             <div class="card-body pt-2 pb-0">
