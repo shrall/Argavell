@@ -21,4 +21,8 @@ class PageController extends Controller
     public function termsconditions(){
         return view('pages.terms_conditions');
     }
+
+    public function authorizedreseller(){
+        return view('pages.authorized_reseller');
+    }
 }
