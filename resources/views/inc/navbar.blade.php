@@ -51,7 +51,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -179,7 +179,8 @@
         </a>
         <div class="w-25 text-center">
             <span class="fa fa-fw fa-user fs-2 mx-1"></span>
-            <span class="fa fa-fw fa-shopping-cart fs-2 mx-1"></span>
+            <span class="fa fa-fw fa-shopping-cart fs-2 mx-1" data-bs-toggle="modal"
+                data-bs-target="#cartModalMobile"></span>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContentMobile">
             <!-- Left Side Of Navbar -->
@@ -223,7 +224,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -235,6 +236,71 @@
         </div>
     </div>
 </nav>
+{{-- cart modal mobile --}}
+<div class="modal fade p-0" id="cartModalMobile" tabindex="-1" aria-labelledby="cartModalMobileLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalMobileLabel"><span
+                        class="text-argavell font-bauer fs-3 me-2">Cart</span><span class="text-secondary fs-6">1
+                        item(s)</span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row align-items-stretch py-2">
+                    <div class="col-4">
+                        <img src="{{ asset('images/argan-oil.jpg') }}" width="100px" class="rounded-3">
+                    </div>
+                    <div class="col-8">
+                        <div class="row">
+                            <div class="col-md-10 pe-0">
+                                <p class="font-proxima-nova font-weight-bold mb-1">Argan Oil</p>
+                                <p class="font-proxima-nova">IDR 130.000</p>
+                            </div>
+                            <div class="col-1">
+                                <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"></span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-end fs-2">
+                            <span
+                                class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                onclick="subtractQuantity()"></span>
+                            <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
+                                id="quantity-counter">0
+                            </div>
+                            <span
+                                class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                onclick="addQuantity()"></span>
+                            <input type="hidden" name="quantity" id="quantity" value=0>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ">
+                <div class="col-12 px-3 font-proxima-nova">
+                    <div class="d-flex justify-content-between">
+                        <div>Subtotal <span class="text-secondary">1 item(s)</span></div>
+                        <div>IDR 1.000.000</div>
+                    </div>
+                    <div class="d-flex justify-content-between text-argavell">
+                        <div>Discount</div>
+                        <div>-IDR 200.000</div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between font-weight-bold">
+                        <div>Total</div>
+                        <div>IDR 800.000</div>
+                    </div>
+                </div>
+                <button type="submit"
+                    class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function openNavbarMobile() {
@@ -248,26 +314,27 @@
     }
 
 </script>
-    <script>
-        function overQuantity(button) {
-            $(button).removeClass('far');
-            $(button).addClass('fa');
-        }
+<script>
+    function overQuantity(button) {
+        $(button).removeClass('far');
+        $(button).addClass('fa');
+    }
 
-        function outQuantity(button) {
-            $(button).removeClass('fa');
-            $(button).addClass('far');
-        }
+    function outQuantity(button) {
+        $(button).removeClass('fa');
+        $(button).addClass('far');
+    }
 
-        function addQuantity() {
-            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
-            $('#quantity').get(0).value++
-        }
+    function addQuantity() {
+        $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
+        $('#quantity').get(0).value++
+    }
 
-        function subtractQuantity() {
-            if (parseInt($('#quantity-counter').html()) > 0) {
-                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
-                $('#quantity').get(0).value--
-            }
+    function subtractQuantity() {
+        if (parseInt($('#quantity-counter').html()) > 0) {
+            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
+            $('#quantity').get(0).value--
         }
-    </script>
+    }
+
+</script>
