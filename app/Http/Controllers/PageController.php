@@ -29,4 +29,8 @@ class PageController extends Controller
     public function faq(){
         return view('pages.faq');
     }
+
+    public function returnpolicy(){
+        return view('pages.return_policy');
+    }
 }

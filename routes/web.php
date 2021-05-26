@@ -28,3 +28,4 @@ Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse')
 Route::get('/authorized-reseller', [PageController::class, 'authorizedreseller'])->name('page.authorizedreseller');
 Route::get('/terms-and-conditions', [PageController::class, 'termsconditions'])->name('page.termsconditions');
 Route::get('/faq', [PageController::class, 'faq'])->name('page.faq');
+Route::get('/return-policy', [PageController::class, 'returnpolicy'])->name('page.returnpolicy');
