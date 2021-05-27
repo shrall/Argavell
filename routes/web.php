@@ -33,3 +33,4 @@ Route::get('/product-detail', [PageController::class, 'productdetail'])->name('p
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
 Route::get('/profile', [PageController::class, 'profile'])->name('page.profile');
+Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
