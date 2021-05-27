@@ -32,3 +32,4 @@ Route::get('/return-policy', [PageController::class, 'returnpolicy'])->name('pag
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
+Route::get('/profile', [PageController::class, 'profile'])->name('page.profile');

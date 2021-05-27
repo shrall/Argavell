@@ -32,7 +32,7 @@
 
 <body>
     <div id="app" class="overflow-hidden font-proxima-nova">
-        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
+        @if (Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
             @include('inc.navbar')
         @endif
 

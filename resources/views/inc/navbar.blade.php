@@ -44,19 +44,17 @@
                     @if (Route::has('login'))
                         <li class="nav-item mx-4">
                             <a class="text-argavell text-decoration-none font-proxima-nova font-weight-bold"
-                                href="{{ route('login') }}">{{ __('Login') }}</a>
+                                href="{{ route('login') }}">
+                                <span class="fa fa-fw fa-user me-2"></span>Login
+                            </a>
                         </li>
                     @endif
                 @else
                     <li class="nav-item mx-4">
-                        <a class="nav-link" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                        <a href="#"
+                            class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
+                            <span class="fa fa-fw fa-user me-2"></span>My Account
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
                     </li>
                 @endguest
                 <li class="nav-item mx-4">
@@ -64,12 +62,6 @@
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer"
                         data-bs-toggle="modal" data-bs-target="#cartModal">
                         <span class="fa fa-fw fa-shopping-cart"></span>
-                    </a>
-                </li>
-                <li class="nav-item mx-4">
-                    <a href="#"
-                        class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                        <span class="fa fa-fw fa-search"></span>
                     </a>
                 </li>
             </ul>
@@ -158,9 +150,17 @@
     <div class="col-12 text-center my-3">
         <a href="#" class="text-decoration-none text-white font-gotham">Contact Us</a>
     </div>
-    <div class="col-12 text-center my-3">
-        <a href="#" class="text-decoration-none text-white font-gotham">My Account</a>
-    </div>
+    @guest
+        @if (Route::has('login'))
+            <div class="col-12 text-center my-3">
+                <a class="text-decoration-none text-white font-gotham" href="{{ route('login') }}">Login</a>
+            </div>
+        @endif
+    @else
+        <div class="col-12 text-center my-3">
+            <a class="text-decoration-none text-white font-gotham" href="#">My Account</a>
+        </div>
+    @endguest
     <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;"
         onclick="closeNavbarMobile()"></span>
 </div>
@@ -178,8 +178,8 @@
                 class="d-inline-block align-text-top">
         </a>
         <div class="w-25 text-center">
-            <span class="fa fa-fw fa-user fs-2 mx-1"></span>
-            <span class="fa fa-fw fa-shopping-cart fs-2 mx-1" data-bs-toggle="modal"
+            <span class="text-argavell fa fa-fw fa-user fs-2 mx-1"></span>
+            <span class="text-argavell fa fa-fw fa-shopping-cart fs-2 mx-1" data-bs-toggle="modal"
                 data-bs-target="#cartModalMobile"></span>
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContentMobile">
@@ -224,7 +224,7 @@
                     <li class="nav-item mx-4">
                         <a class="nav-link" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
-                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

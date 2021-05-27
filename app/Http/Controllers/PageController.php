@@ -55,4 +55,9 @@ class PageController extends Controller
     {
         return view('pages.payment_confirmation');
     }
+
+    public function profile()
+    {
+        return view('pages.profile');
+    }
 }
