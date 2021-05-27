@@ -45,4 +45,9 @@ class PageController extends Controller
     {
         return view('pages.product_detail');
     }
+
+    public function checkout()
+    {
+        return view('pages.checkout');
+    }
 }

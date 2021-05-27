@@ -30,3 +30,4 @@ Route::get('/terms-and-conditions', [PageController::class, 'termsconditions'])-
 Route::get('/faq', [PageController::class, 'faq'])->name('page.faq');
 Route::get('/return-policy', [PageController::class, 'returnpolicy'])->name('page.returnpolicy');
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
+Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
