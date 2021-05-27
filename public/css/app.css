@@ -103,6 +103,13 @@
     border-radius: 50px;
 }
 
+.btn-argavell-reversed {
+    background-color: #fff;
+    color: #8a5b32;
+    border: 2px solid #8a5b32 !important;
+    border-radius: 50px;
+}
+
 .btn-argavell-light {
     background-color: #bb9164;
     color: #fff;
@@ -195,4 +202,11 @@
     background: 0 0;
     border: 0;
     border-bottom: 2px solid #afafaf !important;
+}
+
+/* payment confirmation  */
+.payment-confirmation-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
 }

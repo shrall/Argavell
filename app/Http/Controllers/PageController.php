@@ -50,4 +50,9 @@ class PageController extends Controller
     {
         return view('pages.checkout');
     }
+
+    public function paymentconfirmation()
+    {
+        return view('pages.payment_confirmation');
+    }
 }

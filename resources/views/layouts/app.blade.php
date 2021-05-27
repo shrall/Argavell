@@ -33,7 +33,7 @@
 <body>
     <div id="app" class="overflow-hidden font-proxima-nova">
         @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
-        @include('inc.navbar')
+            @include('inc.navbar')
         @endif
 
         @if (Route::current()->getName() == 'register' || Route::current()->getName() == 'login' || Route::current()->getName() == 'password.request' || Route::current()->getName() == 'password.reset')
@@ -46,7 +46,7 @@
             </main>
         @endif
         @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
-        @include('inc.footer')
+            @include('inc.footer')
         @endif
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
