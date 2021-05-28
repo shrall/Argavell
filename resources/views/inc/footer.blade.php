@@ -10,14 +10,14 @@
                     </li>
                     <li>
                         <div class="row">
-                            <div href="#" class="text-decoration-none text-white col-md-6">Monday — Friday</div>
-                            <div href="#" class="text-decoration-none text-white col-md-6">09.00 — 21.00 WIB</div>
+                            <div class="text-decoration-none text-white col-md-6">Monday — Friday</div>
+                            <div class="text-decoration-none text-white col-md-6">09.00 — 21.00 WIB</div>
                         </div>
                     </li>
                     <li>
                         <div class="row">
-                            <div href="#" class="text-decoration-none text-white col-md-6">Saturday</div>
-                            <div href="#" class="text-decoration-none text-white col-md-6">09.00 — 16.00 WIB</div>
+                            <div class="text-decoration-none text-white col-md-6">Saturday</div>
+                            <div class="text-decoration-none text-white col-md-6">09.00 — 16.00 WIB</div>
                         </div>
                     </li>
                 </ul>
@@ -36,7 +36,7 @@
                                 <a href="#" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Authorized Reseller</a>
+                                <a href="{{route('page.authorizedreseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
                             </li>
                         </ul>
                     </div>
@@ -46,16 +46,16 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">FAQ</a>
+                                <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('page.returnpolicy')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Terms & Conditions</a>
+                                <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Payment Confirmation</a>
+                                <a href="{{route('page.paymentconfirmation')}}" class="text-decoration-none text-white">Payment Confirmation</a>
                             </li>
                         </ul>
                     </div>
@@ -129,7 +129,7 @@
                                 <a href="#" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Authorized Reseller</a>
+                                <a href="{{route('page.authorizedreseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
                             </li>
                         </ul>
                     </div>
@@ -139,16 +139,16 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">FAQ</a>
+                                <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('page.returnpolicy')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Terms & Conditions</a>
+                                <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Payment Confirmation</a>
+                                <a href="{{route('page.paymentconfirmation')}}" class="text-decoration-none text-white">Payment Confirmation</a>
                             </li>
                         </ul>
                     </div>

@@ -28,13 +28,7 @@
     <div class="row w-100 m-0 p-0">
         <div class="col-md-2"></div>
         <div class="col-md-2 px-5 d-none d-sm-block">
-            <ul class="list-unstyled" id="account-sidebar">
-                <li class="my-2"><a href="#" class="text-secondary text-decoration-none">My Profile</a></li>
-                <li class="my-2"><a href="#" class="text-secondary text-decoration-none">My Transactions</a></li>
-                <li class="my-2 active"><a href="#" class="text-secondary text-decoration-none active">My Address</a></li>
-                <li class="my-2"><a href="#" class="text-secondary text-decoration-none">Change Password</a></li>
-                <li class="my-2"><a href="{{ route('logout') }}" class="text-danger text-decoration-none">Logout</a></li>
-            </ul>
+            @include('inc.profile_sidebar')
         </div>
         <div class="col-md-6">
             <div class="row w-100 mx-0 my-4 p-0 align-items-center">
