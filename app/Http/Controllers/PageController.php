@@ -70,4 +70,9 @@ class PageController extends Controller
     {
         return view('pages.my_address');
     }
+
+    public function changepassword()
+    {
+        return view('pages.change_password');
+    }
 }
