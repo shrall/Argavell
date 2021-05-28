@@ -227,3 +227,9 @@
     background-color: #8a5b32!important;
     border-color: #8a5b32!important;
 }
+
+/* overwrite radio buttons  */
+.form-check-input:checked {
+    background-color: #8a5b32!important;
+    border-color: #8a5b32!important;
+}

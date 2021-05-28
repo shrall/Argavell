@@ -65,4 +65,9 @@ class PageController extends Controller
     {
         return view('pages.transactions');
     }
+
+    public function address()
+    {
+        return view('pages.my_address');
+    }
 }
