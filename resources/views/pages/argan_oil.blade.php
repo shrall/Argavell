@@ -317,7 +317,7 @@
             <div class="col-xs-12 col-md-4">
                 <div class="row align-items-center py-4">
                     <div class="col-3">
-                        <img src="{{ asset('images/for-face.png') }}" width="75px">
+                        <img src="{{ asset('images/for-eyelash.png') }}" width="75px">
                     </div>
                     <div class="col-9 text-start">
                         <h2 class="text-argavell font-bauer font-weight-bold">For Eyelash</h2>
