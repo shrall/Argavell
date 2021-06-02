@@ -13,4 +13,9 @@ class Refund extends Model
         'name', 'phone',
         'occasion', 'order_number', 'condition'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

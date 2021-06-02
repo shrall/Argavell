@@ -18,8 +18,11 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            UserSeeder::class,
             ResellerSeeder::class,
             FaqSeeder::class,
+            PolicySeeder::class,
+            RefundSeeder::class,
         ]);
 
         Model::reguard();

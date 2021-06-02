@@ -49,7 +49,7 @@
                                 <a href="{{route('faq.index')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="{{route('page.returnpolicy')}}" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('policy.index')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
                                 <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>
@@ -142,7 +142,7 @@
                                 <a href="{{route('faq.index')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="{{route('page.returnpolicy')}}" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('policy.index')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
                                 <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>

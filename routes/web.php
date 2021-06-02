@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\User\FaqController;
+use App\Http\Controllers\User\PolicyController;
+use App\Http\Controllers\User\RefundController;
 use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +33,7 @@ Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse')
 Route::resource('authorized-reseller', ResellerController::class);
 Route::get('/terms-and-conditions', [PageController::class, 'termsconditions'])->name('page.termsconditions');
 Route::resource('faq', FaqController::class);
-Route::get('/return-policy', [PageController::class, 'returnpolicy'])->name('page.returnpolicy');
+Route::get('/return-policy', [PolicyController::class, 'index'])->name('policy.index');
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
@@ -42,4 +44,6 @@ Route::get('/change-password', [PageController::class, 'changepassword'])->name(
 
 Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('user', UserController::class);
+    Route::resource('policy', PolicyController::class);
+    Route::resource('refund', RefundController::class);
 });

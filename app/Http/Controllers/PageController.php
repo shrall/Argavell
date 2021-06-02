@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faq;
+use App\Models\Policy;
 use App\Models\Reseller;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,8 @@ class PageController extends Controller
 
     public function returnpolicy()
     {
-        return view('pages.return_policy');
+        $policies = Policy::all();
+        return view('pages.return_policy', compact('policies'));
     }
 
     public function productdetail()
