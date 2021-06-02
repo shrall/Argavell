@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             PolicySeeder::class,
             RefundSeeder::class,
             TncSeeder::class,
+            ProofSeeder::class,
         ]);
 
         Model::reguard();

@@ -52,6 +52,9 @@ class User extends Authenticatable
     public function refunds() {
         return $this->hasMany(Refund::class, 'user_id', 'id');
     }
+    public function proofs() {
+        return $this->hasMany(Proof::class, 'user_id', 'id');
+    }
     public function isUser()
     {
         if ($this->role == '0') {

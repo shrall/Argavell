@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\PolicyController;
+use App\Http\Controllers\User\ProofController;
 use App\Http\Controllers\User\RefundController;
 use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\TncController;
@@ -31,13 +32,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
 Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
 Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
+
 Route::get('/terms-and-conditions', [TncController::class, 'index'])->name('page.termsconditions');
 Route::get('/return-policy', [PolicyController::class, 'index'])->name('page.policy');
 Route::get('/authorized-reseller', [ResellerController::class, 'index'])->name('page.reseller');
 Route::get('/faqs', [FaqController::class, 'index'])->name('page.faq');
+Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('page.paymentconfirmation');
+
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
-Route::get('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
 Route::get('/profile', [PageController::class, 'profile'])->name('page.profile');
 Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
 Route::get('/address', [PageController::class, 'address'])->name('page.address');
@@ -51,4 +54,5 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('tnc', TncController::class);
     Route::resource('policy', PolicyController::class);
     Route::resource('refund', RefundController::class);
+    Route::resource('proof', ProofController::class);
 });

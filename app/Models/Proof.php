@@ -10,6 +10,11 @@ class Proof extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_number', 'name', 'payment_file'
+        'order_number', 'name', 'payment_file', 'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

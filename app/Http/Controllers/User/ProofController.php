@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Refund;
+use App\Models\Proof;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RefundController extends Controller
+class ProofController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class RefundController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.payment_confirmation');
     }
 
     /**
@@ -37,32 +37,30 @@ class RefundController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has('condition')) {
-            $condition = time() . '-' . $request['condition']->getClientOriginalName();
-            $request->condition->move(public_path('refunds'), $condition);
+        if ($request->has('payment_file')) {
+            $payment_file = time() . '-' . $request['payment_file']->getClientOriginalName();
+            $request->payment_file->move(public_path('payment'), $payment_file);
         } else {
-            $condition = null;
+            $payment_file = null;
         }
 
-        Refund::create([
-            'name' => $request['name'],
+        Proof::create([
+            'name' => $request['sender_name'],
             'order_number' => $request['order_number'],
-            'occasion' => $request['occasion'],
-            'phone' => $request['phone_number'],
-            'condition' => $condition,
+            'payment_file' => $payment_file,
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('page.policy');
+        return redirect()->route('page.paymentconfirmation');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Refund  $refund
+     * @param  \App\Models\Proof  $proof
      * @return \Illuminate\Http\Response
      */
-    public function show(Refund $refund)
+    public function show(Proof $proof)
     {
         //
     }
@@ -70,10 +68,10 @@ class RefundController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Refund  $refund
+     * @param  \App\Models\Proof  $proof
      * @return \Illuminate\Http\Response
      */
-    public function edit(Refund $refund)
+    public function edit(Proof $proof)
     {
         //
     }
@@ -82,10 +80,10 @@ class RefundController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Refund  $refund
+     * @param  \App\Models\Proof  $proof
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Refund $refund)
+    public function update(Request $request, Proof $proof)
     {
         //
     }
@@ -93,10 +91,10 @@ class RefundController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Refund  $refund
+     * @param  \App\Models\Proof  $proof
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Refund $refund)
+    public function destroy(Proof $proof)
     {
         //
     }
