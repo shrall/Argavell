@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faq;
 use App\Models\Reseller;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,8 @@ class PageController extends Controller
 
     public function faq()
     {
-        return view('pages.faq');
+        $faqs = Faq::all();
+        return view('pages.faq', compact('faqs'));
     }
 
     public function returnpolicy()

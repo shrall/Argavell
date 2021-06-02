@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             ResellerSeeder::class,
+            FaqSeeder::class,
         ]);
 
         Model::reguard();
