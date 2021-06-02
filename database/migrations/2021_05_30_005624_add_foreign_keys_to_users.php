@@ -14,7 +14,7 @@ class AddForeignKeysToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('address_id')->index()->after('dob');
+            $table->unsignedBigInteger('address_id')->index()->after('dob')->nullable();
             $table->foreign('address_id')->references('id')->on('addresses');
         });
     }

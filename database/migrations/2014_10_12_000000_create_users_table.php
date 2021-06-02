@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['0','1',])
             ->default('0')
             ->comment('0 = Male, 1 = Female');
-            $table->date('dob');
+            $table->date('dob')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
