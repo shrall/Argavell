@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Tnc extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'title', 'content'
+    ];
 }

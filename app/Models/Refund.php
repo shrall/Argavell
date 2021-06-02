@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Refund extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name', 'phone',
+        'occasion', 'order_number', 'condition'
+    ];
 }
