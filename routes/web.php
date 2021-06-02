@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -36,3 +37,7 @@ Route::get('/profile', [PageController::class, 'profile'])->name('page.profile')
 Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
 Route::get('/address', [PageController::class, 'address'])->name('page.address');
 Route::get('/change-password', [PageController::class, 'changepassword'])->name('page.changepassword');
+
+Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
+    Route::resource('user', UserController::class);
+});

@@ -49,4 +49,18 @@ class User extends Authenticatable
     public function addresses() {
         return $this->hasMany(Address::class, 'user_id', 'id');
     }
+    public function isUser()
+    {
+        if ($this->role == '0') {
+            return true;
+        }
+        return false;
+    }
+    public function isAdmin()
+    {
+        if ($this->role == '1') {
+            return true;
+        }
+        return false;
+    }
 }
