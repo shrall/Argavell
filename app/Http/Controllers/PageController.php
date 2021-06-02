@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reseller;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -28,7 +29,8 @@ class PageController extends Controller
 
     public function authorizedreseller()
     {
-        return view('pages.authorized_reseller');
+        $resellers = Reseller::all();
+        return view('pages.authorized_reseller', compact('resellers'));
     }
 
     public function faq()

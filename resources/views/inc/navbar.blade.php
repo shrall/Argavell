@@ -17,19 +17,19 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-4">
-                    <a href="{{route('page.arganoil')}}"
+                    <a href="{{ route('page.arganoil') }}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                         Argan Oil
                     </a>
                 </li>
                 <li class="nav-item mx-4">
-                    <a href="{{route('page.arganshampoo')}}"
+                    <a href="{{ route('page.arganshampoo') }}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                         Argan Shampoo
                     </a>
                 </li>
                 <li class="nav-item mx-4">
-                    <a href="{{route('page.kleanse')}}"
+                    <a href="{{ route('page.kleanse') }}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                         Kleanse
                     </a>
@@ -51,7 +51,7 @@
                     @endif
                 @else
                     <li class="nav-item mx-4">
-                        <a href="{{route('page.profile')}}"
+                        <a href="{{ route('user.user.index') }}"
                             class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                             <span class="fa fa-fw fa-user me-2"></span>My Account
                         </a>
@@ -139,13 +139,14 @@
         <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{route('page.arganoil')}}" class="text-decoration-none text-white font-gotham">Argan Oil</a>
+        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham">Argan Oil</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{route('page.arganshampoo')}}" class="text-decoration-none text-white font-gotham">Argan Shampoo</a>
+        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham">Argan
+            Shampoo</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{route('page.kleanse')}}" class="text-decoration-none text-white font-gotham">Kleanse</a>
+        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham">Kleanse</a>
     </div>
     <div class="col-12 text-center my-3">
         <a href="#" class="text-decoration-none text-white font-gotham">Contact Us</a>
@@ -158,7 +159,7 @@
         @endif
     @else
         <div class="col-12 text-center my-3">
-            <a class="text-decoration-none text-white font-gotham" href="{{route('page.profile')}}">My Account</a>
+            <a class="text-decoration-none text-white font-gotham" href="{{ route('user.user.index') }}">My Account</a>
         </div>
     @endguest
     <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;"

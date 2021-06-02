@@ -28,95 +28,34 @@
 
     <div class="row w-100 m-0 p-0 py-5">
         <div class="col-md-2"></div>
-        <div class="col-6 col-md-2">
-            <ul class="list-unstyled text-start">
-                <div class="mb-3">
-                    <li>
-                        <p class="text-argavell font-bauer font-weight-bold fs-4">Jakarta</p>
-                    </li>
-                    <li>
-                        <strong>Travitopia Beauty</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@travitopiabeauty
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-whatsapp me-2"></span>+6287878078800
-                    </li>
-                </div>
-                <div class="mb-3">
-                    <li>
-                        <strong>The Coco Shop</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@thecoco_shop
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="col-6 col-md-2">
-            <ul class="list-unstyled text-start">
-                <div class="mb-3">
-                    <li>
-                        <p class="text-argavell font-bauer font-weight-bold fs-4">Medan</p>
-                    </li>
-                    <li>
-                        <strong>San Wijaya</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@sannwijaya88
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-whatsapp me-2"></span>+628196021144
-                    </li>
-                </div>
-                <div class="mb-3">
-                    <li>
-                        <strong>The Coco Shop</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@thecoco_shop
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="col-6 col-md-2">
-            <ul class="list-unstyled text-start">
-                <div class="mb-3">
-                    <li>
-                        <p class="text-argavell font-bauer font-weight-bold fs-4">Batam</p>
-                    </li>
-                    <li>
-                        <strong>Oil For Gewd</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@oilforgewd
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-whatsapp me-2"></span>+62811696916
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="col-6 col-md-2">
-            <ul class="list-unstyled text-start">
-                <div class="mb-3">
-                    <li>
-                        <p class="text-argavell font-bauer font-weight-bold fs-4">Makassar</p>
-                    </li>
-                    <li>
-                        <strong>Chichicz</strong>
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-line me-2"></span>@chichicz
-                    </li>
-                    <li>
-                        <span class="fab fa-fw fa-whatsapp me-2"></span>+628124127099
-                    </li>
-                </div>
-            </ul>
-        </div>
-        <div class="col-md-2"></div>
+        @foreach ($resellers as $reseller)
+            <div class="col-6 col-md-2">
+                <ul class="list-unstyled text-start">
+                    <div class="mb-3">
+                        <li>
+                            <strong>{{ $reseller->name }}</strong>
+                        </li>
+                        <li>
+                            <span class="fa fa-fw fa-map-marker-alt text-argavell me-2"></span>{{ $reseller->city }}
+                        </li>
+                        @if ($reseller->line != null)
+                            <li>
+                                <span class="fab fa-fw fa-line text-line me-2"></span>@ {{ $reseller->line }}
+                            </li>
+                        @endif
+                        @if ($reseller->whatsapp != null)
+                            <li>
+                                <span class="fab fa-fw fa-whatsapp text-whatsapp me-2"></span>{{ $reseller->whatsapp }}
+                            </li>
+                        @endif
+                    </div>
+                </ul>
+            </div>
+            @if ($loop->iteration % 4 == 0)
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
+            @endif
+        @endforeach
     </div>
     <div class="row w-100 landing-showcase-background text-center py-5 m-0"
         style="background-image: url({{ asset('images/landing-argan-oil.jpg') }})">

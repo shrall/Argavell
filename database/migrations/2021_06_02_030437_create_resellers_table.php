@@ -17,8 +17,8 @@ class CreateResellersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('city');
-            $table->string('line');
-            $table->string('whatsapp');
+            $table->string('line')->nullable();
+            $table->string('whatsapp')->nullable();
             $table->timestamps();
         });
     }
