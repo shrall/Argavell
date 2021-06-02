@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Faq;
 use App\Models\Policy;
 use App\Models\Reseller;
+use App\Models\Tnc;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -26,7 +27,8 @@ class PageController extends Controller
 
     public function termsconditions()
     {
-        return view('pages.terms_conditions');
+        $tncs = Tnc::all();
+        return view('pages.terms_conditions', compact('tncs'));
     }
 
     public function authorizedreseller()

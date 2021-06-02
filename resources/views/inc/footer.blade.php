@@ -36,7 +36,7 @@
                                 <a href="#" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
-                                <a href="{{route('authorized-reseller.index')}}" class="text-decoration-none text-white">Authorized Reseller</a>
+                                <a href="{{route('page.reseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
                             </li>
                         </ul>
                     </div>
@@ -46,10 +46,10 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
-                                <a href="{{route('faq.index')}}" class="text-decoration-none text-white">FAQ</a>
+                                <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="{{route('policy.index')}}" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('page.policy')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
                                 <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>
@@ -129,7 +129,7 @@
                                 <a href="#" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
-                                <a href="{{route('authorized-reseller.index')}}" class="text-decoration-none text-white">Authorized Reseller</a>
+                                <a href="{{route('page.reseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
                             </li>
                         </ul>
                     </div>
@@ -139,10 +139,10 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
-                                <a href="{{route('faq.index')}}" class="text-decoration-none text-white">FAQ</a>
+                                <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
                             </li>
                             <li>
-                                <a href="{{route('policy.index')}}" class="text-decoration-none text-white">Return Policy</a>
+                                <a href="{{route('page.policy')}}" class="text-decoration-none text-white">Return Policy</a>
                             </li>
                             <li>
                                 <a href="{{route('page.termsconditions')}}" class="text-decoration-none text-white">Terms & Conditions</a>
