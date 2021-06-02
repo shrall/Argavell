@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\User\FaqController;
+use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,9 +28,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
 Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
 Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
-Route::get('/authorized-reseller', [PageController::class, 'authorizedreseller'])->name('page.authorizedreseller');
+Route::resource('authorized-reseller', ResellerController::class);
 Route::get('/terms-and-conditions', [PageController::class, 'termsconditions'])->name('page.termsconditions');
-Route::get('/faq', [PageController::class, 'faq'])->name('page.faq');
+Route::resource('faq', FaqController::class);
 Route::get('/return-policy', [PageController::class, 'returnpolicy'])->name('page.returnpolicy');
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
