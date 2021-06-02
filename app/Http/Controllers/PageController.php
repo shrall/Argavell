@@ -83,4 +83,9 @@ class PageController extends Controller
     {
         return view('pages.change_password');
     }
+
+    public function order()
+    {
+        return view('pages.order');
+    }
 }

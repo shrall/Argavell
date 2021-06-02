@@ -42,6 +42,7 @@ Route::get('/profile', [PageController::class, 'profile'])->name('page.profile')
 Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
 Route::get('/address', [PageController::class, 'address'])->name('page.address');
 Route::get('/change-password', [PageController::class, 'changepassword'])->name('page.changepassword');
+Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
 Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('user', UserController::class);
