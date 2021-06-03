@@ -21,7 +21,7 @@ class CreateAddressesTable extends Migration
             $table->string('address');
             $table->string('address_type');
             $table->string('city');
-            $table->string('district');
+            $table->string('province');
             $table->string('postal_code');
             $table->timestamps();
         });

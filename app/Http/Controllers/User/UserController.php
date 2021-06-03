@@ -38,7 +38,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::find(Auth::id());
+        $user->update([
+            'address_id' => $request['address'],
+        ]);
+        return redirect()->route('user.address.index')->with('Success', 'Address Updated!');
     }
 
     /**

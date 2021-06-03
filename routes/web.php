@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\PolicyController;
 use App\Http\Controllers\User\ProofController;
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('policy', PolicyController::class);
     Route::resource('refund', RefundController::class);
     Route::resource('proof', ProofController::class);
+    Route::resource('address', AddressController::class);
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
 });

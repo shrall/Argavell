@@ -10,14 +10,14 @@
         <div class="col-md-5">
             @if (session('Error'))
                 <div class="alert alert-danger">
-                    <ul class="mb-0">
+                    <ul class="mb-0 list-unstyled">
                         <li>{{ session('Error') }}</li>
                     </ul>
                 </div>
             @endif
             @if (session('Success'))
                 <div class="alert alert-success">
-                    <ul class="mb-0">
+                    <ul class="mb-0 list-unstyled">
                         <li>{{ session('Success') }}</li>
                     </ul>
                 </div>
