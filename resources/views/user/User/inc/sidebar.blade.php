@@ -8,9 +8,9 @@
             'page.transactions') active @endif">My Transactions</a></li>
     <li class="my-2 @if (Route::current()->getName() == 'page.address') active @endif"><a href="{{ route('page.address') }}" class="text-secondary text-decoration-none @if (Route::current()->getName() == 'page.address') active @endif">My
             Address</a></li>
-    <li class="my-2 @if (Route::current()->getName() == 'page.changepassword') active @endif"><a href="{{ route('page.changepassword') }}"
+    <li class="my-2 @if (Route::current()->getName() == 'user.user.changepassword') active @endif"><a href="{{ route('user.changepassword') }}"
             class="text-secondary text-decoration-none @if (Route::current()->getName() ==
-            'page.changepassword') active @endif">Change Password</a></li>
+            'user.user.changepassword') active @endif">Change Password</a></li>
     <li class="my-2">
         <a class="text-danger text-decoration-none" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>

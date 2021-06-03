@@ -44,7 +44,7 @@ Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkou
 Route::get('/profile', [PageController::class, 'profile'])->name('page.profile');
 Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
 Route::get('/address', [PageController::class, 'address'])->name('page.address');
-Route::get('/change-password', [PageController::class, 'changepassword'])->name('page.changepassword');
+// Route::get('/change-password', [PageController::class, 'changepassword'])->name('page.changepassword');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
 Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
@@ -55,4 +55,6 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('policy', PolicyController::class);
     Route::resource('refund', RefundController::class);
     Route::resource('proof', ProofController::class);
+    Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
+    Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
 });

@@ -40,7 +40,7 @@
                         </div>
                         <p class="btn-argavell text-center w-25 m-0 py-2 cursor-pointer border-0">Add New Address</p>
                     </div>
-                    <div class="bg-light rounded px-3 py-2 text-center">
+                    <div class="d-block d-sm-none bg-light rounded px-3 py-2 text-center">
                         <p class="my-0 font-weight-bold fs-3">Manage Your Address</p>
                         <p class="my-0 text-secondary">Add or delete your addresses right here.</p>
                         <p class="btn-argavell text-center w-50 mx-auto my-2 py-2 cursor-pointer border-0">Add New Address
