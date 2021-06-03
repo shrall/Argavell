@@ -8,6 +8,20 @@
             @include('user.User.inc.sidebar')
         </div>
         <div class="col-md-5">
+            @if (session('Error'))
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        <li>{{ session('Error') }}</li>
+                    </ul>
+                </div>
+            @endif
+            @if (session('Success'))
+                <div class="alert alert-success">
+                    <ul class="mb-0">
+                        <li>{{ session('Success') }}</li>
+                    </ul>
+                </div>
+            @endif
             <form action="{{ route('user.user.update', Auth::user()->id) }}" method="POST">
                 @csrf
                 <input name="_method" type="hidden" value="PATCH">

@@ -72,13 +72,21 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update([
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name'],
-            'gender' => $request['gender'],
-            'dob' => $request['dob'],
+        $data = $request->validate([
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'gender' => ['required'],
+            'dob' => ['required'],
         ]);
-        return redirect()->route('user.user.index');
+
+        $user->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'gender' => $data['gender'],
+            'dob' => $data['dob'],
+        ]);
+
+        return redirect()->route('user.user.index')->with('Success', 'Profile Updated!');
     }
 
     /**
