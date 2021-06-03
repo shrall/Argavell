@@ -104,7 +104,30 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        //
+        $data = $request->validate([
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'phone_number' => ['required', 'numeric'],
+            'address' => ['required', 'string'],
+            'address_type' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'province' => ['required', 'string'],
+            'postal_code' => ['required', 'numeric'],
+        ]);
+
+        $address->update([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'phone' => $data['phone_number'],
+            'address' => $data['address'],
+            'address_type' => $data['address_type'],
+            'city' => $data['city'],
+            'province' => $data['province'],
+            'postal_code' => $data['postal_code'],
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('user.address.index')->with('Success', 'Address Updated!');
     }
 
     /**
