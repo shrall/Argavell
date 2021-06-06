@@ -78,39 +78,14 @@
         <h1 class="text-argavell font-bauer font-weight-bold">Most Loved, Best Picks</h1>
         <label class="text-argavell mb-4">Giving you a solution & an opportunity to appear outstanding amongst their
             peers.</label>
-        <div class="row gap-3 justify-content-md-center">
-            @foreach ($products as $product)
-                @if ($product->type == '0')
-                    <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
-                        <a href="{{ route('product.show', $product->slug) }}">
-                            <div class="landing-product position-relative w-100 mb-3"
-                                style="background-image: url({{ asset('products/' . $product->img) }})">
-                                @if ($product->price_discount != null)
-                                    <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
-                                @endif
-                            </div>
-                        </a>
-                        <div style="height:15%" class="mb-3">
-                            <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
-                            @if ($product->price_discount != null)
-                                <div class="font-gotham"><del class="text-secondary">IDR {{ $product->price }}</del><span
-                                        class="text-danger font-weight-bold ms-2">IDR
-                                        {{ $product->price - $product->price_discount }}</span></div>
-                            @else
-                                <div class="font-gotham">IDR {{ $product->price }}</div>
-                            @endif
-                        </div>
-                        <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Add to Cart</div>
-                    </div>
-                @endif
-            @endforeach
-        </div>
+        @include('pages.inc.product_showcase_desktop')
     </div>
     {{-- product showcase mobile --}}
     <div class="container pt-5 d-block d-sm-none">
         <h1 class="text-argavell font-bauer font-weight-bold">Most Loved, Best Picks</h1>
         <label class="text-argavell mb-4">Giving you a solution & an opportunity to appear outstanding amongst their
             peers.</label>
+        @include('pages.inc.product_showcase_mobile')
     </div>
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         <div class="row px-3 gap-3 flex-nowrap text-start">

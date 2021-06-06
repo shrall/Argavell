@@ -48,7 +48,9 @@
                                 <div class="font-gotham">IDR {{ $product->price }}</div>
                             @endif
                         </div>
-                        <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                        <a href="{{ route('product.show', $product->slug) }}">
+                            <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                        </a>
                     </div>
                 @endif
             @endforeach
@@ -148,7 +150,9 @@
                             @else
                                 <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                             @endif
-                            <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                            <a href="{{ route('product.show', $product->slug) }}">
+                                <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Check Details</div>
+                            </a>
                         </div>
                     </div>
                 @endif
