@@ -82,22 +82,23 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Cart::find($id);
+        $item->delete();
     }
 
     public function add_item(Request $request)
     {
-        $project = Cart::find($request->id);
-        $project->update([
-            'qty' => $project['qty'] + 1
+        $item = Cart::find($request->id);
+        $item->update([
+            'qty' => $item['qty'] + 1
         ]);
     }
 
     public function subtract_item(Request $request)
     {
-        $project = Cart::find($request->id);
-        $project->update([
-            'qty' => $project['qty'] - 1
+        $item = Cart::find($request->id);
+        $item->update([
+            'qty' => $item['qty'] - 1
         ]);
     }
 }

@@ -149,7 +149,7 @@
     $discount = 0;
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-    $totalqty++;
+    $totalqty += $item->qty;
     $subtotal += $item->price;
     $discount += $item->price_discount;
     }
@@ -159,9 +159,11 @@
         <div class="modal-dialog modal-dialog-scrollable modal-cart">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel"><span
-                            class="text-argavell font-bauer fs-3 me-2">Cart</span><span class="text-secondary fs-6">1
-                            item(s)</span></h5>
+                    <h5 class="modal-title" id="cartModalLabel">
+                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-secondary fs-6" id="modal-header-qty">{{ $totalqty }}</span>
+                        <span class="text-secondary fs-6"> item(s)</span>
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body position-relative">
@@ -171,7 +173,7 @@
                             class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
                     </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
-                        <div class="row align-items-stretch py-2">
+                        <div class="row align-items-stretch py-2" id="cart-row{{ $item->id }}">
                             <div class="col-md-4">
                                 <img src="{{ asset('products/' . $item->product->img) }}" width="100px"
                                     class="rounded-3">
@@ -191,7 +193,8 @@
                                         @endif
                                     </div>
                                     <div class="col-1">
-                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"></span>
+                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"
+                                            onclick="deleteItem({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-end fs-2">
@@ -216,7 +219,10 @@
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
                         <div class="d-flex justify-content-between">
-                            <div>Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span></div>
+                            <div>Subtotal
+                                <span class="text-secondary" id="modal-footer-qty">{{ $totalqty }}</span>
+                                <span class="text-secondary"> item(s)</span>
+                            </div>
                             <div id="cart-subtotal">IDR {{ $subtotal }}</div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
@@ -241,9 +247,11 @@
         <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalMobileLabel"><span
-                            class="text-argavell font-bauer fs-3 me-2">Cart</span><span class="text-secondary fs-6">1
-                            item(s)</span></h5>
+                    <h5 class="modal-title" id="cartModalMobileLabel">
+                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-secondary fs-6" id="modal-header-mobile-qty">{{ $totalqty }}</span>
+                        <span class="text-secondary fs-6"> item(s)</span>
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body position-relative">
@@ -253,7 +261,7 @@
                             class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
                     </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
-                        <div class="row align-items-stretch py-2">
+                        <div class="row align-items-stretch py-2" id="cart-mobile-row{{ $item->id }}">
                             <div class="col-4">
                                 <img src="{{ asset('products/' . $item->product->img) }}" width="100px"
                                     class="rounded-3">
@@ -273,7 +281,8 @@
                                         @endif
                                     </div>
                                     <div class="col-1">
-                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"></span>
+                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"
+                                            onclick="deleteItem({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     </div>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-end fs-2">
@@ -298,12 +307,15 @@
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
                         <div class="d-flex justify-content-between">
-                            <div>Subtotal <span class="text-secondary">{{$totalqty}} item(s)</span></div>
-                            <div id="cart-mobile-subtotal">IDR {{$subtotal}}</div>
+                            <div>Subtotal
+                                <span class="text-secondary" id="modal-footer-mobile-qty">{{ $totalqty }}</span>
+                                <span class="text-secondary">item(s)</span>
+                            </div>
+                            <div id="cart-mobile-subtotal">IDR {{ $subtotal }}</div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div id="cart-mobile-discount">-IDR {{$discount}}</div>
+                            <div id="cart-mobile-discount">-IDR {{ $discount }}</div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
@@ -338,6 +350,10 @@
                 })
                 .done(function(data) {
                     $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) + 1);
+                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
+                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
+                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
+                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
                 })
                 .fail(function() {
                     alert('Fail')
@@ -360,6 +376,10 @@
                     })
                     .done(function(data) {
                         $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - 1);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
                     })
                     .fail(function() {
                         alert('Fail')
@@ -372,15 +392,79 @@
             }
         }
 
+        function deleteItem(id, url) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#cart-loader').removeClass('d-none');
+            $('#cart-mobile-loader').removeClass('d-none');
+            $.post(url + "/cart/" + id, {
+                    _token: CSRF_TOKEN,
+                    _method: "DELETE",
+                    id: id
+                })
+                .done(function(data) {
+                    $('#cart-row' + id).addClass('d-none');
+                    $('#cart-mobile-row' + id).addClass('d-none');
+                })
+                .fail(function() {
+                    alert('Fail')
+                })
+                .always(function() {
+                    console.log("quantity added");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
+                });
+        }
+
         function addQuantityMobile(id, url) {
-            $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) + 1);
-            $('#quantity-mobile' + id).get(0).value++;
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#cart-loader').removeClass('d-none');
+            $('#cart-mobile-loader').removeClass('d-none');
+            $.post(url + "/cart/additem", {
+                    _token: CSRF_TOKEN,
+                    id: id
+                })
+                .done(function(data) {
+                    $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) + 1);
+                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
+                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
+                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
+                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+                })
+                .fail(function() {
+                    alert('Fail')
+                })
+                .always(function() {
+                    console.log("quantity added");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
+                });
         }
 
         function subtractQuantityMobile(id, url) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             if (parseInt($('#quantity-counter-mobile' + id).html()) > 0) {
-                $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) - 1);
-                $('#quantity-mobile' + id).get(0).value--;
+                $('#cart-loader').removeClass('d-none');
+                $('#cart-mobile-loader').removeClass('d-none');
+                $.post(url + "/cart/subtractitem", {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    })
+                    .done(function(data) {
+                        $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) -
+                            1);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
+                    })
+                    .fail(function() {
+                        alert('Fail')
+                    })
+                    .always(function() {
+                        console.log("quantity subtracted");
+                        $('#cart-loader').addClass('d-none');
+                        $('#cart-mobile-loader').addClass('d-none');
+                    });
             }
         }
 
