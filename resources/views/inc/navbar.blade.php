@@ -144,6 +144,16 @@
 </nav>
 
 @auth
+    <?php
+    $subtotal = 0;
+    $discount = 0;
+    $totalqty = 0;
+    foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
+    $totalqty++;
+    $subtotal += $item->price;
+    $discount += $item->price_discount;
+    }
+    ?>
     {{-- cart modal desktop --}}
     <div class="modal fade p-0" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-cart">
@@ -206,17 +216,17 @@
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
                         <div class="d-flex justify-content-between">
-                            <div>Subtotal <span class="text-secondary">1 item(s)</span></div>
-                            <div>IDR 1.000.000</div>
+                            <div>Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span></div>
+                            <div id="cart-subtotal">IDR {{ $subtotal }}</div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div>-IDR 200.000</div>
+                            <div id="cart-discount">-IDR {{ $discount }}</div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div>IDR 800.000</div>
+                            <div id="cart-total">IDR {{ $subtotal - $discount }}</div>
                         </div>
                     </div>
                     <button type="submit"
@@ -288,17 +298,17 @@
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
                         <div class="d-flex justify-content-between">
-                            <div>Subtotal <span class="text-secondary">1 item(s)</span></div>
-                            <div>IDR 1.000.000</div>
+                            <div>Subtotal <span class="text-secondary">{{$totalqty}} item(s)</span></div>
+                            <div id="cart-mobile-subtotal">IDR {{$subtotal}}</div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div>-IDR 200.000</div>
+                            <div id="cart-mobile-discount">-IDR {{$discount}}</div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div>IDR 800.000</div>
+                            <div id="cart-mobile-total">IDR {{ $subtotal - $discount }}</div>
                         </div>
                     </div>
                     <button type="submit"
