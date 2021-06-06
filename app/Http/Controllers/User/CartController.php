@@ -84,6 +84,7 @@ class CartController extends Controller
     {
         $item = Cart::find($id);
         $item->delete();
+        return response()->json($item);
     }
 
     public function add_item(Request $request)
@@ -92,6 +93,7 @@ class CartController extends Controller
         $item->update([
             'qty' => $item['qty'] + 1
         ]);
+        return response()->json($item);
     }
 
     public function subtract_item(Request $request)
@@ -100,5 +102,6 @@ class CartController extends Controller
         $item->update([
             'qty' => $item['qty'] - 1
         ]);
+        return response()->json($item);
     }
 }

@@ -150,8 +150,8 @@
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
     $totalqty += $item->qty;
-    $subtotal += $item->price;
-    $discount += $item->price_discount;
+    $subtotal += $item->price * $item->qty;
+    $discount += $item->price_discount * $item->qty;
     }
     ?>
     {{-- cart modal desktop --}}
@@ -223,16 +223,16 @@
                                 <span class="text-secondary" id="modal-footer-qty">{{ $totalqty }}</span>
                                 <span class="text-secondary"> item(s)</span>
                             </div>
-                            <div id="cart-subtotal">IDR {{ $subtotal }}</div>
+                            <div>IDR <span id="cart-subtotal">{{ $subtotal }}</span></div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div id="cart-discount">-IDR {{ $discount }}</div>
+                            <div>- IDR <span id="cart-discount">{{ $discount }}</span></div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div id="cart-total">IDR {{ $subtotal - $discount }}</div>
+                            <div>IDR <span id="cart-total">{{ $subtotal - $discount }}</span></div>
                         </div>
                     </div>
                     <button type="submit"
@@ -311,16 +311,16 @@
                                 <span class="text-secondary" id="modal-footer-mobile-qty">{{ $totalqty }}</span>
                                 <span class="text-secondary">item(s)</span>
                             </div>
-                            <div id="cart-mobile-subtotal">IDR {{ $subtotal }}</div>
+                            <div>IDR <span id="cart-mobile-subtotal">{{ $subtotal }}</span></div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div id="cart-mobile-discount">-IDR {{ $discount }}</div>
+                            <div>- IDR <span id="cart-mobile-discount">{{ $discount }}</span></div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div id="cart-mobile-total">IDR {{ $subtotal - $discount }}</div>
+                            <div>IDR <span id="cart-mobile-total">{{ $subtotal - $discount }}</span></div>
                         </div>
                     </div>
                     <button type="submit"
@@ -354,6 +354,14 @@
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
+                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
+                    $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data['price_discount']));
+                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
+                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
+                        'price_discount']));
+                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
+                        'price_discount']));
                 })
                 .fail(function() {
                     alert('Fail')
@@ -380,6 +388,15 @@
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price']));
+                        $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount']));
+                        $('#cart-total').html(parseInt($('#cart-total').html()) - (data['price'] - data[
+                            'price_discount']));
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price']));
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
+                            'price_discount']));
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - (data['price'] - data[
+                            'price_discount']));
                     })
                     .fail(function() {
                         alert('Fail')
