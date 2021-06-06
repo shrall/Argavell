@@ -3,9 +3,9 @@
             class="text-secondary text-decoration-none @if (Route::current()->getName() ==
             'user.user.index') active @endif">My
             Profile</a></li>
-    <li class="my-2 @if (Route::current()->getName() == 'page.transactions') active @endif"><a href="{{ route('page.transactions') }}"
+    <li class="my-2 @if (Route::current()->getName() == 'user.transaction.index') active @endif"><a href="{{ route('user.transaction.index') }}"
             class="text-secondary text-decoration-none @if (Route::current()->getName() ==
-            'page.transactions') active @endif">My Transactions</a></li>
+            'user.transaction.index') active @endif">My Transactions</a></li>
     <li class="my-2 @if (Route::current()->getName() == 'user.address.index') active @endif"><a href="{{ route('user.address.index') }}" class="text-secondary text-decoration-none @if (Route::current()->getName() == 'user.address.index') active @endif">My
             Address</a></li>
     <li class="my-2 @if (Route::current()->getName() == 'user.user.changepassword') active @endif"><a href="{{ route('user.changepassword') }}"

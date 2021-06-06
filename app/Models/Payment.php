@@ -12,4 +12,8 @@ class Payment extends Model
     protected $fillable = [
         'name', 'account_number', 'howto'
     ];
+
+    protected $casts = [
+        'howto' => 'array',
+    ];
 }

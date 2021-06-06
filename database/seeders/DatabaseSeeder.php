@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            PaymentSeeder::class,
             UserSeeder::class,
             ResellerSeeder::class,
             FaqSeeder::class,
@@ -27,6 +28,8 @@ class DatabaseSeeder extends Seeder
             ProofSeeder::class,
             AddressSeeder::class,
             ProductSeeder::class,
+            TransactionSeeder::class,
+            CartSeeder::class,
         ]);
 
         Model::reguard();

@@ -9,6 +9,7 @@ use App\Http\Controllers\User\ProofController;
 use App\Http\Controllers\User\RefundController;
 use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\TncController;
+use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,7 +44,6 @@ Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('pa
 
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
-Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
 Route::resource('product', ProductController::class);
@@ -57,6 +57,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('refund', RefundController::class);
     Route::resource('proof', ProofController::class);
     Route::resource('address', AddressController::class);
+    Route::resource('transaction', TransactionController::class);
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
 });

@@ -11,22 +11,26 @@ class Transaction extends Model
 
     protected $fillable = [
         'status', 'order_number', 'date',
-        'payment_id', 'shipment_id', 'product_users_id', 'address_id', 'shipping_cost'
+        'shipment_name', 'shipping_cost', 'price_total', 'transaction_total',
+        'user_id','payment_id', 'address_id'
     ];
 
-    public function payment() {
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function payment()
+    {
         return $this->belongsTo(Payment::class, 'payment_id', 'id');
     }
 
-    public function shipment() {
-        return $this->belongsTo(User::class, 'shipment_id', 'id');
+    public function address()
+    {
+        return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
-    public function productuser() {
-        return $this->belongsTo(ProductUser::class, 'product_users_id', 'id');
-    }
-
-    public function address() {
-        return $this->belongsTo(User::class, 'address_id', 'id');
+    public function carts() {
+        return $this->hasMany(Cart::class, 'transaction_id', 'id');
     }
 }

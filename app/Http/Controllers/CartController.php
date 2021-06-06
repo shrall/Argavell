@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductUser;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
-class ProductUserController extends Controller
+class CartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ProductUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProductUser  $productUser
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductUser $productUser)
+    public function show(Cart $cart)
     {
         //
     }
@@ -52,10 +52,10 @@ class ProductUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProductUser  $productUser
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductUser $productUser)
+    public function edit(Cart $cart)
     {
         //
     }
@@ -64,10 +64,10 @@ class ProductUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductUser  $productUser
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductUser $productUser)
+    public function update(Request $request, Cart $cart)
     {
         //
     }
@@ -75,10 +75,10 @@ class ProductUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProductUser  $productUser
+     * @param  \App\Models\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductUser $productUser)
+    public function destroy(Cart $cart)
     {
         //
     }
