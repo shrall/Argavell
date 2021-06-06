@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -58,7 +59,7 @@ class AddressController extends Controller
             'postal_code' => ['required', 'numeric'],
         ]);
 
-        Address::create([
+        $address = Address::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'phone' => $data['phone_number'],
@@ -68,6 +69,11 @@ class AddressController extends Controller
             'province' => $data['province'],
             'postal_code' => $data['postal_code'],
             'user_id' => Auth::id(),
+        ]);
+
+        $user = User::find(Auth::id());
+        $user->update([
+            'address_id' => $address['id'],
         ]);
 
         return redirect()->route('user.address.index')->with('Success', 'New Address Added!');

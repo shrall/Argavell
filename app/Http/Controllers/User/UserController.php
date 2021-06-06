@@ -42,7 +42,7 @@ class UserController extends Controller
         $user->update([
             'address_id' => $request['address'],
         ]);
-        return redirect()->route('user.address.index')->with('Success', 'Address Updated!');
+        return redirect()->route('user.address.index')->with('Success', 'Main Address Changed!');
     }
 
     /**
