@@ -61,4 +61,6 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('cart', CartController::class);
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
+    Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
+    Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
 });

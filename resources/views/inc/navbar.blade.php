@@ -155,6 +155,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body position-relative">
+                    <div id="cart-loader" class="d-none">
+                        <div class="position-absolute w-100 h-100" style="background-color: #fff; opacity: 70%;"></div>
+                        <img src="{{ asset('cart-loading.svg') }}"
+                            class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
+                    </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                         <div class="row align-items-stretch py-2">
                             <div class="col-md-4">
@@ -183,14 +188,14 @@
                                     <span
                                         class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
                                         id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="subtractQuantity({{ $item->id }})"></span>
+                                        onclick="subtractQuantity({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
                                         id="quantity-counter{{ $item->id }}">{{ $item->qty }}
                                     </div>
                                     <span
                                         class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
                                         id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="addQuantity({{ $item->id }})"></span>
+                                        onclick="addQuantity({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     <input type="hidden" name="quantity{{ $item->id }}"
                                         id="quantity{{ $item->id }}" value={{ $item->qty }}>
                                 </div>
@@ -231,7 +236,12 @@
                             item(s)</span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body position-relative">
+                    <div id="cart-mobile-loader" class="d-none">
+                        <div class="position-absolute w-100 h-100" style="background-color: #fff; opacity: 70%;"></div>
+                        <img src="{{ asset('cart-loading.svg') }}"
+                            class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
+                    </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                         <div class="row align-items-stretch py-2">
                             <div class="col-4">
@@ -260,14 +270,14 @@
                                     <span
                                         class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
                                         id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="subtractQuantityMobile({{ $item->id }})"></span>
+                                        onclick="subtractQuantityMobile({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
                                         id="quantity-counter-mobile{{ $item->id }}">{{ $item->qty }}
                                     </div>
                                     <span
                                         class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
                                         id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="addQuantityMobile({{ $item->id }})"></span>
+                                        onclick="addQuantityMobile({{ $item->id }}, '{{ config('app.url') }}')"></span>
                                     <input type="hidden" name="quantity{{ $item->id }}"
                                         id="quantity-mobile{{ $item->id }}" value={{ $item->qty }}>
                                 </div>
@@ -308,27 +318,59 @@
             $(button).addClass('far');
         }
 
-        function addQuantity(id) {
-            $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) + 1);
-            $('#quantity' + id).get(0).value++
+        function addQuantity(id, url) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#cart-loader').removeClass('d-none');
+            $('#cart-mobile-loader').removeClass('d-none');
+            $.post(url + "/cart/additem", {
+                    _token: CSRF_TOKEN,
+                    id: id
+                })
+                .done(function(data) {
+                    $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) + 1);
+                })
+                .fail(function() {
+                    alert('Fail')
+                })
+                .always(function() {
+                    console.log("quantity added");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
+                });
         }
 
-        function subtractQuantity(id) {
+        function subtractQuantity(id, url) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             if (parseInt($('#quantity-counter' + id).html()) > 0) {
-                $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - 1);
-                $('#quantity' + id).get(0).value--
+                $('#cart-loader').removeClass('d-none');
+                $('#cart-mobile-loader').removeClass('d-none');
+                $.post(url + "/cart/subtractitem", {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    })
+                    .done(function(data) {
+                        $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - 1);
+                    })
+                    .fail(function() {
+                        alert('Fail')
+                    })
+                    .always(function() {
+                        console.log("quantity subtracted");
+                        $('#cart-loader').addClass('d-none');
+                        $('#cart-mobile-loader').addClass('d-none');
+                    });
             }
         }
 
-        function addQuantityMobile(id) {
+        function addQuantityMobile(id, url) {
             $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) + 1);
-            $('#quantity-mobile' + id).get(0).value++
+            $('#quantity-mobile' + id).get(0).value++;
         }
 
-        function subtractQuantityMobile(id) {
+        function subtractQuantityMobile(id, url) {
             if (parseInt($('#quantity-counter-mobile' + id).html()) > 0) {
                 $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) - 1);
-                $('#quantity-mobile' + id).get(0).value--
+                $('#quantity-mobile' + id).get(0).value--;
             }
         }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -81,5 +82,21 @@ class CartController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function add_item(Request $request)
+    {
+        $project = Cart::find($request->id);
+        $project->update([
+            'qty' => $project['qty'] + 1
+        ]);
+    }
+
+    public function subtract_item(Request $request)
+    {
+        $project = Cart::find($request->id);
+        $project->update([
+            'qty' => $project['qty'] - 1
+        ]);
     }
 }
