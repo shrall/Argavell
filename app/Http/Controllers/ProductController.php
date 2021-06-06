@@ -46,7 +46,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $products = Product::where('bundle', '1')->get();
+        return view('user.Product.show', compact('product', 'products'));
     }
 
     /**

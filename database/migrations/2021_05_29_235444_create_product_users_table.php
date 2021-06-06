@@ -15,11 +15,12 @@ class CreateProductUsersTable extends Migration
     {
         Schema::create('product_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('user_id')->constrained();
             $table->integer('qty');
             $table->integer('price');
-            $table->integer('price_discount');
+            $table->integer('price_discount')->nullable();
+            $table->string('order_number')->nullable();
+            $table->foreignId('product_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

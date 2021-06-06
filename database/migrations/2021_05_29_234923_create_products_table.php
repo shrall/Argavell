@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->integer('price');
-            $table->integer('price_discount');
+            $table->integer('price_discount')->nullable();
             $table->text('description');
             $table->json('size');
             $table->json('facts');

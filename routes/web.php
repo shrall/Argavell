@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\PolicyController;
@@ -23,13 +24,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
 Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
 Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
@@ -42,11 +43,10 @@ Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('pa
 
 Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
-Route::get('/profile', [PageController::class, 'profile'])->name('page.profile');
 Route::get('/transactions', [PageController::class, 'transactions'])->name('page.transactions');
-Route::get('/address', [PageController::class, 'address'])->name('page.address');
-// Route::get('/change-password', [PageController::class, 'changepassword'])->name('page.changepassword');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
+
+Route::resource('product', ProductController::class);
 
 Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('user', UserController::class);

@@ -138,6 +138,9 @@
 .border-argavell {
     border-color: #8a5b32 !important;
 }
+.border-kleanse {
+    border-color: #4ac8e2 !important;
+}
 /* other */
 
 .cursor-pointer {
@@ -200,15 +203,31 @@
     height: 70vh;
 }
 
-.nav-products .nav-link.active,
-.nav-products .show > .nav-link {
+.nav-argavell .nav-link.active,
+.nav-argavell .show > .nav-link {
     color: #8a5b32;
     background-color: #fff;
     border: 0;
     border-bottom: 2px solid #8a5b32 !important;
 }
 
-.nav-products .nav-link {
+.nav-argavell .nav-link {
+    color: #afafaf;
+    background-color: #fff;
+    background: 0 0;
+    border: 0;
+    border-bottom: 2px solid #afafaf !important;
+}
+
+.nav-kleanse .nav-link.active,
+.nav-kleanse .show > .nav-link {
+    color: #4ac8e2;
+    background-color: #fff;
+    border: 0;
+    border-bottom: 2px solid #4ac8e2 !important;
+}
+
+.nav-kleanse .nav-link {
     color: #afafaf;
     background-color: #fff;
     background: 0 0;

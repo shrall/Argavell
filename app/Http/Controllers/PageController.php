@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faq;
 use App\Models\Policy;
+use App\Models\Product;
 use App\Models\Reseller;
 use App\Models\Tnc;
 use Illuminate\Http\Request;
@@ -12,17 +13,20 @@ class PageController extends Controller
 {
     public function arganoil()
     {
-        return view('pages.argan_oil');
+        $products = Product::where('type', '0')->get();
+        return view('pages.argan_oil', compact('products'));
     }
 
     public function arganshampoo()
     {
-        return view('pages.argan_shampoo');
+        $products = Product::where('type', '0')->get();
+        return view('pages.argan_shampoo', compact('products'));
     }
 
     public function kleanse()
     {
-        return view('pages.kleanse');
+        $products = Product::where('type', '1')->get();
+        return view('pages.kleanse', compact('products'));
     }
 
     public function termsconditions()

@@ -18,8 +18,9 @@ class CreateTransactionsTable extends Migration
             $table->enum('status', ['0','1','2'])
             ->default('0')
             ->comment('0 = On Delivery, 1 = Shipped, 2 = Canceled');
-            $table->string('order_number');
+            $table->string('order_number')->unique();
             $table->date('date');
+            $table->string('shipment_name');
             $table->integer('shipping_cost');
             $table->timestamps();
         });
