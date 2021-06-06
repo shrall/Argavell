@@ -181,7 +181,9 @@
                             <div class="col-md-8">
                                 <div class="row">
                                     <div class="col-md-10 pe-0">
-                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}</p>
+                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
+                                            <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                                        </p>
                                         @if ($item->price_discount != null)
                                             <p class="font-proxima-nova"><del class="text-secondary">IDR
                                                     {{ $item->product->price }}</del>
@@ -269,7 +271,9 @@
                             <div class="col-8">
                                 <div class="row">
                                     <div class="col-md-10 pe-0">
-                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}</p>
+                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
+                                            <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                                        </p>
                                         @if ($item->price_discount != null)
                                             <p class="font-proxima-nova"><del class="text-secondary">IDR
                                                     {{ $item->product->price }}</del>
@@ -338,6 +342,46 @@
         function outQuantity(button) {
             $(button).removeClass('fa');
             $(button).addClass('far');
+        }
+
+        function deleteItem(id, url) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#cart-loader').removeClass('d-none');
+            $('#cart-mobile-loader').removeClass('d-none');
+            $.post(url + "/cart/" + id, {
+                    _token: CSRF_TOKEN,
+                    _method: "DELETE",
+                    id: id
+                })
+                .done(function(data) {
+                    $('#cart-row' + id).addClass('d-none');
+                    $('#cart-mobile-row' + id).addClass('d-none');
+                    $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - data['qty']);
+                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - data['qty']);
+                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
+                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
+                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
+                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price'] * data['qty']));
+                    $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount'] * data[
+                        'qty']));
+                    $('#cart-total').html(parseInt($('#cart-total').html()) - ((data['price'] * data['qty']) - (data[
+                        'price_discount'] * data['qty'])));
+                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price'] * data[
+                        'qty']));
+                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
+                        'price_discount'] * data['qty']));
+                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - ((data['price'] * data[
+                        'qty']) - (data[
+                        'price_discount'] * data['qty'])));
+                })
+                .fail(function() {
+                    alert('Fail')
+                })
+                .always(function() {
+                    console.log("quantity added");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
+                });
         }
 
         function addQuantity(id, url) {
@@ -409,29 +453,6 @@
             }
         }
 
-        function deleteItem(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#cart-loader').removeClass('d-none');
-            $('#cart-mobile-loader').removeClass('d-none');
-            $.post(url + "/cart/" + id, {
-                    _token: CSRF_TOKEN,
-                    _method: "DELETE",
-                    id: id
-                })
-                .done(function(data) {
-                    $('#cart-row' + id).addClass('d-none');
-                    $('#cart-mobile-row' + id).addClass('d-none');
-                })
-                .fail(function() {
-                    alert('Fail')
-                })
-                .always(function() {
-                    console.log("quantity added");
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                });
-        }
-
         function addQuantityMobile(id, url) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $('#cart-loader').removeClass('d-none');
@@ -446,6 +467,14 @@
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
+                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
+                    $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data['price_discount']));
+                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
+                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
+                        'price_discount']));
+                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
+                        'price_discount']));
                 })
                 .fail(function() {
                     alert('Fail')
@@ -473,6 +502,15 @@
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price']));
+                        $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount']));
+                        $('#cart-total').html(parseInt($('#cart-total').html()) - (data['price'] - data[
+                            'price_discount']));
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price']));
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
+                            'price_discount']));
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - (data['price'] - data[
+                            'price_discount']));
                     })
                     .fail(function() {
                         alert('Fail')

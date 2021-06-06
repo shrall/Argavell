@@ -16,6 +16,7 @@ class CreateCartsTable extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->integer('qty');
+            $table->string('size');
             $table->integer('price');
             $table->integer('price_discount')->nullable();
             $table->foreignId('product_id')->constrained();

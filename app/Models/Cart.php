@@ -10,15 +10,18 @@ class Cart extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id', 'user_id',
-        'qty', 'price', 'price_discount'
+        'product_id', 'user_id', 'transaction_id',
+        'qty', 'size',
+        'price', 'price_discount'
     ];
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

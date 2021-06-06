@@ -16,6 +16,7 @@ class CartSeeder extends Seeder
     {
         $cart = new Cart();
         $cart->qty = 3;
+        $cart->size = "30ml";
         $cart->price = 390000;
         $cart->price_discount = 90000;
         $cart->product_id = 1;
@@ -25,6 +26,7 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 2;
+        $cart->size = "300ml";
         $cart->price = 260000;
         $cart->product_id = 2;
         $cart->user_id = 1;
@@ -33,6 +35,7 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 1;
+        $cart->size = "300ml";
         $cart->price = 130000;
         $cart->product_id = 2;
         $cart->user_id = 1;
@@ -41,6 +44,7 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 1;
+        $cart->size = "300ml";
         $cart->price = 130000;
         $cart->product_id = 4;
         $cart->user_id = 1;
@@ -49,6 +53,7 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 1;
+        $cart->size = "300ml";
         $cart->price = 130000;
         $cart->product_id = 4;
         $cart->user_id = 1;
@@ -57,6 +62,7 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 1;
+        $cart->size = "300ml";
         $cart->price = 130000;
         $cart->product_id = 4;
         $cart->user_id = 1;
@@ -64,6 +70,16 @@ class CartSeeder extends Seeder
 
         $cart = new Cart();
         $cart->qty = 1;
+        $cart->size = "20ml";
+        $cart->price = 130000;
+        $cart->price_discount = 30000;
+        $cart->product_id = 1;
+        $cart->user_id = 1;
+        $cart->save();
+
+        $cart = new Cart();
+        $cart->qty = 1;
+        $cart->size = "30ml";
         $cart->price = 130000;
         $cart->price_discount = 30000;
         $cart->product_id = 1;
