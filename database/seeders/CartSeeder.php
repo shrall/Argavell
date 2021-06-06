@@ -54,5 +54,20 @@ class CartSeeder extends Seeder
         $cart->user_id = 1;
         $cart->transaction_id = 4;
         $cart->save();
+
+        $cart = new Cart();
+        $cart->qty = 1;
+        $cart->price = 130000;
+        $cart->product_id = 4;
+        $cart->user_id = 1;
+        $cart->save();
+
+        $cart = new Cart();
+        $cart->qty = 1;
+        $cart->price = 130000;
+        $cart->price_discount = 30000;
+        $cart->product_id = 1;
+        $cart->user_id = 1;
+        $cart->save();
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AddressController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\FaqController;
 use App\Http\Controllers\User\PolicyController;
 use App\Http\Controllers\User\ProofController;
@@ -42,7 +43,6 @@ Route::get('/authorized-reseller', [ResellerController::class, 'index'])->name('
 Route::get('/faqs', [FaqController::class, 'index'])->name('page.faq');
 Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('page.paymentconfirmation');
 
-Route::get('/product-detail', [PageController::class, 'productdetail'])->name('page.productdetail');
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
@@ -58,6 +58,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::resource('proof', ProofController::class);
     Route::resource('address', AddressController::class);
     Route::resource('transaction', TransactionController::class);
+    Route::resource('cart', CartController::class);
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
 });
