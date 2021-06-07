@@ -15,8 +15,10 @@
             @endif
             @if ($product->price_discount != null)
                 <p class="my-0 text-danger">SALE!</p>
-                <h2 class="font-proxima-nova mb-4"><del class="text-secondary">IDR {{ $product->price }}</del><span
-                        class="text-danger ms-2">IDR {{ $product->price - $product->price_discount }}</span></h2>
+                <h2 class="font-proxima-nova mb-4">
+                    <del class="text-secondary">IDR {{ $product->price }}</del>
+                    <span class="text-danger ms-2">IDR {{ $product->price - $product->price_discount }}</span>
+                </h2>
             @else
                 @if ($product->type == '0')
                     <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ $product->price }}</h2>
@@ -40,57 +42,72 @@
                     @endif
                 @endforeach
             </ul>
-            <div class="row mb-3">
-                <div class="col-8">
-                    <p class="font-proxima-nova font-weight-bold">Size</p>
-                    @if ($product->type == '0')
-                        <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
-                            name="size">
-                            @foreach ($product->size as $size)
-                                <option value="{{ $size }}">{{ $size }} ml</option>
-                            @endforeach
-                        </select>
-                    @else
-                        <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size" name="size">
-                            @foreach ($product->size as $size)
-                                <option value="{{ $size }}">{{ $size }} ml</option>
-                            @endforeach
-                        </select>
-                    @endif
-                </div>
-                <div class="col-4">
-                    <p class="font-proxima-nova font-weight-bold">Quantity</p>
-                    <div class="d-flex align-items-center fs-2">
+            <form action="{{ route('user.cart.store') }}" method="post" id="form-product">
+                @csrf
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <p class="font-proxima-nova font-weight-bold">Size</p>
                         @if ($product->type == '0')
-                            <span class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                onclick="subtractQuantity()"></span>
-                            <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4" id="quantity-counter">0
-                            </div>
-                            <span class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                onclick="addQuantity()"></span>
+                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
+                                name="size">
+                                @foreach ($product->size as $size)
+                                    <option value="{{ $size }}">{{ $size }} ml</option>
+                                @endforeach
+                            </select>
                         @else
-                            <span class="col-4 far fa-fw fa-minus-square text-kleanse cursor-pointer ps-0 quantity-button"
-                                id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                onclick="subtractQuantity()"></span>
-                            <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4" id="quantity-counter">0
-                            </div>
-                            <span class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
-                                id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                onclick="addQuantity()"></span>
+                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
+                                name="size">
+                                @foreach ($product->size as $size)
+                                    <option value="{{ $size }}">{{ $size }} ml</option>
+                                @endforeach
+                            </select>
                         @endif
-                        <input type="hidden" name="quantity" id="quantity" value=0>
+                    </div>
+                    <div class="col-4">
+                        <p class="font-proxima-nova font-weight-bold">Quantity</p>
+                        <div class="d-flex align-items-center fs-2">
+                            @if ($product->type == '0')
+                                <span
+                                    class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                    id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                    onclick="subtractProductQuantity()"></span>
+                                <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
+                                    id="quantity-counter">1
+                                </div>
+                                <span
+                                    class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
+                                    id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                    onclick="addProductQuantity()"></span>
+                            @else
+                                <span
+                                    class="col-4 far fa-fw fa-minus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                    id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                    onclick="subtractProductQuantity()"></span>
+                                <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
+                                    id="quantity-counter">1
+                                </div>
+                                <span
+                                    class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                    id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                    onclick="addProductQuantity()"></span>
+                            @endif
+                            <input type="hidden" name="quantity" id="quantity" value=1>
+                            <input type="hidden" name="id" id="id" value={{ $product->id }}>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="my-3">
-                @if ($product->type == '0')
-                    <div class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer">Add to Cart</div>
-                @else
-                    <div class="btn-kleanse text-center w-100 my-2 py-2 cursor-pointer">Add to Cart</div>
-                @endif
-            </div>
+                <div class="my-3">
+                    @if ($product->type == '0')
+                        <button type="submit" class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');">Add
+                            to Cart</button>
+                    @else
+                        <button type="submit" class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');">Add
+                            to Cart</button>
+                    @endif
+                </div>
+            </form>
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -148,6 +165,7 @@
             </div>
         </div>
     </div>
+
     <div class="row w-100 p-0 m-0 mb-5">
         @if ($product->type == '0')
             <img src="{{ asset('images/argan-product-details.jpg') }}" class="w-100 p-0">
@@ -253,6 +271,45 @@
                 tabTrigger.show()
             })
         })
+
+    </script>
+
+    <script>
+        function addProductQuantity() {
+            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
+            $('#quantity').get(0).value++
+        }
+
+        function subtractProductQuantity() {
+            if (parseInt($('#quantity-counter').html()) > 0) {
+                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
+                $('#quantity').get(0).value--
+            }
+        }
+
+    </script>
+    <script>
+        function addToCart(id, url) {
+            console.log(id);
+            console.log($('#size').val());
+            console.log($('#quantity').val());
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.post(url + "/cart", {
+                    _token: CSRF_TOKEN,
+                    id: id,
+                    size: $('#size').val(),
+                    quantity: $('#quantity').val(),
+                })
+                .done(function(data) {
+                    console.log("cart added");
+                })
+                .fail(function() {
+                    console.log("fail");
+                })
+                .always(function() {
+                    console.log("always");
+                });
+        }
 
     </script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,7 +38,17 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::find($request->id);
+        $cart = Cart::create([
+            'qty' => $request->quantity,
+            'size' => $request->size . "ml",
+            'price' => $product['price'],
+            'price_discount' => $product['price_discount'],
+            'product_id' => $request->id,
+            'user_id' => Auth::id(),
+            'transaction_id' => null
+        ]);
+        return response()->json($cart);
     }
 
     /**
