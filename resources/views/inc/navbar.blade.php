@@ -169,54 +169,10 @@
                 <div class="modal-body pt-0 pe-0 position-relative" id="cart-body" style="overflow-x: hidden">
                     <div id="cart-loader" class="d-flex d-none justify-content-center">
                         <div class="position-fixed h-100" style="background-color: #fff; opacity: 70%; width: 30vw"></div>
-                        <img src="{{ asset('cart-loading.svg') }}"
-                            class="position-fixed top-50 translate-middle-y" style="z-index: 100" />
+                        <img src="{{ asset('cart-loading.svg') }}" class="position-fixed top-50 translate-middle-y"
+                            style="z-index: 100" />
                     </div>
-                    @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
-                        <div class="row align-items-stretch py-2" id="cart-row{{ $item->id }}">
-                            <div class="col-md-4">
-                                <img src="{{ asset('products/' . $item->product->img) }}" width="100px"
-                                    class="rounded-3">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-10 pe-0">
-                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
-                                            <span class="ms-1 text-secondary">({{ $item->size }})</span>
-                                        </p>
-                                        @if ($item->price_discount != null)
-                                            <p class="font-proxima-nova"><del class="text-secondary">IDR
-                                                    {{ $item->product->price }}</del>
-                                                <span class="text-danger ms-2">IDR
-                                                    {{ $item->product->price - $item->product->price_discount }}</span>
-                                            </p>
-                                        @else
-                                            <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
-                                        @endif
-                                    </div>
-                                    <div class="col-1">
-                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"
-                                            onclick="deleteItem({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-end fs-2">
-                                    <span
-                                        class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                        id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="subtractQuantity({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
-                                        id="quantity-counter{{ $item->id }}">{{ $item->qty }}
-                                    </div>
-                                    <span
-                                        class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                        id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="addQuantity({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    <input type="hidden" name="quantity{{ $item->id }}"
-                                        id="quantity{{ $item->id }}" value={{ $item->qty }}>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    @each('inc.cart.product', Auth::user()->carts->where('transaction_id', null), 'item')
                 </div>
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
@@ -262,51 +218,7 @@
                         <img src="{{ asset('cart-loading.svg') }}"
                             class="position-fixed top-50 start-50 translate-middle" style="z-index: 100" />
                     </div>
-                    @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
-                        <div class="row align-items-stretch py-2" id="cart-mobile-row{{ $item->id }}">
-                            <div class="col-4">
-                                <img src="{{ asset('products/' . $item->product->img) }}" width="100px"
-                                    class="rounded-3">
-                            </div>
-                            <div class="col-8">
-                                <div class="row">
-                                    <div class="col-md-10 pe-0">
-                                        <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
-                                            <span class="ms-1 text-secondary">({{ $item->size }})</span>
-                                        </p>
-                                        @if ($item->price_discount != null)
-                                            <p class="font-proxima-nova"><del class="text-secondary">IDR
-                                                    {{ $item->product->price }}</del>
-                                                <span class="text-danger ms-2">IDR
-                                                    {{ $item->product->price - $item->product->price_discount }}</span>
-                                            </p>
-                                        @else
-                                            <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
-                                        @endif
-                                    </div>
-                                    <div class="col-1">
-                                        <span class="fa fa-fw fa-trash-alt text-secondary cursor-pointer"
-                                            onclick="deleteItem({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-end fs-2">
-                                    <span
-                                        class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                        id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="subtractQuantityMobile({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-5"
-                                        id="quantity-counter-mobile{{ $item->id }}">{{ $item->qty }}
-                                    </div>
-                                    <span
-                                        class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                        id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                        onclick="addQuantityMobile({{ $item->id }}, '{{ config('app.url') }}')"></span>
-                                    <input type="hidden" name="quantity{{ $item->id }}"
-                                        id="quantity-mobile{{ $item->id }}" value={{ $item->qty }}>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    @each('inc.cart.product', Auth::user()->carts->where('transaction_id', null), 'item')
                 </div>
                 <div class="modal-footer ">
                     <div class="col-12 px-3 font-proxima-nova">
@@ -354,9 +266,8 @@
                     id: id
                 })
                 .done(function(data) {
-                    $('#cart-row' + id).addClass('d-none');
-                    $('#cart-mobile-row' + id).addClass('d-none');
-                    $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - data['qty']);
+                    $('.cart-row' + id).addClass('d-sm-none');
+                    $('.cart-mobile-row' + id).addClass('d-none');
                     $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - data['qty']);
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
@@ -393,7 +304,7 @@
                     id: id
                 })
                 .done(function(data) {
-                    $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) + 1);
+                    $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
                     $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
@@ -419,7 +330,7 @@
 
         function subtractQuantity(id, url) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            if (parseInt($('#quantity-counter' + id).html()) > 0) {
+            if (parseInt($('.quantity-counter' + id).html()) > 0) {
                 $('#cart-loader').removeClass('d-none');
                 $('#cart-mobile-loader').removeClass('d-none');
                 $.post(url + "/cart/subtractitem", {
@@ -427,7 +338,7 @@
                         id: id
                     })
                     .done(function(data) {
-                        $('#quantity-counter' + id).html(parseInt($('#quantity-counter' + id).html()) - 1);
+                        $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) - 1);
                         $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
@@ -462,7 +373,7 @@
                     id: id
                 })
                 .done(function(data) {
-                    $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) + 1);
+                    $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) + 1);
                     $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
@@ -488,7 +399,7 @@
 
         function subtractQuantityMobile(id, url) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            if (parseInt($('#quantity-counter-mobile' + id).html()) > 0) {
+            if (parseInt($('.quantity-counter-mobile' + id).html()) > 0) {
                 $('#cart-loader').removeClass('d-none');
                 $('#cart-mobile-loader').removeClass('d-none');
                 $.post(url + "/cart/subtractitem", {
@@ -496,7 +407,7 @@
                         id: id
                     })
                     .done(function(data) {
-                        $('#quantity-counter-mobile' + id).html(parseInt($('#quantity-counter-mobile' + id).html()) -
+                        $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) -
                             1);
                         $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);

@@ -48,7 +48,8 @@ class CartController extends Controller
             'user_id' => Auth::id(),
             'transaction_id' => null
         ]);
-        return response()->json($cart);
+        $item = $cart;
+        return view('inc.cart.product', compact('item'));
     }
 
     /**

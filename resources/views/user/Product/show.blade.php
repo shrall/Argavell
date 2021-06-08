@@ -93,17 +93,33 @@
                             @endif
                             <input type="hidden" name="quantity" id="quantity" value=1>
                             <input type="hidden" name="id" id="id" value={{ $product->id }}>
+                            <input type="hidden" name="price" id="price" value={{ $product->price }}>
+                            <input type="hidden" name="price_discount" id="price_discount" value={{ $product->price_discount }}>
                         </div>
                     </div>
                 </div>
                 <div class="my-3">
                     @if ($product->type == '0')
-                        <button type="submit" class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');">Add
+                        <button type="submit"
+                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
+                            to Cart</button>
+                        <button type="submit"
+                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
                             to Cart</button>
                     @else
-                        <button type="submit" class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');">Add
+                        <button type="submit"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
+                            to Cart</button>
+                        <button type="submit"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
+                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
                             to Cart</button>
                     @endif
                 </div>
@@ -290,18 +306,32 @@
     </script>
     <script>
         function addToCart(id, url) {
-            console.log(id);
-            console.log($('#size').val());
-            console.log($('#quantity').val());
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $('#cart-loader').removeClass('d-none');
+            $('#cart-mobile-loader').removeClass('d-none');
             $.post(url + "/cart", {
                     _token: CSRF_TOKEN,
                     id: id,
                     size: $('#size').val(),
-                    quantity: $('#quantity').val(),
+                    quantity: parseInt($('#quantity').val()),
                 })
                 .done(function(data) {
+                    console.log(data)
                     console.log("cart added");
+                    $('#cart-body').append(data);
+                    $('#cart-mobile-body').append(data);
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
+                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity').val()));
+                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($('#quantity').val()));
+                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity').val()));
+                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($('#quantity').val()));
+                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) * parseInt($('#quantity').val())));
+                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val())));
+                    $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) * parseInt($('#quantity').val())) - (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val()))));
+                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($('#price').val()) * parseInt($('#quantity').val())));
+                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val())));
+                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price').val()) * parseInt($('#quantity').val())) - (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val()))));
                 })
                 .fail(function() {
                     console.log("fail");
