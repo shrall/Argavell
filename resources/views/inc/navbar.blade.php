@@ -166,11 +166,11 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body position-relative">
-                    <div id="cart-loader" class="d-none">
-                        <div class="position-absolute w-100 h-100" style="background-color: #fff; opacity: 70%;"></div>
+                <div class="modal-body pt-0 pe-0 position-relative" id="cart-body" style="overflow-x: hidden">
+                    <div id="cart-loader" class="d-flex d-none justify-content-center">
+                        <div class="position-fixed h-100" style="background-color: #fff; opacity: 70%; width: 30vw"></div>
                         <img src="{{ asset('cart-loading.svg') }}"
-                            class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
+                            class="position-fixed top-50 translate-middle-y" style="z-index: 100" />
                     </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                         <div class="row align-items-stretch py-2" id="cart-row{{ $item->id }}">
@@ -256,11 +256,11 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body position-relative">
-                    <div id="cart-mobile-loader" class="d-none">
-                        <div class="position-absolute w-100 h-100" style="background-color: #fff; opacity: 70%;"></div>
+                <div class="modal-body pt-0 pe-0 position-relative" id="cart-mobile-body" style="overflow-x: hidden">
+                    <div id="cart-mobile-loader" class="d-flex d-none justify-content-center">
+                        <div class="position-fixed start-0 h-100 w-100" style="background-color: #fff; opacity: 70%;"></div>
                         <img src="{{ asset('cart-loading.svg') }}"
-                            class="position-absolute top-50 start-50 translate-middle" style="z-index: 100" />
+                            class="position-fixed top-50 start-50 translate-middle" style="z-index: 100" />
                     </div>
                     @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                         <div class="row align-items-stretch py-2" id="cart-mobile-row{{ $item->id }}">
