@@ -22,7 +22,7 @@
                         <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                     @endif
                     <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                        <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Check Details</div>
+                        <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
                     </a>
                 </div>
             </div>

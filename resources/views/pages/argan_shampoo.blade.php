@@ -13,7 +13,7 @@
                 the shampoo will restore the hair’s natural protective layer that will
                 restores shine & volume on your hair.
             </div>
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('product.show', 'argan-shampoo')}}" class="text-decoration-none">
                 <div class="btn-argavell text-center w-25 my-2 py-2 cursor-pointer">Shop Now</div>
             </a>
         </div>
@@ -95,7 +95,7 @@
                 the shampoo will restore the hair’s natural protective layer that will
                 restores shine & volume on your hair.
             </div>
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('product.show', 'argan-shampoo')}}" class="text-decoration-none">
                 <div class="btn-argavell text-center w-25 my-2 py-2 cursor-pointer mx-auto">Shop Now</div>
             </a>
         </div>

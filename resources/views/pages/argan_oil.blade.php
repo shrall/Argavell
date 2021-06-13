@@ -10,7 +10,7 @@
             <div class="pe-4"><strong>Argan oil is extremely rich in Vitamin E</strong> (more than 2x richer than
                 Olive Oil, for about 620mg/l) with loads of antioxidants, linoleic acid
                 (omega-6) that are known for its calming & healing properties on skin.</div>
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('product.show', 'argan-oil')}}" class="text-decoration-none">
                 <div class="btn-argavell text-center w-25 my-2 py-2 cursor-pointer">Shop Now</div>
             </a>
         </div>
@@ -92,7 +92,7 @@
             <div class="px-4"><strong>Argan oil is extremely rich in Vitamin E</strong> (more than 2x richer than
                 Olive Oil, for about 620mg/l) with loads of antioxidants, linoleic acid
                 (omega-6) that are known for its calming & healing properties on skin.</div>
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('product.show', 'argan-oil')}}" class="text-decoration-none">
                 <div class="btn-argavell text-center w-25 my-2 py-2 cursor-pointer mx-auto">Shop Now</div>
             </a>
         </div>

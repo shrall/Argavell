@@ -33,7 +33,7 @@
 
 <body>
     <div id="app" class="overflow-hidden font-proxima-nova">
-        @if (Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
+        @if (Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
             @include('inc.navbar')
         @endif
 
@@ -46,7 +46,7 @@
                 @yield('content')
             </main>
         @endif
-        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset')
+        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
             @include('inc.footer')
         @endif
     </div>
@@ -62,6 +62,7 @@
         });
 
     </script>
+    @yield('scripts')
 </body>
 
 </html>

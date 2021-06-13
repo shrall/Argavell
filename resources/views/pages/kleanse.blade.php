@@ -48,8 +48,9 @@
                                 <div class="font-gotham">IDR {{ $product->price }}</div>
                             @endif
                         </div>
-                        <a href="{{ route('product.show', $product->slug) }}">
-                            <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                        <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                            <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See Product
+                            </div>
                         </a>
                     </div>
                 @endif
@@ -150,8 +151,9 @@
                             @else
                                 <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                             @endif
-                            <a href="{{ route('product.show', $product->slug) }}">
-                                <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Check Details</div>
+                            <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See
+                                    Product</div>
                             </a>
                         </div>
                     </div>

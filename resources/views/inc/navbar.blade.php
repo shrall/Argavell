@@ -56,13 +56,15 @@
                             <span class="fa fa-fw fa-user me-2"></span>My Account
                         </a>
                     </li>
-                    <li class="nav-item mx-4">
-                        <a href="#"
-                            class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer"
-                            data-bs-toggle="modal" data-bs-target="#cartModal">
-                            <span class="fa fa-fw fa-shopping-cart"></span>
-                        </a>
-                    </li>
+                    @if (Route::current()->getName() != 'user.cart.index')
+                        <li class="nav-item mx-4">
+                            <a href="#"
+                                class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer"
+                                data-bs-toggle="modal" data-bs-target="#cartModal">
+                                <span class="fa fa-fw fa-shopping-cart"></span>
+                            </a>
+                        </li>
+                    @endif
                 @endguest
             </ul>
         </div>
@@ -126,10 +128,11 @@
                     class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer mx-1">
                     <span class="text-argavell fa fa-fw fa-user fs-2"></span>
                 </a>
-                <span class="text-argavell fa fa-fw fa-shopping-cart fs-2" data-bs-toggle="modal"
-                    data-bs-target="#cartModalMobile"></span>
+                @if (Route::current()->getName() != 'user.cart.index')
+                    <span class="text-argavell fa fa-fw fa-shopping-cart fs-2" data-bs-toggle="modal"
+                        data-bs-target="#cartModalMobile"></span>
+                @endif
             @endguest
-
         </div>
         <div class="collapse navbar-collapse" id="navbarSupportedContentMobile">
             <!-- Left Side Of Navbar -->
@@ -193,8 +196,9 @@
                             <div>IDR <span id="cart-total">{{ $subtotal - $discount }}</span></div>
                         </div>
                     </div>
-                    <button type="submit"
-                        class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout</button>
+                    <a href="{{ route('user.cart.index') }}"
+                        class="text-decoration-none btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout
+                    </a>
                 </div>
             </div>
         </div>
@@ -239,8 +243,9 @@
                             <div>IDR <span id="cart-mobile-total">{{ $subtotal - $discount }}</span></div>
                         </div>
                     </div>
-                    <button type="submit"
-                        class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout</button>
+                    <a href="{{ route('user.cart.index') }}"
+                        class="text-decoration-none btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout
+                    </a>
                 </div>
             </div>
         </div>

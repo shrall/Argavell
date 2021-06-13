@@ -13,7 +13,7 @@
                     <tr>
                         <th width="40%">Product</th>
                         <th>Price</th>
-                        <th>Inovice</th>
+                        <th>Invoice</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -52,8 +52,16 @@
                                 @elseif($transaction->status == '3')
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
                                 @endif
-                                <p class="btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy again
-                                </p>
+                                @if ($transaction->status == '0')
+                                    <a href="{{ route('page.paymentconfirmation') }}"
+                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Confirm
+                                        Payment
+                                    </a>
+                                @else
+                                    <p class="btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy
+                                        again
+                                    </p>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -151,8 +159,10 @@
                             </div>
                             <div class="col-7 p-0 m-0">
                                 <p class="my-0 text-argavell">Home</p>
-                                <p class="my-0">{{ $transaction->address->address }}, {{ $transaction->address->city }},
-                                    {{ $transaction->address->province }}, {{ $transaction->address->postal_code }} </p>
+                                <p class="my-0">{{ $transaction->address->address }},
+                                    {{ $transaction->address->city }},
+                                    {{ $transaction->address->province }}, {{ $transaction->address->postal_code }}
+                                </p>
                             </div>
                             <div class="col-5 p-0 m-0"></div>
                         </div>

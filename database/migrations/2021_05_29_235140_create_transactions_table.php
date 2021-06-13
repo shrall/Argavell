@@ -24,6 +24,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('shipping_cost');
             $table->integer('price_total');
             $table->integer('qty_total');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

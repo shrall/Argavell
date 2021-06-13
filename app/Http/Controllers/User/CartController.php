@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class CartController extends Controller
 {
@@ -17,7 +20,37 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $addresses = Address::where('user_id', Auth::id())->get();
+
+        $cities = Http::withHeaders([
+            'key' => config('services.rajaongkir.token'),
+        ])->get('https://api.rajaongkir.com/starter/city')
+            ->json()['rajaongkir']['results'];
+
+        $provinces = Http::withHeaders([
+            'key' => config('services.rajaongkir.token'),
+        ])->get('https://api.rajaongkir.com/starter/province')
+            ->json()['rajaongkir']['results'];
+
+        $payments = Payment::all();
+
+        $useraddress = null;
+        foreach($cities as $city){
+            if($city['city_name'] == Auth::user()->address->city){
+                $useraddress = $city['city_id'];
+            }
+        }
+
+        $shipments = Http::withHeaders([
+            'key' => config('services.rajaongkir.token'),
+        ])->post('https://api.rajaongkir.com/starter/cost', [
+            'origin' => $useraddress,
+            'destination' => $useraddress,
+            'weight' => 1000,
+            'courier' => 'jne',
+        ])->json()['rajaongkir']['results'][0];
+
+        return view('user.Checkout.index', compact('addresses', 'cities', 'provinces', 'payments', 'shipments'));
     }
 
     /**

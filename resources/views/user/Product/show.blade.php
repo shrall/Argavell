@@ -11,7 +11,7 @@
             @if ($product->type == '0')
                 <h1 class="text-argavell font-bauer font-weight-bold">{{ $product->name }}</h1>
             @else
-                <h1 class="text-kleanse font-bauer font-weight-bold">{{ $product->name }}</h1>
+                <h1 class="text-kleanse font-gotham font-weight-bold">{{ $product->name }}</h1>
             @endif
             @if ($product->price_discount != null)
                 <p class="my-0 text-danger">SALE!</p>
@@ -94,7 +94,8 @@
                             <input type="hidden" name="quantity" id="quantity" value=1>
                             <input type="hidden" name="id" id="id" value={{ $product->id }}>
                             <input type="hidden" name="price" id="price" value={{ $product->price }}>
-                            <input type="hidden" name="price_discount" id="price_discount" value={{ $product->price_discount }}>
+                            <input type="hidden" name="price_discount" id="price_discount"
+                                value={{ $product->price_discount }}>
                         </div>
                     </div>
                 </div>
@@ -195,7 +196,7 @@
         @if ($product->type == '0')
             <h1 class="text-argavell font-bauer font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
         @else
-            <h1 class="text-kleanse font-bauer font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
+            <h1 class="text-kleanse font-gotham font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
         @endif
         <span class="mb-5 text-center text-secondary">Buy the bundle with special price</span>
         <div class="row gap-3 justify-content-md-center">
@@ -222,9 +223,13 @@
                             @endif
                         </div>
                         @if ($producty->type == '0')
-                            <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                            <a href="{{ route('product.show', $producty->slug) }}" class="text-decoration-none">
+                                <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
+                            </a>
                         @else
-                            <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                            <a href="{{ route('product.show', $producty->slug) }}" class="text-decoration-none">
+                                <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                            </a>
                         @endif
                     </div>
                 @endif
@@ -238,7 +243,7 @@
                 of
                 Love</h1>
         @else
-            <h1 class="col-8 mx-auto text-kleanse font-bauer font-weight-bold text-center text-4xl">Let's Take Our Bundle of
+            <h1 class="col-8 mx-auto text-kleanse font-gotham font-weight-bold text-center text-4xl">Let's Take Our Bundle of
                 Love</h1>
         @endif
         <span class="mb-5 text-center text-secondary">Buy the bundle with special price</span>
@@ -267,9 +272,13 @@
                                 <div class="font-gotham mb-3">IDR {{ $producty->price }}</div>
                             @endif
                             @if ($product->type == '0')
-                                <div class="btn-argavell text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
                             @else
-                                <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">Add to Cart</div>
+                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                    <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -322,16 +331,29 @@
                     $('#cart-mobile-body').append(data);
                     $('#cart-loader').addClass('d-none');
                     $('#cart-mobile-loader').addClass('d-none');
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity').val()));
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($('#quantity').val()));
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity').val()));
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($('#quantity').val()));
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) * parseInt($('#quantity').val())));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val())));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) * parseInt($('#quantity').val())) - (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val()))));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($('#price').val()) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price').val()) * parseInt($('#quantity').val())) - (parseInt({{$product->price_discount ?: 0}}) * parseInt($('#quantity').val()))));
+                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
+                        .val()));
+                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(
+                        '#quantity').val()));
+                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity')
+                        .val()));
+                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
+                        '#quantity').val()));
+                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) *
+                        parseInt($('#quantity').val())));
+                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt(
+                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
+                    $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) * parseInt(
+                        $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
+                        parseInt(
+                            $('#quantity').val()))));
+                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($('#price')
+                        .val()) * parseInt($('#quantity').val())));
+                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt(
+                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
+                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price')
+                        .val()) * parseInt($('#quantity').val())) - (parseInt(
+                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
                 })
                 .fail(function() {
                     console.log("fail");
