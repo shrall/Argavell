@@ -7,6 +7,8 @@ use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Payment;
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -32,11 +34,11 @@ class CartController extends Controller
         ])->get('https://api.rajaongkir.com/starter/province')
             ->json()['rajaongkir']['results'];
 
-        $payments = Payment::all();
+        $payments = Payment::where('id', '!=' , 1001)->get();
 
         $useraddress = null;
-        foreach($cities as $city){
-            if($city['city_name'] == Auth::user()->address->city){
+        foreach ($cities as $city) {
+            if ($city['city_name'] == Auth::user()->address->city) {
                 $useraddress = $city['city_id'];
             }
         }

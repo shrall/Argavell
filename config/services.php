@@ -32,5 +32,10 @@ return [
 
     'rajaongkir' => [
         'token' => env('RAJAONGKIR_TOKEN'),
+    ],
+
+    'midtrans' => [
+        'clientkey' => env('MIDTRANS_CLIENTKEY'),
+        'serverkey' => env('MIDTRANS_SERVERKEY'),
     ]
 ];

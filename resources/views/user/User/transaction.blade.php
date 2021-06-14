@@ -54,8 +54,7 @@
                                 @endif
                                 @if ($transaction->status == '0')
                                     <a href="{{ route('page.paymentconfirmation') }}"
-                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Confirm
-                                        Payment
+                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay Now
                                     </a>
                                 @else
                                     <p class="btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy

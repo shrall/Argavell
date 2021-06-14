@@ -25,5 +25,12 @@ class PaymentSeeder extends Seeder
         $payment->account_number = 8785485289;
         $payment->howto = ["Mandiri Lorem Ipsum", "Dolor Sit", "Amet"];
         $payment->save();
+
+        $payment = new Payment();
+        $payment->id = 1001;
+        $payment->name = "Payment Online";
+        $payment->account_number = 130000789;
+        $payment->howto = ["BCA Lorem Ipsum", "Dolor Sit", "Amet"];
+        $payment->save();
     }
 }

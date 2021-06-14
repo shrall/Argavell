@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('header')
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
+@endsection
+
 @section('content')
     <?php
     $subtotal = 0;
@@ -57,7 +62,7 @@
                     <div class="col-4">IDR <span class="summary_total"></span></div>
                 </div>
             </div>
-            <form action="{{ route('user.transaction.store') }}" method="post">
+            <form action="{{ route('user.transaction.store') }}" method="post" id="form-checkout">
                 @csrf
                 <div class="bg-white rounded px-3 py-2 my-3">
                     <input type="hidden" name="price_total" id="summary_subtotal" value="{{ $subtotal - $discount }}">
@@ -195,13 +200,22 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" value="1001"
+                                id="payment_radio_1001" data-bs-toggle="collapse" data-bs-target="#collapse1001">
+                            <label class="form-check-label" for="payment_radio_1001">
+                                Online Payment
+                            </label>
+                            <div class="collapse" id="collapse1001" data-bs-parent="#paymentGroup">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white rounded px-3 py-2 my-3">
-                    <button type="submit" class="btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Pay
-                        Now</button>
-                </div>
             </form>
+            <div class="bg-white rounded px-3 py-2 my-3">
+                <button id="pay-button" class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0" @if (count(Auth::user()->carts->where('transaction_id', null)) == 0) disabled @endif>Confirm
+                    Order</button>
+            </div>
         </div>
         {{-- order summary desktop --}}
         <div class="col-md-3 d-none d-sm-block">
@@ -265,6 +279,60 @@
 
         $('input[type=radio][name=shipping_method]').on('change', function() {
             refreshSummary();
+        });
+
+        function newTransactionOnline(token, status) {
+            $.post('{{ config('app.url') }}' + "/transaction/online/store", {
+                    _token: token,
+                    data: $("#form-checkout").serializeArray(),
+                    status: status
+                })
+                .done(function(data) {
+                    console.log(data);
+                    window.location.href = '{{ config('app.url') }}' + "/transaction"
+                })
+                .fail(function() {
+                    console.log("fail");
+                })
+                .always(function() {
+                    console.log("always");
+                });
+        }
+
+        $('#pay-button').click(function() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            var price = parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
+                    .html()) +
+                parseInt($('#summary_subtotal').val());
+            if ($('#payment_radio_1001').is(':checked')) {
+                $.post('{{ config('app.url') }}' + "/transaction/getsnap", {
+                        _token: CSRF_TOKEN,
+                        price: price
+                    })
+                    .done(function(data) {
+                        window.snap.pay(data, {
+                            onSuccess: function(result) {
+                                newTransactionOnline(CSRF_TOKEN, '1');
+                            },
+                            onPending: function(result) {
+                                newTransactionOnline(CSRF_TOKEN, '0');
+                            },
+                            onError: function(result) {
+                                /* You may add your own implementation here */
+                                alert("payment failed!");
+                                console.log(result);
+                            }
+                        })
+                    })
+                    .fail(function() {
+                        console.log("fail");
+                    })
+                    .always(function() {
+                        console.log("always");
+                    });
+            } else {
+                document.getElementById('form-checkout').submit();
+            }
         });
 
     </script>

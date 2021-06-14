@@ -63,4 +63,8 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
     Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
     Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
+    Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
+    Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
 });
+
+Route::post('transaction/online/check', [TransactionController::class, 'check'])->name('transaction.check');
