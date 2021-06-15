@@ -220,7 +220,8 @@ class TransactionController extends Controller
             'payment_id' => $request->data[6]['value'],
             'address_id' => Auth::user()->address_id,
             'user_id' => Auth::id(),
-            'notes' => $request->data[4]['value']
+            'notes' => $request->data[4]['value'],
+            'snaptoken' => $request->snaptoken
         ]);
         $carts = Cart::where('transaction_id', null)->get();
         foreach ($carts as $cart) {

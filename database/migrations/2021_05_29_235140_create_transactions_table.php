@@ -25,6 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('price_total');
             $table->integer('qty_total');
             $table->string('notes')->nullable();
+            $table->string('snaptoken')->nullable();
             $table->timestamps();
         });
     }

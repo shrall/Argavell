@@ -11,7 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'status', 'order_number', 'date',
-        'shipment_name', 'shipping_cost', 'price_total', 'qty_total', 'notes',
+        'shipment_name', 'shipping_cost', 'price_total', 'qty_total', 'notes', 'snaptoken',
         'user_id','payment_id', 'address_id'
     ];
 

@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('header')
+    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
+@endsection
+
 @section('content')
     @include('user.User.inc.header')
     <div class="row w-100 m-0 p-0 mb-5">
@@ -53,9 +58,17 @@
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
                                 @endif
                                 @if ($transaction->status == '0')
-                                    <a href="{{ route('page.paymentconfirmation') }}"
-                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay Now
-                                    </a>
+                                    @if ($transaction->payment_id != 1001)
+                                        <a href="{{ route('page.paymentconfirmation') }}"
+                                            class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
+                                            Now
+                                        </a>
+                                    @else
+                                        <a onclick="event.preventDefault(); opensnap('{{$transaction->snaptoken}}')"
+                                            class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
+                                            Now
+                                        </a>
+                                    @endif
                                 @else
                                     <p class="btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy
                                         again
@@ -170,4 +183,24 @@
             </div>
         </div>
     @endforeach
+@endsection
+
+@section('scripts')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        function opensnap(snaptoken) {
+            window.snap.pay(snaptoken, {
+                onSuccess: function(result) {
+                    console.log(result);
+                },
+                onPending: function(result) {
+                    console.log(result);
+                },
+                onError: function(result) {
+                    console.log(result);
+                }
+            })
+        }
+
+    </script>
 @endsection

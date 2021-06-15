@@ -281,11 +281,12 @@
             refreshSummary();
         });
 
-        function newTransactionOnline(token, status) {
+        function newTransactionOnline(token, status, snaptoken) {
             $.post('{{ config('app.url') }}' + "/transaction/online/store", {
                     _token: token,
                     data: $("#form-checkout").serializeArray(),
-                    status: status
+                    status: status,
+                    snaptoken : snaptoken
                 })
                 .done(function(data) {
                     console.log(data);
@@ -312,10 +313,10 @@
                     .done(function(data) {
                         window.snap.pay(data, {
                             onSuccess: function(result) {
-                                newTransactionOnline(CSRF_TOKEN, '1');
+                                newTransactionOnline(CSRF_TOKEN, '1', data);
                             },
                             onPending: function(result) {
-                                newTransactionOnline(CSRF_TOKEN, '0');
+                                newTransactionOnline(CSRF_TOKEN, '0', data);
                             },
                             onError: function(result) {
                                 /* You may add your own implementation here */
@@ -334,6 +335,5 @@
                 document.getElementById('form-checkout').submit();
             }
         });
-
     </script>
 @endsection
