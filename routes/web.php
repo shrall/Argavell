@@ -65,6 +65,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
     Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
     Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
+    Route::post('transaction/buyagain', [TransactionController::class, 'buy_again'])->name('transaction.buyagain');
 });
 
 Route::post('transaction/online/check', [TransactionController::class, 'check'])->name('transaction.check');

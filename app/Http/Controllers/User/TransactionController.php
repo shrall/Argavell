@@ -230,4 +230,23 @@ class TransactionController extends Controller
             ]);
         }
     }
+    public function buy_again(Request $request)
+    {
+
+        $transaction = Transaction::find($request->id);
+
+        foreach ($transaction->carts as $item) {
+            Cart::create([
+                'qty' => $item->qty,
+                'size' => $item->size,
+                'price' => $item->product->price,
+                'price_discount' => $item->product->price_discount,
+                'product_id' => $item->product_id,
+                'user_id' => Auth::id(),
+                'transaction_id' => null
+            ]);
+        }
+
+        return redirect()->route('user.cart.index');
+    }
 }

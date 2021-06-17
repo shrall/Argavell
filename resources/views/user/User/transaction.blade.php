@@ -64,15 +64,20 @@
                                             Now
                                         </a>
                                     @else
-                                        <a onclick="event.preventDefault(); opensnap('{{$transaction->snaptoken}}')"
+                                        <a onclick="event.preventDefault(); opensnap('{{ $transaction->snaptoken }}')"
                                             class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
                                             Now
                                         </a>
                                     @endif
                                 @else
-                                    <p class="btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy
-                                        again
-                                    </p>
+                                    <form action="{{ route('user.transaction.buyagain') }}" method="post" id="buy-again-{{$transaction->id}}">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$transaction->id}}">
+                                        <button type="submit"
+                                            class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy
+                                            again
+                                        </button>
+                                    </form>
                                 @endif
                             </td>
                         </tr>
@@ -188,6 +193,7 @@
 @section('scripts')
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
         function opensnap(snaptoken) {
             window.snap.pay(snaptoken, {
                 onSuccess: function(result) {
