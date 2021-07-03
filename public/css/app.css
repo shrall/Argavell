@@ -51,6 +51,10 @@
     font-weight: 800 !important;
 }
 
+.font-weight-black {
+    font-weight: 900 !important;
+}
+
 /* text settings */
 .text-argavell {
     color: #8a5b32;
@@ -81,6 +85,24 @@
 }
 .text-whatsapp:hover {
     color: #4fce5d;
+}
+.text-red {
+    color: #af6f80;
+}
+.text-red:hover {
+    color: #af6f80;
+}
+.text-blue {
+    color: #6f74af;
+}
+.text-blue:hover {
+    color: #6f74af;
+}
+.text-yellow {
+    color: #af9e6f;
+}
+.text-yellow:hover {
+    color: #af9e6f;
 }
 
 .text-decoration-none {
@@ -132,6 +154,20 @@
     background-color: #4ac8e2;
     color: #fff;
     border-radius: 50px;
+}
+
+.btn-admin-argavell {
+    background-color: #8a5b32;
+    color: #fff;
+}
+
+.btn-admin-argavell-light {
+    background-color: #bb9164;
+    color: #fff;
+}
+
+.btn-panel {
+    cursor: context-menu !important;
 }
 
 /* border settings */
@@ -263,4 +299,17 @@
 .form-check-input:checked {
     background-color: #8a5b32 !important;
     border-color: #8a5b32 !important;
+}
+
+/* admin page  */
+#admin-sidebar li a {
+    color: grey !important;
+}
+#admin-sidebar li.active {
+    border-right: 4px solid #8a5b32 !important;
+    border-radius: 3px;
+    padding-right: 2rem;
+}
+#admin-sidebar li.active a {
+    color: #8a5b32 !important;
 }

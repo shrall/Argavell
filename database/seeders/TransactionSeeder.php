@@ -65,5 +65,18 @@ class TransactionSeeder extends Seeder
         $transaction->user_id = 1;
         $transaction->address_id = 1;
         $transaction->save();
+
+        $transaction = new Transaction();
+        $transaction->status = '4';
+        $transaction->order_number = 'INV20210606-1005';
+        $transaction->date = '2021-06-06';
+        $transaction->shipment_name = 'SiCepat';
+        $transaction->shipping_cost = 11000;
+        $transaction->price_total = 130000;
+        $transaction->qty_total = 1;
+        $transaction->payment_id = 1;
+        $transaction->user_id = 1;
+        $transaction->address_id = 1;
+        $transaction->save();
     }
 }

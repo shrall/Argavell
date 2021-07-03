@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Shipment;
+use App\Http\Controllers\Controller;
+use App\Models\Address;
 use Illuminate\Http\Request;
 
-class ShipmentController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +42,10 @@ class ShipmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Shipment  $shipment
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function show(Shipment $shipment)
+    public function show(Address $address)
     {
         //
     }
@@ -52,10 +53,10 @@ class ShipmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Shipment  $shipment
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function edit(Shipment $shipment)
+    public function edit(Address $address)
     {
         //
     }
@@ -64,10 +65,10 @@ class ShipmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Shipment  $shipment
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shipment $shipment)
+    public function update(Request $request, Address $address)
     {
         //
     }
@@ -75,10 +76,10 @@ class ShipmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Shipment  $shipment
+     * @param  \App\Models\Address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Shipment $shipment)
+    public function destroy(Address $address)
     {
         //
     }

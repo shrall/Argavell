@@ -21,7 +21,7 @@ class User
             if (Auth::user()->isUser()) {
                 return $next($request);
             } else if (Auth::user()->isAdmin()) {
-                echo 'asd';
+                return redirect()->route('admin.page.dashboard');
             } else {
                 return redirect()->route('login');
             }

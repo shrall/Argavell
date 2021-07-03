@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('user.User.index');
+        //
     }
 
     /**
@@ -38,11 +38,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find(Auth::id());
-        $user->update([
-            'address_id' => $request['address'],
-        ]);
-        return redirect()->route('user.address.index')->with('Success', 'Main Address Changed!');
+        //
     }
 
     /**
@@ -76,21 +72,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $data = $request->validate([
-            'first_name' => ['required'],
-            'last_name' => ['required'],
-            'gender' => ['required'],
-            'dob' => ['required'],
-        ]);
-
-        $user->update([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'gender' => $data['gender'],
-            'dob' => $data['dob'],
-        ]);
-
-        return redirect()->route('user.user.index')->with('Success', 'Profile Updated!');
+        //
     }
 
     /**
@@ -107,7 +89,7 @@ class UserController extends Controller
 
     public function changepassword()
     {
-        return view('user.User.change_password');
+        return view('admin.change_password');
     }
 
     public function updatepassword(Request $request)
@@ -121,8 +103,8 @@ class UserController extends Controller
             $user->update([
                 'password' => Hash::make($data['new_password']),
             ]);
-            return redirect()->route('user.changepassword')->with('Success', 'Password Updated!');
+            return redirect()->route('admin.changepassword')->with('Success', 'Password Updated!');
         }
-        return redirect()->route('user.changepassword')->with('Error', 'Wrong Password.');
+        return redirect()->route('admin.changepassword')->with('Error', 'Wrong Password.');
     }
 }

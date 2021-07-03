@@ -15,9 +15,9 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['0','1','2','3'])
+            $table->enum('status', ['0','1','2','3','4'])
             ->default('0')
-            ->comment('0 = Waiting Payment Confirmation, 1 = Shipped, 2 = Canceled, 3 = On Delivery');
+            ->comment('0 = Waiting Payment Confirmation, 1 = Shipped, 2 = Canceled, 3 = On Delivery, 4 = Paid');
             $table->string('order_number')->unique();
             $table->date('date');
             $table->string('shipment_name');

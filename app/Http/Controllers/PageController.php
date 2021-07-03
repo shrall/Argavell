@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Faq;
 use App\Models\Policy;
 use App\Models\Product;
 use App\Models\Reseller;
 use App\Models\Tnc;
+use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -91,5 +94,13 @@ class PageController extends Controller
     public function order()
     {
         return view('pages.order');
+    }
+
+    public function dashboard()
+    {
+        $transactions = Transaction::all();
+        $users = User::all();
+        $carts = Cart::all();
+        return view('admin.dashboard', compact('transactions', 'users', 'carts'));
     }
 }

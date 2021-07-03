@@ -1,5 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\AddressController as AdminAddressController;
+use App\Http\Controllers\Admin\CartController as AdminCartController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\HourController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\PolicyController as AdminPolicyController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\ProofController as AdminProofController;
+use App\Http\Controllers\Admin\RefundController as AdminRefundController;
+use App\Http\Controllers\Admin\ResellerController as AdminResellerController;
+use App\Http\Controllers\Admin\TncController as AdminTncController;
+use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AddressController;
@@ -66,6 +80,25 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
     Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
     Route::post('transaction/buyagain', [TransactionController::class, 'buy_again'])->name('transaction.buyagain');
+});
+
+Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('page.dashboard');
+    Route::resource('address', AdminAddressController::class);
+    Route::resource('cart', AdminCartController::class);
+    Route::resource('contact', ContactController::class);
+    Route::resource('faq', AdminFaqController::class);
+    Route::resource('hour', HourController::class);
+    Route::resource('payment', PaymentController::class);
+    Route::resource('policy', AdminPolicyController::class);
+    Route::resource('product', AdminProductController::class);
+    Route::resource('proof', AdminProofController::class);
+    Route::resource('refund', AdminRefundController::class);
+    Route::resource('reseller', AdminResellerController::class);
+    Route::resource('tnc', AdminTncController::class);
+    Route::resource('transaction', AdminTransactionController::class);
+    Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
+    Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');
 });
 
 Route::post('transaction/online/check', [TransactionController::class, 'check'])->name('transaction.check');
