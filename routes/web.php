@@ -97,6 +97,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('reseller', AdminResellerController::class);
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
+    Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');
 });

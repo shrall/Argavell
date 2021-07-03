@@ -17,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('role', '0')->get();
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -49,7 +50,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('admin.user.show', compact('user'));
     }
 
     /**
@@ -72,7 +73,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->update([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+        ]);
+
+        $user->address->update([
+            'address' => $request['address'],
+            'phone' => $request['phone']
+        ]);
+
+        return redirect()->route('admin.user.show', $user->id);
     }
 
     /**

@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li class="nav-item mb-4">
-                            <a href="#" class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
+                            <a href="{{route('admin.user.index')}}" class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-user mr-2"></span><span class="ms-1 d-none d-sm-inline">Users</span>
                             </a>
                         </li>
