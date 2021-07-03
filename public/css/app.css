@@ -308,7 +308,6 @@
 #admin-sidebar li.active {
     border-right: 4px solid #8a5b32 !important;
     border-radius: 3px;
-    padding-right: 2rem;
 }
 #admin-sidebar li.active a {
     color: #8a5b32 !important;

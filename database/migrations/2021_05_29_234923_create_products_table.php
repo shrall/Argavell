@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->integer('price');
             $table->integer('price_discount')->nullable();
+            $table->integer('stock');
             $table->text('description');
             $table->json('size');
             $table->json('facts');
@@ -31,6 +32,8 @@ class CreateProductsTable extends Migration
             $table->enum('bundle', ['0','1',])
             ->default('0')
             ->comment('0 = No, 1 = Yes');
+            $table->datetime('bundle_start')->nullable();
+            $table->datetime('bundle_end')->nullable();
             $table->timestamps();
         });
     }

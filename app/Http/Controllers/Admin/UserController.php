@@ -79,10 +79,13 @@ class UserController extends Controller
             'email' => $request['email'],
         ]);
 
-        $user->address->update([
-            'address' => $request['address'],
-            'phone' => $request['phone']
-        ]);
+
+        if ($request['address'] != null) {
+            $user->address->update([
+                'address' => $request['address'],
+                'phone' => $request['phone']
+            ]);
+        }
 
         return redirect()->route('admin.user.show', $user->id);
     }

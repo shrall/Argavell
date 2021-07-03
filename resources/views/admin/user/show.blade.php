@@ -26,11 +26,13 @@
                         <div class="row mb-3">
                             <div class="col-6">
                                 <input id="first_name" type="text" class="form-control" name="first_name" required
-                                    autocomplete="first_name" placeholder="Nama Depan" value="{{ $user->first_name }}" required>
+                                    autocomplete="first_name" placeholder="Nama Depan" value="{{ $user->first_name }}"
+                                    required>
                             </div>
                             <div class="col-6">
                                 <input id="last_name" type="text" class="form-control" name="last_name" required
-                                    autocomplete="last_name" placeholder="Nama Belakang" value="{{ $user->last_name }}" required>
+                                    autocomplete="last_name" placeholder="Nama Belakang" value="{{ $user->last_name }}"
+                                    required>
                             </div>
                         </div>
                         <div class="row font-weight-bold">
@@ -44,7 +46,8 @@
                             </div>
                             <div class="col-6">
                                 <input id="phone" type="text" class="form-control" name="phone" required
-                                    autocomplete="phone" placeholder="Nomor Telepon" value="{{ $user->address->phone }}" required>
+                                    autocomplete="phone" placeholder="Nomor Telepon"
+                                    value="{{ $user->address->phone ?? 'Not Set' }}" @if ($user->address == null) disabled @else required @endif>
                             </div>
                         </div>
                         <div class="row font-weight-bold">
@@ -53,8 +56,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <textarea id="address" type="textarea" class="form-control" name="address" required
-                                    autocomplete="address" placeholder="Alamat Pengiriman"
-                                    style="resize: none;" required>{{ $user->address->address }}</textarea>
+                                    autocomplete="address" placeholder="Alamat Pengiriman" style="resize: none;" @if ($user->address == null) disabled @else required @endif>{{ $user->address->address ?? 'Not Set' }}</textarea>
                             </div>
                         </div>
                     </div>
