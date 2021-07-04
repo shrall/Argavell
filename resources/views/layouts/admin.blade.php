@@ -95,11 +95,15 @@
                     </ul>
                     <hr>
                     <div class="dropdown pb-4">
-                        <a href="#"
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"
                             class="text-dark text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                             <span class="fa fa-fw fa-sign-out-alt mr-2"></span><span
                                 class="ms-1 d-none d-sm-inline">Logout</span>
                         </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>
