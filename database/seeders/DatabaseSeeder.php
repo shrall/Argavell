@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             TransactionSeeder::class,
             CartSeeder::class,
+            BundleSeeder::class
         ]);
 
         Model::reguard();

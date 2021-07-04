@@ -37,4 +37,8 @@ class Product extends Model
     {
         return 'slug';
     }
+
+    public function bundles() {
+        return $this->hasMany(Bundle::class, 'bundle_id', 'id');
+    }
 }

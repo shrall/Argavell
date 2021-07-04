@@ -32,7 +32,30 @@
                             @foreach ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $product->name }}</td>
+                                    <td>
+                                        <p class="my-0">{{ $product->name }}</p>
+                                        @if ($product->bundle == '1')
+                                            <p class="my-0 text-secondary">
+                                                @foreach ($product->bundles as $item)
+                                                    @if ($loop->iteration > 1) +
+                                                    @endif {{ $item->product->name }}
+                                                @endforeach
+                                            </p>
+                                            @if (now() >= $product->bundle_start && now() <= $product->bundle_end)
+                                                <p class="btn btn-success btn-panel">
+                                                    Active :
+                                                    {{ date('j F Y', strtotime($product->bundle_start)) }} -
+                                                    {{ date('j F Y', strtotime($product->bundle_end)) }}
+                                                </p>
+                                            @else
+                                                <p class="btn btn-danger btn-panel">
+                                                    Inactive :
+                                                    {{ date('j F Y', strtotime($product->bundle_start)) }} -
+                                                    {{ date('j F Y', strtotime($product->bundle_end)) }}
+                                                </p>
+                                            @endif
+                                        @endif
+                                    </td>
                                     <td>
                                     @if ($product->bundle == '0')Single @else Bundle
                                         @endif
