@@ -200,40 +200,46 @@
         @endif
         <span class="mb-5 text-center text-secondary">Buy the bundle with special price</span>
         <div class="row gap-3 justify-content-md-center">
-            @foreach ($products as $producty)
-                @if ($product->type == $producty->type)
-                    <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
-                        <a href="{{ route('product.show', $producty->slug) }}">
-                            <div class="landing-product position-relative w-100 mb-3"
-                                style="background-image: url({{ asset('products/' . $producty->img) }})">
-                                @if ($producty->price_discount != null)
-                                    <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
-                                    </div>
+            @if ($bundles->count() > 0)
+                @foreach ($bundles as $bundle)
+                    @if ($product->type == $bundle->type)
+                        <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
+                            <a href="{{ route('product.show', $bundle->slug) }}">
+                                <div class="landing-product position-relative w-100 mb-3"
+                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
+                                    @if ($bundle->price_discount != null)
+                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
+                                        </div>
+                                    @endif
+                                </div>
+                            </a>
+                            <div style="height:15%" class="mb-3">
+                                <div class="font-weight-bold font-gotham">{{ $bundle->name }}</div>
+                                @if ($bundle->price_discount != null)
+                                    <div class="font-gotham"><del class="text-secondary">IDR
+                                            {{ $bundle->price }}</del><span class="text-danger font-weight-bold ms-2">IDR
+                                            {{ $bundle->price - $bundle->price_discount }}</span></div>
+                                @else
+                                    <div class="font-gotham">IDR {{ $bundle->price }}</div>
                                 @endif
                             </div>
-                        </a>
-                        <div style="height:15%" class="mb-3">
-                            <div class="font-weight-bold font-gotham">{{ $producty->name }}</div>
-                            @if ($producty->price_discount != null)
-                                <div class="font-gotham"><del class="text-secondary">IDR
-                                        {{ $producty->price }}</del><span class="text-danger font-weight-bold ms-2">IDR
-                                        {{ $producty->price - $producty->price_discount }}</span></div>
+                            @if ($bundle->type == '0')
+                                <a href="{{ route('product.show', $bundle->slug) }}" class="text-decoration-none">
+                                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
                             @else
-                                <div class="font-gotham">IDR {{ $producty->price }}</div>
+                                <a href="{{ route('product.show', $bundle->slug) }}" class="text-decoration-none">
+                                    <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
                             @endif
                         </div>
-                        @if ($producty->type == '0')
-                            <a href="{{ route('product.show', $producty->slug) }}" class="text-decoration-none">
-                                <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
-                            </a>
-                        @else
-                            <a href="{{ route('product.show', $producty->slug) }}" class="text-decoration-none">
-                                <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
-                            </a>
-                        @endif
-                    </div>
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
+            @else
+                <div class="col-10 p-0">
+                    <h5 class="text-secondary mb-0 mt-5">No Bundles Available</h5>
+                </div>
+            @endif
         </div>
     </div>
     {{-- product showcase mobile --}}
@@ -243,47 +249,55 @@
                 of
                 Love</h1>
         @else
-            <h1 class="col-8 mx-auto text-kleanse font-gotham font-weight-bold text-center text-4xl">Let's Take Our Bundle of
+            <h1 class="col-8 mx-auto text-kleanse font-gotham font-weight-bold text-center text-4xl">Let's Take Our Bundle
+                of
                 Love</h1>
         @endif
         <span class="mb-5 text-center text-secondary">Buy the bundle with special price</span>
     </div>
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         <div class="row px-3 gap-3 flex-nowrap text-start">
-            @foreach ($products as $producty)
-                @if ($producty->type == $product->type)
-                    <div class="col-10 p-0">
-                        <a href="{{ route('product.show', $producty->slug) }}">
-                            <div class="landing-product position-relative w-100 mb-3"
-                                style="background-image: url({{ asset('products/' . $producty->img) }})">
-                                @if ($producty->price_discount != null)
-                                    <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
+            @if ($bundles->count() > 0)
+                @foreach ($bundles as $bundle)
+                    @if ($bundle->type == $product->type)
+                        <div class="col-10 p-0">
+                            <a href="{{ route('product.show', $bundle->slug) }}">
+                                <div class="landing-product position-relative w-100 mb-3"
+                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
+                                    @if ($bundle->price_discount != null)
+                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
+                                        </div>
+                                    @endif
+                                </div>
+                            </a>
+                            <div class="mb-3">
+                                <div class="w-100" style="height: 50px">
+                                    <p class="w-100 font-weight-bold font-gotham text-break">{{ $bundle->name }}</p>
+                                </div>
+                                @if ($bundle->price_discount != null)
+                                    <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
+                                            class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
+                                @else
+                                    <div class="font-gotham mb-3">IDR {{ $bundle->price }}</div>
+                                @endif
+                                @if ($product->type == '0')
+                                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                        <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
+                                    </a>
+                                @else
+                                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                        <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                    </a>
                                 @endif
                             </div>
-                        </a>
-                        <div class="mb-3">
-                            <div class="w-100" style="height: 50px">
-                                <p class="w-100 font-weight-bold font-gotham text-break">{{ $producty->name }}</p>
-                            </div>
-                            @if ($producty->price_discount != null)
-                                <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
-                                        class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
-                            @else
-                                <div class="font-gotham mb-3">IDR {{ $producty->price }}</div>
-                            @endif
-                            @if ($product->type == '0')
-                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
-                                </a>
-                            @else
-                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                    <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
-                                </a>
-                            @endif
                         </div>
-                    </div>
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
+            @else
+                <div class="col-12 p-0">
+                    <h5 class="text-secondary text-center mb-0 mt-5">No Bundles Available</h5>
+                </div>
+            @endif
         </div>
     </div>
     <script>
@@ -296,7 +310,6 @@
                 tabTrigger.show()
             })
         })
-
     </script>
 
     <script>
@@ -311,7 +324,6 @@
                 $('#quantity').get(0).value--
             }
         }
-
     </script>
     <script>
         function addToCart(id, url) {
@@ -362,6 +374,5 @@
                     console.log("always");
                 });
         }
-
     </script>
 @endsection

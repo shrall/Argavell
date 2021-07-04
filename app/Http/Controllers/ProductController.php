@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -46,8 +47,20 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $products = Product::where('bundle', '1')->get();
-        return view('user.Product.show', compact('product', 'products'));
+        $bundles = Product::where('bundle', '1')
+            ->where('bundle_start', '>=', Carbon::now())
+            ->where('bundle_end', '<=', Carbon::now())
+            ->get();
+
+        if ($product->bundle == '1') {
+            if ($product->bundle_start >= Carbon::now() && $product->bundle_end <= Carbon::now()) {
+                return view('user.Product.show', compact('product', 'bundles'));
+            } else {
+                return redirect()->route('home');
+            }
+        } else {
+            return view('user.Product.show', compact('product', 'bundles'));
+        }
     }
 
     /**

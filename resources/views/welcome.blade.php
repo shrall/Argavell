@@ -85,6 +85,8 @@
         <h1 class="text-argavell font-bauer font-weight-bold">Most Loved, Best Picks</h1>
         <label class="text-argavell mb-4">Giving you a solution & an opportunity to appear outstanding amongst their
             peers.</label>
+    </div>
+    <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         @include('pages.inc.product_showcase_mobile')
     </div>
     <div class="row w-100 m-0" style="background-color: #FCF3EE">
