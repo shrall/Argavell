@@ -13,6 +13,13 @@
                     class="font-weight-black">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}!</span></h6>
         </div>
     </div>
+    <div class="row justify-content-end mb-3">
+        <div class="col-2 text-end">
+            <a href="{{route('admin.product.create')}}" class="btn btn-admin-argavell text-decoration-none">
+                <span class="fa fa-fw fa-plus-circle me-2"></span>Tambah Produk
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm border-0">
