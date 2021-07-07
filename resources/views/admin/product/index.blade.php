@@ -15,7 +15,7 @@
     </div>
     <div class="row justify-content-end mb-3">
         <div class="col-2 text-end">
-            <a href="{{route('admin.product.create')}}" class="btn btn-admin-argavell text-decoration-none">
+            <a href="{{ route('admin.product.create') }}" class="btn btn-admin-argavell text-decoration-none">
                 <span class="fa fa-fw fa-plus-circle me-2"></span>Tambah Produk
             </a>
         </div>
@@ -36,7 +36,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as $product)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
@@ -74,7 +73,6 @@
                                             class="btn btn-admin-argavell-light">See Details</a>
                                     </td>
                                 </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>

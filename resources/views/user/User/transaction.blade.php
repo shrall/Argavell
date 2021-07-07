@@ -56,6 +56,8 @@
                                     <p class="my-0 text-danger font-weight-bold">Canceled</p>
                                 @elseif($transaction->status == '3')
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
+                                @elseif($transaction->status == '4')
+                                    <p class="my-0 text-warning font-weight-bold">Waiting for Confirmation</p>
                                 @endif
                                 @if ($transaction->status == '0')
                                     @if ($transaction->payment_id != 1001)
@@ -70,9 +72,10 @@
                                         </a>
                                     @endif
                                 @else
-                                    <form action="{{ route('user.transaction.buyagain') }}" method="post" id="buy-again-{{$transaction->id}}">
+                                    <form action="{{ route('user.transaction.buyagain') }}" method="post"
+                                        id="buy-again-{{ $transaction->id }}">
                                         @csrf
-                                        <input type="hidden" name="id" value="{{$transaction->id}}">
+                                        <input type="hidden" name="id" value="{{ $transaction->id }}">
                                         <button type="submit"
                                             class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Buy
                                             again
@@ -115,6 +118,8 @@
                                         <p class="my-0 text-danger font-weight-bold text-end">Canceled</p>
                                     @elseif($transaction->status == '3')
                                         <p class="my-0 text-warning font-weight-bold text-end">On Delivery</p>
+                                    @elseif($transaction->status == '4')
+                                        <p class="my-0 text-warning font-weight-bold text-end">Waiting for Confirmation</p>
                                     @endif
                                 </div>
                             </div>
@@ -207,6 +212,5 @@
                 }
             })
         }
-
     </script>
 @endsection

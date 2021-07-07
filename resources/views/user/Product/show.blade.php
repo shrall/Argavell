@@ -300,6 +300,10 @@
             @endif
         </div>
     </div>
+@endsection
+
+@section('scripts')
+
     <script>
         var triggerTabList = [].slice.call(document.querySelectorAll('#detailTab a'))
         triggerTabList.forEach(function(triggerEl) {

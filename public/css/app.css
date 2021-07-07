@@ -33,6 +33,9 @@
 .bg-navbar-mobile {
     background-color: #bb9164;
 }
+.bg-gray-light{
+    background-color: #f2f2f2;
+}
 
 /* font settings */
 .font-bauer {
@@ -69,10 +72,10 @@
     color: #bb9164;
 }
 .text-argavell-lighter {
-    color: #C9AE98;
+    color: #c9ae98;
 }
 .text-argavell-lighter:hover {
-    color: #C9AE98;
+    color: #c9ae98;
 }
 .text-kleanse {
     color: #4ac8e2;
@@ -149,13 +152,6 @@
     border-radius: 50px;
 }
 
-.btn-argavell-reversed {
-    background-color: #fff;
-    color: #8a5b32;
-    border: 2px solid #8a5b32 !important;
-    border-radius: 50px;
-}
-
 .btn-argavell-light {
     background-color: #bb9164;
     color: #fff;
@@ -168,6 +164,12 @@
     border-radius: 50px;
 }
 
+.btn-gray{
+    background-color: #adadad;
+    color: #fff;
+    border-radius: 50px;
+}
+
 .btn-admin-argavell {
     background-color: #8a5b32;
     color: #fff;
@@ -176,6 +178,11 @@
 .btn-admin-argavell-light {
     background-color: #bb9164;
     color: #fff;
+}
+
+.btn-admin-light {
+    background-color: #fff;
+    color: #888;
 }
 
 .btn-panel {
@@ -340,4 +347,13 @@
     height: 25px;
     width: 25px;
     border-radius: 50%;
+}
+
+/* admin transactions */
+.card-admin-transactions {
+    border-left: 4px solid #bb9164 !important;
+}
+.card-admin-transactions .card-header,
+.card-admin-transactions .card-footer {
+    background-color: #fff;
 }

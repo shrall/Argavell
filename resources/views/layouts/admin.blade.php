@@ -53,8 +53,9 @@
                                     class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100">
-                            <a href="#"
+                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() ==
+                            'admin.transaction.index') active @endif">
+                            <a href="{{ route('admin.transaction.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-comment-dollar mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Transactions</span>

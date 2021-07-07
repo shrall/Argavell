@@ -44,8 +44,10 @@ class TransactionController extends Controller
         $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
         $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
 
-        if ($request->shipping_method == 'CTC' || $request->shipping_method == 'CTCYES') {
-            $request->shipping_method = 'JNE';
+        if ($request->shipping_method == 'CTC') {
+            $request->shipping_method = 'REG - JNE';
+        } else if ($request->shipping_method == 'CTCYES') {
+            $request->shipping_method = 'YES - JNE';
         }
         $transaction = Transaction::create([
             'status' => '0',
@@ -205,8 +207,10 @@ class TransactionController extends Controller
         $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
         $shipmentname = $request->data[5]['value'];
 
-        if ($request->data[5]['value'] == 'CTC' || $request->data[5]['value'] == 'CTCYES') {
-            $shipmentname = 'JNE';
+        if ($request->shipping_method == 'CTC') {
+            $request->shipping_method = 'REG - JNE';
+        } else if ($request->shipping_method == 'CTCYES') {
+            $request->shipping_method = 'YES - JNE';
         }
 
         $transaction = Transaction::create([
