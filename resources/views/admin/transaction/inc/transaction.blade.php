@@ -51,15 +51,14 @@
                     </p>
                     <p class="my-0 text-secondary">{{ $transaction->address->address }}</p>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class="my-2">
                         <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus Sesuai</span></p>
                         <p class="my-0 text-secondary">{{ $transaction->shipment_name }}</p>
                     </div>
                     <div class="my-2">
-                        <p class="my-0">Kode Booking <span class="btn btn-gray btn-panel p-0 px-2">Harus
-                                Dicantumkan</span></p>
-                        <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
+                        <p class="my-0">Nomor Resi</p>
+                        <input type="text" name="" id="" class="form-control" placeholder="Ketik Nomor Resi Disini">
                     </div>
                 </div>
             </div>
@@ -79,18 +78,11 @@
                         <span class="far fa-fw fa-comment-dots me-1"></span>Tanya Pembeli
                     </a>
                 </div>
-                <div class="mx-2">
-                    <a href="#" class="text-secondary text-decoration-none">
-                        <span class="fa fa-fw fa-clipboard-list me-1"></span>Status Pesanan
-                    </a>
-                </div>
-                <div class="mx-2 position-relative">
-                    <span
-                        class="far fa-fw fa-edit position-absolute top-50 start-0 translate-middle-y ps-3 fs-6 text-secondary"></span>
-                    <input type="text" name="" id="" class="form-control ps-5" placeholder="Ketik Catatan toko disini">
-                </div>
                 <div class="ms-auto">
-                    <button type="submit" class="btn btn-admin-argavell text-white text-decoration-none">
+                    <button type="submit" class="btn btn-danger text-white text-decoration-none me-2">
+                        Tolak Pesanan
+                    </button>
+                    <button type="submit" class="btn btn-admin-argavell text-white text-decoration-none ms-2">
                         Terima Pesanan
                     </button>
                 </div>
