@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->string('order_number')->unique();
             $table->date('date');
             $table->string('shipment_name');
+            $table->integer('shipment_etd');
             $table->integer('shipping_cost');
             $table->integer('price_total');
             $table->integer('qty_total');

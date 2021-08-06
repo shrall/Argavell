@@ -11,9 +11,9 @@
     $discount = 0;
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-    $totalqty += $item->qty;
-    $subtotal += $item->price * $item->qty;
-    $discount += $item->price_discount * $item->qty;
+        $totalqty += $item->qty;
+        $subtotal += $item->price * $item->qty;
+        $discount += $item->price_discount * $item->qty;
     }
     ?>
     <div class="row w-100 p-0 m-0 bg-light">
@@ -163,6 +163,8 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="shipping_method"
                                     value="{{ $shipment['service'] }}" id="shipping_radio_{{ $loop->iteration }}" @if ($loop->iteration == 1) checked @endif>
+                                <input class="form-check-input" type="hidden" name="shipping_etd"
+                                    value="{{ $shipment['cost'][0]['etd'] }}">
                                 <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
                                     <span class="font-weight-bold">{{ $shipment['description'] }} -
                                         {{ $shipment['service'] }}</span> : IDR <span
@@ -286,7 +288,7 @@
                     _token: token,
                     data: $("#form-checkout").serializeArray(),
                     status: status,
-                    snaptoken : snaptoken
+                    snaptoken: snaptoken
                 })
                 .done(function(data) {
                     console.log(data);

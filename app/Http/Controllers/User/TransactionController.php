@@ -57,6 +57,7 @@ class TransactionController extends Controller
             'shipping_cost' => $request->shipping_cost,
             'price_total' => $request->price_total,
             'qty_total' => $request->qty_total,
+            'shipment_etd' => intval(substr($request->shipping_etd, 2)),
             'payment_id' => $request->payment_method,
             'address_id' => Auth::user()->address_id,
             'user_id' => Auth::id(),
