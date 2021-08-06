@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
             PolicySeeder::class,
             RefundSeeder::class,
             TncSeeder::class,
-            ProofSeeder::class,
             AddressSeeder::class,
             ProductSeeder::class,
             TransactionSeeder::class,
+            ProofSeeder::class,
             CartSeeder::class,
             BundleSeeder::class
         ]);

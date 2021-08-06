@@ -25,43 +25,36 @@
             <div class="card-body">
                 <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active font-weight-bold" id="semua-pesanan-tab" data-bs-toggle="tab"
-                            data-bs-target="#semua-pesanan" type="button" role="tab" aria-controls="semua-pesanan"
-                            aria-selected="true">SEMUA PESANAN</button>
+                        <button class="nav-link active font-weight-bold" id="semua-pesanan-tab" type="button"
+                            data-bs-toggle="tab">SEMUA PESANAN</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#pesanan-baru" type="button" role="tab" aria-controls="pesanan-baru"
-                            aria-selected="false">PESANAN BARU</button>
+                        <button class="nav-link font-weight-bold" id="pesanan-baru-tab" type="button"
+                            data-bs-toggle="tab">PESANAN BARU</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#siap-dikirim" type="button" role="tab" aria-controls="siap-dikirim"
-                            aria-selected="false">SIAP DIKIRIM</button>
+                        <button class="nav-link font-weight-bold" id="siap-dikirim-tab" type="button"
+                            data-bs-toggle="tab">SIAP DIKIRIM</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#dalam-pengiriman" type="button" role="tab" aria-controls="dalam-pengiriman"
-                            aria-selected="false">DALAM PENGIRIMAN</button>
+                        <button class="nav-link font-weight-bold" id="dalam-pengiriman-tab" type="button"
+                            data-bs-toggle="tab">DALAM PENGIRIMAN</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#dikomplain" type="button" role="tab" aria-controls="dikomplain"
-                            aria-selected="false">DIKOMPLAIN</button>
+                        <button class="nav-link font-weight-bold" id="dikomplain-tab" type="button"
+                            data-bs-toggle="tab">DIKOMPLAIN</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#pesanan-selesai" type="button" role="tab" aria-controls="pesanan-selesai"
-                            aria-selected="false">PESANAN SELESAI</button>
+                        <button class="nav-link font-weight-bold" id="pesanan-selesai-tab" type="button"
+                            data-bs-toggle="tab">PESANAN SELESAI</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link font-weight-bold" id="ingredients-tab" data-bs-toggle="tab"
-                            data-bs-target="#dibatalkan" type="button" role="tab" aria-controls="dibatalkan"
-                            aria-selected="false">DIBATALKAN</button>
+                        <button class="nav-link font-weight-bold" id="dibatalkan-tab" type="button"
+                            data-bs-toggle="tab">DIBATALKAN</button>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="semua-pesanan" role="tabpanel" aria-labelledby="semua-pesanan-tab">
+                    <div class="tab-pane active" id="semua-pesanan">
                         <div class="row gx-3 mt-3">
                             <div class="col-3 position-relative">
                                 <span
@@ -90,24 +83,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="pesanan-baru" role="tabpanel" aria-labelledby="pesanan-baru-tab">
-                        asd</div>
-                    <div class="tab-pane" id="siap-dikirim" role="tabpanel" aria-labelledby="siap-dikirim-tab">
-                        asd</div>
-                    <div class="tab-pane" id="dalam-pengiriman" role="tabpanel" aria-labelledby="dalam-pengiriman-tab">
-                        asd</div>
-                    <div class="tab-pane" id="dikomplain" role="tabpanel" aria-labelledby="dikomplain-tab">
-                        asd</div>
-                    <div class="tab-pane" id="pesanan-selesai" role="tabpanel" aria-labelledby="pesanan-selesai-tab">
-                        asd</div>
-                    <div class="tab-pane" id="dibatalkan" role="tabpanel" aria-labelledby="dibatalkan-tab">
-                        asd</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center gx-3 mb-3">
-        <div class="mx-2">
+    <div class="d-flex align-items-center gx-3 mb-3" id="select-all-row">
+        <div class="mx-2" id="checkbox-div">
             <input type="checkbox" />
             <span class="font-weight-bold ms-2">Select All</span>
         </div>
@@ -154,23 +135,25 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
+        var method = 'all'
 
-            $(document).on('click', '.pagination a', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                fetch_data(page);
-            });
-
-            function fetch_data(page) {
-                $.ajax({
-                    url: "transaction/pagination/fetch_data?page=" + page,
-                    success: function(data) {
-                        $('#transaction-container').html(data);
-                    }
-                });
-            }
-
+        $('#pesanan-baru-tab').click(function() {
+            method = 'new'
         });
+
+        $(document).on('click', '.pagination a', function(event) {
+            event.preventDefault();
+            var page = $(this).attr('href').split('page=')[1];
+            fetch_data(page, method);
+        });
+
+        function fetch_data(page, method) {
+            $.ajax({
+                url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
+                success: function(data) {
+                    $('#transaction-container').html(data);
+                }
+            });
+        }
     </script>
 @endsection

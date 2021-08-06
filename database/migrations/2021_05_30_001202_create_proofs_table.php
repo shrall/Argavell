@@ -18,6 +18,7 @@ class CreateProofsTable extends Migration
             $table->string('order_number');
             $table->string('name');
             $table->text('payment_file');
+            $table->foreignId('transaction_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

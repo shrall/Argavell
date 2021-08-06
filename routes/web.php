@@ -97,7 +97,12 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('reseller', AdminResellerController::class);
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
-    Route::get('transaction/pagination/fetch_data', [AdminTransactionController::class, 'fetch_data'])->name('transaction.fetchdata');
+    Route::get('transaction/pagination/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all'])->name('transaction.fetchdataall');
+    Route::get('transaction/pagination/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new'])->name('transaction.fetchdatanew');
+    Route::get('transaction/pagination/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready'])->name('transaction.fetchdataready');
+    Route::get('transaction/pagination/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery'])->name('transaction.fetchdataondelivery');
+    Route::get('transaction/pagination/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain'])->name('transaction.fetchdatacomplain');
+    Route::get('transaction/pagination/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered'])->name('transaction.fetchdatadelivered');
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');

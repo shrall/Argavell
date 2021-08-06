@@ -11,8 +11,8 @@ class Transaction extends Model
 
     protected $fillable = [
         'status', 'order_number', 'date',
-        'shipment_name', 'shipping_cost', 'price_total', 'qty_total', 'notes', 'snaptoken',
-        'user_id','payment_id', 'address_id', 'updated_at'
+        'shipment_name', 'shipping_cost', 'price_total', 'qty_total', 'notes', 'snaptoken', 'is_cetak',
+        'user_id', 'payment_id', 'address_id', 'updated_at'
     ];
 
     public function user()
@@ -30,7 +30,8 @@ class Transaction extends Model
         return $this->belongsTo(Address::class, 'address_id', 'id');
     }
 
-    public function carts() {
+    public function carts()
+    {
         return $this->hasMany(Cart::class, 'transaction_id', 'id');
     }
 }

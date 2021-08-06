@@ -15,8 +15,8 @@ class TransactionSeeder extends Seeder
     public function run()
     {
         $transaction = new Transaction();
-        $transaction->status = '1';
-        $transaction->order_number = 'INV20210606-1001';
+        $transaction->status = '0';
+        $transaction->order_number = '0 = Waiting Payment Confirmation';
         $transaction->date = '2021-06-06';
         $transaction->shipment_name = 'JNE';
         $transaction->shipping_cost = 13000;
@@ -28,21 +28,22 @@ class TransactionSeeder extends Seeder
         $transaction->save();
 
         $transaction = new Transaction();
-        $transaction->status = '2';
-        $transaction->order_number = 'INV20210606-1002';
+        $transaction->status = '1';
+        $transaction->order_number = '1 = Shipped';
         $transaction->date = '2021-06-06';
         $transaction->shipment_name = 'SiCepat';
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->nomor_resi = '01kd0k1002ke0';
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
         $transaction->save();
 
         $transaction = new Transaction();
-        $transaction->status = '0';
-        $transaction->order_number = 'INV20210606-1003';
+        $transaction->status = '2';
+        $transaction->order_number = '2 = Canceled';
         $transaction->date = '2021-06-06';
         $transaction->shipment_name = 'SiCepat';
         $transaction->shipping_cost = 11000;
@@ -55,7 +56,34 @@ class TransactionSeeder extends Seeder
 
         $transaction = new Transaction();
         $transaction->status = '3';
-        $transaction->order_number = 'INV20210606-1004';
+        $transaction->order_number = '3 = On Delivery';
+        $transaction->date = '2021-06-06';
+        $transaction->shipment_name = 'SiCepat';
+        $transaction->shipping_cost = 11000;
+        $transaction->price_total = 130000;
+        $transaction->qty_total = 1;
+        $transaction->nomor_resi = '01kd0k1002ke0';
+        $transaction->payment_id = 1;
+        $transaction->user_id = 1;
+        $transaction->address_id = 1;
+        $transaction->save();
+
+        $transaction = new Transaction();
+        $transaction->status = '4';
+        $transaction->order_number = '4 = Paid';
+        $transaction->date = '2021-06-06';
+        $transaction->shipment_name = 'SiCepat';
+        $transaction->shipping_cost = 11000;
+        $transaction->price_total = 130000;
+        $transaction->qty_total = 1;
+        $transaction->payment_id = 1;
+        $transaction->user_id = 1;
+        $transaction->address_id = 1;
+        $transaction->save();
+
+        $transaction = new Transaction();
+        $transaction->status = '5';
+        $transaction->order_number = '5 = Confirmed';
         $transaction->date = '2021-06-06';
         $transaction->shipment_name = 'SiCepat';
         $transaction->shipping_cost = 11000;
@@ -68,7 +96,7 @@ class TransactionSeeder extends Seeder
 
         $transaction = new Transaction();
         $transaction->status = '4';
-        $transaction->order_number = 'INV20210606-1005';
+        $transaction->order_number = '4 = Paid - Cetaked';
         $transaction->date = '2021-06-06';
         $transaction->shipment_name = 'SiCepat';
         $transaction->shipping_cost = 11000;
@@ -77,6 +105,7 @@ class TransactionSeeder extends Seeder
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
+        $transaction->is_cetak = '1';
         $transaction->save();
     }
 }

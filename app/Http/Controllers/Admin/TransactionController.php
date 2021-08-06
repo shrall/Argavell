@@ -18,13 +18,6 @@ class TransactionController extends Controller
         $transactions = Transaction::paginate(2);
         return view('admin.transaction.index', compact('transactions'));
     }
-    function fetch_data(Request $request)
-    {
-        if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -90,5 +83,53 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+
+    function fetch_data_all(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_new(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_ready(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_ondelivery(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_complain(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_delivered(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
     }
 }
