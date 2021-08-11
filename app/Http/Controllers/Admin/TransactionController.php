@@ -160,4 +160,8 @@ class TransactionController extends Controller
     function view_label(){
         return view('admin.transaction.label');
     }
+
+    function view_label_transaction(Transaction $transaction){
+        return view('admin.transaction.label', compact('transaction'));
+    }
 }
