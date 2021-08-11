@@ -12,10 +12,10 @@
                     @elseif ($transaction->status == '3')
                         <span class="font-weight-bold">Dalam Pengiriman</span>
                     @elseif ($transaction->status == '4')
-                        <input type="checkbox" />
+                        <input type="checkbox" class="checkbox-transaction" />
                         <span class="font-weight-bold ms-2">Pesanan Baru</span>
                     @elseif ($transaction->status == '5')
-                        <input type="checkbox" />
+                        <input type="checkbox" class="checkbox-transaction" />
                         <span class="font-weight-bold ms-2">Siap Dikirim</span>
                     @endif
                 </div>
@@ -42,7 +42,8 @@
             <div class="row mb-3">
                 <div class="col-5">
                     <div class="row">
-                        <div class="col-3 col-xxl-2"><img src="{{ asset('products/argan-oil.jpg') }}" class="rounded"
+                        <div class="col-3 col-xxl-2">
+                            <img src="{{ asset('products/' . $transaction->carts[0]->product->img) }}" class="rounded"
                                 width="75px">
                         </div>
                         <div class="col-9 col-xxl-10">
@@ -83,10 +84,10 @@
                 </div>
             </div>
             <div class="row justify-content-between mx-1 py-2 rounded bg-gray-light">
-                <div class="col-1">
+                <div class="col-2 text-start">
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
-                <div class="col-1">
+                <div class="col-2 text-end">
                     <span class="font-weight-bold">Rp. {{ $transaction->price_total }}</span>
                 </div>
             </div>
@@ -99,19 +100,27 @@
                     </a>
                 </div>
                 <div class="ms-auto">
-                    @if ($transaction->status == '5')
-                        <button class="btn btn-danger text-white text-decoration-none me-2">
+                    @if ($transaction->status == '4')
+                        <button class="btn btn-danger text-white text-decoration-none me-2" data-bs-toggle="modal"
+                            data-bs-target="#cancelModal{{ $transaction->id }}">
                             Tolak Pesanan
                         </button>
+                        @include('admin.transaction.inc.modal.cancel')
                     @endif
                     @if ($transaction->status == '4' || $transaction->status == '5')
-                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2">
-                            @if ($transaction->status == '4')
+                        @if ($transaction->status == '4')
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
+                                data-bs-toggle="modal" data-bs-target="#acceptModal{{ $transaction->id }}">
                                 Terima Pesanan
-                            @elseif ($transaction->status == '5')
+                            </button>
+                            @include('admin.transaction.inc.modal.accept')
+                        @elseif ($transaction->status == '5')
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
+                                data-bs-toggle="modal" data-bs-target="#sendModal">
                                 Kirim Pesanan
-                            @endif
-                        </button>
+                            </button>
+                            @include('admin.transaction.inc.modal.send')
+                        @endif
                     @endif
                 </div>
             </div>

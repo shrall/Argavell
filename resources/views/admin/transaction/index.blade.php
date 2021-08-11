@@ -87,27 +87,32 @@
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center gx-3 mb-3" id="select-all-row">
-        <div class="mx-2" id="checkbox-div">
+    <div class="d-none align-items-center gx-3 mb-3" id="select-all-row">
+        <div class="mx-2" id="select-all-checkbox">
             <input type="checkbox" />
             <span class="font-weight-bold ms-2">Select All</span>
         </div>
-        <div class="mx-2">
+        <div class="mx-2 d-block" id="select-all-accept">
+            <button class="btn btn-admin-light shadow-sm text-decoration-none">
+                Terima Pesanan
+            </button>
+        </div>
+        <div class="mx-2 d-block" id="select-all-send">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Kirim Pesanan
             </button>
         </div>
-        <div class="mx-2">
+        <div class="mx-2 d-block" id="select-all-label">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Cetak Label
             </button>
         </div>
-        <div class="mx-2">
+        <div class="mx-2 d-block" id="select-all-invoice">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Cetak Invoice
             </button>
         </div>
-        <div class="mx-2">
+        <div class="mx-2 d-block" id="select-all-list">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Download Daftar Produk
             </button>
@@ -116,6 +121,11 @@
     <div class="row gy-3" id="transaction-container">
         @include('admin.transaction.inc.transaction')
     </div>
+    <form action="{{ route('admin.transaction.store') }}" method="post">
+        @csrf
+        <input type="hidden" name="transaction_id[]" id="input-transaction">
+        <input type="hidden" name="method" id="input-method" value="all">
+    </form>
 @endsection
 
 @section('scripts')
@@ -136,24 +146,83 @@
     </script>
     <script>
         var method = 'all'
+        var page = 1
+
+        $('#semua-pesanan-tab').click(function() {
+            method = 'all'
+            page = 1
+            fetch_data(page, method);
+        });
 
         $('#pesanan-baru-tab').click(function() {
             method = 'new'
+            page = 1
+            fetch_data(page, method);
+        });
+
+        $('#siap-dikirim-tab').click(function() {
+            method = 'ready'
+            page = 1
+            fetch_data(page, method);
+        });
+
+        $('#dalam-pengiriman-tab').click(function() {
+            method = 'ondelivery'
+            page = 1
+            fetch_data(page, method);
+        });
+
+        $('#dikomplain-tab').click(function() {
+            //belum
+            // method = 'complain'
+            // page = 1
+            // fetch_data(page, method);
+        });
+
+        $('#pesanan-selesai-tab').click(function() {
+            method = 'delivered'
+            page = 1
+            fetch_data(page, method);
+        });
+
+        $('#dibatalkan-tab').click(function() {
+            method = 'canceled'
+            page = 1
+            fetch_data(page, method);
         });
 
         $(document).on('click', '.pagination a', function(event) {
             event.preventDefault();
-            var page = $(this).attr('href').split('page=')[1];
+            page = $(this).attr('href').split('page=')[1];
             fetch_data(page, method);
         });
 
         function fetch_data(page, method) {
+            changePageMenu();
             $.ajax({
                 url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
                 success: function(data) {
                     $('#transaction-container').html(data);
                 }
             });
+        }
+
+        function changePageMenu() {
+            if (method != 'all') {
+                $('#select-all-row').removeClass('d-none').addClass('d-flex')
+            } else {
+                $('#select-all-row').removeClass('d-flex').addClass('d-none')
+            }
+            if (method == 'new') {
+                $('#select-all-accept').removeClass('d-none').addClass('d-block')
+            } else {
+                $('#select-all-accept').removeClass('d-block').addClass('d-none')
+            }
+            if (method == 'ready') {
+                $('#select-all-send').removeClass('d-none').addClass('d-block')
+            } else {
+                $('#select-all-send').removeClass('d-block').addClass('d-none')
+            }
         }
     </script>
 @endsection

@@ -103,6 +103,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::get('transaction/pagination/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery'])->name('transaction.fetchdataondelivery');
     Route::get('transaction/pagination/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain'])->name('transaction.fetchdatacomplain');
     Route::get('transaction/pagination/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered'])->name('transaction.fetchdatadelivered');
+    Route::get('transaction/pagination/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled'])->name('transaction.fetchdatacanceled');
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');

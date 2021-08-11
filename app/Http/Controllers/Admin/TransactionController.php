@@ -37,7 +37,22 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->input_method == 'new') {
+            foreach ($request->transaction_id as $transaction_id) {
+                $transaction = Transaction::where('id', $transaction_id)->first();
+                $transaction->update([
+                    'status' => '5'
+                ]);
+            }
+        } else if ($request->input_method == 'cancel') {
+            foreach ($request->transaction_id as $transaction_id) {
+                $transaction = Transaction::where('id', $transaction_id)->first();
+                $transaction->update([
+                    'status' => '2'
+                ]);
+            }
+        }
+        return redirect()->route('admin.transaction.index');
     }
 
     /**
@@ -96,7 +111,7 @@ class TransactionController extends Controller
     function fetch_data_new(Request $request)
     {
         if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
+            $transactions = Transaction::where('status', '4')->paginate(2);
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
@@ -104,7 +119,7 @@ class TransactionController extends Controller
     function fetch_data_ready(Request $request)
     {
         if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
+            $transactions = Transaction::where('status', '5')->paginate(2);
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
@@ -112,7 +127,7 @@ class TransactionController extends Controller
     function fetch_data_ondelivery(Request $request)
     {
         if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
+            $transactions = Transaction::where('status', '3')->paginate(2);
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
@@ -120,7 +135,16 @@ class TransactionController extends Controller
     function fetch_data_complain(Request $request)
     {
         if ($request->ajax()) {
+            //belum
             $transactions = Transaction::paginate(2);
+            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        }
+    }
+
+    function fetch_data_canceled(Request $request)
+    {
+        if ($request->ajax()) {
+            $transactions = Transaction::where('status', '2')->paginate(2);
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
@@ -128,7 +152,7 @@ class TransactionController extends Controller
     function fetch_data_delivered(Request $request)
     {
         if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
+            $transactions = Transaction::where('status', '1')->paginate(2);
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
