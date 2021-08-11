@@ -156,4 +156,8 @@ class TransactionController extends Controller
             return view('admin.transaction.inc.transaction', compact('transactions'))->render();
         }
     }
+
+    function view_label(){
+        return view('admin.transaction.label');
+    }
 }
