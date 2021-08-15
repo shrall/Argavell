@@ -15,6 +15,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
+        $this->check_response_limit();
         $transactions = Transaction::paginate(2);
         return view('admin.transaction.index', compact('transactions'));
     }
@@ -163,5 +164,16 @@ class TransactionController extends Controller
 
     function view_label_transaction(Transaction $transaction){
         return view('admin.transaction.label', compact('transaction'));
+    }
+
+    function check_response_limit(){
+        $transactions = Transaction::all();
+        foreach($transactions as $transaction){
+            if((strtotime($transaction->created_at)-strtotime(\Carbon\Carbon::now()))/60/60 < 0 && $transaction->status == '4'){
+                $transaction->update([
+                    'status' => '2'
+                ]);
+            }
+        }
     }
 }
