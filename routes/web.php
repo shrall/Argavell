@@ -50,6 +50,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
 Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
 Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
+Route::get('/contact-us', [PageController::class, 'contactus'])->name('page.contactus');
 
 Route::get('/terms-and-conditions', [TncController::class, 'index'])->name('page.termsconditions');
 Route::get('/return-policy', [PolicyController::class, 'index'])->name('page.policy');

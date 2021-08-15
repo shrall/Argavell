@@ -38,6 +38,11 @@ class PageController extends Controller
         return view('pages.terms_conditions', compact('tncs'));
     }
 
+    public function contactus()
+    {
+        return view('pages.contact_us');
+    }
+
     public function authorizedreseller()
     {
         $resellers = Reseller::all();

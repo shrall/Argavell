@@ -33,7 +33,7 @@
                                 <a href="#" class="text-decoration-none text-white">Our Story</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Contact Us</a>
+                                <a href="{{route('page.contactus')}}" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
                                 <a href="{{route('page.reseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
