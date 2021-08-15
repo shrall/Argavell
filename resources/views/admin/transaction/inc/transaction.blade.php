@@ -33,7 +33,7 @@
                 <div class="ms-auto @if ($transaction->status != '4') invisible @endif">
                     <span class="me-2">Batas Respon</span>
                     <a href="#" class="btn btn-warning btn-panel text-white text-decoration-none">
-                        <span class="far fa-fw fa-clock me-1"></span>{{(strtotime($transaction->created_at)-strtotime(\Carbon\Carbon::now()))/60/60}} Jam
+                        <span class="far fa-fw fa-clock me-1"></span>{{round((strtotime($transaction->created_at . ' +1 day')-strtotime(\Carbon\Carbon::now()))/60/60)}} Jam
                     </a>
                 </div>
             </div>

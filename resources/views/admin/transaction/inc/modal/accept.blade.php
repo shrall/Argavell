@@ -17,11 +17,11 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <div class="col-3 col-xxl-2">
+                                <div class="col-3">
                                     <img src="{{ asset('products/' . $transaction->carts[0]->product->img) }}"
                                         class="rounded" width="75px">
                                 </div>
-                                <div class="col-9 col-xxl-10">
+                                <div class="col-9">
                                     <div class="row">
                                         @foreach ($transaction->carts as $item)
                                             <div class="col-6">

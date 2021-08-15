@@ -97,26 +97,26 @@
                 Terima Pesanan
             </button>
         </div>
-        <div class="mx-2 d-block" id="select-all-send">
+        {{-- <div class="mx-2 d-block" id="select-all-send">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Kirim Pesanan
             </button>
-        </div>
-        <div class="mx-2 d-block" id="select-all-label">
+        </div> --}}
+        <div class="mx-2 d-none" id="select-all-label">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Cetak Label
             </button>
         </div>
-        <div class="mx-2 d-block" id="select-all-invoice">
+        <div class="mx-2 d-none" id="select-all-invoice">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Cetak Invoice
             </button>
         </div>
-        <div class="mx-2 d-block" id="select-all-list">
+        {{-- <div class="mx-2 d-block" id="select-all-list">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Download Daftar Produk
             </button>
-        </div>
+        </div> --}}
     </div>
     <div class="row gy-3" id="transaction-container">
         @include('admin.transaction.inc.transaction')
@@ -208,7 +208,7 @@
         }
 
         function changePageMenu() {
-            if (method != 'all') {
+            if (method != 'all' && method != 'ondelivery' && method != 'canceled') {
                 $('#select-all-row').removeClass('d-none').addClass('d-flex')
             } else {
                 $('#select-all-row').removeClass('d-flex').addClass('d-none')
@@ -219,9 +219,14 @@
                 $('#select-all-accept').removeClass('d-block').addClass('d-none')
             }
             if (method == 'ready') {
-                $('#select-all-send').removeClass('d-none').addClass('d-block')
+                $('#select-all-label').removeClass('d-none').addClass('d-block')
             } else {
-                $('#select-all-send').removeClass('d-block').addClass('d-none')
+                $('#select-all-label').removeClass('d-block').addClass('d-none')
+            }
+            if (method == 'delivered') {
+                $('#select-all-invoice').removeClass('d-none').addClass('d-block')
+            } else {
+                $('#select-all-invoice').removeClass('d-block').addClass('d-none')
             }
         }
     </script>

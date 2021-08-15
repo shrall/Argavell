@@ -158,18 +158,21 @@ class TransactionController extends Controller
         }
     }
 
-    function view_label(){
+    function view_label()
+    {
         return view('admin.transaction.label');
     }
 
-    function view_label_transaction(Transaction $transaction){
+    function view_label_transaction(Transaction $transaction)
+    {
         return view('admin.transaction.label', compact('transaction'));
     }
 
-    function check_response_limit(){
+    function check_response_limit()
+    {
         $transactions = Transaction::all();
-        foreach($transactions as $transaction){
-            if((strtotime($transaction->created_at)-strtotime(\Carbon\Carbon::now()))/60/60 < 0 && $transaction->status == '4'){
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->created_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '4') {
                 $transaction->update([
                     'status' => '2'
                 ]);
