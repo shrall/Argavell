@@ -369,3 +369,28 @@
     border: 1px solid #b7b7b7;
     color: #7e7e7e;
 }
+
+
+/* design update */
+/* home */
+.carousel-overlay{
+    background-color: #000;
+    opacity: 20%;
+    z-index: 10;
+    height: 100%;
+    top:0;
+}
+
+.landing-showcase-overlay{
+    background-color: #000;
+    opacity: 10%;
+    z-index: 10;
+    height: 100%;
+    top:0;
+}
+
+/* argan products */
+.argan-benefits{
+    background: linear-gradient(358deg, #bb9164, #ffffff 95%);
+    background-size: 400% 400%;
+}

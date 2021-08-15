@@ -117,8 +117,8 @@
     {{-- desktop --}}
     <div class="row w-100 p-0 align-items-center py-5 my-5 d-none d-sm-flex">
         <div class="col-md-1"></div>
-        <div class="col-md-6">
-            <h1 class="text-kleanse font-gotham font-weight-bold text-6xl">making your skin feel safe,
+        <div class="col-md-6 ps-5 ms-5">
+            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl">making your skin feel safe,
                 free from side
                 effects.</h1>
         </div>
@@ -229,14 +229,19 @@
             @endforeach
         </div>
     </div>
-    <div class="row w-100 landing-showcase-background text-center py-5 m-0"
-        style="background-image: url({{ asset('images/kleanse-detail-3.jpg') }})">
-        <h1 class="font-gotham text-white my-5 font-weight-bold">which kleanse product made you<br>fall in love?</h1>
-        <a href="#" class="text-decoration-none d-none d-sm-block">
-            <div class="btn-kleanse text-center w-25 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
-        <a href="#" class="text-decoration-none d-block d-sm-none">
-            <div class="btn-kleanse text-center w-50 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
+    <div class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative" style="height:45vh;">
+        <img src="{{ asset('images/kleanse-detail-3.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
+            style="height: 100%;object-fit: cover;">
+        <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
+            <h1 class="font-gotham text-white my-5 font-weight-bold">which kleanse product made you<br>fall in love?</h1>
+            {{-- <h1 class="font-gotham text-white my-5 font-weight-bold" style="
+            text-shadow: 2px 2px #000;">which kleanse product made you<br>fall in love?</h1> --}}
+            <a href="#" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-kleanse text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+            <a href="#" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-kleanse text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+        </div>
     </div>
 @endsection

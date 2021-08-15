@@ -4,9 +4,11 @@
     {{-- carousel desktop --}}
     <div id="productShowcase" class="carousel slide carousel-fade d-none d-sm-block" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('images/carousel-argan-oil.jpg') }}" class="d-block w-100">
-                <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%);">
+            <div class="carousel-item position-relative active">
+                <img src="{{ asset('images/carousel-argan-oil.jpg') }}" class="d-block w-100"
+                    style="height: 95vh;object-fit: cover;">
+                <div class="carousel-overlay position-absolute w-100"></div>
+                <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-bauer text-8xl">Argan Oil</h1>
                     <p>Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
@@ -15,9 +17,11 @@
                             Product</span></a>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/carousel-argan-shampoo.jpg') }}" class="d-block w-100">
-                <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%);">
+            <div class="carousel-item position-relative">
+                <img src="{{ asset('images/carousel-argan-shampoo.jpg') }}" class="d-block w-100"
+                    style="height: 95vh;object-fit: cover;">
+                <div class="carousel-overlay position-absolute w-100"></div>
+                <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-bauer text-8xl">Argan Shampoo</h1>
                     <p>Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
@@ -41,8 +45,9 @@
     <div id="productShowcaseMobile" class="carousel slide carousel-fade d-block d-sm-none" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ asset('images/carousel-mobile-argan-oil.jpg') }}" class="d-block w-100 vh-100">
-                <div class="carousel-caption" style="top: 55%; transform: translateY(-55%);">
+                <img src="{{ asset('images/carousel-argan-oil.jpg') }}" class="d-block w-100 vh-100" style="height: 95vh;object-fit: cover;">
+                <div class="carousel-overlay position-absolute w-100"></div>
+                <div class="carousel-caption" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-bauer text-6xl">Argan Oil</h1>
                     <p>Argan Oil is produced from the nut og the Argan tree. It's natural and organic,<br>safe to use on any
@@ -52,8 +57,9 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('images/carousel-mobile-argan-shampoo.jpg') }}" class="d-block w-100 vh-100">
-                <div class="carousel-caption" style="top: 55%; transform: translateY(-55%);">
+                <img src="{{ asset('images/carousel-argan-shampoo.jpg') }}" class="d-block w-100 vh-100" style="height: 95vh;object-fit: cover;">
+                <div class="carousel-overlay position-absolute w-100"></div>
+                <div class="carousel-caption" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-bauer text-6xl">Argan Shampoo</h1>
                     <p>Argan Oil is produced from the nut og the Argan tree. It's natural and organic,<br>safe to use on any
@@ -101,8 +107,9 @@
         </div>
         <div class="col-md-8 px-0">
             <div class="row">
-                <div class="col-md-6 align-self-center px-5">
-                    <h1 class="text-argavell font-bauer font-weight-bold text-5xl py-3">Our Story</h1>
+                <div class="col-md-6 align-self-center px-5 my-3">
+                    <h1 class="text-argavell font-bauer font-weight-bold text-4xl py-3 d-block d-sm-none">Our Story</h1>
+                    <h1 class="text-argavell font-bauer font-weight-bold text-5xl py-3 d-none d-sm-block">Our Story</h1>
                     <p><strong>Argavéll Indonesia</strong> was founded in August 2017 as
                         an answer for those with dry & sensitive skin
                         conditions seeking a safe & gentle skincare while
@@ -122,19 +129,22 @@
     </div>
     <div class="container py-5 my-5 text-center">
         <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-        <h1 class="text-argavell font-bauer">Our business is not just about selling skincare.<br>
-            It’s about giving people <strong>a solution & an opportunity</strong><br>
-            to appear outstanding amongst their peers.</h1>
+        <h3 class="text-argavell font-bauer">Our business is not just about selling skincare.
+            It’s about giving people <strong>a solution & an opportunity</strong>
+            to appear outstanding amongst their peers.</h3>
     </div>
-    <div class="row w-100 landing-showcase-background text-center py-5 m-0"
-        style="background-image: url({{ asset('images/landing-argan-oil.jpg') }})">
-        <h1 class="font-bauer text-white my-5">Which Argavell Product Made<br>You Fall In Love?</h1>
-        <a href="#" class="text-decoration-none d-none d-sm-block">
-            <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
-        <a href="#" class="text-decoration-none d-block d-sm-none">
-            <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
+    <div class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative" style="height:45vh;">
+        <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
+            style="height: 100%;object-fit: cover;">
+        <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
+            <h1 class="font-bauer text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
+            <a href="#" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+            <a href="#" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+        </div>
     </div>
     <div class="container py-5 text-center">
         <h1 class="text-argavell font-weight-bold font-bauer text-center mt-5">Find us at</h1>
