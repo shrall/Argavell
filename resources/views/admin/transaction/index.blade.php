@@ -89,7 +89,7 @@
     </div>
     <div class="d-none align-items-center gx-3 mb-3" id="select-all-row">
         <div class="mx-2" id="select-all-checkbox">
-            <input type="checkbox" />
+            <input type="checkbox" id="check-all" />
             <span class="font-weight-bold ms-2">Select All</span>
         </div>
         <div class="mx-2 d-block" id="select-all-accept">
@@ -229,5 +229,11 @@
                 $('#select-all-invoice').removeClass('d-block').addClass('d-none')
             }
         }
+    </script>
+    <script>
+        // checkall
+        $("#check-all").click(function() {
+            $('input:checkbox').not(this).prop('checked', this.checked);
+        });
     </script>
 @endsection

@@ -16,6 +16,7 @@ class TransactionController extends Controller
     public function index()
     {
         $this->check_response_limit();
+        $this->check_shipping_etd();
         $transactions = Transaction::paginate(2);
         return view('admin.transaction.index', compact('transactions'));
     }
@@ -175,6 +176,18 @@ class TransactionController extends Controller
             if ((strtotime($transaction->created_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '4') {
                 $transaction->update([
                     'status' => '2'
+                ]);
+            }
+        }
+    }
+
+    function check_shipping_etd()
+    {
+        $transactions = Transaction::all();
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->created_at . ' +' . $transaction->shipment_etd . ' day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '3') {
+                $transaction->update([
+                    'status' => '1'
                 ]);
             }
         }

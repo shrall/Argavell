@@ -12,7 +12,7 @@
                     @elseif ($transaction->status == '3')
                         <span class="font-weight-bold">Dalam Pengiriman</span>
                     @elseif ($transaction->status == '4')
-                        <input type="checkbox" class="checkbox-transaction" />
+                        <input type="checkbox" name="transaction_checkbox_new{{$transaction->id}}" value={{$transaction->id}} class="checkbox-transaction-new" />
                         <span class="font-weight-bold ms-2">Pesanan Baru</span>
                     @elseif ($transaction->status == '5')
                         <input type="checkbox" class="checkbox-transaction" />
