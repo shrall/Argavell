@@ -146,41 +146,57 @@ class TransactionController extends Controller
     }
     function fetch_data_all_search(Request $request)
     {
-        $transactions = Transaction::whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
     function fetch_data_new_search(Request $request)
     {
-        $transactions = Transaction::where('status', '4')->whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::where('status', '4')->whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('status', '4')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
     function fetch_data_ready_search(Request $request)
     {
-        $transactions = Transaction::where('status', '5')->whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::where('status', '5')->whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('status', '5')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
     function fetch_data_ondelivery_search(Request $request)
     {
-        $transactions = Transaction::where('status', '3')->whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::where('status', '3')->whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('status', '3')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
@@ -191,21 +207,29 @@ class TransactionController extends Controller
 
     function fetch_data_canceled_search(Request $request)
     {
-        $transactions = Transaction::where('status', '2')->whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::where('status', '2')->whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('status', '2')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
     function fetch_data_delivered_search(Request $request)
     {
-        $transactions = Transaction::where('status', '1')->whereHas('carts', function (Builder $query)  use ($request) {
-            $query->whereHas('product', function (Builder $query)  use ($request) {
-                $query->where('name', 'like', '%'. $request->data . '%');
-            });
-        })->get();
+        if ($request->has('data')) {
+            $transactions = Transaction::where('status', '1')->whereHas('carts', function (Builder $query)  use ($request) {
+                $query->whereHas('product', function (Builder $query)  use ($request) {
+                    $query->where('name', 'like', '%' . $request->data . '%');
+                });
+            })->get();
+        } else {
+            $transactions = Transaction::where('status', '1')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 

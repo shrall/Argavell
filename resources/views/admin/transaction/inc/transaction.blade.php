@@ -29,7 +29,7 @@
                 </div>
                 <div class="mx-2">
                     <span
-                        class="far fa-fw fa-clock me-1"></span>{{ date('j F Y, g:i a', strtotime($transaction->updated_at)) }}
+                        class="far fa-fw fa-clock me-1"></span>{{ date('j F Y, g:i a', strtotime($transaction->created_at)) }}
                 </div>
                 <div class="ms-auto @if ($transaction->status != '4') invisible @endif">
                     <span class="me-2">Batas Respon</span>

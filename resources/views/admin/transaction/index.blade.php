@@ -79,7 +79,7 @@
                             <div class="col-3 position-relative">
                                 <span
                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-5 fs-6 text-secondary"></span>
-                                <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" class="form-control" />
+                                <input type="text" name="daterange"  class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -141,6 +141,19 @@
             }, function(start, end, label) {
                 console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
                     .format('YYYY-MM-DD'));
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+                        _token: CSRF_TOKEN,
+                        start: start.format('YYYY-MM-DD'),
+                        end: end.format('YYYY-MM-DD')
+                    })
+                    .done(function(data) {
+                        // console.log(data)
+                        $('#transaction-container').html(data);
+                    })
+                    .fail(function(error) {
+                        console.log(error);
+                    });
             });
         });
     </script>
@@ -214,7 +227,6 @@
                     data: $('#input-search').val()
                 })
                 .done(function(data) {
-                    // console.log(data)
                     $('#transaction-container').html(data);
                 })
                 .fail(function(error) {
