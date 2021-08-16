@@ -48,13 +48,13 @@
                     <h1 class="font-weight-bold" style="font-size: 4rem">Non Tunai</h1>
                 </div>
                 <div class="d-flex items-start justify-content-between mb-1 px-5 py-4">
-                    <h1 style="font-size: 3rem">{{$transaction->order_number}}</h1>
+                    <h1 style="font-size: 3rem">{{ $transaction->order_number }}</h1>
                 </div>
                 <div class="row items-center px-5 py-4 mb-3">
-                    <div class="col-3"></div>
+                    <div class="col-3">{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</div>
                     <div class="col-4 d-flex flex-column">
                         <h1 style="font-size: 3rem">Kurir</h1>
-                        <h1 class="font-weight-bold" style="font-size: 3rem">{{$transaction->shipment_name}}</h1>
+                        <h1 class="font-weight-bold" style="font-size: 3rem">{{ $transaction->shipment_name }}</h1>
                     </div>
                     <div class="col-2 d-flex flex-column">
                         <h1 style="font-size: 3rem">Berat</h1>
@@ -62,11 +62,12 @@
                     </div>
                     <div class="col-3 d-flex flex-column">
                         <h1 style="font-size: 3rem">Ongkir</h1>
-                        <h1 class="font-weight-bold" style="font-size: 3rem">Rp {{$transaction->shipping_cost}}</h1>
+                        <h1 class="font-weight-bold" style="font-size: 3rem">Rp {{ $transaction->shipping_cost }}</h1>
                     </div>
                 </div>
                 <div class="label-info mx-5 mb-1">
-                    <h1 class="px-5 py-4"><i>Penjual tidak perlu bayar apapun ke kurir, sudah dibayarkan otomatis.</i></h1>
+                    <h1 class="px-5 py-4"><i>Penjual tidak perlu bayar apapun ke kurir, sudah dibayarkan otomatis.</i>
+                    </h1>
                 </div>
             </div>
         </div>
