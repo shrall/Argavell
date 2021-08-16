@@ -12,7 +12,8 @@
                     @elseif ($transaction->status == '3')
                         <span class="font-weight-bold">Dalam Pengiriman</span>
                     @elseif ($transaction->status == '4')
-                        <input type="checkbox" name="transaction_checkbox_new{{$transaction->id}}" value={{$transaction->id}} class="checkbox-transaction-new" />
+                        <input type="checkbox" name="transaction_checkbox_new{{ $transaction->id }}"
+                            value={{ $transaction->id }} class="checkbox-transaction-new" />
                         <span class="font-weight-bold ms-2">Pesanan Baru</span>
                     @elseif ($transaction->status == '5')
                         <input type="checkbox" class="checkbox-transaction" />
@@ -33,7 +34,9 @@
                 <div class="ms-auto @if ($transaction->status != '4') invisible @endif">
                     <span class="me-2">Batas Respon</span>
                     <a href="#" class="btn btn-warning btn-panel text-white text-decoration-none">
-                        <span class="far fa-fw fa-clock me-1"></span>{{round((strtotime($transaction->created_at . ' +1 day')-strtotime(\Carbon\Carbon::now()))/60/60)}} Jam
+                        <span
+                            class="far fa-fw fa-clock me-1"></span>{{ round((strtotime($transaction->created_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) / 60 / 60) }}
+                        Jam
                     </a>
                 </div>
             </div>
@@ -127,4 +130,12 @@
         </div>
     </div>
 @endforeach
-{{ $transactions->links() }}
+@if (Route::current()->getName() == 'admin.transaction.fetchdataall' ||
+Route::current()->getName() == 'admin.transaction.fetchdatanew' ||
+Route::current()->getName() == 'admin.transaction.fetchdataready' ||
+Route::current()->getName() == 'admin.transaction.fetchdataondelivery' ||
+Route::current()->getName() == 'admin.transaction.fetchdatacomplain' ||
+Route::current()->getName() == 'admin.transaction.fetchdatadelivered' ||
+Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
+    {{ $transactions->links() }}
+@endif

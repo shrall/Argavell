@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -102,61 +103,110 @@ class TransactionController extends Controller
         //
     }
 
-    function fetch_data_all(Request $request)
+    function fetch_data_all()
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
-    function fetch_data_new(Request $request)
+    function fetch_data_new()
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::where('status', '4')->paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::where('status', '4')->paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
-    function fetch_data_ready(Request $request)
+    function fetch_data_ready()
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::where('status', '5')->paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::where('status', '5')->paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
-    function fetch_data_ondelivery(Request $request)
+    function fetch_data_ondelivery()
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::where('status', '3')->paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::where('status', '3')->paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
-    function fetch_data_complain(Request $request)
+    function fetch_data_complain()
     {
-        if ($request->ajax()) {
-            //belum
-            $transactions = Transaction::paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        //belum
+        $transactions = Transaction::paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+    }
+    function fetch_data_canceled()
+    {
+        $transactions = Transaction::where('status', '2')->paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
-    function fetch_data_canceled(Request $request)
+    function fetch_data_delivered()
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::where('status', '2')->paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::where('status', '1')->paginate(2);
+        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+    }
+    function fetch_data_all_search(Request $request)
+    {
+        $transactions = Transaction::whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
-    function fetch_data_delivered(Request $request)
+    function fetch_data_new_search(Request $request)
     {
-        if ($request->ajax()) {
-            $transactions = Transaction::where('status', '1')->paginate(2);
-            return view('admin.transaction.inc.transaction', compact('transactions'))->render();
-        }
+        $transactions = Transaction::where('status', '4')->whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
+    }
+
+    function fetch_data_ready_search(Request $request)
+    {
+        $transactions = Transaction::where('status', '5')->whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
+    }
+
+    function fetch_data_ondelivery_search(Request $request)
+    {
+        $transactions = Transaction::where('status', '3')->whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
+    }
+
+    function fetch_data_complain_search(Request $request)
+    {
+        //belum
+    }
+
+    function fetch_data_canceled_search(Request $request)
+    {
+        $transactions = Transaction::where('status', '2')->whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
+    }
+
+    function fetch_data_delivered_search(Request $request)
+    {
+        $transactions = Transaction::where('status', '1')->whereHas('carts', function (Builder $query)  use ($request) {
+            $query->whereHas('product', function (Builder $query)  use ($request) {
+                $query->where('name', 'like', '%'. $request->data . '%');
+            });
+        })->get();
+        return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
     function view_label()

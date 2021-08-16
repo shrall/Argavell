@@ -107,6 +107,14 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::get('transaction/pagination/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain'])->name('transaction.fetchdatacomplain');
     Route::get('transaction/pagination/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered'])->name('transaction.fetchdatadelivered');
     Route::get('transaction/pagination/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled'])->name('transaction.fetchdatacanceled');
+
+    Route::post('transaction/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all_search'])->name('transaction.fetchdataall.search');
+    Route::post('transaction/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new_search'])->name('transaction.fetchdatanew.search');
+    Route::post('transaction/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready_search'])->name('transaction.fetchdataready.search');
+    Route::post('transaction/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery_search'])->name('transaction.fetchdataondelivery.search');
+    Route::post('transaction/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain_search'])->name('transaction.fetchdatacomplain.search');
+    Route::post('transaction/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered_search'])->name('transaction.fetchdatadelivered.search');
+    Route::post('transaction/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled_search'])->name('transaction.fetchdatacanceled.search');
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');

@@ -59,8 +59,8 @@
                             <div class="col-3 position-relative">
                                 <span
                                     class="fa fa-fw fa-search position-absolute top-50 start-0 translate-middle-y ps-4 fs-6 text-secondary"></span>
-                                <input type="text" name="" id="" class="form-control ps-5"
-                                    placeholder="Search by product name">
+                                <input type="text" id="input-search" class="form-control ps-5"
+                                    onkeyup="fetch_data_by_name();" placeholder="Search by product name">
                             </div>
                             <div class="col-3">
                                 <select class="form-select" id="" name="">
@@ -205,6 +205,21 @@
                     $('#transaction-container').html(data);
                 }
             });
+        }
+
+        function fetch_data_by_name() {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+                    _token: CSRF_TOKEN,
+                    data: $('#input-search').val()
+                })
+                .done(function(data) {
+                    // console.log(data)
+                    $('#transaction-container').html(data);
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
         }
 
         function changePageMenu() {
