@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TransactionController extends Controller
 {
@@ -265,5 +267,12 @@ class TransactionController extends Controller
                 ]);
             }
         }
+    }
+
+    function export()
+    {
+        // $transactions = Transaction::all();
+        // return view('admin.transaction.export', compact('transactions'));
+        return Excel::download(new TransactionExport('all'), 'laporan_penjualan.xlsx');
     }
 }

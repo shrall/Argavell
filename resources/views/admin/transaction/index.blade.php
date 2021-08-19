@@ -15,11 +15,12 @@
     </div>
     <div class="row justify-content-start mb-3">
         <div class="col-12 text-start">
-            <a href="#" class="btn btn-admin-light shadow-sm text-decoration-none">
+            <a href="#" class="btn btn-admin-light shadow-sm text-decoration-none" data-bs-toggle="modal" data-bs-target="#reportModal">
                 <span class="fa fa-fw fa-download me-2"></span>Download Laporan Penjualan
             </a>
         </div>
     </div>
+    @include('admin.transaction.inc.modal.report')
     <div class="row mb-3">
         <div class="card">
             <div class="card-body">
