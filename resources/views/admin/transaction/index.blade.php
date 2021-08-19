@@ -80,7 +80,7 @@
                             <div class="col-3 position-relative">
                                 <span
                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-5 fs-6 text-secondary"></span>
-                                <input type="text" name="daterange"  class="form-control" />
+                                <input type="text" name="daterange" id="filter-date" class="form-control" />
                             </div>
                         </div>
                     </div>
@@ -137,11 +137,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         $(function() {
-            $('input[name="daterange"]').daterangepicker({
+            $('#filter-date').daterangepicker({
                 opens: 'left'
             }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end
-                    .format('YYYY-MM-DD'));
                 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                         _token: CSRF_TOKEN,
