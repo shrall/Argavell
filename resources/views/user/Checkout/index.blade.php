@@ -32,7 +32,7 @@
                 @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                     <div class="row my-2">
                         <div class="col-3">
-                            <img src="{{ asset('products/' . $item->product->img) }}" class="w-100 rounded">
+                            <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}<span
@@ -233,7 +233,7 @@
                 @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                     <div class="row my-2">
                         <div class="col-3">
-                            <img src="{{ asset('products/' . $item->product->img) }}" class="w-100 rounded">
+                            <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}<span

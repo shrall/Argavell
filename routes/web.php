@@ -120,6 +120,8 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
 
     Route::get('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
 
+    Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
+
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');

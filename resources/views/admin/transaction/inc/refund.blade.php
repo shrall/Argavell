@@ -23,7 +23,7 @@
                 <div class="col-5">
                     <div class="row">
                         <div class="col-3 col-xxl-2">
-                            <img src="{{ asset('products/' . $refund->transaction->carts[0]->product->img) }}"
+                            <img src="{{ asset('uploads/products/' . $refund->transaction->carts[0]->product->img) }}"
                                 class="rounded" width="75px">
                         </div>
                         <div class="col-9 col-xxl-10">

@@ -6,7 +6,7 @@
                     <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
                         <a href="{{ route('product.show', $product->slug) }}">
                             <div class="landing-product position-relative w-100 mb-3"
-                                style="background-image: url({{ asset('products/' . $product->img) }})">
+                                style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
                                 @if ($product->price_discount != null)
                                     <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                     </div>
@@ -32,7 +32,7 @@
                 <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
                     <a href="{{ route('product.show', $product->slug) }}">
                         <div class="landing-product position-relative w-100 mb-3"
-                            style="background-image: url({{ asset('products/' . $product->img) }})">
+                            style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
                             @if ($product->price_discount != null)
                                 <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
                             @endif

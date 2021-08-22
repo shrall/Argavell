@@ -18,7 +18,7 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="{{ asset('products/' . $transaction->carts[0]->product->img) }}"
+                                    <img src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
                                         class="rounded" width="75px">
                                 </div>
                                 <div class="col-9">

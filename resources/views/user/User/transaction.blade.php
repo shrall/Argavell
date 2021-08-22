@@ -28,7 +28,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col-6 col-sm-4"><img
-                                            src="{{ asset('products/' . $transaction->carts[0]->product->img) }}"
+                                            src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
                                     <div class="col-4 col-sm-6">
@@ -133,7 +133,7 @@
                         @foreach ($transaction->carts as $item)
                             <div class="col-12 mx-2 my-2">
                                 <div class="row">
-                                    <div class="col-2"><img src="{{ asset('products/' . $item->product->img) }}"
+                                    <div class="col-2"><img src="{{ asset('uploads/products/' . $item->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
                                     <div class="col-7">{{ $item->qty }}x {{ $item->product->name }}</div>

@@ -1,6 +1,6 @@
 <div class="row align-items-stretch py-2 d-none d-sm-flex cart-row{{ $item->id }}" id="">
     <div class="col-4">
-        <img src="{{ asset('products/' . $item->product->img) }}" width="100px" class="rounded-3">
+        <img src="{{ asset('uploads/products/' . $item->product->img) }}" width="100px" class="rounded-3">
     </div>
     <div class="col-8">
         <div class="row">
@@ -40,7 +40,7 @@
 </div>
 <div class="row align-items-stretch py-2 d-flex d-sm-none cart-mobile-row{{ $item->id }}" id="">
     <div class="col-4">
-        <img src="{{ asset('products/' . $item->product->img) }}" width="100px" class="rounded-3">
+        <img src="{{ asset('uploads/products/' . $item->product->img) }}" width="100px" class="rounded-3">
     </div>
     <div class="col-8">
         <div class="row">

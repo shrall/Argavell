@@ -4,7 +4,7 @@
     <div class="row w-100 m-0 p-0 py-5 align-items-center">
         <div class="col-md-2"></div>
         <div class="col-md-3">
-            <div class="w-100 product-detail" style="background-image: url({{ asset('products/' . $product->img) }})">
+            <div class="w-100 product-detail" style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
             </div>
         </div>
         <div class="col-md-5">
@@ -206,7 +206,7 @@
                         <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
                             <a href="{{ route('product.show', $bundle->slug) }}">
                                 <div class="landing-product position-relative w-100 mb-3"
-                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
+                                    style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
                                     @if ($bundle->price_discount != null)
                                         <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                         </div>
@@ -263,7 +263,7 @@
                         <div class="col-10 p-0">
                             <a href="{{ route('product.show', $bundle->slug) }}">
                                 <div class="landing-product position-relative w-100 mb-3"
-                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
+                                    style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
                                     @if ($bundle->price_discount != null)
                                         <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                         </div>

@@ -123,11 +123,6 @@
 @endsection
 
 @section('scripts')
-    {{-- date range picker --}}
-    {{-- https://www.daterangepicker.com/ --}}
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         $(function() {
             $('#filter-date').daterangepicker({
@@ -140,7 +135,6 @@
                         end: end.format('YYYY-MM-DD')
                     })
                     .done(function(data) {
-                        // console.log(data)
                         $('#transaction-container').html(data);
                     })
                     .fail(function(error) {

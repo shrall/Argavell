@@ -185,6 +185,11 @@
     color: #888;
 }
 
+.btn-admin-gray{
+    background-color: #adadad;
+    color: #fff;
+}
+
 .btn-panel {
     cursor: context-menu !important;
 }

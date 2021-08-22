@@ -48,8 +48,8 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $bundles = Product::where('bundle', '1')
-            ->where('bundle_start', '>=', Carbon::now())
-            ->where('bundle_end', '<=', Carbon::now())
+            ->where('bundle_start', '<=', Carbon::now())
+            ->where('bundle_end', '>=', Carbon::now())
             ->get();
 
         if ($product->bundle == '1') {
