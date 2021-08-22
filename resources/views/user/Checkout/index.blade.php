@@ -67,6 +67,7 @@
                 <div class="bg-white rounded px-3 py-2 my-3">
                     <input type="hidden" name="price_total" id="summary_subtotal" value="{{ $subtotal - $discount }}">
                     <input type="hidden" name="qty_total" value="{{ $totalqty }}">
+                    <input type="hidden" name="weight_total" value="{{ $weight }}">
                     <input type="hidden" name="shipping_cost" id="shipping_cost">
                     <h2 class="text-argavell font-bauer font-weight-bold">Address Details</h2>
                     <p class="text-secondary">Please complete the following data so that your product arrives correctly and

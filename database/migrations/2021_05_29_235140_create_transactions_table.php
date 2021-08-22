@@ -25,6 +25,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('shipping_cost');
             $table->integer('price_total');
             $table->integer('qty_total');
+            $table->integer('weight_total')->comment('gram');
             $table->enum('is_cetak', ['0', '1'])
                 ->default('0')
                 ->comment('0 = No, 1 = Yes');

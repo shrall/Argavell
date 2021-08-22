@@ -16,7 +16,9 @@
                             value={{ $transaction->id }} class="checkbox-transaction-new" />
                         <span class="font-weight-bold ms-2">Pesanan Baru</span>
                     @elseif ($transaction->status == '5')
-                        <input type="checkbox" class="checkbox-transaction" />
+                        <input type="checkbox" name="transaction_checkbox_label{{ $transaction->id }}"
+                            class="checkbox-transaction-label" id="checkbox-transaction-label{{ $transaction->id }}"
+                            value={{ $transaction->id }} onclick="addLabelToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold ms-2">Siap Dikirim</span>
                     @endif
                 </div>
@@ -46,8 +48,8 @@
                 <div class="col-5">
                     <div class="row">
                         <div class="col-3 col-xxl-2">
-                            <img src="{{ asset('products/' . $transaction->carts[0]->product->img) }}" class="rounded"
-                                width="75px">
+                            <img src="{{ asset('products/' . $transaction->carts[0]->product->img) }}"
+                                class="rounded" width="75px">
                         </div>
                         <div class="col-9 col-xxl-10">
                             <div class="row">
@@ -130,12 +132,6 @@
         </div>
     </div>
 @endforeach
-@if (Route::current()->getName() == 'admin.transaction.fetchdataall' ||
-Route::current()->getName() == 'admin.transaction.fetchdatanew' ||
-Route::current()->getName() == 'admin.transaction.fetchdataready' ||
-Route::current()->getName() == 'admin.transaction.fetchdataondelivery' ||
-Route::current()->getName() == 'admin.transaction.fetchdatacomplain' ||
-Route::current()->getName() == 'admin.transaction.fetchdatadelivered' ||
-Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
+@if (Route::current()->getName() == 'admin.transaction.fetchdataall' || Route::current()->getName() == 'admin.transaction.fetchdatanew' || Route::current()->getName() == 'admin.transaction.fetchdataready' || Route::current()->getName() == 'admin.transaction.fetchdataondelivery' || Route::current()->getName() == 'admin.transaction.fetchdatacomplain' || Route::current()->getName() == 'admin.transaction.fetchdatadelivered' || Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
     {{ $transactions->links() }}
 @endif

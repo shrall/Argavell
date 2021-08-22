@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('price_discount')->nullable();
             $table->integer('stock');
+            $table->integer('weight')->comment('gram');
             $table->text('description');
             $table->json('size');
             $table->json('facts');

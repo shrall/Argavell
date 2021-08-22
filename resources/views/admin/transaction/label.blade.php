@@ -29,47 +29,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @page { margin: 0; }
+        table {
+            border-left: 0;
+            border-right: 0;
+            border-top: 0;
+            border-bottom: 0;
+            border-spacing: -1px;
+        }
+
+        table td,
+        table th {
+            border-left: 0;
+            border-right: 0;
+            border-top: 0;
+            border-bottom: 0;
+        }
+
+    </style>
 </head>
 
 <body>
     <div class="font-proxima-nova">
-        <div style="background-color: #FFF7F0">
-            <div class="container py-3">
-                <div class="d-flex items-center justify-content-between mb-3">
-                    <h1 class="text-argavell text-start font-weight-bold">Cetak Label</h1>
-                    <div class="btn btn-admin-argavell m-2">Cetak Label</div>
-                </div>
-            </div>
-        </div>
         <div class="px-4 py-3">
-            <div class="argavell-label">
-                <div class="d-flex items-start justify-content-between mb-3 px-5 py-4">
-                    <img src="{{ asset('images/logo-argavell.png') }}" alt="" width="150" height="150">
-                    <h1 class="font-weight-bold" style="font-size: 4rem">Non Tunai</h1>
-                </div>
-                <div class="d-flex items-start justify-content-between mb-1 px-5 py-4">
-                    <h1 style="font-size: 3rem">{{ $transaction->order_number }}</h1>
-                </div>
-                <div class="row items-center px-5 py-4 mb-3">
-                    <div class="col-3">{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</div>
-                    <div class="col-4 d-flex flex-column">
-                        <h1 style="font-size: 3rem">Kurir</h1>
-                        <h1 class="font-weight-bold" style="font-size: 3rem">{{ $transaction->shipment_name }}</h1>
+            @foreach ($transactions as $transaction)
+                <div class="argavell-label">
+                    <div class="d-flex items-start justify-content-between mb-3 px-5 py-4">
+                        <img src="{{ asset('images/logo-argavell.png') }}" alt="" width="150" height="150">
+                        <h1 class="font-weight-bold" style="font-size: 4rem">Non Tunai</h1>
                     </div>
-                    <div class="col-2 d-flex flex-column">
-                        <h1 style="font-size: 3rem">Berat</h1>
-                        <h1 class="font-weight-bold" style="font-size: 3rem">0,33 Kg</h1>
+                    <div class="d-flex items-start justify-content-between mb-1 px-5 py-4">
+                        <h1 style="font-size: 2rem">{{ $transaction->order_number }}</h1>
                     </div>
-                    <div class="col-3 d-flex flex-column">
-                        <h1 style="font-size: 3rem">Ongkir</h1>
-                        <h1 class="font-weight-bold" style="font-size: 3rem">Rp {{ $transaction->shipping_cost }}</h1>
+                    <div class="px-5 border-0">
+                        <table class="mx-auto w-100 py-4 mb-3 border-0">
+                            <tr>
+                                <td>{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</td>
+                                <td>
+                                    <h1 style="font-size: 2rem">Kurir</h1>
+                                    <h1 class="font-weight-bold" style="font-size: 2rem">
+                                        {{ $transaction->shipment_name }}
+                                    </h1>
+                                </td>
+                                <td>
+                                    <h1 style="font-size: 2rem">Berat</h1>
+                                    <h1 class="font-weight-bold" style="font-size: 2rem">
+                                        {{ $transaction->weight_total / 1000 }}
+                                        kg</h1>
+                                </td>
+                                <td>
+                                    <h1 style="font-size: 2rem">Ongkir</h1>
+                                    <h1 class="font-weight-bold" style="font-size: 2rem">Rp
+                                        {{ $transaction->shipping_cost }}
+                                    </h1>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="label-info mx-5 mb-1">
+                        <h1 class="px-5 py-4"><i>Penjual tidak perlu bayar apapun ke kurir, sudah dibayarkan
+                                otomatis.</i>
+                        </h1>
                     </div>
                 </div>
-                <div class="label-info mx-5 mb-1">
-                    <h1 class="px-5 py-4"><i>Penjual tidak perlu bayar apapun ke kurir, sudah dibayarkan otomatis.</i>
-                    </h1>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </body>

@@ -15,7 +15,7 @@ class Product extends Model
         'name', 'slug',
         'price', 'price_discount', 'stock',
         'description', 'size', 'facts', 'howtouse', 'ingredients',
-        'img', 'type',
+        'img', 'type', 'weight',
         'bundle', 'bundle_start', 'bundle_end'
     ];
 

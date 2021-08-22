@@ -15,7 +15,8 @@
     </div>
     <div class="row justify-content-start mb-3">
         <div class="col-12 text-start">
-            <a href="#" class="btn btn-admin-light shadow-sm text-decoration-none" data-bs-toggle="modal" data-bs-target="#reportModal">
+            <a href="#" class="btn btn-admin-light shadow-sm text-decoration-none" data-bs-toggle="modal"
+                data-bs-target="#reportModal">
                 <span class="fa fa-fw fa-download me-2"></span>Download Laporan Penjualan
             </a>
         </div>
@@ -98,13 +99,9 @@
                 Terima Pesanan
             </button>
         </div>
-        {{-- <div class="mx-2 d-block" id="select-all-send">
-            <button class="btn btn-admin-light shadow-sm text-decoration-none">
-                Kirim Pesanan
-            </button>
-        </div> --}}
         <div class="mx-2 d-none" id="select-all-label">
-            <button class="btn btn-admin-light shadow-sm text-decoration-none">
+            <button class="btn btn-admin-light shadow-sm text-decoration-none" data-bs-toggle="modal"
+                data-bs-target="#labelModal">
                 Cetak Label
             </button>
         </div>
@@ -113,12 +110,8 @@
                 Cetak Invoice
             </button>
         </div>
-        {{-- <div class="mx-2 d-block" id="select-all-list">
-            <button class="btn btn-admin-light shadow-sm text-decoration-none">
-                Download Daftar Produk
-            </button>
-        </div> --}}
     </div>
+    @include('admin.transaction.inc.modal.label')
     <div class="row gy-3" id="transaction-container">
         @include('admin.transaction.inc.transaction')
     </div>
@@ -210,13 +203,17 @@
         });
 
         function fetch_data(page, method) {
+            emptyLabelArray();
             changePageMenu();
             $.ajax({
-                url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
-                success: function(data) {
-                    $('#transaction-container').html(data);
-                }
-            });
+                    url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
+                    success: function(data) {
+                        $('#transaction-container').html(data);
+                    }
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
         }
 
         function fetch_data_by_name() {
@@ -258,8 +255,66 @@
     </script>
     <script>
         // checkall
+        var label_array = []
+
+        function emptyLabelArray() {
+            label_array = []
+            $('#transaction-label').val(label_array);
+            $('#label-description').text('Anda akan mencetak label untuk ' + label_array.length +
+                ' pesanan sekaligus')
+            $('#button-label-submit').prop("disabled", true);
+        }
+
+        function addLabelToArray(id) {
+            if ($('#checkbox-transaction-label' + id).is(":checked")) {
+                label_array.push($('#checkbox-transaction-label' + id).val());
+                $('#transaction-label').val(label_array);
+                $('#label-description').text('Anda akan mencetak label untuk ' + label_array
+                    .length +
+                    ' pesanan sekaligus')
+                if (label_array.length > 0) {
+                    $('#button-label-submit').prop("disabled", false);
+                } else {
+                    $('#button-label-submit').prop("disabled", true);
+                }
+            } else {
+                const index = label_array.indexOf($('#checkbox-transaction-label' + id).val());
+                label_array.splice(index, 1);
+                $('#transaction-label').val(label_array);
+                $('#label-description').text('Anda akan mencetak label untuk ' + label_array
+                    .length +
+                    ' pesanan sekaligus')
+                if (label_array.length > 0) {
+                    $('#button-label-submit').prop("disabled", false);
+                } else {
+                    $('#button-label-submit').prop("disabled", true);
+                }
+            }
+        }
         $("#check-all").click(function() {
-            $('input:checkbox').not(this).prop('checked', this.checked);
+            if (!$("#check-all").is(":checked")) {
+                //kalau ada yang kecentang dari semua checkbox dia ngilangin semuanya dulu
+                $('.checkbox-transaction-label').each(function() {
+                    this.checked = false;
+                });
+                emptyLabelArray();
+            } else {
+                $('.checkbox-transaction-label').each(function() {
+                    if (!this.checked) {
+                        this.checked = true;
+                        label_array.push($(this).val());
+                        $('#transaction-label').val(label_array);
+                        $('#label-description').text('Anda akan mencetak label untuk ' + label_array
+                            .length +
+                            ' pesanan sekaligus')
+                        if (label_array.length > 0) {
+                            $('#button-label-submit').prop("disabled", false);
+                        } else {
+                            $('#button-label-submit').prop("disabled", true);
+                        }
+                    }
+                });
+            }
         });
     </script>
 @endsection

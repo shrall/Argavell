@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
+use SnappyImage;
 
 class TransactionController extends Controller
 {
@@ -235,14 +238,27 @@ class TransactionController extends Controller
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
 
-    function view_label()
+    function view_label_transaction(Request $request)
     {
-        return view('admin.transaction.label');
+        $transactions = Transaction::whereIn('id', $request->transaction_label)->get();
+        return view('admin.transaction.create_label', compact('transactions'));
     }
 
-    function view_label_transaction(Transaction $transaction)
+    function download_label_transaction(Request $request)
     {
-        return view('admin.transaction.label', compact('transaction'));
+        $transactions_label = explode(",", $request->transaction_label[0]);
+        $transactions = Transaction::whereIn('id', $transactions_label)->get();
+        if ($request->checkbox_cetak == 'on') {
+            foreach ($transactions as $transaction) {
+                $transaction->update([
+                    'is_cetak' => '1'
+                ]);
+            }
+        }
+        $pdf = PDF::loadview('admin.transaction.label', ['transactions' => $transactions])
+            ->setOption('page-width', 200)
+            ->setOption('page-height', 180);
+        return $pdf->download('label-' . Carbon::now() . '.pdf');
     }
 
     function check_response_limit()

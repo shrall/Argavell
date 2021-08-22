@@ -23,6 +23,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 13000;
         $transaction->price_total = 560000;
         $transaction->qty_total = 5;
+        $transaction->weight_total = 1000;
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
@@ -37,6 +38,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->nomor_resi = '01kd0k1002ke0';
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
@@ -52,6 +54,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
@@ -66,6 +69,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->nomor_resi = '01kd0k1002ke0';
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
@@ -81,6 +85,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
@@ -95,6 +100,7 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
@@ -109,10 +115,41 @@ class TransactionSeeder extends Seeder
         $transaction->shipping_cost = 11000;
         $transaction->price_total = 130000;
         $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
         $transaction->payment_id = 1;
         $transaction->user_id = 1;
         $transaction->address_id = 1;
         $transaction->is_cetak = '1';
+        $transaction->save();
+
+        $transaction = new Transaction();
+        $transaction->status = '5';
+        $transaction->order_number = '5 = Confirmed - 1';
+        $transaction->date = '2021-06-06';
+        $transaction->shipment_name = 'SiCepat';
+        $transaction->shipment_etd = 3;
+        $transaction->shipping_cost = 11000;
+        $transaction->price_total = 130000;
+        $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
+        $transaction->payment_id = 1;
+        $transaction->user_id = 1;
+        $transaction->address_id = 1;
+        $transaction->save();
+
+        $transaction = new Transaction();
+        $transaction->status = '5';
+        $transaction->order_number = '5 = Confirmed - 2';
+        $transaction->date = '2021-06-06';
+        $transaction->shipment_name = 'SiCepat';
+        $transaction->shipment_etd = 3;
+        $transaction->shipping_cost = 11000;
+        $transaction->price_total = 130000;
+        $transaction->qty_total = 1;
+        $transaction->weight_total = 1000;
+        $transaction->payment_id = 1;
+        $transaction->user_id = 1;
+        $transaction->address_id = 1;
         $transaction->save();
     }
 }

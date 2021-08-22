@@ -98,8 +98,10 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('reseller', AdminResellerController::class);
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
-    Route::get('transaction/label/view', [AdminTransactionController::class, 'view_label'])->name('transaction.viewlabel');
-    Route::get('transaction/label/view/{transaction}', [AdminTransactionController::class, 'view_label_transaction'])->name('transaction.viewlabeltransaction');
+
+    Route::post('transaction/label/view', [AdminTransactionController::class, 'view_label_transaction'])->name('transaction.viewlabeltransaction');
+    Route::post('transaction/label/download', [AdminTransactionController::class, 'download_label_transaction'])->name('transaction.downloadlabeltransaction');
+
     Route::get('transaction/pagination/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all'])->name('transaction.fetchdataall');
     Route::get('transaction/pagination/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new'])->name('transaction.fetchdatanew');
     Route::get('transaction/pagination/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready'])->name('transaction.fetchdataready');

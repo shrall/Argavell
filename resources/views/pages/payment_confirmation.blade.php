@@ -15,7 +15,7 @@
                     <div class="row mb-3">
                         <div class="col-12">
                             <input id="order_number" type="text" class="form-control" name="order_number" required
-                                autocomplete="order_number" placeholder="Enter your phone number">
+                                autocomplete="order_number" placeholder="Enter Order Number">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
