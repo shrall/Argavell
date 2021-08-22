@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
             ResellerSeeder::class,
             FaqSeeder::class,
             PolicySeeder::class,
-            RefundSeeder::class,
             TncSeeder::class,
             AddressSeeder::class,
             ProductSeeder::class,
             TransactionSeeder::class,
+            RefundSeeder::class,
             ProofSeeder::class,
             CartSeeder::class,
             BundleSeeder::class

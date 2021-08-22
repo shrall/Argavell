@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Refund;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,12 +45,13 @@ class RefundController extends Controller
             $condition = null;
         }
 
+        $transaction = Transaction::where('order_number', $request['order_number'])->first();
         Refund::create([
             'name' => $request['name'],
-            'order_number' => $request['order_number'],
             'occasion' => $request['occasion'],
             'phone' => $request['phone_number'],
             'condition' => $condition,
+            'transaction_id' => $transaction->id,
             'user_id' => Auth::id(),
         ]);
 

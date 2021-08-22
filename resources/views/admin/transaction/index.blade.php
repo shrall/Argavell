@@ -178,10 +178,9 @@
         });
 
         $('#dikomplain-tab').click(function() {
-            //belum
-            // method = 'complain'
-            // page = 1
-            // fetch_data(page, method);
+            method = 'complain'
+            page = 1
+            fetch_data(page, method);
         });
 
         $('#pesanan-selesai-tab').click(function() {
@@ -231,7 +230,7 @@
         }
 
         function changePageMenu() {
-            if (method != 'all' && method != 'ondelivery' && method != 'canceled') {
+            if (method != 'all' && method != 'ondelivery' && method != 'canceled' && method != 'complain') {
                 $('#select-all-row').removeClass('d-none').addClass('d-flex')
             } else {
                 $('#select-all-row').removeClass('d-flex').addClass('d-none')

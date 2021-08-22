@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
+use App\Models\Refund;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -134,9 +135,8 @@ class TransactionController extends Controller
 
     function fetch_data_complain()
     {
-        //belum
-        $transactions = Transaction::paginate(2);
-        return view('admin.transaction.inc.transaction', compact('transactions'))->render();
+        $refunds = Refund::paginate(2);
+        return view('admin.transaction.inc.refund', compact('refunds'))->render();
     }
     function fetch_data_canceled()
     {
