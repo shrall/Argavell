@@ -5,11 +5,13 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
     use Sluggable;
+    // use SoftDeletes;
 
     protected $fillable = [
         'name', 'slug',
@@ -41,4 +43,14 @@ class Product extends Model
     public function bundles() {
         return $this->hasMany(Bundle::class, 'bundle_id', 'id');
     }
+    // protected static function boot()
+    // {
+    //     static::deleting(function ($instance) {
+    //         $instance->child->each->delete();
+    //     });
+
+    //     static::restoring(function ($instance) {
+    //         $instance->child->each->restore();
+    //     });
+    // }
 }

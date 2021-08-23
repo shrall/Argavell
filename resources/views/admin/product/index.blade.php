@@ -70,7 +70,7 @@
                                     <td>{{ $product->stock }}</td>
                                     <td>{{ $product->price }}</td>
                                     <td>
-                                        <a href="{{ route('admin.product.show', $product->id) }}"
+                                        <a href="{{ route('admin.product.edit', $product->slug) }}"
                                             class="btn btn-admin-argavell-light">See Details</a>
                                     </td>
                                 </tr>

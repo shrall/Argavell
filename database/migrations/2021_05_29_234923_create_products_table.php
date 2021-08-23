@@ -35,6 +35,7 @@ class CreateProductsTable extends Migration
             ->comment('0 = No, 1 = Yes');
             $table->datetime('bundle_start')->nullable();
             $table->datetime('bundle_end')->nullable();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

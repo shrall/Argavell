@@ -15,9 +15,9 @@ class AddForeignKeysToRefunds extends Migration
     {
         Schema::table('refunds', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->index()->after('condition');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('transaction_id')->index()->after('user_id');
-            $table->foreign('transaction_id')->references('id')->on('transactions');
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
         });
     }
 

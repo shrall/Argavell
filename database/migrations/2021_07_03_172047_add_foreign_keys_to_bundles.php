@@ -15,9 +15,9 @@ class AddForeignKeysToBundles extends Migration
     {
         Schema::table('bundles', function (Blueprint $table) {
             $table->unsignedBigInteger('bundle_id')->index()->after('id');
-            $table->foreign('bundle_id')->references('id')->on('products');
+            $table->foreign('bundle_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('product_id')->index()->after('bundle_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
