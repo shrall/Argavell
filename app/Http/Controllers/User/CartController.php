@@ -79,15 +79,30 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->id);
-        $cart = Cart::create([
-            'qty' => $request->quantity,
-            'size' => $request->size . "ml",
-            'price' => $product['price'],
-            'price_discount' => $product['price_discount'],
-            'product_id' => $request->id,
-            'user_id' => Auth::id(),
-            'transaction_id' => null
-        ]);
+        if(Auth::user()->carts->where('transaction_id', null )->where('product_id', $product->id)->first()){
+            return 'false';
+        }
+        if ($product['stock'] > $request->quantity) {
+            $cart = Cart::create([
+                'qty' => $request->quantity,
+                'size' => $request->size . "ml",
+                'price' => $product['price'],
+                'price_discount' => $product['price_discount'],
+                'product_id' => $request->id,
+                'user_id' => Auth::id(),
+                'transaction_id' => null
+            ]);
+        } else {
+            $cart = Cart::create([
+                'qty' => $product['stock'],
+                'size' => $request->size . "ml",
+                'price' => $product['price'],
+                'price_discount' => $product['price_discount'],
+                'product_id' => $request->id,
+                'user_id' => Auth::id(),
+                'transaction_id' => null
+            ]);
+        }
         $item = $cart;
         return view('inc.cart.product', compact('item'));
     }
@@ -142,10 +157,14 @@ class CartController extends Controller
     public function add_item(Request $request)
     {
         $item = Cart::find($request->id);
-        $item->update([
-            'qty' => $item['qty'] + 1
-        ]);
-        return response()->json($item);
+        if ($item['product']['stock'] >= $item['qty'] + 1) {
+            $item->update([
+                'qty' => $item['qty'] + 1
+            ]);
+            return response()->json($item);
+        } else{
+            return 'false';
+        }
     }
 
     public function subtract_item(Request $request)

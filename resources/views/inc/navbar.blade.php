@@ -152,9 +152,9 @@
     $discount = 0;
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-    $totalqty += $item->qty;
-    $subtotal += $item->price * $item->qty;
-    $discount += $item->price_discount * $item->qty;
+        $totalqty += $item->qty;
+        $subtotal += $item->price * $item->qty;
+        $discount += $item->price_discount * $item->qty;
     }
     ?>
     {{-- cart modal desktop --}}
@@ -309,19 +309,23 @@
                     id: id
                 })
                 .done(function(data) {
-                    $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data['price_discount']));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
-                        'price_discount']));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
-                        'price_discount']));
+                    console.log(data)
+                    if (data != 'false') {
+                        $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
+                        $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
+                        $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data[
+                            'price_discount']));
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
+                            'price_discount']));
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
+                            'price_discount']));
+                    }
                 })
                 .fail(function() {
                     alert('Fail')
@@ -438,7 +442,6 @@
                     });
             }
         }
-
     </script>
 @endauth
 
@@ -453,5 +456,4 @@
         $("#navbar-mobile").removeClass('d-block');
         $("#navbar-mobile").addClass('d-none');
     }
-
 </script>

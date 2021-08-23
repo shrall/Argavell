@@ -4,7 +4,8 @@
     <div class="row w-100 m-0 p-0 py-5 align-items-center">
         <div class="col-md-2"></div>
         <div class="col-md-3">
-            <div class="w-100 product-detail" style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
+            <div class="w-100 product-detail"
+                style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
             </div>
         </div>
         <div class="col-md-5">
@@ -72,7 +73,7 @@
                                     id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="subtractProductQuantity()"></span>
                                 <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
-                                    id="quantity-counter">1
+                                    id="quantity-counter">0
                                 </div>
                                 <span
                                     class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
@@ -84,14 +85,14 @@
                                     id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="subtractProductQuantity()"></span>
                                 <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
-                                    id="quantity-counter">1
+                                    id="quantity-counter">0
                                 </div>
                                 <span
                                     class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
                                     id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="addProductQuantity()"></span>
                             @endif
-                            <input type="hidden" name="quantity" id="quantity" value=1>
+                            <input type="hidden" name="quantity" id="quantity" value=0>
                             <input type="hidden" name="id" id="id" value={{ $product->id }}>
                             <input type="hidden" name="price" id="price" value={{ $product->price }}>
                             <input type="hidden" name="price_discount" id="price_discount"
@@ -102,25 +103,25 @@
                 <div class="my-3">
                     @if ($product->type == '0')
                         <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
+                            data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
                             to Cart</button>
                         <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
+                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
                             to Cart</button>
                     @else
                         <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
+                            data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
                             to Cart</button>
                         <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
                             to Cart</button>
                     @endif
                 </div>
@@ -305,6 +306,11 @@
 @section('scripts')
 
     <script>
+        var product = @json($product);
+        console.log(product);
+    </script>
+
+    <script>
         var triggerTabList = [].slice.call(document.querySelectorAll('#detailTab a'))
         triggerTabList.forEach(function(triggerEl) {
             var tabTrigger = new bootstrap.Tab(triggerEl)
@@ -318,14 +324,22 @@
 
     <script>
         function addProductQuantity() {
-            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
-            $('#quantity').get(0).value++
+            if (parseInt($('#quantity-counter').html()) < product['stock']) {
+                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
+                $('#quantity').get(0).value++
+                if (parseInt($('#quantity-counter').html()) > 0) {
+                    $('.add-to-cart-button').prop("disabled", false);
+                }
+            }
         }
 
         function subtractProductQuantity() {
             if (parseInt($('#quantity-counter').html()) > 0) {
                 $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
                 $('#quantity').get(0).value--
+                if (parseInt($('#quantity-counter').html()) == 0) {
+                    $('.add-to-cart-button').prop("disabled", true);
+                }
             }
         }
     </script>
@@ -341,41 +355,42 @@
                     quantity: parseInt($('#quantity').val()),
                 })
                 .done(function(data) {
-                    console.log(data)
-                    console.log("cart added");
-                    $('#cart-body').append(data);
-                    $('#cart-mobile-body').append(data);
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
-                        .val()));
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(
-                        '#quantity').val()));
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity')
-                        .val()));
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
-                        '#quantity').val()));
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) *
-                        parseInt($('#quantity').val())));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) * parseInt(
-                        $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
-                        parseInt(
-                            $('#quantity').val()))));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($('#price')
-                        .val()) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price')
-                        .val()) * parseInt($('#quantity').val())) - (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
+                    if (data != 'false') {
+                        $('#cart-body').append(data);
+                        $('#cart-mobile-body').append(data);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
+                            .val()));
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(
+                            '#quantity').val()));
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity')
+                            .val()));
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
+                            '#quantity').val()));
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) *
+                            parseInt($('#quantity').val())));
+                        $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt(
+                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
+                        $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) *
+                            parseInt(
+                                $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
+                            parseInt(
+                                $('#quantity').val()))));
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($(
+                                '#price')
+                            .val()) * parseInt($('#quantity').val())));
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt(
+                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price')
+                            .val()) * parseInt($('#quantity').val())) - (parseInt(
+                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
+                    }
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(error) {
+                    console.log(error);
                 })
                 .always(function() {
-                    console.log("always");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
                 });
         }
     </script>

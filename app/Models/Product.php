@@ -43,6 +43,10 @@ class Product extends Model
     public function bundles() {
         return $this->hasMany(Bundle::class, 'bundle_id', 'id');
     }
+
+    public function carts() {
+        return $this->hasMany(Cart::class, 'product_id', 'id');
+    }
     // protected static function boot()
     // {
     //     static::deleting(function ($instance) {
