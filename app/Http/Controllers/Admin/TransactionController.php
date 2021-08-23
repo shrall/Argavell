@@ -207,7 +207,18 @@ class TransactionController extends Controller
 
     function fetch_data_complain_search(Request $request)
     {
-        //belum
+        if ($request->has('data')) {
+            $refunds = Refund::whereHas('transaction', function (Builder $query)  use ($request) {
+                $query->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                });
+            })->get();
+        } else {
+            $refunds = Refund::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+        }
+        return view('admin.transaction.inc.refund', compact('refunds'))->render();
     }
 
     function fetch_data_canceled_search(Request $request)
