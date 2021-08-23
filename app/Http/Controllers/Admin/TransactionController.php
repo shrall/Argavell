@@ -296,10 +296,8 @@ class TransactionController extends Controller
         }
     }
 
-    function export()
+    function export(Request $request)
     {
-        // $transactions = Transaction::all();
-        // return view('admin.transaction.export', compact('transactions'));
-        return Excel::download(new TransactionExport('all'), 'laporan_penjualan.xlsx');
+        return Excel::download(new TransactionExport($request->type, $request->report_date_start, $request->report_date_end), 'laporan_penjualan.xlsx');
     }
 }

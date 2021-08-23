@@ -144,6 +144,26 @@
         });
     </script>
     <script>
+        $(function() {
+            $('#report-date').daterangepicker({
+    "alwaysShowCalendars": true,
+                ranges: {
+                    'Hari Ini': [moment(), moment()],
+                    'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 Hari Terakhir': [moment().subtract(6, 'days'), moment()],
+                    '30 Hari Terakhir': [moment().subtract(29, 'days'), moment()],
+                    'Bulan Ini': [moment().startOf('month'), moment().endOf('month')],
+                    'Bulan Kemarin': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1,
+                        'month').endOf('month')]
+                },
+                opens: 'right'
+            }, function(start, end, label) {
+                $('#report-date-start').val(start.format('YYYY-MM-DD'))
+                $('#report-date-end').val(end.format('YYYY-MM-DD'))
+            });
+        });
+    </script>
+    <script>
         var method = 'all'
         var page = 1
 

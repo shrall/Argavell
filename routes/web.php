@@ -121,7 +121,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('transaction/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered_search'])->name('transaction.fetchdatadelivered.search');
     Route::post('transaction/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled_search'])->name('transaction.fetchdatacanceled.search');
 
-    Route::get('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
+    Route::post('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
 
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
 

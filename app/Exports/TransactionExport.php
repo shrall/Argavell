@@ -13,18 +13,35 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class TransactionExport implements FromView, ShouldAutoSize, WithStyles, WithColumnWidths
 {
 
-    protected $type;
+    protected $type, $start, $end;
 
-    function __construct($type)
+    function __construct($type, $start, $end)
     {
         $this->type = $type;
+        $this->start = $start;
+        $this->end = $end;
     }
 
     public function view(): View
     {
-        return view('admin.transaction.export', [
-            'transactions' => Transaction::all()
-        ]);
+        if ($this->type == 'all') {
+            return view('admin.transaction.export', [
+                'transactions' => Transaction::where('created_at', '>=', $this->start)
+                    ->where('created_at', '<=', $this->end)->get()
+            ]);
+        } else if ($this->type == 'new') {
+            return view('admin.transaction.export', [
+                'transactions' => Transaction::where('created_at', '>=', $this->start)
+                    ->where('created_at', '<=', $this->end)
+                    ->where('status', 4)->get()
+            ]);
+        } else if ($this->type == 'canceled') {
+            return view('admin.transaction.export', [
+                'transactions' => Transaction::where('created_at', '>=', $this->start)
+                    ->where('created_at', '<=', $this->end)
+                    ->where('status', 2)->get()
+            ]);
+        }
     }
     public function styles(Worksheet $sheet)
     {
