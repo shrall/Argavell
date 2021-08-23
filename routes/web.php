@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ResellerController as AdminResellerController;
 use App\Http\Controllers\Admin\TncController as AdminTncController;
 use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AddressController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\TncController;
 use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -98,6 +100,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('reseller', AdminResellerController::class);
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
+    Route::resource('voucher', AdminVoucherController::class);
 
     Route::post('transaction/label/view', [AdminTransactionController::class, 'view_label_transaction'])->name('transaction.viewlabeltransaction');
     Route::post('transaction/label/download', [AdminTransactionController::class, 'download_label_transaction'])->name('transaction.downloadlabeltransaction');

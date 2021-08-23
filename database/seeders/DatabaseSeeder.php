@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            VoucherSeeder::class,
             PaymentSeeder::class,
             UserSeeder::class,
             ResellerSeeder::class,
