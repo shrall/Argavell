@@ -12,12 +12,13 @@
                     @elseif ($transaction->status == '3')
                         <span class="font-weight-bold">Dalam Pengiriman</span>
                     @elseif ($transaction->status == '4')
-                        <input type="checkbox" name="transaction_checkbox_new{{ $transaction->id }}"
-                            value={{ $transaction->id }} class="checkbox-transaction-new" />
+                        <input type="checkbox" name="transaction_checkbox_accept{{ $transaction->id }}"
+                            id="checkbox-transaction-accept{{ $transaction->id }}" class="checkbox-transaction-accept"
+                            value={{ $transaction->id }} onclick="addAcceptToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold ms-2">Pesanan Baru</span>
                     @elseif ($transaction->status == '5')
                         <input type="checkbox" name="transaction_checkbox_label{{ $transaction->id }}"
-                            class="checkbox-transaction-label" id="checkbox-transaction-label{{ $transaction->id }}"
+                            id="checkbox-transaction-label{{ $transaction->id }}" class="checkbox-transaction-label"
                             value={{ $transaction->id }} onclick="addLabelToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold ms-2">Siap Dikirim</span>
                     @endif
@@ -81,7 +82,8 @@
                         <p class="my-0">Nomor Resi</p>
                         <input type="text" name="input-resi{{ $loop->iteration }}"
                             id="input-resi{{ $loop->iteration }}" class="form-control"
-                            placeholder="Ketik Nomor Resi Disini" value="{{ $transaction->nomor_resi ?? null }}" @if ($transaction->status != '5') disabled @endif>
+                            placeholder="Ketik Nomor Resi Disini" value="{{ $transaction->nomor_resi ?? null }}"
+                            @if ($transaction->status != '5') disabled @endif>
                         @if ($transaction->status == 0 || $transaction->status == 4)
                             <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
                         @endif

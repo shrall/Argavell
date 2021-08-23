@@ -95,7 +95,8 @@
             <span class="font-weight-bold ms-2">Select All</span>
         </div>
         <div class="mx-2 d-block" id="select-all-accept">
-            <button class="btn btn-admin-light shadow-sm text-decoration-none">
+            <button class="btn btn-admin-light shadow-sm text-decoration-none" data-bs-toggle="modal"
+                data-bs-target="#acceptModal">
                 Terima Pesanan
             </button>
         </div>
@@ -112,23 +113,19 @@
         </div>
     </div>
     @include('admin.transaction.inc.modal.label')
+    @include('admin.transaction.inc.modal.accept_all')
     <div class="row gy-3" id="transaction-container">
         @include('admin.transaction.inc.transaction')
     </div>
-    <form action="{{ route('admin.transaction.store') }}" method="post">
-        @csrf
-        <input type="hidden" name="transaction_id[]" id="input-transaction">
-        <input type="hidden" name="method" id="input-method" value="all">
-    </form>
 @endsection
 
 @section('scripts')
     <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(function() {
             $('#filter-date').daterangepicker({
                 opens: 'left'
             }, function(start, end, label) {
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                         _token: CSRF_TOKEN,
                         start: start.format('YYYY-MM-DD'),
@@ -146,7 +143,7 @@
     <script>
         $(function() {
             $('#report-date').daterangepicker({
-    "alwaysShowCalendars": true,
+                "alwaysShowCalendars": true,
                 ranges: {
                     'Hari Ini': [moment(), moment()],
                     'Kemarin': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -230,7 +227,6 @@
         }
 
         function fetch_data_by_name() {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val()
@@ -269,6 +265,59 @@
     <script>
         // checkall
         var label_array = []
+        var accept_array = []
+
+        $("#check-all").click(function() {
+            if (!$("#check-all").is(":checked")) {
+                //kalau ada yang kecentang dari semua checkbox dia ngilangin semuanya dulu
+                if (method == 'ready') {
+                    $('.checkbox-transaction-label').each(function() {
+                        this.checked = false;
+                    });
+                    emptyLabelArray();
+                } else
+                if (method == 'new') {
+                    $('.checkbox-transaction-accept').each(function() {
+                        this.checked = false;
+                    });
+                    emptyAcceptArray();
+                    refreshTransactionListOnAcceptModal()
+                }
+            } else {
+                if (method == 'ready') {
+                    $('.checkbox-transaction-label').each(function() {
+                        if (!this.checked) {
+                            this.checked = true;
+                            label_array.push($(this).val());
+                            $('#transaction-label').val(label_array);
+                            $('#label-description').text('Anda akan mencetak label untuk ' + label_array
+                                .length +
+                                ' pesanan sekaligus')
+                            if (label_array.length > 0) {
+                                $('#button-label-submit').prop("disabled", false);
+                            } else {
+                                $('#button-label-submit').prop("disabled", true);
+                            }
+                        }
+                    });
+                } else
+                if (method == 'new') {
+                    $('.checkbox-transaction-accept').each(function() {
+                        if (!this.checked) {
+                            this.checked = true;
+                            accept_array.push($(this).val());
+                            $('#transaction-accept').val(accept_array);
+                            if (accept_array.length > 0) {
+                                $('#button-accept-submit').prop("disabled", false);
+                            } else {
+                                $('#button-accept-submit').prop("disabled", true);
+                            }
+                        }
+                    });
+                    refreshTransactionListOnAcceptModal()
+                }
+            }
+        });
 
         function emptyLabelArray() {
             label_array = []
@@ -276,6 +325,12 @@
             $('#label-description').text('Anda akan mencetak label untuk ' + label_array.length +
                 ' pesanan sekaligus')
             $('#button-label-submit').prop("disabled", true);
+        }
+
+        function emptyAcceptArray() {
+            accept_array = []
+            $('#transaction-accept').val(accept_array);
+            $('#button-accept-submit').prop("disabled", true);
         }
 
         function addLabelToArray(id) {
@@ -304,30 +359,40 @@
                 }
             }
         }
-        $("#check-all").click(function() {
-            if (!$("#check-all").is(":checked")) {
-                //kalau ada yang kecentang dari semua checkbox dia ngilangin semuanya dulu
-                $('.checkbox-transaction-label').each(function() {
-                    this.checked = false;
-                });
-                emptyLabelArray();
+
+        function addAcceptToArray(id) {
+            if ($('#checkbox-transaction-accept' + id).is(":checked")) {
+                accept_array.push($('#checkbox-transaction-accept' + id).val());
+                $('#transaction-accept').val(accept_array);
+                if (accept_array.length > 0) {
+                    $('#button-accept-submit').prop("disabled", false);
+                } else {
+                    $('#button-accept-submit').prop("disabled", true);
+                }
             } else {
-                $('.checkbox-transaction-label').each(function() {
-                    if (!this.checked) {
-                        this.checked = true;
-                        label_array.push($(this).val());
-                        $('#transaction-label').val(label_array);
-                        $('#label-description').text('Anda akan mencetak label untuk ' + label_array
-                            .length +
-                            ' pesanan sekaligus')
-                        if (label_array.length > 0) {
-                            $('#button-label-submit').prop("disabled", false);
-                        } else {
-                            $('#button-label-submit').prop("disabled", true);
-                        }
-                    }
-                });
+                const index = accept_array.indexOf($('#checkbox-transaction-accept' + id).val());
+                accept_array.splice(index, 1);
+                $('#transaction-accept').val(accept_array);
+                if (accept_array.length > 0) {
+                    $('#button-accept-submit').prop("disabled", false);
+                } else {
+                    $('#button-accept-submit').prop("disabled", true);
+                }
             }
-        });
+            refreshTransactionListOnAcceptModal()
+        }
+
+        function refreshTransactionListOnAcceptModal() {
+            $.post('{{ config('app.url') }}' + "/admin/transaction/refresh_transaction_list_on_accept_modal", {
+                    _token: CSRF_TOKEN,
+                    data: accept_array,
+                })
+                .done(function(data) {
+                    $('#accept-modal-transaction-list').html(data);
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
+        }
     </script>
 @endsection

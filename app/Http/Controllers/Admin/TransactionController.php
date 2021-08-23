@@ -47,7 +47,8 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         if ($request->input_method == 'new') {
-            foreach ($request->transaction_id as $transaction_id) {
+            $transactions_id = explode(",", $request->transaction_id[0]);
+            foreach ($transactions_id as $transaction_id) {
                 $transaction = Transaction::where('id', $transaction_id)->first();
                 $transaction->update([
                     'status' => '5'
@@ -299,5 +300,11 @@ class TransactionController extends Controller
     function export(Request $request)
     {
         return Excel::download(new TransactionExport($request->type, $request->report_date_start, $request->report_date_end), 'laporan_penjualan.xlsx');
+    }
+
+    function refresh_transaction_list_on_accept_modal(Request $request)
+    {
+        $transactions = Transaction::whereIn('id', $request->data)->get();
+        return view('admin.transaction.inc.transaction_accept_modal', compact('transactions'));
     }
 }
