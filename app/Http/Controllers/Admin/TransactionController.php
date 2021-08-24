@@ -150,6 +150,7 @@ class TransactionController extends Controller
         $transactions = Transaction::where('status', '1')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
+
     function fetch_data_all_search(Request $request)
     {
         if ($request->has('data')) {
@@ -158,6 +159,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -172,6 +187,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::where('status', '4')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::where('status', '4')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('status', '4')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -186,6 +215,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::where('status', '5')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::where('status', '5')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('status', '5')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -200,6 +243,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::where('status', '3')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::where('status', '3')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('status', '3')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -216,6 +273,24 @@ class TransactionController extends Controller
                     });
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $refunds = Refund::whereHas('transaction', function (Builder $query)  use ($request) {
+                    $query->whereHas('carts', function (Builder $query)  use ($request) {
+                        $query->whereHas('product', function (Builder $query)  use ($request) {
+                            $query->where('name', 'like', '%' . $request->data . '%');
+                        });
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $refunds = Refund::whereHas('transaction', function (Builder $query)  use ($request) {
+                    $query->whereHas('carts', function (Builder $query)  use ($request) {
+                        $query->whereHas('product', function (Builder $query)  use ($request) {
+                            $query->where('name', 'like', '%' . $request->data . '%');
+                        });
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $refunds = Refund::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -230,6 +305,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::where('status', '2')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::where('status', '2')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('status', '2')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }
@@ -244,6 +333,20 @@ class TransactionController extends Controller
                     $query->where('name', 'like', '%' . $request->data . '%');
                 });
             })->get();
+        } else if ($request->has('sort')) {
+            if ($request->sort == 'latest') {
+                $transactions = Transaction::where('status', '1')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->latest('created_at')->get();
+            } else if ($request->sort == 'oldest') {
+                $transactions = Transaction::where('status', '1')->whereHas('carts', function (Builder $query)  use ($request) {
+                    $query->whereHas('product', function (Builder $query)  use ($request) {
+                        $query->where('name', 'like', '%' . $request->data . '%');
+                    });
+                })->oldest('created_at')->get();
+            }
         } else {
             $transactions = Transaction::where('status', '1')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
         }

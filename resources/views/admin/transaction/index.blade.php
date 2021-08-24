@@ -58,27 +58,19 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="semua-pesanan">
                         <div class="row gx-3 mt-3">
-                            <div class="col-3 position-relative">
+                            <div class="col-4 position-relative">
                                 <span
                                     class="fa fa-fw fa-search position-absolute top-50 start-0 translate-middle-y ps-4 fs-6 text-secondary"></span>
                                 <input type="text" id="input-search" class="form-control ps-5"
                                     onkeyup="fetch_data_by_name();" placeholder="Search by product name">
                             </div>
-                            <div class="col-3">
-                                <select class="form-select" id="" name="">
-                                    <option>Pilih Filter</option>
-                                    <option>Pilih Filter</option>
-                                    <option>Pilih Filter</option>
+                            <div class="col-4">
+                                <select class="form-select" id="sort" name="sort" onchange="fetch_data_sort();">
+                                    <option value="oldest">Terlama</option>
+                                    <option value="latest">Terbaru</option>
                                 </select>
                             </div>
-                            <div class="col-3">
-                                <select class="form-select" id="" name="">
-                                    <option>Urut Berdasarkan</option>
-                                    <option>Urut Berdasarkan</option>
-                                    <option>Urut Berdasarkan</option>
-                                </select>
-                            </div>
-                            <div class="col-3 position-relative">
+                            <div class="col-4 position-relative">
                                 <span
                                     class="fa fa-fw fa-calendar-day position-absolute top-50 end-0 translate-middle-y pe-5 fs-6 text-secondary"></span>
                                 <input type="text" name="daterange" id="filter-date" class="form-control" />
@@ -167,42 +159,49 @@
         $('#semua-pesanan-tab').click(function() {
             method = 'all'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#pesanan-baru-tab').click(function() {
             method = 'new'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#siap-dikirim-tab').click(function() {
             method = 'ready'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#dalam-pengiriman-tab').click(function() {
             method = 'ondelivery'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#dikomplain-tab').click(function() {
             method = 'complain'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#pesanan-selesai-tab').click(function() {
             method = 'delivered'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
         $('#dibatalkan-tab').click(function() {
             method = 'canceled'
             page = 1
+            $('#sort').val('oldest');
             fetch_data(page, method);
         });
 
@@ -230,6 +229,19 @@
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val()
+                })
+                .done(function(data) {
+                    $('#transaction-container').html(data);
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function fetch_data_sort() {
+            $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+                    _token: CSRF_TOKEN,
+                    sort: $('#sort').val()
                 })
                 .done(function(data) {
                     $('#transaction-container').html(data);
