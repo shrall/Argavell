@@ -76,27 +76,27 @@
         <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham">Argan Oil</a>
+        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Argan Oil</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham">Argan
+        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Argan
             Shampoo</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham">Kleanse</a>
+        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Kleanse</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="#" class="text-decoration-none text-white font-gotham">Contact Us</a>
+        <a href="#" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Contact Us</a>
     </div>
     @guest
         @if (Route::has('login'))
             <div class="col-12 text-center my-3">
-                <a class="text-decoration-none text-white font-gotham" href="{{ route('login') }}">Login</a>
+                <a class="text-decoration-none text-white font-gotham" href="{{ route('login') }}" style="display: block;height: 3vh;">Login</a>
             </div>
         @endif
     @else
         <div class="col-12 text-center my-3">
-            <a class="text-decoration-none text-white font-gotham" href="{{ route('user.user.index') }}">My Account</a>
+            <a class="text-decoration-none text-white font-gotham" href="{{ route('user.user.index') }}" style="display: block;height: 3vh;">My Account</a>
         </div>
     @endguest
     <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;"
