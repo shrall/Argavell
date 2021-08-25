@@ -87,7 +87,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.user.show', $user->id);
+        return redirect()->route('admin.user.index');
     }
 
     /**

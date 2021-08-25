@@ -37,7 +37,7 @@
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #fcfcfc">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100 position-fixed">
                     <a href="{{ route('admin.page.dashboard') }}"
                         class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                         <img src="{{ asset('images/logo-argavell.png') }}" alt="" width="50" height="50"
@@ -45,42 +45,42 @@
                     </a>
                     <ul class="nav nav-pills w-100 flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="admin-sidebar">
-                        <li class="nav-item my-4 w-100 @if (Route::current()->getName() == 'admin.page.dashboard') active @endif">
+                        <li class="nav-item my-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.page.dashboard') active @endif">
                             <a href="{{ route('admin.page.dashboard') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-th-large mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() == 'admin.transaction.index') active @endif">
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.transaction.index') active @endif">
                             <a href="{{ route('admin.transaction.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-comment-dollar mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Transactions</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() == 'admin.product.index' || Route::current()->getName() == 'admin.product.create' || Route::current()->getName() == 'admin.product.edit') active @endif">
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.product.index' || Route::current()->getName() == 'admin.product.create' || Route::current()->getName() == 'admin.product.edit') active @endif">
                             <a href="{{ route('admin.product.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-shopping-bag mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Products</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() == 'admin.voucher.index' || Route::current()->getName() == 'admin.voucher.create' || Route::current()->getName() == 'admin.voucher.edit') active @endif">
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.voucher.index' || Route::current()->getName() == 'admin.voucher.create' || Route::current()->getName() == 'admin.voucher.edit') active @endif">
                             <a href="{{ route('admin.voucher.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-ticket-alt mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Vouchers</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() == 'admin.user.index' || Route::current()->getName() == 'admin.user.show') active @endif">
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.user.index' || Route::current()->getName() == 'admin.user.show') active @endif">
                             <a href="{{ route('admin.user.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-user mr-2"></span><span
                                     class="ms-1 d-none d-sm-inline">Users</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 @if (Route::current()->getName() == 'admin.changepassword') active @endif">
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.changepassword') active @endif">
                             <a href="{{ route('admin.changepassword') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-lock mr-2"></span><span class="ms-1 d-none d-sm-inline">Change

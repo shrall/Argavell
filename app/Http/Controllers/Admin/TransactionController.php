@@ -61,6 +61,14 @@ class TransactionController extends Controller
                     'status' => '2'
                 ]);
             }
+        } else if ($request->input_method == 'send') {
+            foreach ($request->transaction_id as $transaction_id) {
+                $transaction = Transaction::where('id', $transaction_id)->first();
+                $transaction->update([
+                    'status' => '3',
+                    'nomor_resi' => $request->resi
+                ]);
+            }
         }
         return redirect()->route('admin.transaction.index');
     }

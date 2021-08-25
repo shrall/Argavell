@@ -51,9 +51,11 @@
                                         onchange="loadFile(event)">
                                 </div>
                             </div>
-                            <div class="col-12 text-argavell">
+                            <div class="col-12 text-argavell d-flex align-items-center">
                                 <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#voucherPreviewModal"></div>
+                                <span class="d-none far fa-fw fa-times-circle cursor-pointer ms-2" id="delete-image-button"
+                                    onclick="deleteImage();"></span>
                             </div>
                         </div>
                     </div>
@@ -67,7 +69,8 @@
                             <label class="col-12 text-start font-weight-bold">Syarat & Ketentuan</label>
                             <div class="col-12">
                                 <textarea id="tnc" type="textarea" class="form-control" name="tnc" required
-                                    placeholder="Syarat & Ketentuan Voucher" style="resize: none;min-height:150px;"></textarea>
+                                    placeholder="Syarat & Ketentuan Voucher"
+                                    style="resize: none;min-height:150px;"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -94,6 +97,16 @@
             ])
             $('#image-upload-button').removeClass('d-block').addClass('d-none');
             $('#image-upload-preview').removeClass('d-none').addClass('d-block');
+            $('#delete-image-button').removeClass('d-none').addClass('d-block');
         };
+    </script>
+    <script>
+        function deleteImage() {
+            $('.voucher-image-preview').attr('src', null);
+            $('#image').val(null);
+            $('#image-upload-button').removeClass('d-none').addClass('d-block');
+            $('#image-upload-preview').removeClass('d-block').addClass('d-none');
+            $('#delete-image-button').removeClass('d-block').addClass('d-none');
+        }
     </script>
 @endsection

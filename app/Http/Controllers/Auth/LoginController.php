@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user';
+    protected $redirectTo = '/admin';
 
     /**
      * Login username to be used by the controller.
@@ -71,5 +71,9 @@ class LoginController extends Controller
     public function username()
     {
         return $this->username;
+    }
+
+    protected function loggedOut(Request $request) {
+        return redirect()->route('login');
     }
 }

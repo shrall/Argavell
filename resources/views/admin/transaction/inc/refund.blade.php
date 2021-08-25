@@ -51,24 +51,25 @@
                 <div class="col-4 row">
                     <div class="col-6">
                         <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus Sesuai</span></p>
-                        <p class="my-0 text-secondary">{{ $refund->transaction->shipment_name }}</p>
+                        <p class="my-0 mb-2 text-secondary">{{ $refund->transaction->shipment_name }}</p>
                     </div>
                     <div class="col-6">
                         <p class="my-0">Occasion</p>
                         @if ($refund->occasion == '0')
-                            <p class="my-0 text-secondary">Wrong Item</p>
+                            <p class="my-0 mb-2 text-secondary">Wrong Item</p>
                         @elseif ($refund->occasion == '1')
-                            <p class="my-0 text-secondary">Broken</p>
+                            <p class="my-0 mb-2 text-secondary">Broken</p>
                         @endif
                     </div>
                     <div class="col-6">
                         <p class="my-0">Nomor Resi</p>
-                        <p class="my-0 text-secondary">{{ $refund->transaction->nomor_resi ?? '-'}}</p>
+                        <p class="my-0 mb-2 text-secondary">{{ $refund->transaction->nomor_resi ?? '-' }}</p>
                     </div>
                     <div class="col-6">
                         <p class="my-0">Product Condition</p>
-                        <p class="my-0 text-secondary cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
-                        data-bs-target="#refundPreviewModal{{$refund->id}}"><span class="fas fa-fw fa-paperclip me-2"></span>{{$refund->condition}}</p>
+                        <p class="my-0 mb-2 text-secondary cursor-pointer" style="text-decoration: underline;"
+                            data-bs-toggle="modal" data-bs-target="#refundPreviewModal{{ $refund->id }}"><span
+                                class="fas fa-fw fa-paperclip me-2"></span>{{ $refund->condition }}</p>
                     </div>
                 </div>
             </div>
@@ -85,9 +86,10 @@
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="ms-auto">
-                    <button class="btn btn-admin-argavell text-white text-decoration-none me-2">
+                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '08123456789'}}" target="_blank"
+                        class="btn btn-admin-argavell text-white text-decoration-none me-2">
                         Kontak Pembeli
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

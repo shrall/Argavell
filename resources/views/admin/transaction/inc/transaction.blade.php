@@ -80,10 +80,17 @@
                     </div>
                     <div class="my-2">
                         <p class="my-0">Nomor Resi</p>
-                        <input type="text" name="input-resi{{ $loop->iteration }}"
-                            id="input-resi{{ $loop->iteration }}" class="form-control"
-                            placeholder="Ketik Nomor Resi Disini" value="{{ $transaction->nomor_resi ?? null }}"
-                            @if ($transaction->status != '5') disabled @endif>
+                        <form action="{{ route('admin.transaction.store') }}" id="form-send-transaction"
+                            method="post">
+                            @csrf
+                            <input type="hidden" name="transaction_id[]"
+                                id="input-transaction-send{{ $transaction->id }}" value="{{ $transaction->id }}">
+                            <input type="hidden" name="input_method" value="send">
+                            <input type="text" name="resi"
+                                id="input-resi{{ $loop->iteration }}" class="form-control"
+                                placeholder="Ketik Nomor Resi Disini" value="{{ $transaction->nomor_resi ?? null }}"
+                                @if ($transaction->status != '5') disabled @endif>
+                        </form>
                         @if ($transaction->status == 0 || $transaction->status == 4)
                             <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
                         @endif
@@ -122,11 +129,10 @@
                             </button>
                             @include('admin.transaction.inc.modal.accept')
                         @elseif ($transaction->status == '5')
-                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
-                                data-bs-toggle="modal" data-bs-target="#sendModal">
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" onclick="event.preventDefault();
+                            document.getElementById('form-send-transaction').submit();">
                                 Kirim Pesanan
                             </button>
-                            @include('admin.transaction.inc.modal.send')
                         @endif
                     @endif
                 </div>

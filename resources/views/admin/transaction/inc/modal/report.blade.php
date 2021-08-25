@@ -26,7 +26,7 @@
                             <div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="type" id="report-type-radio-all"
-                                        value="all">
+                                        value="all" checked>
                                     <label class="form-check-label" for="report-type-radio-all">Semua</label>
                                 </div>
                                 <div class="form-check form-check-inline">

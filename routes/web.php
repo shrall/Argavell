@@ -86,7 +86,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
 });
 
 Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
-    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('page.dashboard');
+    Route::get('/', [PageController::class, 'dashboard'])->name('page.dashboard');
     Route::resource('address', AdminAddressController::class);
     Route::resource('cart', AdminCartController::class);
     Route::resource('contact', ContactController::class);
