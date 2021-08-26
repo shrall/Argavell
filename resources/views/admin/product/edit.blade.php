@@ -115,15 +115,21 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-6 text-start font-weight-bold">Stok</label>
-                            <label class="col-6 text-start font-weight-bold">Harga Produk</label>
-                            <div class="col-6">
-                                <input type="number" name="stock" id="stock" class="form-control" required
-                                    value="{{ $product->stock }}" />
+                            <label class="col-12 text-start font-weight-bold">Stok</label>
+                            <div class="col-12">
+                                <input type="number" name="stock" id="stock" class="form-control" value="{{ $product->stock }}" required />
                             </div>
-                            <div class="col-6">
-                                <input type="number" name="price" id="price" class="form-control" required
-                                    value="{{ $product->price }}" />
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Harga Produk</label>
+                            <div class="col-12">
+                                <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Diskon</label>
+                            <div class="col-12">
+                                <input type="number" name="price_discount" id="price_discount" class="form-control" value="{{ $product->price_discount }}" placeholder="Kosongkan apabila tidak ada diskon" />
                             </div>
                         </div>
                         <div class="row mb-3">

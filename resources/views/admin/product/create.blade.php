@@ -42,7 +42,7 @@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <input type="number" name="weight" id="weight" class="form-control" required/>
+                                <input type="number" name="weight" id="weight" class="form-control" required />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -57,9 +57,9 @@
                         <div class="row mb-3 d-none" id="product-bundle-date">
                             <label class="col-12 text-start font-weight-bold">Jangka Waktu</label>
                             <div class="col-12">
-                                <input type="text" name="date" id="date" class="form-control" required/>
-                                <input type="hidden" name="date_start" id="date-start" value="{{\Carbon\Carbon::now()}}">
-                                <input type="hidden" name="date_end" id="date-end" value="{{\Carbon\Carbon::now()}}">
+                                <input type="text" name="date" id="date" class="form-control" required />
+                                <input type="hidden" name="date_start" id="date-start" value="{{ \Carbon\Carbon::now() }}">
+                                <input type="hidden" name="date_end" id="date-end" value="{{ \Carbon\Carbon::now() }}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -106,13 +106,21 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-6 text-start font-weight-bold">Stok</label>
-                            <label class="col-6 text-start font-weight-bold">Harga Produk</label>
-                            <div class="col-6">
-                                <input type="number" name="stock" id="stock" class="form-control" required/>
+                            <label class="col-12 text-start font-weight-bold">Stok</label>
+                            <div class="col-12">
+                                <input type="number" name="stock" id="stock" class="form-control" required />
                             </div>
-                            <div class="col-6">
-                                <input type="number" name="price" id="price" class="form-control" required/>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Harga Produk</label>
+                            <div class="col-12">
+                                <input type="number" name="price" id="price" class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Diskon</label>
+                            <div class="col-12">
+                                <input type="number" name="price_discount" id="price_discount" class="form-control" placeholder="Kosongkan apabila tidak ada diskon" />
                             </div>
                         </div>
                         <div class="row mb-3">
