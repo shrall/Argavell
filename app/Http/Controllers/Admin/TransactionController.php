@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\ProductExport;
 use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Refund;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -410,7 +413,21 @@ class TransactionController extends Controller
 
     function export(Request $request)
     {
-        return Excel::download(new TransactionExport($request->type, $request->report_date_start, $request->report_date_end), 'laporan_penjualan.xlsx');
+        return Excel::download(new TransactionExport($request->type, $request->report_date_start, $request->report_date_end), 'laporan_penjualan_' . Carbon::now() . '.xlsx');
+    }
+
+    function download_product_list(Request $request){
+        $products = array();
+        $transaction_ids = explode(",", $request->transactions[0]);
+        $transactions = Transaction::whereIn('id', $transaction_ids)->get();
+        foreach ($transactions as $transaction){
+            foreach($transaction->carts as $cart){
+                if($cart->transaction_id){
+                    array_push($products, $cart->product_id);
+                }
+            }
+        }
+        return Excel::download(new ProductExport(array_unique($products, SORT_REGULAR)), 'daftar_produk_' . Carbon::now() . '.xlsx');
     }
 
     function refresh_transaction_list_on_accept_modal(Request $request)

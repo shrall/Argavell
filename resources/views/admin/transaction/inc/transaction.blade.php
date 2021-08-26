@@ -4,12 +4,24 @@
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
                     @if ($transaction->status == '0')
+                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold">Menunggu Pembayaran</span>
                     @elseif ($transaction->status == '1')
+                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold">Pesanan Selesai</span>
                     @elseif ($transaction->status == '2')
+                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold">Dibatalkan</span>
                     @elseif ($transaction->status == '3')
+                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
                         <span class="font-weight-bold">Dalam Pengiriman</span>
                     @elseif ($transaction->status == '4')
                         <input type="checkbox" name="transaction_checkbox_accept{{ $transaction->id }}"
@@ -86,8 +98,7 @@
                             <input type="hidden" name="transaction_id[]"
                                 id="input-transaction-send{{ $transaction->id }}" value="{{ $transaction->id }}">
                             <input type="hidden" name="input_method" value="send">
-                            <input type="text" name="resi"
-                                id="input-resi{{ $loop->iteration }}" class="form-control"
+                            <input type="text" name="resi" id="input-resi{{ $loop->iteration }}" class="form-control"
                                 placeholder="Ketik Nomor Resi Disini" value="{{ $transaction->nomor_resi ?? null }}"
                                 @if ($transaction->status != '5') disabled @endif>
                         </form>

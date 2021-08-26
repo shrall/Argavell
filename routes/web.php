@@ -124,6 +124,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('transaction/refresh_transaction_list_on_accept_modal', [AdminTransactionController::class, 'refresh_transaction_list_on_accept_modal'])->name('transaction.rtloam');
 
     Route::post('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
+    Route::post('transaction/label/downloadproductlist', [AdminTransactionController::class, 'download_product_list'])->name('transaction.downloadproductlist');
 
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
 

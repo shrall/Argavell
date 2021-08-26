@@ -47,14 +47,4 @@ class Product extends Model
     public function carts() {
         return $this->hasMany(Cart::class, 'product_id', 'id');
     }
-    // protected static function boot()
-    // {
-    //     static::deleting(function ($instance) {
-    //         $instance->child->each->delete();
-    //     });
-
-    //     static::restoring(function ($instance) {
-    //         $instance->child->each->restore();
-    //     });
-    // }
 }

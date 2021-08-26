@@ -98,9 +98,15 @@
                 Cetak Label
             </button>
         </div>
-        <div class="mx-2 d-none" id="select-all-invoice">
+        {{-- <div class="mx-2 d-none" id="select-all-invoice">
             <button class="btn btn-admin-light shadow-sm text-decoration-none">
                 Cetak Invoice
+            </button>
+        </div> --}}
+        <div class="mx-2" id="select-all-download">
+            <button class="btn btn-admin-light shadow-sm text-decoration-none" id="button-download-submit"  onclick="event.preventDefault();
+            document.getElementById('download-product-list-form').submit();">
+                Download Daftar Produk
             </button>
         </div>
     </div>
@@ -109,6 +115,10 @@
     <div class="row gy-3" id="transaction-container">
         @include('admin.transaction.inc.transaction')
     </div>
+    <form action="{{ route('admin.transaction.downloadproductlist') }}" method="post" id="download-product-list-form">
+        @csrf
+        <input type="hidden" name="transactions[]" id="transaction-download">
+    </form>
 @endsection
 
 @section('scripts')
@@ -213,6 +223,8 @@
 
         function fetch_data(page, method) {
             emptyLabelArray();
+            emptyAcceptArray();
+            emptyDownloadArray();
             changePageMenu();
             $.ajax({
                     url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
@@ -252,7 +264,7 @@
         }
 
         function changePageMenu() {
-            if (method != 'all' && method != 'ondelivery' && method != 'canceled' && method != 'complain') {
+            if (method != 'all') {
                 $('#select-all-row').removeClass('d-none').addClass('d-flex')
             } else {
                 $('#select-all-row').removeClass('d-flex').addClass('d-none')
@@ -278,6 +290,7 @@
         // checkall
         var label_array = []
         var accept_array = []
+        var download_array = []
 
         $("#check-all").click(function() {
             if (!$("#check-all").is(":checked")) {
@@ -287,13 +300,19 @@
                         this.checked = false;
                     });
                     emptyLabelArray();
-                } else
-                if (method == 'new') {
+                    emptyDownloadArray();
+                } else if (method == 'new') {
                     $('.checkbox-transaction-accept').each(function() {
                         this.checked = false;
                     });
                     emptyAcceptArray();
+                    emptyDownloadArray();
                     refreshTransactionListOnAcceptModal()
+                } else {
+                    $('.checkbox-transaction-download').each(function() {
+                        this.checked = false;
+                    });
+                    emptyDownloadArray();
                 }
             } else {
                 if (method == 'ready') {
@@ -301,7 +320,9 @@
                         if (!this.checked) {
                             this.checked = true;
                             label_array.push($(this).val());
+                            download_array.push($(this).val());
                             $('#transaction-label').val(label_array);
+                            $('#transaction-download').val(download_array);
                             $('#label-description').text('Anda akan mencetak label untuk ' + label_array
                                 .length +
                                 ' pesanan sekaligus')
@@ -310,23 +331,47 @@
                             } else {
                                 $('#button-label-submit').prop("disabled", true);
                             }
+                            if (download_array.length > 0) {
+                                $('#button-download-submit').prop("disabled", false);
+                            } else {
+                                $('#button-download-submit').prop("disabled", true);
+                            }
                         }
                     });
-                } else
-                if (method == 'new') {
+                } else if (method == 'new') {
                     $('.checkbox-transaction-accept').each(function() {
                         if (!this.checked) {
                             this.checked = true;
                             accept_array.push($(this).val());
+                            download_array.push($(this).val());
                             $('#transaction-accept').val(accept_array);
+                            $('#transaction-download').val(download_array);
                             if (accept_array.length > 0) {
                                 $('#button-accept-submit').prop("disabled", false);
                             } else {
                                 $('#button-accept-submit').prop("disabled", true);
                             }
+                            if (download_array.length > 0) {
+                                $('#button-download-submit').prop("disabled", false);
+                            } else {
+                                $('#button-download-submit').prop("disabled", true);
+                            }
                         }
                     });
                     refreshTransactionListOnAcceptModal()
+                } else {
+                    $('.checkbox-transaction-download').each(function() {
+                        if (!this.checked) {
+                            this.checked = true;
+                            download_array.push($(this).val());
+                            $('#transaction-download').val(download_array);
+                            if (download_array.length > 0) {
+                                $('#button-download-submit').prop("disabled", false);
+                            } else {
+                                $('#button-download-submit').prop("disabled", true);
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -345,10 +390,18 @@
             $('#button-accept-submit').prop("disabled", true);
         }
 
+        function emptyDownloadArray() {
+            download_array = []
+            $('#transaction-download').val(download_array);
+            $('#button-download-submit').prop("disabled", true);
+        }
+
         function addLabelToArray(id) {
             if ($('#checkbox-transaction-label' + id).is(":checked")) {
                 label_array.push($('#checkbox-transaction-label' + id).val());
+                download_array.push($('#checkbox-transaction-label' + id).val());
                 $('#transaction-label').val(label_array);
+                $('#transaction-download').val(download_array);
                 $('#label-description').text('Anda akan mencetak label untuk ' + label_array
                     .length +
                     ' pesanan sekaligus')
@@ -357,10 +410,17 @@
                 } else {
                     $('#button-label-submit').prop("disabled", true);
                 }
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
+                }
             } else {
                 const index = label_array.indexOf($('#checkbox-transaction-label' + id).val());
                 label_array.splice(index, 1);
+                download_array.splice(index, 1);
                 $('#transaction-label').val(label_array);
+                $('#transaction-download').val(download_array);
                 $('#label-description').text('Anda akan mencetak label untuk ' + label_array
                     .length +
                     ' pesanan sekaligus')
@@ -368,6 +428,11 @@
                     $('#button-label-submit').prop("disabled", false);
                 } else {
                     $('#button-label-submit').prop("disabled", true);
+                }
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
                 }
             }
         }
@@ -375,23 +440,58 @@
         function addAcceptToArray(id) {
             if ($('#checkbox-transaction-accept' + id).is(":checked")) {
                 accept_array.push($('#checkbox-transaction-accept' + id).val());
+                download_array.push($('#checkbox-transaction-accept' + id).val());
                 $('#transaction-accept').val(accept_array);
+                $('#transaction-download').val(download_array);
                 if (accept_array.length > 0) {
                     $('#button-accept-submit').prop("disabled", false);
                 } else {
                     $('#button-accept-submit').prop("disabled", true);
+                }
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
                 }
             } else {
                 const index = accept_array.indexOf($('#checkbox-transaction-accept' + id).val());
                 accept_array.splice(index, 1);
+                download_array.splice(index, 1);
                 $('#transaction-accept').val(accept_array);
+                $('#transaction-download').val(download_array);
                 if (accept_array.length > 0) {
                     $('#button-accept-submit').prop("disabled", false);
                 } else {
                     $('#button-accept-submit').prop("disabled", true);
                 }
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
+                }
             }
             refreshTransactionListOnAcceptModal()
+        }
+
+        function addDownloadToArray(id) {
+            if ($('#checkbox-transaction-download' + id).is(":checked")) {
+                download_array.push($('#checkbox-transaction-download' + id).val());
+                $('#transaction-download').val(download_array);
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
+                }
+            } else {
+                const index = download_array.indexOf($('#checkbox-transaction-download' + id).val());
+                download_array.splice(index, 1);
+                $('#transaction-download').val(download_array);
+                if (download_array.length > 0) {
+                    $('#button-download-submit').prop("disabled", false);
+                } else {
+                    $('#button-download-submit').prop("disabled", true);
+                }
+            }
         }
 
         function refreshTransactionListOnAcceptModal() {

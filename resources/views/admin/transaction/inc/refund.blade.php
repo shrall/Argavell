@@ -3,6 +3,9 @@
         <div class="card-header">
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
+                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
                     <span class="font-weight-bold">Dikomplain</span>
                 </div>
                 <div class="mx-2">
@@ -86,8 +89,8 @@
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="ms-auto">
-                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '08123456789'}}" target="_blank"
-                        class="btn btn-admin-argavell text-white text-decoration-none me-2">
+                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '08123456789' }}"
+                        target="_blank" class="btn btn-admin-argavell text-white text-decoration-none me-2">
                         Kontak Pembeli
                     </a>
                 </div>
