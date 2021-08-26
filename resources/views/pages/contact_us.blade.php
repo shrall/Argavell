@@ -6,8 +6,8 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-            <h1 class="text-argavell font-bauer font-weight-bold">Frequently Asked Questions</h1>
-            <div class="pe-4">You can find answers to some of the most frequently asked questions.
+            <h1 class="text-argavell font-bauer font-weight-bold">Contact Us</h1>
+            <div class="pe-4">Don’t hesitate to contact us and we are always ready to serve your needs!
             </div>
         </div>
         <div class="col-md-5 p-0">
@@ -21,8 +21,8 @@
         </div>
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-            <h1 class="text-argavell font-bauer font-weight-bold text-4xl">Frequently Asked Questions</h1>
-            <div class="px-2 text-start">You can find answers to some of the most frequently asked questions.</div>
+            <h1 class="text-argavell font-bauer font-weight-bold text-4xl">Contact Us</h1>
+            <div class="px-2 text-start">Don’t hesitate to contact us and we are always ready to serve your needs!</div>
         </div>
     </div>
     <div class="row justify-content-center my-5">
