@@ -3,9 +3,9 @@
         <div class="card-header">
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
-                    <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
-                        id="checkbox-transaction-download{{ $transaction->id }}" class="checkbox-transaction-download"
-                        value={{ $transaction->id }} onclick="addDownloadToArray({{ $transaction->id }});" />
+                    <input type="checkbox" name="transaction_checkbox_download{{ $refund->transaction->id }}"
+                        id="checkbox-transaction-download{{ $refund->transaction->id }}" class="checkbox-transaction-download"
+                        value={{ $refund->transaction->id }} onclick="addDownloadToArray({{ $refund->transaction->id }});" />
                     <span class="font-weight-bold">Dikomplain</span>
                 </div>
                 <div class="mx-2">

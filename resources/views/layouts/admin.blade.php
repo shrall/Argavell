@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col py-4 px-5 font-proxima-nova" style="background-color: #FFF7F0">
+            <div class="col py-4 px-5 font-proxima-nova" style="background-color: #FFF7F0; min-height: 100vh;">
                 @yield('content')
             </div>
         </div>

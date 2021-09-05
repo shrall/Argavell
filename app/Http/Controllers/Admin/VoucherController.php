@@ -81,16 +81,26 @@ class VoucherController extends Controller
      */
     public function update(Request $request, Voucher $voucher)
     {
-        $image = time() . '-' . $request['image']->getClientOriginalName();
-        $request->image->move(public_path('uploads/vouchers'), $image);
-        $voucher->update([
-            'title' => $request->title,
-            'code' => $request->code,
-            'expired_date' => $request->expired_date,
-            'minimum_charge' => $request->minimum_charge,
-            'tnc' => $request->tnc,
-            'img' => $image,
-        ]);
+        if ($request->hasFile('image')) {
+            $image = time() . '-' . $request['image']->getClientOriginalName();
+            $request->image->move(public_path('uploads/vouchers'), $image);
+            $voucher->update([
+                'title' => $request->title,
+                'code' => $request->code,
+                'expired_date' => $request->expired_date,
+                'minimum_charge' => $request->minimum_charge,
+                'tnc' => $request->tnc,
+                'img' => $image,
+            ]);
+        } else {
+            $voucher->update([
+                'title' => $request->title,
+                'code' => $request->code,
+                'expired_date' => $request->expired_date,
+                'minimum_charge' => $request->minimum_charge,
+                'tnc' => $request->tnc,
+            ]);
+        }
         return redirect()->route('admin.voucher.index');
     }
 

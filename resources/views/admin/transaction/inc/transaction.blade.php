@@ -92,7 +92,7 @@
                     </div>
                     <div class="my-2">
                         <p class="my-0">Nomor Resi</p>
-                        <form action="{{ route('admin.transaction.store') }}" id="form-send-transaction"
+                        <form action="{{ route('admin.transaction.store') }}" id="form-send-transaction-{{$transaction->id}}"
                             method="post">
                             @csrf
                             <input type="hidden" name="transaction_id[]"
@@ -141,7 +141,7 @@
                             @include('admin.transaction.inc.modal.accept')
                         @elseif ($transaction->status == '5')
                             <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" onclick="event.preventDefault();
-                            document.getElementById('form-send-transaction').submit();">
+                            document.getElementById('form-send-transaction-{{$transaction->id}}').submit();">
                                 Kirim Pesanan
                             </button>
                         @endif
