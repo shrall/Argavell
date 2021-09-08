@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-item mx-4">
-                    <a href="#"
+                    <a href="{{route('page.contactus')}}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                         Contact Us
                     </a>
@@ -86,7 +86,7 @@
         <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Kleanse</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="#" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Contact Us</a>
+        <a href="{{route('page.contactus')}}" class="text-decoration-none text-white font-gotham" style="display: block;height: 3vh;">Contact Us</a>
     </div>
     @guest
         @if (Route::has('login'))
