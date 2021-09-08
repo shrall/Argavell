@@ -50,7 +50,7 @@
                             <div class="col-12 d-none" id="image-upload-button">
                                 <div class="btn btn-admin-argavell">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
-                                    <input type="file" name="image" id="image" class="d-none" accept="image/*" required
+                                    <input type="file" name="image" id="image" class="d-none" accept="image/*"
                                         onchange="loadFile(event)">
                                 </div>
                             </div>
