@@ -18,8 +18,8 @@
                         <div class="col-12 mb-3">
                             <label class="text-start font-weight-bold">Rentang Waktu</label>
                             <input type="text" name="report_date_range" id="report-date" class="form-control" />
-                            <input type="hidden" name="report_date_start" id="report-date-start">
-                            <input type="hidden" name="report_date_end" id="report-date-end">
+                            <input type="hidden" name="report_date_start" id="report-date-start" value="{{date('Y-m-d')}}">
+                            <input type="hidden" name="report_date_end" id="report-date-end" value="{{date('Y-m-d')}}">
                         </div>
                         <div class="col-12">
                             <label class="text-start font-weight-bold">Detail laporan yang dibutuhkan</label>
