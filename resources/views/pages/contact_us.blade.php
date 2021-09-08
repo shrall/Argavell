@@ -25,7 +25,7 @@
             <div class="px-2 text-start">Don’t hesitate to contact us and we are always ready to serve your needs!</div>
         </div>
     </div>
-    <div class="row justify-content-center my-5">
+    <div class="row justify-content-center mt-5 pb-5 argan-benefits">
         <div class="col-xs-6 col-md-2 text-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48.003" viewBox="0 0 48 48.003">
                 <g id="jcIdXC.tif" transform="translate(-2951.716 -3778.086)">
@@ -42,7 +42,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-weight-bold my-2">Instagram</h3>
+            <h3 class="text-argavell font-bauer font-weight-bold my-2">Instagram</h3>
             <h5>@argavell.id</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -63,7 +63,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-weight-bold my-2">Tokopedia</h3>
+            <h3 class="text-argavell font-bauer font-weight-bold my-2">Tokopedia</h3>
             <h5>Argavell Indonesia</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -81,7 +81,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-weight-bold my-2">Shopee</h3>
+            <h3 class="text-argavell font-bauer font-weight-bold my-2">Shopee</h3>
             <h5>Argavell Official Shop</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -100,7 +100,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-weight-bold my-2">Whatsapp</h3>
+            <h3 class="text-argavell font-bauer font-weight-bold my-2">Whatsapp</h3>
             <h5>0821 4321 1310</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -118,7 +118,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-weight-bold my-2">Line</h3>
+            <h3 class="text-argavell font-bauer font-weight-bold my-2">Line</h3>
             <h5>@argavell.id</h5>
         </div>
     </div>

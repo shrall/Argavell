@@ -214,8 +214,8 @@
                                     @endif
                                 </div>
                             </a>
-                            <div style="height:15%" class="mb-3">
-                                <div class="font-weight-bold font-gotham">{{ $bundle->name }}</div>
+                            <div style="height:10%" class="mb-3">
+                                <div class="font-weight-bold font-gotham mb-1">{{ $bundle->name }}</div>
                                 @if ($bundle->price_discount != null)
                                     <div class="font-gotham"><s class="text-secondary">IDR
                                             {{ $bundle->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
@@ -273,7 +273,7 @@
                             </a>
                             <div class="mb-3">
                                 <div class="w-100" style="height: 50px">
-                                    <p class="w-100 font-weight-bold font-gotham text-break">{{ $bundle->name }}</p>
+                                    <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $bundle->name }}</p>
                                 </div>
                                 @if ($bundle->price_discount != null)
                                     <div class="font-gotham mb-3"><s class="text-secondary">IDR 130.000</s><span

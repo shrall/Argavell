@@ -166,13 +166,13 @@
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
         <h1 class="text-argavell font-bauer font-weight-bold text-center">Get Yours Now!</h1>
-        <span class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</span>
+        <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
         @include('pages.inc.product_showcase_desktop')
     </div>
     {{-- product showcase mobile --}}
     <div class="container pt-5 d-block d-sm-none text-center">
         <h1 class="text-argavell font-bauer font-weight-bold text-center">Get Yours Now!</h1>
-        <span class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</span>
+        <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
     </div>
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         @include('pages.inc.product_showcase_mobile')

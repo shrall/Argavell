@@ -13,8 +13,8 @@
                                 @endif
                             </div>
                         </a>
-                        <div style="height:15%" class="mb-3">
-                            <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
+                        <div style="height:10%" class="mb-3">
+                            <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                             @if ($product->price_discount != null)
                                 <div class="font-gotham"><s class="text-secondary">IDR
                                         {{ $product->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
@@ -38,8 +38,8 @@
                             @endif
                         </div>
                     </a>
-                    <div style="height:15%" class="mb-3">
-                        <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
+                    <div style="height:10%" class="mb-3">
+                        <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                         @if ($product->price_discount != null)
                             <div class="font-gotham"><s class="text-secondary">IDR {{ $product->price }}</s><span
                                     class="text-danger font-weight-bold ms-2">IDR

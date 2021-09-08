@@ -25,7 +25,7 @@
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
         <h1 class="text-kleanse font-gotham font-weight-bold text-center">get yours now!</h1>
-        <span class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</span>
+        <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
         <div class="row gap-3 justify-content-md-center">
             @foreach ($products as $product)
                 @if ($product->type == '1')
@@ -41,8 +41,8 @@
                                         @endif
                                     </div>
                                 </a>
-                                <div style="height:15%" class="mb-3">
-                                    <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
+                                <div style="height:10%" class="mb-3">
+                                    <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                                     @if ($product->price_discount != null)
                                         <div class="font-gotham"><s class="text-secondary">IDR
                                                 {{ $product->price }}</s><span
@@ -70,8 +70,8 @@
                                     @endif
                                 </div>
                             </a>
-                            <div style="height:15%" class="mb-3">
-                                <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
+                            <div style="height:10%" class="mb-3">
+                                <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                                 @if ($product->price_discount != null)
                                     <div class="font-gotham"><s class="text-secondary">IDR
                                             {{ $product->price }}</s><span
@@ -118,9 +118,8 @@
     <div class="row w-100 p-0 align-items-center py-5 my-5 d-none d-sm-flex">
         <div class="col-md-1"></div>
         <div class="col-md-6 ps-5 ms-5">
-            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl">making your skin feel safe,
-                free from side
-                effects.</h1>
+            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl mb-2">making your skin feel safe,</h1>
+            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl">free from side effects.</h1>
         </div>
         <div class="col-md-4">
             <ul class="list-unstyled">
@@ -140,9 +139,8 @@
     <div class="row w-100 p-0 align-items-center mb-5 d-block d-sm-none">
         <div class="col-md-1"></div>
         <div class="col-md-6">
-            <h1 class="text-kleanse font-gotham font-weight-bold">making your skin feel safe,
-                free from side
-                effects.</h1>
+            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl mb-2">making your skin feel safe,</h1>
+            <h1 class="text-kleanse font-gotham font-weight-bold text-5xl">free from side effects.</h1>
         </div>
         <div class="col-md-4">
             <ul class="list-unstyled">
@@ -161,7 +159,7 @@
     {{-- product showcase mobile --}}
     <div class="container pt-5 d-block d-sm-none text-center">
         <h1 class="text-kleanse font-gotham font-weight-bold text-center">get yours now!</h1>
-        <span class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</span>
+        <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
     </div>
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         <div class="row px-3 gap-3 flex-nowrap text-start">
@@ -181,18 +179,16 @@
                                 </a>
                                 <div class="mb-3">
                                     <div class="w-100" style="height: 50px">
-                                        <p class="w-100 font-weight-bold font-gotham text-break">{{ $product->name }}</p>
+                                        <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                                     </div>
                                     @if ($product->price_discount != null)
-                                        <div class="font-gotham mb-3"><s class="text-secondary">IDR 130.000</s><span
-                                                class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
+                                        <div class="font-gotham mb-3"><s class="text-secondary">IDR {{ $product->price }}</s><span
+                                                class="text-danger font-weight-bold ms-2">IDR {{ $product->price - $product->price_discount }}</span></div>
                                     @else
                                         <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                                     @endif
                                     <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">
-                                            See
-                                            Product</div>
+                                        <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
                                     </a>
                                 </div>
                             </div>
@@ -203,24 +199,22 @@
                                 <div class="landing-product position-relative w-100 mb-3"
                                     style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
                                     @if ($product->price_discount != null)
-                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
-                                        </div>
+                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
                                     @endif
                                 </div>
                             </a>
                             <div class="mb-3">
                                 <div class="w-100" style="height: 50px">
-                                    <p class="w-100 font-weight-bold font-gotham text-break">{{ $product->name }}</p>
+                                    <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                                 </div>
                                 @if ($product->price_discount != null)
-                                    <div class="font-gotham mb-3"><s class="text-secondary">IDR 130.000</s><span
-                                            class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
+                                <div class="font-gotham mb-3"><s class="text-secondary">IDR {{ $product->price }}</s><span
+                                        class="text-danger font-weight-bold ms-2">IDR {{ $product->price - $product->price_discount }}</span></div>
                                 @else
                                     <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                                 @endif
                                 <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                    <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See
-                                        Product</div>
+                                    <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
                                 </a>
                             </div>
                         </div>

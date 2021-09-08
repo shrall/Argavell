@@ -15,7 +15,7 @@
                         </a>
                         <div class="mb-3">
                             <div class="w-100" style="height: 50px">
-                                <p class="w-100 font-weight-bold font-gotham text-break">{{ $product->name }}</p>
+                                <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                             </div>
                             @if ($product->price_discount != null)
                                 <div class="font-gotham mb-3"><s class="text-secondary">IDR
@@ -42,7 +42,7 @@
                     </a>
                     <div class="mb-3">
                         <div class="w-100" style="height: 50px">
-                            <p class="w-100 font-weight-bold font-gotham text-break">{{ $product->name }}</p>
+                            <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                         </div>
                         @if ($product->price_discount != null)
                             <div class="font-gotham mb-3"><s class="text-secondary">IDR
