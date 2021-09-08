@@ -9,8 +9,8 @@
                     <span class="ms-1 text-secondary">({{ $item->size }})</span>
                 </p>
                 @if ($item->price_discount != null)
-                    <p class="font-proxima-nova"><del class="text-secondary">IDR
-                            {{ $item->product->price }}</del>
+                    <p class="font-proxima-nova"><s class="text-secondary">IDR
+                            {{ $item->product->price }}</s>
                         <span class="text-danger ms-2">IDR
                             {{ $item->product->price - $item->product->price_discount }}</span>
                     </p>
@@ -49,8 +49,8 @@
                     <span class="ms-1 text-secondary">({{ $item->size }})</span>
                 </p>
                 @if ($item->price_discount != null)
-                    <p class="font-proxima-nova"><del class="text-secondary">IDR
-                            {{ $item->product->price }}</del>
+                    <p class="font-proxima-nova"><s class="text-secondary">IDR
+                            {{ $item->product->price }}</s>
                         <span class="text-danger ms-2">IDR
                             {{ $item->product->price - $item->product->price_discount }}</span>
                     </p>

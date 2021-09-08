@@ -17,7 +17,7 @@
             @if ($product->price_discount != null)
                 <p class="my-0 text-danger">SALE!</p>
                 <h2 class="font-proxima-nova mb-4">
-                    <del class="text-secondary">IDR {{ $product->price }}</del>
+                    <s class="text-secondary">IDR {{ $product->price }}</s>
                     <span class="text-danger ms-2">IDR {{ $product->price - $product->price_discount }}</span>
                 </h2>
             @else
@@ -217,8 +217,8 @@
                             <div style="height:15%" class="mb-3">
                                 <div class="font-weight-bold font-gotham">{{ $bundle->name }}</div>
                                 @if ($bundle->price_discount != null)
-                                    <div class="font-gotham"><del class="text-secondary">IDR
-                                            {{ $bundle->price }}</del><span class="text-danger font-weight-bold ms-2">IDR
+                                    <div class="font-gotham"><s class="text-secondary">IDR
+                                            {{ $bundle->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
                                             {{ $bundle->price - $bundle->price_discount }}</span></div>
                                 @else
                                     <div class="font-gotham">IDR {{ $bundle->price }}</div>
@@ -276,7 +276,7 @@
                                     <p class="w-100 font-weight-bold font-gotham text-break">{{ $bundle->name }}</p>
                                 </div>
                                 @if ($bundle->price_discount != null)
-                                    <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
+                                    <div class="font-gotham mb-3"><s class="text-secondary">IDR 130.000</s><span
                                             class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
                                 @else
                                     <div class="font-gotham mb-3">IDR {{ $bundle->price }}</div>

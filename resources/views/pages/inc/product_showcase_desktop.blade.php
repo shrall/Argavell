@@ -16,8 +16,8 @@
                         <div style="height:15%" class="mb-3">
                             <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
                             @if ($product->price_discount != null)
-                                <div class="font-gotham"><del class="text-secondary">IDR
-                                        {{ $product->price }}</del><span class="text-danger font-weight-bold ms-2">IDR
+                                <div class="font-gotham"><s class="text-secondary">IDR
+                                        {{ $product->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
                                         {{ $product->price - $product->price_discount }}</span></div>
                             @else
                                 <div class="font-gotham">IDR {{ $product->price }}</div>
@@ -41,7 +41,7 @@
                     <div style="height:15%" class="mb-3">
                         <div class="font-weight-bold font-gotham">{{ $product->name }}</div>
                         @if ($product->price_discount != null)
-                            <div class="font-gotham"><del class="text-secondary">IDR {{ $product->price }}</del><span
+                            <div class="font-gotham"><s class="text-secondary">IDR {{ $product->price }}</s><span
                                     class="text-danger font-weight-bold ms-2">IDR
                                     {{ $product->price - $product->price_discount }}</span></div>
                         @else
