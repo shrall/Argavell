@@ -74,13 +74,13 @@
                     @endforeach
                 </td>
                 <td>{{ $transaction->user->first_name }} {{ $transaction->user->last_name }}</td>
-                <td>{{ $transaction->user->address->phone }}</td>
-                <td>{{ $transaction->user->address->first_name }} {{ $transaction->user->address->last_name }}</td>
-                <td>{{ $transaction->user->address->phone }}</td>
-                <td>{{ $transaction->user->address->address }}</td>
-                <td>{{ $transaction->user->address->city }}</td>
-                <td>{{ $transaction->user->address->province }}</td>
-                <td>{{ $transaction->user->address->postal_code }}</td>
+                <td>{{ $transaction->user->address->phone ?? '-' }}</td>
+                <td>{{ $transaction->user->address->first_name  ?? $transaction->user->first_name }} {{ $transaction->user->address->last_name ?? $transaction->user->last_name }}</td>
+                <td>{{ $transaction->user->address->phone ?? '-' }}</td>
+                <td>{{ $transaction->user->address->address ?? '-' }}</td>
+                <td>{{ $transaction->user->address->city ?? '-' }}</td>
+                <td>{{ $transaction->user->address->province ?? '-' }}</td>
+                <td>{{ $transaction->user->address->postal_code ?? '-' }}</td>
                 <td>{{ $transaction->shipment_name }}</td>
                 <td>{{ $transaction->shipping_cost }}</td>
                 <td>{{ $transaction->price_total }}</td>

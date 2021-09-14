@@ -144,9 +144,25 @@
   font-size: 8rem;
   line-height: 1;
 }
+.cross {
+    position: relative;
+    display: inline-block;
+}
+.cross::after{
+    content: '';
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+.cross::after {
+    border-bottom: 1px solid #6c757d!important;
+    -webkit-transform: skewY(-10deg);
+    transform: skewY(-10deg);
+}
 
 /* button settings */
-.btn:hover {
+a:hover, .btn:hover {
   color: #fff;
 }
 .btn-argavell {

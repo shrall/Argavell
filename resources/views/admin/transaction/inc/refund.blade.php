@@ -89,7 +89,7 @@
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="ms-auto">
-                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '08123456789' }}"
+                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '#' }}"
                         target="_blank" class="btn btn-admin-argavell text-white text-decoration-none me-2">
                         Kontak Pembeli
                     </a>

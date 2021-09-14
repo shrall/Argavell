@@ -50,6 +50,7 @@ class ProductController extends Controller
         $bundles = Product::where('bundle', '1')
             ->where('bundle_start', '<=', Carbon::now())
             ->where('bundle_end', '>=', Carbon::now())
+            ->where('type', $product->type)
             ->get();
 
         if ($product->bundle == '1') {

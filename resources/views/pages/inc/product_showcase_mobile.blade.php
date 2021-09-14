@@ -18,9 +18,13 @@
                                 <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                             </div>
                             @if ($product->price_discount != null)
-                                <div class="font-gotham mb-3"><s class="text-secondary">IDR
-                                        {{ $product->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
-                                        {{ $product->price - $product->price_discount }}</span></div>
+                                <div class="d-flex mb-3">
+                                    <div class="position-relative">
+                                        <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                    </div>
+                                    <span class="text-danger font-weight-bold ms-2">IDR
+                                        {{ $product->price - $product->price_discount }}</span>
+                                </div>
                             @else
                                 <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                             @endif
@@ -45,9 +49,13 @@
                             <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
                         </div>
                         @if ($product->price_discount != null)
-                            <div class="font-gotham mb-3"><s class="text-secondary">IDR
-                                    {{ $product->price }}</s><span class="text-danger font-weight-bold ms-2">IDR
-                                    {{ $product->price - $product->price_discount }}</span></div>
+                            <div class="d-flex mb-3">
+                                <div class="position-relative">
+                                    <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                </div>
+                                <span class="text-danger font-weight-bold ms-2">IDR
+                                    {{ $product->price - $product->price_discount }}</span>
+                            </div>
                         @else
                             <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                         @endif

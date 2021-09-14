@@ -44,10 +44,13 @@
                                 <div style="height:10%" class="mb-3">
                                     <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                                     @if ($product->price_discount != null)
-                                        <div class="font-gotham"><s class="text-secondary">IDR
-                                                {{ $product->price }}</s><span
-                                                class="text-danger font-weight-bold ms-2">IDR
-                                                {{ $product->price - $product->price_discount }}</span></div>
+                                        <div class="d-flex justify-content-center font-gotham">
+                                            <div class="position-relative">
+                                                <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                            </div>
+                                            <span class="text-danger font-weight-bold ms-2">IDR
+                                                {{ $product->price - $product->price_discount }}</span>
+                                        </div>
                                     @else
                                         <div class="font-gotham">IDR {{ $product->price }}</div>
                                     @endif
@@ -73,10 +76,13 @@
                             <div style="height:10%" class="mb-3">
                                 <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                                 @if ($product->price_discount != null)
-                                    <div class="font-gotham"><s class="text-secondary">IDR
-                                            {{ $product->price }}</s><span
-                                            class="text-danger font-weight-bold ms-2">IDR
-                                            {{ $product->price - $product->price_discount }}</span></div>
+                                    <div class="d-flex justify-content-center font-gotham">
+                                        <div class="position-relative">
+                                            <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                        </div>
+                                        <span class="text-danger font-weight-bold ms-2">IDR
+                                            {{ $product->price - $product->price_discount }}</span>
+                                    </div>
                                 @else
                                     <div class="font-gotham">IDR {{ $product->price }}</div>
                                 @endif
@@ -179,16 +185,23 @@
                                 </a>
                                 <div class="mb-3">
                                     <div class="w-100" style="height: 50px">
-                                        <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
+                                        <p class="w-100 font-weight-bold font-gotham text-break mb-1">
+                                            {{ $product->name }}</p>
                                     </div>
                                     @if ($product->price_discount != null)
-                                        <div class="font-gotham mb-3"><s class="text-secondary">IDR {{ $product->price }}</s><span
-                                                class="text-danger font-weight-bold ms-2">IDR {{ $product->price - $product->price_discount }}</span></div>
+                                        <div class="d-flex font-gotham mb-3">
+                                            <div class="position-relative">
+                                                <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                            </div>
+                                            <span class="text-danger font-weight-bold ms-2">IDR
+                                                {{ $product->price - $product->price_discount }}</span>
+                                        </div>
                                     @else
                                         <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                                     @endif
                                     <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                        <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">
+                                            See Product</div>
                                     </a>
                                 </div>
                             </div>
@@ -199,22 +212,30 @@
                                 <div class="landing-product position-relative w-100 mb-3"
                                     style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
                                     @if ($product->price_discount != null)
-                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!</div>
+                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
+                                        </div>
                                     @endif
                                 </div>
                             </a>
                             <div class="mb-3">
                                 <div class="w-100" style="height: 50px">
-                                    <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}</p>
+                                    <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $product->name }}
+                                    </p>
                                 </div>
                                 @if ($product->price_discount != null)
-                                <div class="font-gotham mb-3"><s class="text-secondary">IDR {{ $product->price }}</s><span
-                                        class="text-danger font-weight-bold ms-2">IDR {{ $product->price - $product->price_discount }}</span></div>
+                                    <div class="d-flex font-gotham mb-3">
+                                        <div class="position-relative">
+                                            <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                        </div>
+                                        <span class="text-danger font-weight-bold ms-2">IDR
+                                            {{ $product->price - $product->price_discount }}</span>
+                                    </div>
                                 @else
                                     <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
                                 @endif
                                 <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                    <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                    <div class="text-decoration-none btn-kleanse text-center w-100 py-2 cursor-pointer">See
+                                        Product</div>
                                 </a>
                             </div>
                         </div>
@@ -231,10 +252,12 @@
             {{-- <h1 class="font-gotham text-white my-5 font-weight-bold" style="
             text-shadow: 2px 2px #000;">which kleanse product made you<br>fall in love?</h1> --}}
             <a href="#" class="text-decoration-none d-none d-sm-block">
-                <div class="btn-kleanse text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+                <div class="btn-kleanse text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products
+                </div>
             </a>
             <a href="#" class="text-decoration-none d-block d-sm-none">
-                <div class="btn-kleanse text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+                <div class="btn-kleanse text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products
+                </div>
             </a>
         </div>
     </div>

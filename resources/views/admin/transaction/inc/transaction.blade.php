@@ -120,7 +120,7 @@
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
-                    <a href="#" class="text-secondary text-decoration-none">
+                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '#' }}" class="text-secondary text-decoration-none">
                         <span class="far fa-fw fa-comment-dots me-1"></span>Tanya Pembeli
                     </a>
                 </div>
