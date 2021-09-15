@@ -58,6 +58,8 @@
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
                                 @elseif($transaction->status == '4')
                                     <p class="my-0 text-warning font-weight-bold">Waiting for Confirmation</p>
+                                @elseif($transaction->status == '5')
+                                    <p class="my-0 text-primary font-weight-bold">Confirmed</p>
                                 @endif
                                 @if ($transaction->status == '0')
                                     @if ($transaction->payment_id != 1001)
@@ -133,7 +135,8 @@
                         @foreach ($transaction->carts as $item)
                             <div class="col-12 mx-2 my-2">
                                 <div class="row">
-                                    <div class="col-2"><img src="{{ asset('uploads/products/' . $item->product->img) }}"
+                                    <div class="col-2"><img
+                                            src="{{ asset('uploads/products/' . $item->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
                                     <div class="col-7">{{ $item->qty }}x {{ $item->product->name }}</div>

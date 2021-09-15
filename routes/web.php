@@ -79,6 +79,8 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
     Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
+    Route::post('cart/getcity', [CartController::class, 'get_city'])->name('cart.getcity');
+    Route::post('cart/getshipment', [CartController::class, 'get_shipment'])->name('cart.getshipment');
     Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
     Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
     Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');

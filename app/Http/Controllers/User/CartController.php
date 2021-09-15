@@ -36,28 +36,51 @@ class CartController extends Controller
 
         $payments = Payment::where('id', '!=', 1001)->get();
 
-        $useraddress = null;
-        foreach ($cities as $city) {
-            if ($city['city_name'] == Auth::user()->address->city) {
-                $useraddress = $city['city_id'];
-            }
-        }
-        $weight = 0;
         $items = Cart::where('transaction_id', null)->where('user_id', Auth::id())->get();
+        $weight = 0;
         foreach ($items as $item) {
             $weight += $item->product->weight;
         }
+        foreach ($cities as $city) {
+            if (Auth::user()->address_id) {
+                if ($city['city_name'] == Auth::user()->address->city) {
+                    $useraddress = $city['city_id'];
+                    $shipments = Http::withHeaders([
+                        'key' => config('services.rajaongkir.token'),
+                    ])->post('https://api.rajaongkir.com/starter/cost', [
+                        'origin' => $useraddress, //@marshall ini perlu dirubah ke asal pengirim
+                        'destination' => $useraddress,
+                        'weight' => $weight,
+                        'courier' => 'jne',
+                    ])->json()['rajaongkir']['results'][0];
+                }
+            } else {
+                $shipments = null;
+            }
+        }
 
+        return view('user.Checkout.index', compact('addresses', 'cities', 'provinces', 'payments', 'shipments', 'weight'));
+    }
+    public function get_shipment(Request $request)
+    {
         $shipments = Http::withHeaders([
             'key' => config('services.rajaongkir.token'),
         ])->post('https://api.rajaongkir.com/starter/cost', [
-            'origin' => $useraddress,
-            'destination' => $useraddress,
-            'weight' => $weight,
+            'origin' => $request->city_id, //@marshall ini perlu dirubah ke asal pengirim
+            'destination' => $request->city_id,
+            'weight' => $request->weight,
             'courier' => 'jne',
         ])->json()['rajaongkir']['results'][0];
-
-        return view('user.Checkout.index', compact('addresses', 'cities', 'provinces', 'payments', 'shipments', 'weight'));
+        return view('user.Checkout.inc.shipment_list', compact('shipments'));
+    }
+    public function get_city(Request $request)
+    {
+        $cities = Http::withHeaders([
+            'key' => config('services.rajaongkir.token'),
+        ])->get('https://api.rajaongkir.com/starter/city')
+            ->json()['rajaongkir']['results'];
+        $cities = collect($cities)->where('province', $request->province);
+        return $cities;
     }
 
     /**
@@ -79,7 +102,7 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->id);
-        if(Auth::user()->carts->where('transaction_id', null )->where('product_id', $product->id)->first()){
+        if (Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->first()) {
             return 'false';
         }
         if ($product['stock'] > $request->quantity) {
@@ -162,7 +185,7 @@ class CartController extends Controller
                 'qty' => $item['qty'] + 1
             ]);
             return response()->json($item);
-        } else{
+        } else {
             return 'false';
         }
     }

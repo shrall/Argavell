@@ -16,7 +16,7 @@
                         <div style="height:10%" class="mb-3">
                             <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                             @if ($product->price_discount != null)
-                                <div class="d-flex">
+                                <div class="d-flex justify-content-center">
                                     <div class="position-relative">
                                         <span class="text-secondary cross">IDR {{ $product->price }}</span>
                                     </div>
@@ -45,7 +45,7 @@
                     <div style="height:10%" class="mb-3">
                         <div class="font-weight-bold font-gotham mb-1">{{ $product->name }}</div>
                         @if ($product->price_discount != null)
-                            <div class="d-flex">
+                            <div class="d-flex @if (Route::current()->getName() != 'home') justify-content-center @endif">
                                 <div class="position-relative">
                                     <span class="text-secondary cross">IDR {{ $product->price }}</span>
                                 </div>

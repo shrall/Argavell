@@ -259,16 +259,16 @@
     </div>
     {{-- video desktop --}}
     <div class="row w-100 m-0 d-none d-sm-block">
-        <iframe class="w-100 p-0" height="800px" src="https://www.youtube.com/embed/0WVDKZJkGlY"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+        <video class="w-100 p-0" height="800px"
+            title="YouTube video player" frameborder="0" controls
+            allowfullscreen> <source src="{{asset('videos/argavell.mp4')}}" type="video/mp4">
+        </video>
     </div>
     {{-- video mobile --}}
     <div class="row w-100 m-0 d-block d-sm-none">
-        <iframe class="w-100 p-0" height="200px" src="https://www.youtube.com/embed/0WVDKZJkGlY"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+        <video class="w-100 p-0" height="200px"
+            title="YouTube video player" frameborder="0" controls
+            allowfullscreen> <source src="{{asset('videos/argavell.mp4')}}" type="video/mp4">
+        </video>
     </div>
 @endsection
