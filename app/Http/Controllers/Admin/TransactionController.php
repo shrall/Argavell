@@ -27,7 +27,7 @@ class TransactionController extends Controller
     {
         $this->check_response_limit();
         $this->check_shipping_etd();
-        $transactions = Transaction::paginate(2);
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.index', compact('transactions'));
     }
 
@@ -123,42 +123,42 @@ class TransactionController extends Controller
 
     function fetch_data_all()
     {
-        $transactions = Transaction::paginate(2);
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_new()
     {
-        $transactions = Transaction::where('status', '4')->paginate(2);
+        $transactions = Transaction::where('status', '4')->orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_ready()
     {
-        $transactions = Transaction::where('status', '5')->paginate(2);
+        $transactions = Transaction::where('status', '5')->orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_ondelivery()
     {
-        $transactions = Transaction::where('status', '3')->paginate(2);
+        $transactions = Transaction::where('status', '3')->orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_complain()
     {
-        $refunds = Refund::paginate(2);
+        $refunds = Refund::orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.refund', compact('refunds'))->render();
     }
     function fetch_data_canceled()
     {
-        $transactions = Transaction::where('status', '2')->paginate(2);
+        $transactions = Transaction::where('status', '2')->orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_delivered()
     {
-        $transactions = Transaction::where('status', '1')->paginate(2);
+        $transactions = Transaction::where('status', '1')->orderBy('created_at', 'desc')->paginate(2);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
@@ -185,7 +185,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
@@ -213,7 +213,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('status', '4')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('status', '4')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
@@ -241,7 +241,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('status', '5')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('status', '5')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
@@ -269,7 +269,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('status', '3')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('status', '3')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
@@ -303,7 +303,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $refunds = Refund::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $refunds = Refund::where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.refund', compact('refunds'))->render();
     }
@@ -331,7 +331,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('status', '2')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('status', '2')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }
@@ -359,7 +359,7 @@ class TransactionController extends Controller
                 })->oldest('created_at')->get();
             }
         } else {
-            $transactions = Transaction::where('status', '1')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->get();
+            $transactions = Transaction::where('status', '1')->where('created_at', '>=', $request->start)->where('created_at', '<=', $request->end)->orderBy('created_at', 'desc')->get();
         }
         return view('admin.transaction.inc.transaction', compact('transactions'));
     }

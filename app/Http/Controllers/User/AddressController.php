@@ -144,11 +144,17 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        if(Auth::user()->address_id != $address->id){
-            $address->delete();
-            return redirect()->back()->with('Success', 'Address Deleted!');
-        } else {
-            return redirect()->back()->with('Error', 'Address is being used!');
-        }
+        // if(Auth::user()->address_id != $address->id){
+        $address->update([
+            'user_id' => null
+        ]);
+        $user = User::find(Auth::id());
+        $user->update([
+            'address_id' => null,
+        ]);
+        return redirect()->back()->with('Success', 'Address Deleted!');
+        // } else {
+        //     return redirect()->back()->with('Error', 'Address is being used!');
+        // }
     }
 }

@@ -151,6 +151,6 @@
         </div>
     </div>
 @endforeach
-@if (Route::current()->getName() == 'admin.transaction.fetchdataall' || Route::current()->getName() == 'admin.transaction.fetchdatanew' || Route::current()->getName() == 'admin.transaction.fetchdataready' || Route::current()->getName() == 'admin.transaction.fetchdataondelivery' || Route::current()->getName() == 'admin.transaction.fetchdatacomplain' || Route::current()->getName() == 'admin.transaction.fetchdatadelivered' || Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
+@if (Route::current()->getName() == 'admin.transaction.index' || Route::current()->getName() == 'admin.transaction.fetchdataall' || Route::current()->getName() == 'admin.transaction.fetchdatanew' || Route::current()->getName() == 'admin.transaction.fetchdataready' || Route::current()->getName() == 'admin.transaction.fetchdataondelivery' || Route::current()->getName() == 'admin.transaction.fetchdatacomplain' || Route::current()->getName() == 'admin.transaction.fetchdatadelivered' || Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
     {{ $transactions->links() }}
 @endif

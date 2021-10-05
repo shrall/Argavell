@@ -104,29 +104,48 @@
                     </div>
                 </div>
                 <div class="my-3">
-                    @if ($product->type == '0')
-                        <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
-                            to Cart</button>
-                        <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
-                            to Cart</button>
-                    @else
-                        <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
-                            to Cart</button>
-                        <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
-                            to Cart</button>
-                    @endif
+                    @auth
+                        @if ($product->type == '0')
+                            <button type="submit"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
+                                to Cart</button>
+                            <button type="submit"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
+                                to Cart</button>
+                        @else
+                            <button type="submit"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                data-bs-toggle="modal" data-bs-target="#cartModal" disabled>Add
+                                to Cart</button>
+                            <button type="submit"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                data-bs-toggle="modal" data-bs-target="#cartModalMobile" disabled>Add
+                                to Cart</button>
+                        @endif
+                    @endauth
+                    @guest
+                        @if ($product->type == '0')
+                            <a href="{{ route('login') }}"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                Add to Cart</a>
+                            <a href="{{ route('login') }}"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                Add to Cart</a>
+                        @else
+                            <a href="{{ route('login') }}"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                Add to Cart</a>
+                            <a href="{{ route('login') }}"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                Add to Cart</a>
+                        @endif
+                    @endguest
                 </div>
             </form>
         </div>
