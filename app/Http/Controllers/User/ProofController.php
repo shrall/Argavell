@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Proof;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,18 +39,22 @@ class ProofController extends Controller
     public function store(Request $request)
     {
         if ($request->has('payment_file')) {
-            $payment_file = time() . '-' . $request['payment_file']->getClientOriginalName();
-            $request->payment_file->move(public_path('payment'), $payment_file);
-        } else {
-            $payment_file = null;
-        }
+            if (Transaction::where('order_number', '=', $request['order_number'])->exists()) {
+                $transaction = Transaction::where('order_number', $request['order_number'])->first();
+                if ($transaction->user_id == Auth::id()) {
+                    $payment_file = time() . '-' . $request['payment_file']->getClientOriginalName();
+                    $request->payment_file->move(public_path('payment'), $payment_file);
 
-        Proof::create([
-            'name' => $request['sender_name'],
-            'order_number' => $request['order_number'],
-            'payment_file' => $payment_file,
-            'user_id' => Auth::id(),
-        ]);
+                    Proof::create([
+                        'name' => $request['sender_name'],
+                        'order_number' => $request['order_number'],
+                        'payment_file' => $payment_file,
+                        'user_id' => Auth::id(),
+                        'transaction_id' => $transaction->id
+                    ]);
+                }
+            }
+        }
 
         return redirect()->route('page.paymentconfirmation');
     }

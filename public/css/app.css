@@ -65,6 +65,12 @@
 .text-argavell:hover {
   color: #8a5b32;
 }
+.text-argavell-link{
+    color: #8a5b32 !important;
+}
+.text-argavell-link:hover{
+    color: #6a3b12 !important;
+}
 .text-argavell-light {
   color: #bb9164;
 }

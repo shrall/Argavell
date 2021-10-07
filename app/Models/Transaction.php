@@ -34,4 +34,9 @@ class Transaction extends Model
     {
         return $this->hasMany(Cart::class, 'transaction_id', 'id');
     }
+
+    public function proofs()
+    {
+        return $this->hasMany(Proof::class, 'transaction_id', 'id');
+    }
 }

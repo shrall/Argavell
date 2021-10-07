@@ -31,6 +31,10 @@
                             data-bs-toggle="tab">SEMUA PESANAN</button>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <button class="nav-link font-weight-bold" id="menunggu-pembayaran-tab" type="button"
+                            data-bs-toggle="tab">MENUNGGU PEMBAYARAN</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="pesanan-baru-tab" type="button"
                             data-bs-toggle="tab">PESANAN BARU</button>
                     </li>
@@ -66,8 +70,8 @@
                             </div>
                             <div class="col-4">
                                 <select class="form-select" id="sort" name="sort" onchange="fetch_data_sort();">
+                                    <option value="latest" selected>Terbaru</option>
                                     <option value="oldest">Terlama</option>
-                                    <option value="latest">Terbaru</option>
                                 </select>
                             </div>
                             <div class="col-4 position-relative">
@@ -104,8 +108,8 @@
             </button>
         </div> --}}
         <div class="mx-2" id="select-all-download">
-            <button class="btn btn-admin-light shadow-sm text-decoration-none" id="button-download-submit"  onclick="event.preventDefault();
-            document.getElementById('download-product-list-form').submit();">
+            <button class="btn btn-admin-light shadow-sm text-decoration-none" id="button-download-submit" onclick="event.preventDefault();
+                    document.getElementById('download-product-list-form').submit();">
                 Download Daftar Produk
             </button>
         </div>
@@ -169,49 +173,56 @@
         $('#semua-pesanan-tab').click(function() {
             method = 'all'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
+            fetch_data(page, method);
+        });
+
+        $('#menunggu-pembayaran-tab').click(function() {
+            method = 'waiting'
+            page = 1
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#pesanan-baru-tab').click(function() {
             method = 'new'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#siap-dikirim-tab').click(function() {
             method = 'ready'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#dalam-pengiriman-tab').click(function() {
             method = 'ondelivery'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#dikomplain-tab').click(function() {
             method = 'complain'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#pesanan-selesai-tab').click(function() {
             method = 'delivered'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
         $('#dibatalkan-tab').click(function() {
             method = 'canceled'
             page = 1
-            $('#sort').val('oldest');
+            $('#sort').val('latest');
             fetch_data(page, method);
         });
 
@@ -240,7 +251,8 @@
         function fetch_data_by_name() {
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
-                    data: $('#input-search').val()
+                    data: $('#input-search').val(),
+                    sort: $('#sort').val()
                 })
                 .done(function(data) {
                     $('#transaction-container').html(data);
@@ -253,6 +265,7 @@
         function fetch_data_sort() {
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
+                    data: $('#input-search').val(),
                     sort: $('#sort').val()
                 })
                 .done(function(data) {
@@ -264,10 +277,10 @@
         }
 
         function changePageMenu() {
-            if (method != 'all') {
-                $('#select-all-row').removeClass('d-none').addClass('d-flex')
-            } else {
+            if (method == 'all' || method == 'waiting') {
                 $('#select-all-row').removeClass('d-flex').addClass('d-none')
+            } else {
+                $('#select-all-row').removeClass('d-none').addClass('d-flex')
             }
             if (method == 'new') {
                 $('#select-all-accept').removeClass('d-none').addClass('d-block')

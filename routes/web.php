@@ -108,6 +108,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('transaction/label/download', [AdminTransactionController::class, 'download_label_transaction'])->name('transaction.downloadlabeltransaction');
 
     Route::get('transaction/pagination/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all'])->name('transaction.fetchdataall');
+    Route::get('transaction/pagination/fetch_data_waiting', [AdminTransactionController::class, 'fetch_data_waiting'])->name('transaction.fetchdatawaiting');
     Route::get('transaction/pagination/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new'])->name('transaction.fetchdatanew');
     Route::get('transaction/pagination/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready'])->name('transaction.fetchdataready');
     Route::get('transaction/pagination/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery'])->name('transaction.fetchdataondelivery');
@@ -117,6 +118,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
 
     Route::post('transaction/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all_search'])->name('transaction.fetchdataall.search');
     Route::post('transaction/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new_search'])->name('transaction.fetchdatanew.search');
+    Route::post('transaction/fetch_data_waiting', [AdminTransactionController::class, 'fetch_data_waiting_search'])->name('transaction.fetchdatawaiting.search');
     Route::post('transaction/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready_search'])->name('transaction.fetchdataready.search');
     Route::post('transaction/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery_search'])->name('transaction.fetchdataondelivery.search');
     Route::post('transaction/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain_search'])->name('transaction.fetchdatacomplain.search');
