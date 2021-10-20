@@ -58,7 +58,8 @@
                             <label class="col-12 text-start font-weight-bold">Jangka Waktu</label>
                             <div class="col-12">
                                 <input type="text" name="date" id="date" class="form-control" required />
-                                <input type="hidden" name="date_start" id="date-start" value="{{ \Carbon\Carbon::now() }}">
+                                <input type="hidden" name="date_start" id="date-start"
+                                    value="{{ \Carbon\Carbon::now() }}">
                                 <input type="hidden" name="date_end" id="date-end" value="{{ \Carbon\Carbon::now() }}">
                             </div>
                         </div>
@@ -67,8 +68,8 @@
                             <div class="col-12 d-block" id="image-upload-button">
                                 <div class="btn btn-admin-argavell">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
-                                    <input type="file" name="image" id="image" class="d-none" accept="image/*" required
-                                        onchange="loadFile(event)">
+                                    <input type="file" name="image" id="image" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event)">
                                 </div>
                             </div>
                             <div class="col-12 text-argavell">
@@ -120,7 +121,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Diskon</label>
                             <div class="col-12">
-                                <input type="number" name="price_discount" id="price_discount" class="form-control" placeholder="Kosongkan apabila tidak ada diskon" />
+                                <input type="number" name="price_discount" id="price_discount" class="form-control"
+                                    placeholder="Kosongkan apabila tidak ada diskon" />
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -151,12 +153,19 @@
     </script>
     <script>
         var loadFile = function(event) {
-            $('.product-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
-            $('#image-upload-preview').html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target.files[0][
-                'name'
-            ])
-            $('#image-upload-button').removeClass('d-block').addClass('d-none');
-            $('#image-upload-preview').removeClass('d-none').addClass('d-block');
+            console.log($('#image')[0].files[0].size);
+            if ($('#image')[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $('#image').val(null);
+            } else {
+                $('.product-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+                $('#image-upload-preview').html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                    .files[0][
+                        'name'
+                    ])
+                $('#image-upload-button').removeClass('d-block').addClass('d-none');
+                $('#image-upload-preview').removeClass('d-none').addClass('d-block');
+            }
         };
     </script>
     <script>

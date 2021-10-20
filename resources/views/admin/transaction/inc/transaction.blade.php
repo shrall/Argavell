@@ -1,3 +1,10 @@
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = 'Rp ' . number_format($angka, 2, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @foreach ($transactions as $transaction)
     <div class="card card-admin-transactions px-0">
         <div class="card-header">
@@ -74,7 +81,7 @@
                                 @foreach ($transaction->carts as $item)
                                     <div class="col-6">
                                         <h6 class="font-weight-black">{{ $item->product->name }}</h6>
-                                        <h6>{{ $item->qty }}x {{ $item->price }}</h6>
+                                        <h6>{{ $item->qty }}x {{ rupiah($item->price) }}</h6>
                                     </div>
                                 @endforeach
                             </div>
@@ -145,7 +152,7 @@
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
                 <div class="col-2 text-end">
-                    <span class="font-weight-bold">Rp. {{ $transaction->price_total }}</span>
+                    <span class="font-weight-bold">{{ rupiah($transaction->price_total) }}</span>
                 </div>
             </div>
         </div>
@@ -181,7 +188,7 @@
                             @if (count($transaction->proofs) <= 0) disabled @endif
                             onclick="event.preventDefault();
                                 document.getElementById('form-waiting-transaction-{{ $transaction->id }}').submit();">
-                            Kirim Pesanan
+                            Konfirmasi Pembayaran
                         </button>
                     @endif
                 </div>
