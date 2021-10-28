@@ -1,5 +1,11 @@
 @extends('layouts.app')
-
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @section('content')
     <div class="row w-100 m-0 p-0 py-5 align-items-center">
         <div class="col-md-2"></div>
@@ -18,16 +24,16 @@
                 <p class="my-0 text-danger">SALE!</p>
                 <h2 class="font-proxima-nova mb-4 d-flex">
                     <div class="position-relative">
-                        <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                        <span class="text-secondary cross">IDR {{ rupiah($product->price) }}</span>
                     </div>
                     <span class="text-danger font-weight-bold ms-2">IDR
-                        {{ $product->price - $product->price_discount }}</span>
+                        {{ rupiah($product->price - $product->price_discount) }}</span>
                 </h2>
             @else
                 @if ($product->type == '0')
-                    <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ $product->price }}</h2>
+                    <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
                 @else
-                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR {{ $product->price }}</h2>
+                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
                 @endif
             @endif
             <p class="font-proxima-nova font-weight-bold">Description</p>
@@ -408,21 +414,22 @@
                             .val()));
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
                             '#quantity').val()));
-                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) *
+
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($('#price').val()) *
                             parseInt($('#quantity').val())));
-                        $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt(
+                        $('#cart-discount').html(parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
                             {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) *
+                        $('#cart-total').html(parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($('#price').val()) *
                             parseInt(
                                 $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
                             parseInt(
                                 $('#quantity').val()))));
-                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($(
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html().replace('.', '')) + (parseInt($(
                                 '#price')
                             .val()) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt(
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html().replace('.', '')) + (parseInt(
                             {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price')
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html().replace('.', '')) + ((parseInt($('#price')
                             .val()) * parseInt($('#quantity').val())) - (parseInt(
                             {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
                     }

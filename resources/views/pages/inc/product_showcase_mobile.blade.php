@@ -20,13 +20,13 @@
                             @if ($product->price_discount != null)
                                 <div class="d-flex mb-3">
                                     <div class="position-relative">
-                                        <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                        <span class="text-secondary cross">IDR {{ rupiah($product->price) }}</span>
                                     </div>
                                     <span class="text-danger font-weight-bold ms-2">IDR
-                                        {{ $product->price - $product->price_discount }}</span>
+                                        {{ rupiah($product->price - $product->price_discount) }}</span>
                                 </div>
                             @else
-                                <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
+                                <div class="font-gotham mb-3">IDR {{ rupiah($product->price) }}</div>
                             @endif
                             <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
                                 <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
@@ -51,13 +51,13 @@
                         @if ($product->price_discount != null)
                             <div class="d-flex mb-3">
                                 <div class="position-relative">
-                                    <span class="text-secondary cross">IDR {{ $product->price }}</span>
+                                    <span class="text-secondary cross">IDR {{ rupiah($product->price) }}</span>
                                 </div>
                                 <span class="text-danger font-weight-bold ms-2">IDR
-                                    {{ $product->price - $product->price_discount }}</span>
+                                    {{ rupiah($product->price - $product->price_discount) }}</span>
                             </div>
                         @else
-                            <div class="font-gotham mb-3">IDR {{ $product->price }}</div>
+                            <div class="font-gotham mb-3">IDR {{ rupiah($product->price) }}</div>
                         @endif
                         <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
                             <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>

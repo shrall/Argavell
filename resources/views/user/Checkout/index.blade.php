@@ -4,7 +4,13 @@
     <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
 @endsection
-
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @section('content')
     <?php
     $subtotal = 0;
@@ -38,7 +44,8 @@
                             {{ $item->qty }}x {{ $item->product->name }}<span
                                 class="ms-1 text-secondary">({{ $item->size }})</span>
                         </div>
-                        <div class="col-4">IDR {{ ($item->price - $item->price_discount) * $item->qty }}</div>
+                        <div class="col-4">IDR {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}
+                        </div>
                     </div>
                 @endforeach
                 <hr>
@@ -46,7 +53,8 @@
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span class="summary_subtotal">{{ $subtotal - $discount }}</span>
+                    <div class="col-4">IDR <span
+                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
                     </div>
                 </div>
                 <div class="row my-2">
@@ -185,7 +193,7 @@
                                     <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
                                         <span class="font-weight-bold">{{ $shipment['description'] }} -
                                             {{ $shipment['service'] }}</span> : IDR <span
-                                            id="shipping_cost_{{ $shipment['service'] }}">{{ $shipment['cost'][0]['value'] }}</span>
+                                            id="shipping_cost_{{ $shipment['service'] }}">{{ rupiah($shipment['cost'][0]['value']) }}</span>
                                     </label>
                                 </div>
                             @endforeach
@@ -262,7 +270,8 @@
                             {{ $item->qty }}x {{ $item->product->name }}<span
                                 class="ms-1 text-secondary">({{ $item->size }})</span>
                         </div>
-                        <div class="col-4">IDR {{ ($item->price - $item->price_discount) * $item->qty }}</div>
+                        <div class="col-4">IDR
+                            {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}</div>
                     </div>
                 @endforeach
                 <hr>
@@ -270,7 +279,8 @@
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span class="summary_subtotal">{{ $subtotal - $discount }}</span>
+                    <div class="col-4">IDR <span
+                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
                     </div>
                 </div>
                 <div class="row my-2">
@@ -294,14 +304,27 @@
 
 @section('scripts')
     <script>
+        Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+            var n = this,
+                decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+                decSeparator = decSeparator == undefined ? "." : decSeparator,
+                thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+                sign = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+            return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" +
+                thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+        };
+
         function refreshSummary() {
             $('.summary_shipping_cost').html($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html())
-            $('.summary_total').html(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                    .html()) +
-                parseInt($('#summary_subtotal').val()));
+            $('.summary_total').html(
+                (parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html().replace('.',
+                    '')) + parseInt($('#summary_subtotal').val())).formatMoney(0, '.', ''));
             $('#shipping_cost').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
                 .html()));
-            $('#summary_total').val($('#shipping_cost').val() + $('#summary_subtotal').val());
+            $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html()
+                .replace('.', '')) + parseInt($('#summary_subtotal').val()));
         }
         refreshSummary();
 
@@ -336,9 +359,7 @@
 
         $('#pay-button').click(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var price = parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                    .html()) +
-                parseInt($('#summary_subtotal').val());
+            var price = parseInt($('#summary_total').val());
             if ($('#payment_radio_1001').is(':checked')) {
                 $.post('{{ config('app.url') }}' + "/transaction/getsnap", {
                         _token: CSRF_TOKEN,

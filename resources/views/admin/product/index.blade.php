@@ -1,5 +1,11 @@
 @extends('layouts.admin')
-
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @section('content')
     <div class="row mb-3">
         <div class="col-4">
@@ -68,7 +74,7 @@
                                         @endif
                                     </td>
                                     <td>{{ $product->stock }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td>{{ rupiah($product->price) }}</td>
                                     <td>
                                         <a href="{{ route('admin.product.edit', $product->slug) }}"
                                             class="btn btn-admin-argavell-light">See Details</a>

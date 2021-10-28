@@ -11,13 +11,13 @@
                 @if ($item->price_discount != null)
                     <div class="d-flex font-proxima-nova">
                         <div class="position-relative">
-                            <span class="text-secondary cross">IDR {{ $item->product->price }}</span>
+                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
                         </div>
                         <span class="text-danger font-weight-bold ms-2">IDR
-                            {{ $item->product->price - $item->product->price_discount }}</span>
+                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
                     </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">
@@ -53,13 +53,13 @@
                 @if ($item->price_discount != null)
                     <div class="d-flex font-proxima-nova">
                         <div class="position-relative">
-                            <span class="text-secondary cross">IDR {{ $item->product->price }}</span>
+                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
                         </div>
                         <span class="text-danger font-weight-bold ms-2">IDR
-                            {{ $item->product->price - $item->product->price_discount }}</span>
+                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
                     </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">
