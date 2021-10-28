@@ -33,15 +33,19 @@ class LoginController extends Controller
     // protected $redirectTo = '/admin';
     protected function redirectTo()
     {
-        if (FacadesRequest::session()->get('product.slug')) {
+        if (Session::has('product.slug')) {
             $url = route(FacadesRequest::session()->get('route.intended'), FacadesRequest::session()->get('product.slug'));
             Session::forget('route.intended');
             Session::forget('product.slug');
             return $url ?? '/admin';
         } else {
-            $url = route(FacadesRequest::session()->get('route.intended'));
-            Session::forget('route.intended');
-            return $url ?? '/admin';
+            if (Session::has('route.intended')) {
+                $url = route(FacadesRequest::session()->get('route.intended'));
+                Session::forget('route.intended');
+                return $url ?? '/admin';
+            } else {
+                return '/admin';
+            }
         }
     }
 

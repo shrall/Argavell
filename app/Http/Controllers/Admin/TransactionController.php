@@ -7,11 +7,13 @@ use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Proof;
 use App\Models\Refund;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use SnappyImage;
@@ -78,6 +80,18 @@ class TransactionController extends Controller
                 $transaction->update([
                     'status' => '4',
                 ]);
+                if ($request->has('image')) {
+                    $payment_file = time() . '-' . $request['image']->getClientOriginalName();
+                    $request->image->move(public_path('payment'), $payment_file);
+
+                    Proof::create([
+                        'name' => $transaction->user->first_name . ' ' . $transaction->user->last_name,
+                        'order_number' => $transaction->order_number,
+                        'payment_file' => $payment_file,
+                        'user_id' => Auth::id(),
+                        'transaction_id' => $transaction->id
+                    ]);
+                }
             }
         }
         return redirect()->route('admin.transaction.index');

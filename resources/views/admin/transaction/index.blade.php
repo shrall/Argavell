@@ -109,7 +109,7 @@
         </div> --}}
         <div class="mx-2" id="select-all-download">
             <button class="btn btn-admin-light shadow-sm text-decoration-none" id="button-download-submit" onclick="event.preventDefault();
-                            document.getElementById('download-product-list-form').submit();">
+                                    document.getElementById('download-product-list-form').submit();">
                 Download Daftar Produk
             </button>
         </div>
@@ -126,6 +126,15 @@
 @endsection
 
 @section('scripts')
+    <script>
+        var loadFile = function(event, order) {
+            $('#file-bukti').attr('href', URL.createObjectURL(event.target.files[0]));
+            $('#file-bukti').html(event.target.files[0].name);
+            $('#no-bukti').removeClass('d-block').addClass('d-none');
+            $('#yes-bukti').removeClass('d-none').addClass('d-block');
+            $('#transaction-button-'+order).prop("disabled", false);
+        };
+    </script>
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $(function() {

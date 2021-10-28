@@ -103,7 +103,7 @@ function rupiah($angka)
                                 Sesuai</span></p>
                         <p class="my-0 text-secondary">{{ $transaction->shipment_name }}</p>
                     </div>
-                    @if ($transaction->status != '0')
+                    @if ($transaction->status != '0' && $transaction->status != '2')
                         <div class="my-2">
                             <p class="my-0">Nomor Resi</p>
                             <form action="{{ route('admin.transaction.store') }}"
@@ -141,7 +141,11 @@ function rupiah($angka)
                                     </p>
                                 @endforeach
                             @else
-                                <p class="my-0 text-secondary">Belum ada bukti pembayaran.</p>
+                                <p class="my-0 text-secondary" id="no-bukti">Belum ada bukti pembayaran.</p>
+                                <p class="my-0 text-argavell d-none" id="yes-bukti">
+                                    <span class="fa fa-fw fa-paperclip"></span>
+                                    <a class="text-argavell-link" target="_blank" href="" id="file-bukti"></a>
+                                </p>
                             @endif
                         </div>
                     @endif
@@ -184,12 +188,25 @@ function rupiah($angka)
                             Kirim Pesanan
                         </button>
                     @elseif ($transaction->status == '0')
-                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
-                            @if (count($transaction->proofs) <= 0) disabled @endif
-                            onclick="event.preventDefault();
-                                document.getElementById('form-waiting-transaction-{{ $transaction->id }}').submit();">
-                            Konfirmasi Pembayaran
-                        </button>
+                        <form action="{{ route('admin.transaction.store') }}"
+                            id="form-waiting-transaction-{{ $transaction->id }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="transaction_id[]"
+                                id="input-transaction-waiting{{ $transaction->id }}"
+                                value="{{ $transaction->id }}">
+                            <input type="hidden" name="input_method" value="waiting">
+                            @if (count($transaction->proofs) <= 0)
+                                <div class="btn btn-admin-argavell">
+                                    <label for="image" class="cursor-pointer">Upload Pembayaran</label>
+                                    <input type="file" name="image" id="image" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event, {{$loop->iteration}})">
+                                </div>
+                            @endif
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" id="transaction-button-{{$loop->iteration}}"
+                                @if (count($transaction->proofs) <= 0) disabled @endif>
+                                Konfirmasi Pembayaran
+                            </button>
+                        </form>
                     @endif
                 </div>
             </div>
