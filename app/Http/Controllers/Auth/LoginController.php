@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 
 class LoginController extends Controller
 {
@@ -28,7 +29,15 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    // protected $redirectTo = '/admin';
+    protected function redirectTo()
+    {
+        if (FacadesRequest::session()->get('product.slug')) {
+            return route(FacadesRequest::session()->get('route.intended'), FacadesRequest::session()->get('product.slug')) ?? '/admin';
+        } else {
+            return route(FacadesRequest::session()->get('route.intended')) ?? '/admin';
+        }
+    }
 
     /**
      * Login username to be used by the controller.
@@ -43,7 +52,6 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-
         $this->username = $this->findUsername();
     }
 
@@ -73,7 +81,8 @@ class LoginController extends Controller
         return $this->username;
     }
 
-    protected function loggedOut(Request $request) {
+    protected function loggedOut(Request $request)
+    {
         return redirect()->route('login');
     }
 }

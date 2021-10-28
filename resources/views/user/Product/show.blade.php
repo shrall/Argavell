@@ -150,23 +150,30 @@ function rupiah($angka)
                     @endauth
                     @guest
                         @if ($product->type == '0')
-                            <a href="{{ route('login') }}"
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
                                 class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
                                 Add to Cart</a>
-                            <a href="{{ route('login') }}"
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
                                 class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
                                 Add to Cart</a>
                         @else
-                            <a href="{{ route('login') }}"
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
                                 class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
                                 Add to Cart</a>
-                            <a href="{{ route('login') }}"
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
                                 class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
                                 Add to Cart</a>
                         @endif
                     @endguest
                 </div>
             </form>
+            @guest
+                <form action="{{ route('redirect.login') }}" method="post" id="redirect-form">
+                    @csrf
+                    <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                    <input type="hidden" name="product_slug" value="{{ $product->slug }}">
+                </form>
+            @endguest
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -415,22 +422,27 @@ function rupiah($angka)
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
                             '#quantity').val()));
 
-                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($('#price').val()) *
+                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($(
+                                '#price').val()) *
                             parseInt($('#quantity').val())));
                         $('#cart-discount').html(parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
                             {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-total').html(parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($('#price').val()) *
+                        $('#cart-total').html(parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
+                                '#price').val()) *
                             parseInt(
                                 $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
                             parseInt(
                                 $('#quantity').val()))));
-                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html().replace('.', '')) + (parseInt($(
-                                '#price')
-                            .val()) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html().replace('.', '')) + (parseInt(
-                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html().replace('.', '')) + ((parseInt($('#price')
-                            .val()) * parseInt($('#quantity').val())) - (parseInt(
+                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html().replace('.', '')) + (
+                            parseInt($(
+                                    '#price')
+                                .val()) * parseInt($('#quantity').val())));
+                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html().replace('.', '')) + (
+                            parseInt(
+                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
+                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
+                            parseInt($('#price')
+                                .val()) * parseInt($('#quantity').val())) - (parseInt(
                             {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
                     }
                 })

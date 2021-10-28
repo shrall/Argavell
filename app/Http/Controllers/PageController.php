@@ -11,6 +11,7 @@ use App\Models\Tnc;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
@@ -107,5 +108,13 @@ class PageController extends Controller
         $users = User::all();
         $carts = Cart::all();
         return view('admin.dashboard', compact('transactions', 'users', 'carts'));
+    }
+
+    public function redirect_login(Request $request){
+        Session::put('route.intended', $request->prev_route);
+        if($request->product_slug){
+            Session::put('product.slug', $request->product_slug);
+        }
+        return redirect()->route('login');
     }
 }

@@ -63,6 +63,8 @@ Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('pa
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
+Route::post('/redirect-login', [PageController::class, 'redirect_login'])->name('redirect.login');
+
 Route::resource('product', ProductController::class);
 
 Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
