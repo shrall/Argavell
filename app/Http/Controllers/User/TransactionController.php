@@ -11,6 +11,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TransactionController extends Controller
 {
@@ -110,6 +111,7 @@ class TransactionController extends Controller
                 }
             }
         }
+        Session::put('transaction.id', $transaction->order_number);
         return view('pages.order');
     }
 

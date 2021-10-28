@@ -7,6 +7,7 @@ use App\Models\Proof;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProofController extends Controller
 {
@@ -17,7 +18,13 @@ class ProofController extends Controller
      */
     public function index()
     {
-        return view('pages.payment_confirmation');
+        if(Session::has('transaction.id')){
+            $latest_transaction_id = Session::get('transaction.id');
+            Session::forget('transaction.id');
+        }else{
+            $latest_transaction_id = '';
+        }
+        return view('pages.payment_confirmation', compact('latest_transaction_id'));
     }
 
     /**

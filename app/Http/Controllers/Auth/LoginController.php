@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -33,9 +34,14 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         if (FacadesRequest::session()->get('product.slug')) {
-            return route(FacadesRequest::session()->get('route.intended'), FacadesRequest::session()->get('product.slug')) ?? '/admin';
+            $url = route(FacadesRequest::session()->get('route.intended'), FacadesRequest::session()->get('product.slug'));
+            Session::forget('route.intended');
+            Session::forget('product.slug');
+            return $url ?? '/admin';
         } else {
-            return route(FacadesRequest::session()->get('route.intended')) ?? '/admin';
+            $url = route(FacadesRequest::session()->get('route.intended'));
+            Session::forget('route.intended');
+            return $url ?? '/admin';
         }
     }
 

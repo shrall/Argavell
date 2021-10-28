@@ -74,7 +74,14 @@ class PageController extends Controller
 
     public function paymentconfirmation()
     {
-        return view('pages.payment_confirmation');
+        dd('asd');
+        if(Session::get('transaction.id')){
+            $latest_transaction_id = Session::get('transaction.id');
+            Session::forget('transaction.id');
+        }else{
+            $latest_transaction_id = '';
+        }
+        return view('pages.payment_confirmation', compact('latest_transaction_id'));
     }
 
     public function profile()
