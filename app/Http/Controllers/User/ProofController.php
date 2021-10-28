@@ -18,10 +18,10 @@ class ProofController extends Controller
      */
     public function index()
     {
-        if(Session::has('transaction.id')){
+        if (Session::has('transaction.id')) {
             $latest_transaction_id = Session::get('transaction.id');
             Session::forget('transaction.id');
-        }else{
+        } else {
             $latest_transaction_id = '';
         }
         return view('pages.payment_confirmation', compact('latest_transaction_id'));
@@ -59,11 +59,14 @@ class ProofController extends Controller
                         'user_id' => Auth::id(),
                         'transaction_id' => $transaction->id
                     ]);
+                    return redirect()->route('page.paymentconfirmation')->with('Success', 'Bukti Pembayaran Berhasil Terupload!');
+                } else {
+                    return redirect()->route('page.paymentconfirmation')->with('Error', 'Invoice ID yang anda pilih bukan milik anda!');
                 }
+            } else {
+                return redirect()->route('page.paymentconfirmation')->with('Error', 'Invoice ID tidak terdaftar!')->with('Additional', ' Silahkan cek pesanan anda melalui email atau halaman my account.');
             }
         }
-
-        return redirect()->route('page.paymentconfirmation');
     }
 
     /**

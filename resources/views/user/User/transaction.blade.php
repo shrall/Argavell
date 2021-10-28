@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>IDR {{ $transaction->price_total }}</td>
+                            <td>IDR {{ number_format($transaction->price_total, 0, ',', '.') }}</td>
                             <td>
                                 <p class="my-0">{{ $transaction->date }}</p>
                                 <p class="my-0">{{ $transaction->order_number }}</p>
