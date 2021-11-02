@@ -28,6 +28,8 @@ use App\Http\Controllers\User\TncController;
 use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\VoucherController;
+use App\Mail\InvoiceMail;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,10 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Auth::routes();
+
+Route::get('/invoice', function(){
+    return new InvoiceMail(new Transaction());
+});
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');

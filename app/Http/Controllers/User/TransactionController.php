@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Refund;
@@ -11,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class TransactionController extends Controller
@@ -92,7 +94,7 @@ class TransactionController extends Controller
             'weight_total' => $request->weight_total,
             'shipment_etd' => intval(substr($request->shipping_etd, 2)),
             'payment_id' => $request->payment_method,
-            'address_id' =>$user->address_id,
+            'address_id' => $user->address_id,
             'user_id' => Auth::id(),
             'notes' => $request->notes
         ]);
@@ -112,6 +114,7 @@ class TransactionController extends Controller
             }
         }
         Session::put('transaction.id', $transaction->order_number);
+        Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
         return view('pages.order');
     }
 
