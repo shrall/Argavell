@@ -46,75 +46,77 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::where('id', Auth::id())->first();
-        if (!Auth::user()->address_id) {
-            $request->validate([
-                'shipping_method' => ['required'],
-                'shipping_cost' => ['required'],
-                'price_total' => ['required'],
-                'qty_total' => ['required'],
-                'weight_total' => ['required'],
-                'province' => ['required'],
-                'city' => ['required'],
-                'postal_code' => ['required'],
-                'phone_number' => ['required'],
-                'address' => ['required'],
-            ]);
-            $address = Address::create([
-                'first_name' => Auth::user()->first_name,
-                'last_name' => Auth::user()->last_name,
-                'phone' => $request->phone_number,
-                'address' => $request->address,
-                'address_type' => 'Home',
-                'city' => $request->city,
-                'province' => $request->province,
-                'postal_code' => $request->postal_code,
-                'user_id' => Auth::id(),
-            ]);
-            $user->update([
-                'address_id' => $address['id'],
-            ]);
-        }
-        $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
-        $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
+        if (Cart::where('transaction_id', null)->where('user_id', Auth::id())->get()) {
+            $user = User::where('id', Auth::id())->first();
+            if (!Auth::user()->address_id) {
+                $request->validate([
+                    'shipping_method' => ['required'],
+                    'shipping_cost' => ['required'],
+                    'price_total' => ['required'],
+                    'qty_total' => ['required'],
+                    'weight_total' => ['required'],
+                    'province' => ['required'],
+                    'city' => ['required'],
+                    'postal_code' => ['required'],
+                    'phone_number' => ['required'],
+                    'address' => ['required'],
+                ]);
+                $address = Address::create([
+                    'first_name' => Auth::user()->first_name,
+                    'last_name' => Auth::user()->last_name,
+                    'phone' => $request->phone_number,
+                    'address' => $request->address,
+                    'address_type' => 'Home',
+                    'city' => $request->city,
+                    'province' => $request->province,
+                    'postal_code' => $request->postal_code,
+                    'user_id' => Auth::id(),
+                ]);
+                $user->update([
+                    'address_id' => $address['id'],
+                ]);
+            }
+            $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
+            $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
 
-        if ($request->shipping_method == 'CTC') {
-            $request->shipping_method = 'REG - JNE';
-        } else if ($request->shipping_method == 'CTCYES') {
-            $request->shipping_method = 'YES - JNE';
-        }
-        $transaction = Transaction::create([
-            'status' => '0',
-            'order_number' => $ordernumber,
-            'date' => Carbon::now()->format('Y-m-d'),
-            'shipment_name' => $request->shipping_method,
-            'shipping_cost' => $request->shipping_cost,
-            'price_total' => $request->price_total,
-            'qty_total' => $request->qty_total,
-            'weight_total' => $request->weight_total,
-            'shipment_etd' => intval(substr($request->shipping_etd, 2)),
-            'payment_id' => $request->payment_method,
-            'address_id' => $user->address_id,
-            'user_id' => Auth::id(),
-            'notes' => $request->notes
-        ]);
-        $carts = Cart::where('transaction_id', null)->get();
-        foreach ($carts as $cart) {
-            $cart->product->update([
-                'stock' => $cart->product->stock - $cart->qty
+            if ($request->shipping_method == 'CTC') {
+                $request->shipping_method = 'REG - JNE';
+            } else if ($request->shipping_method == 'CTCYES') {
+                $request->shipping_method = 'YES - JNE';
+            }
+            $transaction = Transaction::create([
+                'status' => '0',
+                'order_number' => $ordernumber,
+                'date' => Carbon::now()->format('Y-m-d'),
+                'shipment_name' => $request->shipping_method,
+                'shipping_cost' => $request->shipping_cost,
+                'price_total' => $request->price_total,
+                'qty_total' => $request->qty_total,
+                'weight_total' => $request->weight_total,
+                'shipment_etd' => intval(substr($request->shipping_etd, 2)),
+                'payment_id' => $request->payment_method,
+                'address_id' => $user->address_id,
+                'user_id' => Auth::id(),
+                'notes' => $request->notes
             ]);
-            $cart->update([
-                'transaction_id' => $transaction->id
-            ]);
-            $othercarts = $cart->product->carts->where('transaction_id', null);
-            foreach ($othercarts as $othercart) {
-                if ($othercart->qty > $cart->product->stock) {
-                    $othercart->delete();
+            $carts = Cart::where('transaction_id', null)->where('user_id', Auth::id())->get();
+            foreach ($carts as $cart) {
+                $cart->product->update([
+                    'stock' => $cart->product->stock - $cart->qty
+                ]);
+                $cart->update([
+                    'transaction_id' => $transaction->id
+                ]);
+                $othercarts = $cart->product->carts->where('transaction_id', null);
+                foreach ($othercarts as $othercart) {
+                    if ($othercart->qty > $cart->product->stock) {
+                        $othercart->delete();
+                    }
                 }
             }
+            Session::put('transaction.id', $transaction->order_number);
+            Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
         }
-        Session::put('transaction.id', $transaction->order_number);
-        Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
         return view('pages.order');
     }
 

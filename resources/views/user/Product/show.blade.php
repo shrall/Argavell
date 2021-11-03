@@ -422,28 +422,34 @@ function rupiah($angka)
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
                             '#quantity').val()));
 
-                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($(
+                        $('#cart-subtotal').html((parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($(
                                 '#price').val()) *
-                            parseInt($('#quantity').val())));
-                        $('#cart-discount').html(parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
-                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-total').html(parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
+                            parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
+                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                            .formatMoney(0, '.', ''));
+                        $('#cart-total').html((parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
                                 '#price').val()) *
                             parseInt(
-                                $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
+                                $('#quantity').val())) - (parseInt(
+                                {{ $product->price_discount ?: 0 }}) *
                             parseInt(
-                                $('#quantity').val()))));
-                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html().replace('.', '')) + (
-                            parseInt($(
-                                    '#price')
-                                .val()) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html().replace('.', '')) + (
-                            parseInt(
-                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
+                                $('#quantity').val())))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((parseInt($('#cart-mobile-subtotal').html().replace('.', '')) +
+                            (
+                                parseInt($(
+                                        '#price')
+                                    .val()) * parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((parseInt($('#cart-mobile-discount').html().replace('.', '')) +
+                                (
+                                    parseInt(
+                                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                            .formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html((parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
                             parseInt($('#price')
                                 .val()) * parseInt($('#quantity').val())) - (parseInt(
-                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
+                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity')
+                        .val())))).formatMoney(0, '.', ''));
                     }
                 })
                 .fail(function(error) {

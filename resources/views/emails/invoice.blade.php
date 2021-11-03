@@ -39,6 +39,6 @@
         <p style="line-height: 1; font-size:12px; margin-bottom:4px;">Our brand focuses on <span style="font-weight:700;">Argan Oil-based product</span>, since Argan Oil is renowned
             to be very gentle on sensitive & allergic skins, nourishing, very hydrating due to its <span
                 style="font-weight: 700;">high vitamin E & fatty acids content.</span></p>
-        <p style="line-height: 1; font-size:12px;">You can access Winged Savior with any device by going to <span style="font-weight: 700; text-decoration: underline;">www.argavell.id</span></p>
+        <p style="line-height: 1; font-size:12px;">You can access Winged Savior with any device by going to <span style="font-weight: 700; text-decoration: underline;color:#ffffff !important;">www.argavell.id</span></p>
     </div>
 @endcomponent

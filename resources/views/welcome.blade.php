@@ -45,7 +45,8 @@
     <div id="productShowcaseMobile" class="carousel slide carousel-fade d-block d-sm-none" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ asset('images/carousel-argan-oil.jpg') }}" class="d-block w-100 vh-100" style="height: 95vh;object-fit: cover;">
+                <img src="{{ asset('images/carousel-argan-oil.jpg') }}" class="d-block w-100 vh-100"
+                    style="height: 95vh;object-fit: cover;">
                 <div class="carousel-overlay position-absolute w-100"></div>
                 <div class="carousel-caption" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
@@ -57,7 +58,8 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ asset('images/carousel-argan-shampoo.jpg') }}" class="d-block w-100 vh-100" style="height: 95vh;object-fit: cover;">
+                <img src="{{ asset('images/carousel-argan-shampoo.jpg') }}" class="d-block w-100 vh-100"
+                    style="height: 95vh;object-fit: cover;">
                 <div class="carousel-overlay position-absolute w-100"></div>
                 <div class="carousel-caption" style="top: 55%; transform: translateY(-55%); z-index:11;">
                     <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
@@ -139,10 +141,12 @@
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
             <h1 class="font-bauer text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
             <a href="#" class="text-decoration-none d-none d-sm-block">
-                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse
+                    Products</div>
             </a>
             <a href="#" class="text-decoration-none d-block d-sm-none">
-                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse
+                    Products</div>
             </a>
         </div>
     </div>
