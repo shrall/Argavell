@@ -4,7 +4,7 @@
         <p class="invoice-number">Invoice Number {{$transaction->order_number}}</p>
     </div>
     <div class="card-body" style="color: black; padding-left: 32px; padding-right: 32px;">
-        <p class="hello" style="line-height: 1.2;font-size:12px; margin-top:8px; margin-bottom:1em;"><span class="font-weight-medium" style="font-weight: 700;">Hello, man! Thank you for
+        <p class="hello" style="line-height: 1.2;font-size:12px; margin-top:8px; margin-bottom:1em;"><span class="font-weight-medium" style="font-weight: 700;">Hello, {{$transaction->user->first_name}}! Thank you for
                 ordering our product.</span> Please
             confirm the payment immediately so that we can process the order.</p>
         <div class="order-summary" style="margin-left: 20px; margin-bottom:1em;">
