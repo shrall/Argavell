@@ -322,7 +322,7 @@ function rupiah($angka)
                 (parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html().replace('.',
                     '')) + parseInt($('#summary_subtotal').val())).formatMoney(0, '.', ''));
             $('#shipping_cost').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                .html()));
+                .html().replace('.', '')));
             $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html()
                 .replace('.', '')) + parseInt($('#summary_subtotal').val()));
         }
@@ -336,12 +336,12 @@ function rupiah($angka)
         function newTransactionOnline(token, status, snaptoken) {
             $.post('{{ config('app.url') }}' + "/transaction/online/store", {
                     _token: token,
-                    shipping_method: $("input[name=shipping_method]").val(),
+                    shipping_method: $("input[name=shipping_method]:checked").val(),
                     shipping_cost: $("input[name=shipping_cost]").val(),
                     price_total: $("input[name=price_total]").val(),
                     qty_total: $("input[name=qty_total]").val(),
                     weight_total: $("input[name=weight_total]").val(),
-                    payment_method: $("input[name=payment_method]").val(),
+                    payment_method: $("input[name=payment_method]:checked").val(),
                     shipping_etd: $("input[name=shipping_etd]").val(),
                     status: status,
                     snaptoken: snaptoken,
