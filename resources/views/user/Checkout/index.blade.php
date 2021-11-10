@@ -336,7 +336,13 @@ function rupiah($angka)
         function newTransactionOnline(token, status, snaptoken) {
             $.post('{{ config('app.url') }}' + "/transaction/online/store", {
                     _token: token,
-                    data: $("#form-checkout").serializeArray(),
+                    shipping_method: $("input[name=shipping_method]").val(),
+                    shipping_cost: $("input[name=shipping_cost]").val(),
+                    price_total: $("input[name=price_total]").val(),
+                    qty_total: $("input[name=qty_total]").val(),
+                    weight_total: $("input[name=weight_total]").val(),
+                    payment_method: $("input[name=payment_method]").val(),
+                    shipping_etd: $("input[name=shipping_etd]").val(),
                     status: status,
                     snaptoken: snaptoken,
                     phone_number: $('#phone_number').val(),

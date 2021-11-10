@@ -79,11 +79,6 @@ class TransactionController extends Controller
             $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
             $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
 
-            if ($request->shipping_method == 'CTC') {
-                $request->shipping_method = 'REG - JNE';
-            } else if ($request->shipping_method == 'CTCYES') {
-                $request->shipping_method = 'YES - JNE';
-            }
             $transaction = Transaction::create([
                 'status' => '0',
                 'order_number' => $ordernumber,
@@ -274,26 +269,20 @@ class TransactionController extends Controller
         $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
         $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
 
-        if ($request->data[7]['value'] == 'CTC') {
-            $request->data[7]['value'] = 'REG - JNE';
-        } else if ($request->data[7]['value'] == 'CTCYES') {
-            $request->data[7]['value'] = 'YES - JNE';
-        }
-
         $transaction = Transaction::create([
             'status' => $request->status,
             'order_number' => $ordernumber,
             'date' => Carbon::now()->format('Y-m-d'),
-            'shipment_name' => $request->data[7]['value'],
-            'shipping_cost' => $request->data[4]['value'],
-            'price_total' => $request->data[1]['value'],
-            'qty_total' => $request->data[2]['value'],
-            'weight_total' => $request->data[3]['value'],
-            'shipment_etd' => intval(substr($request->data[6]['value'], 2)),
-            'payment_id' => $request->data[9]['value'],
+            'shipment_name' => $request->shipping_method,
+            'shipping_cost' => $request->shipping_cost,
+            'price_total' => $request->price_total,
+            'qty_total' => $request->qty_total,
+            'weight_total' => $request->weight_total,
+            'shipment_etd' => intval(substr($request->shipping_etd, 2)),
+            'payment_id' => $request->payment_method,
             'address_id' => $user->address_id,
             'user_id' => Auth::id(),
-            'notes' => $request->data[5]['value'],
+            'notes' => $request->notes,
             'snaptoken' => $request->snaptoken
         ]);
         $carts = Cart::where('transaction_id', null)->get();
