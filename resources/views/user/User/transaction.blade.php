@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
 @endsection
 

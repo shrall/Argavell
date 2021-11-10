@@ -175,7 +175,7 @@ class TransactionController extends Controller
         \Midtrans\Config::$serverKey = config('services.midtrans.serverkey');
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         //@marshall rubah ini kalo ga sandbox
-        \Midtrans\Config::$isProduction = true;
+        \Midtrans\Config::$isProduction = false;
         // Set sanitization on (default)
         \Midtrans\Config::$isSanitized = true;
         // Set 3DS transaction for credit card to true
@@ -201,7 +201,8 @@ class TransactionController extends Controller
 
     public function check()
     {
-        \Midtrans\Config::$isProduction = true;
+        //@marshall rubah ini kalo ga sandbox
+        \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$serverKey = config('services.midtrans.serverkey');
         $notif = new \Midtrans\Notification();
 
