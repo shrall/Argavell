@@ -43,12 +43,16 @@ class CartController extends Controller
         }
         foreach ($cities as $city) {
             if (Auth::user()->address_id) {
+                //! ini buat ngecek city_id
+                // if ($city['city_name'] == 'Surabaya') {
+                //     dd($city['city_id']);
+                // }
                 if ($city['city_name'] == Auth::user()->address->city) {
                     $useraddress = $city['city_id'];
                     $shipments = Http::withHeaders([
                         'key' => config('services.rajaongkir.token'),
                     ])->post('https://api.rajaongkir.com/starter/cost', [
-                        'origin' => $useraddress, //@marshall ini perlu dirubah ke asal pengirim
+                        'origin' => 444, //ini id Surabaya
                         'destination' => $useraddress,
                         'weight' => $weight,
                         'courier' => 'jne',
