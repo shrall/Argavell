@@ -145,9 +145,7 @@ class AddressController extends Controller
     public function destroy(Address $address)
     {
         // if(Auth::user()->address_id != $address->id){
-        $address->update([
-            'user_id' => null
-        ]);
+        $address->delete();
         $user = User::find(Auth::id());
         $user->update([
             'address_id' => null,

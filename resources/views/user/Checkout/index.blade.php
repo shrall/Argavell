@@ -132,8 +132,11 @@ function rupiah($angka)
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select class="form-select font-proxima-nova font-weight-bold" id="province" name="province"
-                                required @if (Auth::user()->address_id) disabled @endif>
+                            <select class="form-select font-proxima-nova" id="province" name="province" required
+                                @if (Auth::user()->address_id) disabled @endif>
+                                @if (!Auth::user()->address_id)
+                                    <option class="tempprovince" selected>Please select your province</option>
+                                @endif
                                 @foreach ($provinces as $province)
                                     <option value="{{ $province['province'] }}" @if (Auth::user()->address_id) @if ($province['province'] == Auth::user()->address->province) selected @endif @endif>
                                         {{ $province['province'] }}
@@ -147,8 +150,7 @@ function rupiah($angka)
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select class="form-select font-proxima-nova font-weight-bold" id="city" name="city" required
-                                disabled>
+                            <select class="form-select font-proxima-nova" id="city" name="city" required disabled>
                                 @if (Auth::user()->address_id)
                                     @foreach ($cities as $city)
                                         <option value="{{ $city['city_name'] }}" @if ($city['city_name'] == Auth::user()->address->city) selected @endif>
@@ -248,7 +250,8 @@ function rupiah($angka)
                 <button id="pay-button" type="submit"
                     class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0"
                     @if (count(Auth::user()->carts->where('transaction_id', null)) == 0) disabled @endif>Confirm
-                    Order</button>
+                    Order
+                </button>
             </div>
         </div>
         {{-- order summary desktop --}}
@@ -326,7 +329,9 @@ function rupiah($angka)
             $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html()
                 .replace('.', '')) + parseInt($('#summary_subtotal').val()));
         }
-        refreshSummary();
+        @if (Auth::user()->address_id)
+            refreshSummary();
+        @endif
 
         $('input[type=radio][name=shipping_method]').on('change', function() {
             refreshSummary();
@@ -403,7 +408,9 @@ function rupiah($angka)
                     province: $('#province').val(),
                 })
                 .done(function(data) {
+                    $('.tempprovince').remove();
                     $('#city').prop("disabled", false);
+                    $('#city').html('');
                     Object.values(data).forEach((element, index) => {
                         if (index == 0) {
                             get_shipment(element.city_id);
