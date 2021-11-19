@@ -74,7 +74,6 @@ class PageController extends Controller
 
     public function paymentconfirmation()
     {
-        dd('asd');
         if(Session::get('transaction.id')){
             $latest_transaction_id = Session::get('transaction.id');
             Session::forget('transaction.id');
@@ -112,6 +111,20 @@ class PageController extends Controller
     public function dashboard()
     {
         $transactions = Transaction::all();
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->updated_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '4') {
+                $transaction->update([
+                    'status' => '2'
+                ]);
+            }
+        }
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->updated_at . ' +' . $transaction->shipment_etd . ' day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '3') {
+                $transaction->update([
+                    'status' => '1'
+                ]);
+            }
+        }
         $users = User::all();
         $carts = Cart::all();
         return view('admin.dashboard', compact('transactions', 'users', 'carts'));

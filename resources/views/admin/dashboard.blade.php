@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <div class="row mb-3">
+    {{-- <div class="row mb-3">
         <div class="col-7">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
@@ -145,7 +145,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         <h6 class="font-weight-black">Transaksi Baru</h6>
         <div class="col-12">
@@ -188,8 +188,10 @@
                                         </p>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-panel btn-secondary"><span
-                                                class="far fa-fw fa-clock mr-2"></span> 24 Jam</button>
+                                        <button type="button" class="btn btn-panel btn-warning">
+                                            <span
+                                                class="far fa-fw fa-clock mr-2"></span>{{ round((strtotime($transaction->updated_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) / 60 / 60) }} Jam
+                                            </button>
                                     </td>
                                     <td>
                                         <a href="#" class="btn btn-admin-argavell-light">See Details</a>
@@ -204,7 +206,7 @@
     </div>
 @endsection
 
-@section('scripts')
+{{-- @section('scripts')
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
@@ -351,7 +353,7 @@
             }]
         });
     </script>
-@endsection
+@endsection --}}
 
 @section('header')
     <style>
