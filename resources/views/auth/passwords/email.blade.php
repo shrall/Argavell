@@ -23,7 +23,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row px-2 mb-2 col-6 mx-auto">
+                            <div class="row mb-2 col-6 mx-auto">
                                 <button type="submit" class="btn btn-argavell col-12">
                                     {{ __('Send E-Mail') }}
                                 </button>

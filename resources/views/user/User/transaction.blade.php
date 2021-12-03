@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('header')
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
 @endsection
 
@@ -28,7 +28,7 @@
                             <td>
                                 <div class="row">
                                     <div class="col-6 col-sm-4"><img
-                                            src="{{ asset('products/' . $transaction->carts[0]->product->img) }}"
+                                            src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
                                     <div class="col-4 col-sm-6">
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>IDR {{ $transaction->price_total }}</td>
+                            <td>IDR {{ number_format($transaction->price_total, 0, ',', '.') }}</td>
                             <td>
                                 <p class="my-0">{{ $transaction->date }}</p>
                                 <p class="my-0">{{ $transaction->order_number }}</p>
@@ -58,6 +58,8 @@
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
                                 @elseif($transaction->status == '4')
                                     <p class="my-0 text-warning font-weight-bold">Waiting for Confirmation</p>
+                                @elseif($transaction->status == '5')
+                                    <p class="my-0 text-primary font-weight-bold">Confirmed</p>
                                 @endif
                                 @if ($transaction->status == '0')
                                     @if ($transaction->payment_id != 1001)
@@ -133,7 +135,8 @@
                         @foreach ($transaction->carts as $item)
                             <div class="col-12 mx-2 my-2">
                                 <div class="row">
-                                    <div class="col-2"><img src="{{ asset('products/' . $item->product->img) }}"
+                                    <div class="col-2"><img
+                                            src="{{ asset('uploads/products/' . $item->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
                                     <div class="col-7">{{ $item->qty }}x {{ $item->product->name }}</div>

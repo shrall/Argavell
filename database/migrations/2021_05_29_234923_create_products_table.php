@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->integer('price');
             $table->integer('price_discount')->nullable();
             $table->integer('stock');
+            $table->integer('weight')->comment('gram');
             $table->text('description');
             $table->json('size');
             $table->json('facts');
@@ -34,6 +35,7 @@ class CreateProductsTable extends Migration
             ->comment('0 = No, 1 = Yes');
             $table->datetime('bundle_start')->nullable();
             $table->datetime('bundle_end')->nullable();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }

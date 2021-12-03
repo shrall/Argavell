@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ResellerController as AdminResellerController;
 use App\Http\Controllers\Admin\TncController as AdminTncController;
 use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\User\AddressController;
@@ -26,6 +27,9 @@ use App\Http\Controllers\User\ResellerController;
 use App\Http\Controllers\User\TncController;
 use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\VoucherController;
+use App\Mail\InvoiceMail;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,10 +50,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/invoice', function(){
+    return new InvoiceMail(new Transaction());
+});
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
 Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
 Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
+Route::get('/contact-us', [PageController::class, 'contactus'])->name('page.contactus');
 
 Route::get('/terms-and-conditions', [TncController::class, 'index'])->name('page.termsconditions');
 Route::get('/return-policy', [PolicyController::class, 'index'])->name('page.policy');
@@ -59,6 +68,8 @@ Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('pa
 
 Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
+
+Route::post('/redirect-login', [PageController::class, 'redirect_login'])->name('redirect.login');
 
 Route::resource('product', ProductController::class);
 
@@ -76,6 +87,8 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
     Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
+    Route::post('cart/getcity', [CartController::class, 'get_city'])->name('cart.getcity');
+    Route::post('cart/getshipment', [CartController::class, 'get_shipment'])->name('cart.getshipment');
     Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
     Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
     Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
@@ -83,7 +96,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
 });
 
 Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
-    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('page.dashboard');
+    Route::get('/', [PageController::class, 'dashboard'])->name('page.dashboard');
     Route::resource('address', AdminAddressController::class);
     Route::resource('cart', AdminCartController::class);
     Route::resource('contact', ContactController::class);
@@ -97,7 +110,36 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('reseller', AdminResellerController::class);
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
-    Route::get('transaction/pagination/fetch_data', [AdminTransactionController::class, 'fetch_data'])->name('transaction.fetchdata');
+    Route::resource('voucher', AdminVoucherController::class);
+
+    Route::post('transaction/label/view', [AdminTransactionController::class, 'view_label_transaction'])->name('transaction.viewlabeltransaction');
+    Route::post('transaction/label/download', [AdminTransactionController::class, 'download_label_transaction'])->name('transaction.downloadlabeltransaction');
+
+    Route::get('transaction/pagination/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all'])->name('transaction.fetchdataall');
+    Route::get('transaction/pagination/fetch_data_waiting', [AdminTransactionController::class, 'fetch_data_waiting'])->name('transaction.fetchdatawaiting');
+    Route::get('transaction/pagination/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new'])->name('transaction.fetchdatanew');
+    Route::get('transaction/pagination/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready'])->name('transaction.fetchdataready');
+    Route::get('transaction/pagination/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery'])->name('transaction.fetchdataondelivery');
+    Route::get('transaction/pagination/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain'])->name('transaction.fetchdatacomplain');
+    Route::get('transaction/pagination/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered'])->name('transaction.fetchdatadelivered');
+    Route::get('transaction/pagination/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled'])->name('transaction.fetchdatacanceled');
+
+    Route::post('transaction/fetch_data_all', [AdminTransactionController::class, 'fetch_data_all_search'])->name('transaction.fetchdataall.search');
+    Route::post('transaction/fetch_data_new', [AdminTransactionController::class, 'fetch_data_new_search'])->name('transaction.fetchdatanew.search');
+    Route::post('transaction/fetch_data_waiting', [AdminTransactionController::class, 'fetch_data_waiting_search'])->name('transaction.fetchdatawaiting.search');
+    Route::post('transaction/fetch_data_ready', [AdminTransactionController::class, 'fetch_data_ready_search'])->name('transaction.fetchdataready.search');
+    Route::post('transaction/fetch_data_ondelivery', [AdminTransactionController::class, 'fetch_data_ondelivery_search'])->name('transaction.fetchdataondelivery.search');
+    Route::post('transaction/fetch_data_complain', [AdminTransactionController::class, 'fetch_data_complain_search'])->name('transaction.fetchdatacomplain.search');
+    Route::post('transaction/fetch_data_delivered', [AdminTransactionController::class, 'fetch_data_delivered_search'])->name('transaction.fetchdatadelivered.search');
+    Route::post('transaction/fetch_data_canceled', [AdminTransactionController::class, 'fetch_data_canceled_search'])->name('transaction.fetchdatacanceled.search');
+
+    Route::post('transaction/refresh_transaction_list_on_accept_modal', [AdminTransactionController::class, 'refresh_transaction_list_on_accept_modal'])->name('transaction.rtloam');
+
+    Route::post('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
+    Route::post('transaction/label/downloadproductlist', [AdminTransactionController::class, 'download_product_list'])->name('transaction.downloadproductlist');
+
+    Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
+
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');
     Route::post('change-password', [AdminUserController::class, 'updatepassword'])->name('updatepassword');

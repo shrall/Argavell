@@ -1,6 +1,6 @@
 <div class="row align-items-stretch py-2 d-none d-sm-flex cart-row{{ $item->id }}" id="">
     <div class="col-4">
-        <img src="{{ asset('products/' . $item->product->img) }}" width="100px" class="rounded-3">
+        <img src="{{ asset('uploads/products/' . $item->product->img) }}" width="100px" class="rounded-3">
     </div>
     <div class="col-8">
         <div class="row">
@@ -9,13 +9,15 @@
                     <span class="ms-1 text-secondary">({{ $item->size }})</span>
                 </p>
                 @if ($item->price_discount != null)
-                    <p class="font-proxima-nova"><del class="text-secondary">IDR
-                            {{ $item->product->price }}</del>
-                        <span class="text-danger ms-2">IDR
-                            {{ $item->product->price - $item->product->price_discount }}</span>
-                    </p>
+                    <div class="d-flex font-proxima-nova">
+                        <div class="position-relative">
+                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                        </div>
+                        <span class="text-danger font-weight-bold ms-2">IDR
+                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
+                    </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">
@@ -40,7 +42,7 @@
 </div>
 <div class="row align-items-stretch py-2 d-flex d-sm-none cart-mobile-row{{ $item->id }}" id="">
     <div class="col-4">
-        <img src="{{ asset('products/' . $item->product->img) }}" width="100px" class="rounded-3">
+        <img src="{{ asset('uploads/products/' . $item->product->img) }}" width="100px" class="rounded-3">
     </div>
     <div class="col-8">
         <div class="row">
@@ -49,13 +51,15 @@
                     <span class="ms-1 text-secondary">({{ $item->size }})</span>
                 </p>
                 @if ($item->price_discount != null)
-                    <p class="font-proxima-nova"><del class="text-secondary">IDR
-                            {{ $item->product->price }}</del>
-                        <span class="text-danger ms-2">IDR
-                            {{ $item->product->price - $item->product->price_discount }}</span>
-                    </p>
+                    <div class="d-flex font-proxima-nova">
+                        <div class="position-relative">
+                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                        </div>
+                        <span class="text-danger font-weight-bold ms-2">IDR
+                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
+                    </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ $item->product->price }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">

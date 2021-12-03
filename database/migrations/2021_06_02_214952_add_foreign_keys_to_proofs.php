@@ -15,7 +15,7 @@ class AddForeignKeysToProofs extends Migration
     {
         Schema::table('proofs', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id')->index()->after('payment_file');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "barryvdh/laravel-snappy": "^0.4.8",
         "cviebrock/eloquent-sluggable": "^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -13,7 +14,9 @@
         "laravel/framework": "^8.40",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "midtrans/midtrans-php": "^2.3"
+        "maatwebsite/excel": "^3.1",
+        "midtrans/midtrans-php": "^2.3",
+        "milon/barcode": "^8.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

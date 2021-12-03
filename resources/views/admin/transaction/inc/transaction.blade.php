@@ -1,10 +1,51 @@
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @foreach ($transactions as $transaction)
     <div class="card card-admin-transactions px-0">
         <div class="card-header">
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
-                    <input type="checkbox" />
-                    <span class="font-weight-bold ms-2">Pesanan Baru</span>
+                    @if ($transaction->status == '0')
+                        <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                            id="checkbox-transaction-download{{ $transaction->id }}"
+                            class="checkbox-transaction-download" value={{ $transaction->id }}
+                            onclick="addDownloadToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold">Menunggu Pembayaran</span>
+                    @elseif ($transaction->status == '1')
+                        <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                            id="checkbox-transaction-download{{ $transaction->id }}"
+                            class="checkbox-transaction-download" value={{ $transaction->id }}
+                            onclick="addDownloadToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold">Pesanan Selesai</span>
+                    @elseif ($transaction->status == '2')
+                        <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                            id="checkbox-transaction-download{{ $transaction->id }}"
+                            class="checkbox-transaction-download" value={{ $transaction->id }}
+                            onclick="addDownloadToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold">Dibatalkan</span>
+                    @elseif ($transaction->status == '3')
+                        <input type="checkbox" name="transaction_checkbox_download{{ $transaction->id }}"
+                            id="checkbox-transaction-download{{ $transaction->id }}"
+                            class="checkbox-transaction-download" value={{ $transaction->id }}
+                            onclick="addDownloadToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold">Dalam Pengiriman</span>
+                    @elseif ($transaction->status == '4')
+                        <input type="checkbox" name="transaction_checkbox_accept{{ $transaction->id }}"
+                            id="checkbox-transaction-accept{{ $transaction->id }}"
+                            class="checkbox-transaction-accept" value={{ $transaction->id }}
+                            onclick="addAcceptToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold ms-2">Pesanan Baru</span>
+                    @elseif ($transaction->status == '5')
+                        <input type="checkbox" name="transaction_checkbox_label{{ $transaction->id }}"
+                            id="checkbox-transaction-label{{ $transaction->id }}" class="checkbox-transaction-label"
+                            value={{ $transaction->id }} onclick="addLabelToArray({{ $transaction->id }});" />
+                        <span class="font-weight-bold ms-2">Siap Dikirim</span>
+                    @endif
                 </div>
                 <div class="mx-2">
                     <span class="text-argavell">{{ $transaction->order_number }}</span>
@@ -15,12 +56,14 @@
                 </div>
                 <div class="mx-2">
                     <span
-                        class="far fa-fw fa-clock me-1"></span>{{ date('j F Y, g:i a', strtotime($transaction->updated_at)) }}
+                        class="far fa-fw fa-clock me-1"></span>{{ date('j F Y, g:i a', strtotime($transaction->created_at)) }}
                 </div>
-                <div class="ms-auto">
+                <div class="ms-auto @if ($transaction->status != '4') invisible @endif">
                     <span class="me-2">Batas Respon</span>
                     <a href="#" class="btn btn-warning btn-panel text-white text-decoration-none">
-                        <span class="far fa-fw fa-clock me-1"></span>24 Jam
+                        <span
+                            class="far fa-fw fa-clock me-1"></span>{{ round((strtotime($transaction->updated_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) / 60 / 60) }}
+                        Jam
                     </a>
                 </div>
             </div>
@@ -29,15 +72,16 @@
             <div class="row mb-3">
                 <div class="col-5">
                     <div class="row">
-                        <div class="col-3 col-xxl-2"><img src="{{ asset('products/argan-oil.jpg') }}" class="rounded"
-                                width="75px">
+                        <div class="col-3 col-xxl-2">
+                            <img src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
+                                class="rounded" width="75px">
                         </div>
                         <div class="col-9 col-xxl-10">
                             <div class="row">
                                 @foreach ($transaction->carts as $item)
                                     <div class="col-6">
                                         <h6 class="font-weight-black">{{ $item->product->name }}</h6>
-                                        <h6>{{ $item->qty }}x {{ $item->price }}</h6>
+                                        <h6>{{ $item->qty }}x {{ rupiah($item->price) }}</h6>
                                     </div>
                                 @endforeach
                             </div>
@@ -45,152 +89,130 @@
                     </div>
                 </div>
                 <div class="col-3 px-4 border-start border-end border-2">
-                    <p class="my-0">Address <span class="btn btn-gray btn-panel p-0 px-2">Sudah dicetak</span></p>
+                    <p class="my-0">Address @if ($transaction->is_cetak == '1')<span
+                                class="btn btn-gray btn-panel p-0 px-2">Sudah dicetak</span> @endif
+                    </p>
                     <p class="my-0 text-secondary">{{ $transaction->user->first_name }}
                         {{ $transaction->user->last_name }} ({{ $transaction->address->phone }})
                     </p>
                     <p class="my-0 text-secondary">{{ $transaction->address->address }}</p>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     <div class="my-2">
-                        <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus Sesuai</span></p>
+                        <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus
+                                Sesuai</span></p>
                         <p class="my-0 text-secondary">{{ $transaction->shipment_name }}</p>
                     </div>
-                    <div class="my-2">
-                        <p class="my-0">Kode Booking <span class="btn btn-gray btn-panel p-0 px-2">Harus
-                                Dicantumkan</span></p>
-                        <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
-                    </div>
+                    @if ($transaction->status != '0' && $transaction->status != '2')
+                        <div class="my-2">
+                            <p class="my-0">Nomor Resi</p>
+                            <form action="{{ route('admin.transaction.store') }}"
+                                id="form-send-transaction-{{ $transaction->id }}" method="post">
+                                @csrf
+                                <input type="hidden" name="transaction_id[]"
+                                    id="input-transaction-send{{ $transaction->id }}"
+                                    value="{{ $transaction->id }}">
+                                <input type="hidden" name="input_method" value="send">
+                                <input type="text" name="resi" id="input-resi{{ $loop->iteration }}"
+                                    class="form-control" placeholder="Ketik Nomor Resi Disini"
+                                    value="{{ $transaction->nomor_resi ?? null }}" @if ($transaction->status != '5') disabled @endif>
+                            </form>
+                            @if ($transaction->status == 0 || $transaction->status == 4)
+                                <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
+                            @endif
+                        </div>
+                    @else
+                        <div class="my-2">
+                            <p class="my-0">Bukti Pembayaran</p>
+                            <form action="{{ route('admin.transaction.store') }}"
+                                id="form-waiting-transaction-{{ $transaction->id }}" method="post">
+                                @csrf
+                                <input type="hidden" name="transaction_id[]"
+                                    id="input-transaction-waiting{{ $transaction->id }}"
+                                    value="{{ $transaction->id }}">
+                                <input type="hidden" name="input_method" value="waiting">
+                            </form>
+                            @if (count($transaction->proofs) > 0)
+                                @foreach ($transaction->proofs as $proof)
+                                    <p class="my-0 text-argavell">
+                                        <span class="fa fa-fw fa-paperclip"></span>
+                                        <a class="text-argavell-link" target="_blank"
+                                            href="{{ asset('payment/' . $proof->payment_file) }}">{{ $proof->payment_file }}</a>
+                                    </p>
+                                @endforeach
+                            @else
+                                <p class="my-0 text-secondary" id="no-bukti">Belum ada bukti pembayaran.</p>
+                                <p class="my-0 text-argavell d-none" id="yes-bukti">
+                                    <span class="fa fa-fw fa-paperclip"></span>
+                                    <a class="text-argavell-link" target="_blank" href="" id="file-bukti"></a>
+                                </p>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="row justify-content-between mx-1 py-2 rounded bg-gray-light">
-                <div class="col-1">
+                <div class="col-2 text-start">
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
-                <div class="col-1">
-                    <span class="font-weight-bold">Rp. {{$transaction->price_total}}</span>
+                <div class="col-2 text-end">
+                    <span class="font-weight-bold">{{ rupiah($transaction->price_total) }}</span>
                 </div>
             </div>
         </div>
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
-                    <a href="#" class="text-secondary text-decoration-none">
+                    <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '#' }}"
+                        class="text-secondary text-decoration-none">
                         <span class="far fa-fw fa-comment-dots me-1"></span>Tanya Pembeli
                     </a>
                 </div>
-                <div class="mx-2">
-                    <a href="#" class="text-secondary text-decoration-none">
-                        <span class="fa fa-fw fa-clipboard-list me-1"></span>Status Pesanan
-                    </a>
-                </div>
-                <div class="mx-2 position-relative">
-                    <span
-                        class="far fa-fw fa-edit position-absolute top-50 start-0 translate-middle-y ps-3 fs-6 text-secondary"></span>
-                    <input type="text" name="" id="" class="form-control ps-5" placeholder="Ketik Catatan toko disini">
-                </div>
                 <div class="ms-auto">
-                    <button type="submit" class="btn btn-admin-argavell text-white text-decoration-none">
-                        Terima Pesanan
-                    </button>
+                    @if ($transaction->status == '4')
+                        <button class="btn btn-danger text-white text-decoration-none me-2" data-bs-toggle="modal"
+                            data-bs-target="#cancelModal{{ $transaction->id }}">
+                            Tolak Pesanan
+                        </button>
+                        @include('admin.transaction.inc.modal.cancel')
+                    @endif
+                    @if ($transaction->status == '4')
+                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
+                            data-bs-toggle="modal" data-bs-target="#acceptModal{{ $transaction->id }}">
+                            Terima Pesanan
+                        </button>
+                        @include('admin.transaction.inc.modal.accept')
+                    @elseif ($transaction->status == '5')
+                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" onclick="event.preventDefault();
+                            document.getElementById('form-send-transaction-{{ $transaction->id }}').submit();">
+                            Kirim Pesanan
+                        </button>
+                    @elseif ($transaction->status == '0')
+                        <form action="{{ route('admin.transaction.store') }}"
+                            id="form-waiting-transaction-{{ $transaction->id }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="transaction_id[]"
+                                id="input-transaction-waiting{{ $transaction->id }}"
+                                value="{{ $transaction->id }}">
+                            <input type="hidden" name="input_method" value="waiting">
+                            @if (count($transaction->proofs) <= 0)
+                                <div class="btn btn-admin-argavell">
+                                    <label for="image" class="cursor-pointer">Upload Pembayaran</label>
+                                    <input type="file" name="image" id="image" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event, {{$loop->iteration}})">
+                                </div>
+                            @endif
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" id="transaction-button-{{$loop->iteration}}"
+                                @if (count($transaction->proofs) <= 0) disabled @endif>
+                                Konfirmasi Pembayaran
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 @endforeach
-{{ $transactions->links() }}
-{{-- <div class="card card-admin-transactions px-0">
-    <div class="card-header">
-        <div class="d-flex align-items-center gx-3">
-            <div class="mx-2">
-                <input type="checkbox" />
-                <span class="font-weight-bold ms-2">Pesanan Baru</span>
-            </div>
-            <div class="mx-2">
-                <span class="text-argavell">INV902183812038123</span>
-            </div>
-            <div class="mx-2 px-2 border-start border-end border-2">
-                <span class="far fa-fw fa-user me-1"></span>
-                John Doe
-            </div>
-            <div class="mx-2">
-                <span class="far fa-fw fa-clock me-1"></span>02 June 2021, 10:00 AM
-            </div>
-            <div class="ms-auto">
-                <span class="me-2">Batas Respon</span>
-                <a href="#" class="btn btn-warning btn-panel text-white text-decoration-none">
-                    <span class="far fa-fw fa-clock me-1"></span>24 Jam
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <div class="row mb-3">
-            <div class="col-5">
-                <div class="row">
-                    <div class="col-3 col-xxl-2"><img src="{{ asset('products/argan-oil.jpg') }}" class="rounded"
-                            width="75px">
-                    </div>
-                    <div class="col-9 col-xxl-10">
-                        <h6 class="font-weight-black">Argavell Certified Unrefined Argan Oil 20 ml - sourced from
-                            Morocco</h6>
-                        <h6>1 x 130.000</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3 px-4 border-start border-end border-2">
-                <p class="my-0">Address <span class="btn btn-gray btn-panel p-0 px-2">Sudah dicetak</span></p>
-                <p class="my-0 text-secondary">John Doe (08391238123)</p>
-                <p class="my-0 text-secondary">Jl. Lorem ipsum Blok A No 1
-                    Surabaya, Jawa Timur
-                    Indonesia 123123</p>
-            </div>
-            <div class="col-3">
-                <div class="my-2">
-                    <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus Sesuai</span></p>
-                    <p class="my-0 text-secondary">Regular - JNE</p>
-                </div>
-                <div class="my-2">
-                    <p class="my-0">Nomor Resi</p>
-                    <p class="my-0 text-secondary">10938102831092831</p>
-                </div>
-                <div class="my-2">
-                    <p class="my-0">No. Resi</p>
-                    <input type="text" name="" id="" class="form-control" placeholder="Ketik nomor resi disini">
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-between mx-1 py-2 rounded bg-gray-light">
-            <div class="col-1">
-                <span class="font-weight-bold">Total Bayar</span>
-            </div>
-            <div class="col-1">
-                <span class="font-weight-bold">Rp. 178.000</span>
-            </div>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="d-flex align-items-center gx-3">
-            <div class="mx-2">
-                <a href="#" class="text-secondary text-decoration-none">
-                    <span class="far fa-fw fa-comment-dots me-1"></span>Tanya Pembeli
-                </a>
-            </div>
-            <div class="mx-2">
-                <a href="#" class="text-secondary text-decoration-none">
-                    <span class="fa fa-fw fa-clipboard-list me-1"></span>Status Pesanan
-                </a>
-            </div>
-            <div class="mx-2 position-relative">
-                <span
-                    class="far fa-fw fa-edit position-absolute top-50 start-0 translate-middle-y ps-3 fs-6 text-secondary"></span>
-                <input type="text" name="" id="" class="form-control ps-5" placeholder="Ketik Catatan toko disini">
-            </div>
-            <div class="ms-auto">
-                <button type="submit" class="btn btn-admin-argavell text-white text-decoration-none">
-                    Terima Pesanan
-                </button>
-            </div>
-        </div>
-    </div>
-</div> --}}
+@if (Route::current()->getName() == 'admin.transaction.index' || Route::current()->getName() == 'admin.transaction.fetchdataall' || Route::current()->getName() == 'admin.transaction.fetchdatawaiting' || Route::current()->getName() == 'admin.transaction.fetchdatanew' || Route::current()->getName() == 'admin.transaction.fetchdataready' || Route::current()->getName() == 'admin.transaction.fetchdataondelivery' || Route::current()->getName() == 'admin.transaction.fetchdatacomplain' || Route::current()->getName() == 'admin.transaction.fetchdatadelivered' || Route::current()->getName() == 'admin.transaction.fetchdatacanceled')
+    {{ $transactions->links() }}
+@endif

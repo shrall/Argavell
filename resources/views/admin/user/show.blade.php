@@ -56,7 +56,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <textarea id="address" type="textarea" class="form-control" name="address" required
-                                    autocomplete="address" placeholder="Alamat Pengiriman" style="resize: none;" @if ($user->address == null) disabled @else required @endif>{{ $user->address->address ?? 'Not Set' }}</textarea>
+                                    autocomplete="address" placeholder="Alamat Pengiriman" style="resize: none;"
+                                    @if ($user->address == null) disabled @else required @endif>{{ $user->address->address ?? 'Not Set' }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -87,9 +88,11 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->product->name }}</td>
-                                    <td>{{ $item->product->price }}</td>
+                                    <td>Rp. {{ number_format($item->product->price, 0, ',', '.') }}</td>
                                     <td>{{ $item->qty }}</td>
-                                    <td>{{ ($item->price - $item->price_discount) * $item->qty }}</td>
+                                    <td>Rp.
+                                        {{ number_format(($item->price - $item->price_discount) * $item->qty, 0, ',', '.') }}
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -20,7 +20,6 @@ class CreateRefundsTable extends Migration
             $table->enum('occasion', ['0','1'])
             ->default('0')
             ->comment('0 = Wrong Item, 1 = Broken');
-            $table->string('order_number');
             $table->text('condition');
             $table->timestamps();
         });

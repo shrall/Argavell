@@ -5,17 +5,19 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
     use Sluggable;
+    // use SoftDeletes;
 
     protected $fillable = [
         'name', 'slug',
         'price', 'price_discount', 'stock',
         'description', 'size', 'facts', 'howtouse', 'ingredients',
-        'img', 'type',
+        'img', 'type', 'weight',
         'bundle', 'bundle_start', 'bundle_end'
     ];
 
@@ -40,5 +42,9 @@ class Product extends Model
 
     public function bundles() {
         return $this->hasMany(Bundle::class, 'bundle_id', 'id');
+    }
+
+    public function carts() {
+        return $this->hasMany(Cart::class, 'product_id', 'id');
     }
 }

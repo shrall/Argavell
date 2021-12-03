@@ -30,10 +30,10 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">The Story</a>
+                                <a href="#" class="text-decoration-none text-white">Our Story</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Contact Us</a>
+                                <a href="{{route('page.contactus')}}" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
                                 <a href="{{route('page.reseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>
@@ -123,10 +123,10 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">The Story</a>
+                                <a href="#" class="text-decoration-none text-white">Our Story</a>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Contact Us</a>
+                                <a href="{{route('page.contactus')}}" class="text-decoration-none text-white">Contact Us</a>
                             </li>
                             <li>
                                 <a href="{{route('page.reseller')}}" class="text-decoration-none text-white">Authorized Reseller</a>

@@ -1,19 +1,25 @@
 @extends('layouts.app')
 
 @section('header')
-    <script type="text/javascript" src="https://app.midtrans.com/snap/snap.js"
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.clientkey') }}"></script>
 @endsection
-
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @section('content')
     <?php
     $subtotal = 0;
     $discount = 0;
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-    $totalqty += $item->qty;
-    $subtotal += $item->price * $item->qty;
-    $discount += $item->price_discount * $item->qty;
+        $totalqty += $item->qty;
+        $subtotal += $item->price * $item->qty;
+        $discount += $item->price_discount * $item->qty;
     }
     ?>
     <div class="row w-100 p-0 m-0 bg-light">
@@ -32,13 +38,14 @@
                 @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                     <div class="row my-2">
                         <div class="col-3">
-                            <img src="{{ asset('products/' . $item->product->img) }}" class="w-100 rounded">
+                            <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}<span
                                 class="ms-1 text-secondary">({{ $item->size }})</span>
                         </div>
-                        <div class="col-4">IDR {{ ($item->price - $item->price_discount) * $item->qty }}</div>
+                        <div class="col-4">IDR {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}
+                        </div>
                     </div>
                 @endforeach
                 <hr>
@@ -46,7 +53,9 @@
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span class="summary_subtotal">{{ $subtotal - $discount }}</span></div>
+                    <div class="col-4">IDR <span
+                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
+                    </div>
                 </div>
                 <div class="row my-2">
                     <div class="col-8 font-weight-bold">
@@ -66,14 +75,25 @@
                 @csrf
                 <div class="bg-white rounded px-3 py-2 my-3">
                     <input type="hidden" name="price_total" id="summary_subtotal" value="{{ $subtotal - $discount }}">
+                    <input type="hidden" id="summary_total">
                     <input type="hidden" name="qty_total" value="{{ $totalqty }}">
+                    <input type="hidden" name="weight_total" value="{{ $weight }}">
                     <input type="hidden" name="shipping_cost" id="shipping_cost">
                     <h2 class="text-argavell font-bauer font-weight-bold">Address Details</h2>
                     <p class="text-secondary">Please complete the following data so that your product arrives correctly and
                         safely.</p>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul class="mb-0 list-unstyled">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="row font-weight-bold">
-                        <label class="col-6">First Name<span class="text-danger">*</span> </label>
-                        <label class="col-6">Last Name<span class="text-danger">*</span> </label>
+                        <label class="col-6">First Name<span class="text-danger">*</span></label>
+                        <label class="col-6">Last Name<span class="text-danger">*</span></label>
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
@@ -92,9 +112,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <input id="address" type="text" class="form-control" name="address" required disabled
-                                autocomplete="address" placeholder="Enter your address"
-                                value="{{ Auth::user()->address->address }}">
+                            <input id="address" type="text" class="form-control" name="address" required
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="address" placeholder="Enter your address"
+                                value="{{ Auth::user()->address->address ?? null }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -102,9 +122,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <input id="phone_number" type="text" class="form-control" name="phone_number" required disabled
-                                autocomplete="phone_number" placeholder="Enter your phone number"
-                                value="{{ Auth::user()->address->phone }}">
+                            <input id="phone_number" type="number" class="form-control" name="phone_number" required
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="phone_number" placeholder="Enter your phone number"
+                                value="{{ Auth::user()->address->phone ?? null }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -112,10 +132,14 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select class="form-select font-proxima-nova font-weight-bold" id="province" name="province"
-                                required disabled>
+                            <select class="form-select font-proxima-nova" id="province" name="province" required
+                                @if (Auth::user()->address_id) disabled @endif>
+                                @if (!Auth::user()->address_id)
+                                    <option class="tempprovince" selected>Please select your province</option>
+                                @endif
                                 @foreach ($provinces as $province)
-                                    <option value="{{ $province['province'] }}" @if ($province['province'] == Auth::user()->address->province) selected @endif>{{ $province['province'] }}
+                                    <option value="{{ $province['province'] }}" @if (Auth::user()->address_id) @if ($province['province'] == Auth::user()->address->province) selected @endif @endif>
+                                        {{ $province['province'] }}
                                     </option>
                                 @endforeach
                             </select>
@@ -126,12 +150,13 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select class="form-select font-proxima-nova font-weight-bold" id="city" name="city" required
-                                disabled>
-                                @foreach ($cities as $city)
-                                    <option value="{{ $city['city_name'] }}" @if ($city['city_name'] == Auth::user()->address->city) selected @endif>
-                                        {{ $city['city_name'] }}</option>
-                                @endforeach
+                            <select class="form-select font-proxima-nova" id="city" name="city" required disabled>
+                                @if (Auth::user()->address_id)
+                                    @foreach ($cities as $city)
+                                        <option value="{{ $city['city_name'] }}" @if ($city['city_name'] == Auth::user()->address->city) selected @endif>
+                                            {{ $city['city_name'] }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -140,9 +165,9 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <input id="postal_code" type="text" class="form-control" name="postal_code" required disabled
-                                autocomplete="postal_code" placeholder="Enter your postal code"
-                                value="{{ Auth::user()->address->postal_code }}">
+                            <input id="postal_code" type="number" class="form-control" name="postal_code" required
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="postal_code" placeholder="Enter your postal code"
+                                value="{{ Auth::user()->address->postal_code ?? null }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -156,20 +181,27 @@
                     </div>
                 </div>
                 <div class="bg-white rounded px-3 py-2 my-3">
-                    <h2 class="text-argavell font-bauer font-weight-bold">Address Details</h2>
+                    <h2 class="text-argavell font-bauer font-weight-bold">Shipping Method</h2>
                     <p class="text-secondary">Choose your shipping method.</p>
-                    <div class="mb-3">
-                        @foreach ($shipments['costs'] as $shipment)
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="shipping_method"
-                                    value="{{ $shipment['service'] }}" id="shipping_radio_{{ $loop->iteration }}" @if ($loop->iteration == 1) checked @endif>
-                                <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
-                                    <span class="font-weight-bold">{{ $shipment['description'] }} -
-                                        {{ $shipment['service'] }}</span> : IDR <span
-                                        id="shipping_cost_{{ $shipment['service'] }}">{{ $shipment['cost'][0]['value'] }}</span>
-                                </label>
-                            </div>
-                        @endforeach
+                    <div class="mb-3" id="container-shipment">
+                        @if (Auth::user()->address_id)
+                            @foreach ($shipments['costs'] as $shipment)
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="shipping_method"
+                                        value="{{ $shipment['service'] }}" id="shipping_radio_{{ $loop->iteration }}"
+                                        @if ($loop->iteration == 1) checked @endif>
+                                    <input class="form-check-input" type="hidden" name="shipping_etd"
+                                        value="{{ $shipment['cost'][0]['etd'] }}">
+                                    <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
+                                        <span class="font-weight-bold">{{ $shipment['description'] }} -
+                                            {{ $shipment['service'] }}</span> : IDR <span
+                                            id="shipping_cost_{{ $shipment['service'] }}">{{ rupiah($shipment['cost'][0]['value']) }}</span>
+                                    </label>
+                                </div>
+                            @endforeach
+                        @else
+                            <h5 class="mb-0">Please Complete Your Address First</h5>
+                        @endif
                     </div>
                 </div>
                 <div class="bg-white rounded px-3 py-2 my-3">
@@ -180,41 +212,28 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="payment_method"
                                     value="{{ $payment->id }}" id="payment_radio_{{ $payment->id }}"
-                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ $payment->id }}" @if ($loop->iteration == 1) checked @endif>
+                                    @if ($loop->iteration == 1) checked @endif>
                                 <label class="form-check-label" for="payment_radio_{{ $payment->id }}">
                                     {{ $payment->name }}
                                 </label>
-                                <div class="collapse @if ($loop->iteration == 1) show @endif" id="collapse{{ $payment->id }}" data-bs-parent="#paymentGroup">
-                                    <div class="row mb-2">
-                                        <div class="col-md-7 bg-light font-weight-bold rounded py-2 px-3">
-                                            Account Number : {{ $payment->account_number }}
-                                        </div>
-                                    </div>
-                                    <p class="font-weight-bold">How to pay with Transfer BCA :</p>
-                                    <ul>
-                                        @foreach ($payment->howto as $howto)
-                                            <li>{{ $howto }}</li>
-                                        @endforeach
-                                    </ul>
-                                    <hr>
-                                </div>
                             </div>
                         @endforeach
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment_method" value="1001"
-                                id="payment_radio_1001" data-bs-toggle="collapse" data-bs-target="#collapse1001">
+                                id="payment_radio_1001">
                             <label class="form-check-label" for="payment_radio_1001">
                                 Online Payment
                             </label>
-                            <div class="collapse" id="collapse1001" data-bs-parent="#paymentGroup">
-                            </div>
                         </div>
                     </div>
                 </div>
             </form>
             <div class="bg-white rounded px-3 py-2 my-3">
-                <button id="pay-button" class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0" @if (count(Auth::user()->carts->where('transaction_id', null)) == 0) disabled @endif>Confirm
-                    Order</button>
+                <button id="pay-button" type="submit"
+                    class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0"
+                    @if (count(Auth::user()->carts->where('transaction_id', null)) == 0) disabled @endif>Confirm
+                    Order
+                </button>
             </div>
         </div>
         {{-- order summary desktop --}}
@@ -230,13 +249,14 @@
                 @foreach (Auth::user()->carts->where('transaction_id', null) as $item)
                     <div class="row my-2">
                         <div class="col-3">
-                            <img src="{{ asset('products/' . $item->product->img) }}" class="w-100 rounded">
+                            <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}<span
                                 class="ms-1 text-secondary">({{ $item->size }})</span>
                         </div>
-                        <div class="col-4">IDR {{ ($item->price - $item->price_discount) * $item->qty }}</div>
+                        <div class="col-4">IDR
+                            {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}</div>
                     </div>
                 @endforeach
                 <hr>
@@ -244,7 +264,9 @@
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span class="summary_subtotal">{{ $subtotal - $discount }}</span></div>
+                    <div class="col-4">IDR <span
+                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
+                    </div>
                 </div>
                 <div class="row my-2">
                     <div class="col-8 font-weight-bold">
@@ -267,33 +289,61 @@
 
 @section('scripts')
     <script>
+        Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+            var n = this,
+                decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+                decSeparator = decSeparator == undefined ? "." : decSeparator,
+                thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+                sign = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+            return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" +
+                thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+        };
+
         function refreshSummary() {
             $('.summary_shipping_cost').html($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html())
-            $('.summary_total').html(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                    .html()) +
-                parseInt($('#summary_subtotal').val()));
+            $('.summary_total').html(
+                (parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html().replace('.',
+                    '')) + parseInt($('#summary_subtotal').val())).formatMoney(0, '.', ''));
             $('#shipping_cost').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                .html()));
+                .html().replace('.', '')));
+            $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html()
+                .replace('.', '')) + parseInt($('#summary_subtotal').val()));
         }
-        refreshSummary();
+        @if (Auth::user()->address_id)
+            refreshSummary();
+        @endif
 
         $('input[type=radio][name=shipping_method]').on('change', function() {
             refreshSummary();
+            console.log($("#form-checkout").serializeArray());
         });
 
         function newTransactionOnline(token, status, snaptoken) {
             $.post('{{ config('app.url') }}' + "/transaction/online/store", {
                     _token: token,
-                    data: $("#form-checkout").serializeArray(),
+                    shipping_method: $("input[name=shipping_method]:checked").val(),
+                    shipping_cost: $("input[name=shipping_cost]").val(),
+                    price_total: $("input[name=price_total]").val(),
+                    qty_total: $("input[name=qty_total]").val(),
+                    weight_total: $("input[name=weight_total]").val(),
+                    payment_method: $("input[name=payment_method]:checked").val(),
+                    shipping_etd: $("input[name=shipping_etd]").val(),
                     status: status,
-                    snaptoken : snaptoken
+                    snaptoken: snaptoken,
+                    phone_number: $('#phone_number').val(),
+                    city: $('#city').val(),
+                    address: $('#address').val(),
+                    province: $('#province').val(),
+                    postal_code: $('#postal_code').val(),
                 })
                 .done(function(data) {
                     console.log(data);
                     window.location.href = '{{ config('app.url') }}' + "/transaction"
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(e) {
+                    console.log(e);
                 })
                 .always(function() {
                     console.log("always");
@@ -302,18 +352,17 @@
 
         $('#pay-button').click(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            var price = parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
-                    .html()) +
-                parseInt($('#summary_subtotal').val());
+            var price = parseInt($('#summary_total').val());
             if ($('#payment_radio_1001').is(':checked')) {
                 $.post('{{ config('app.url') }}' + "/transaction/getsnap", {
                         _token: CSRF_TOKEN,
-                        price: price
+                        price: price,
+                        phone: $('#phone_number').val()
                     })
                     .done(function(data) {
                         window.snap.pay(data, {
                             onSuccess: function(result) {
-                                newTransactionOnline(CSRF_TOKEN, '1', data);
+                                newTransactionOnline(CSRF_TOKEN, '5', data);
                             },
                             onPending: function(result) {
                                 newTransactionOnline(CSRF_TOKEN, '0', data);
@@ -325,15 +374,53 @@
                             }
                         })
                     })
-                    .fail(function() {
-                        console.log("fail");
-                    })
-                    .always(function() {
-                        console.log("always");
+                    .fail(function(e) {
+                        console.log(e);
                     });
             } else {
                 document.getElementById('form-checkout').submit();
             }
         });
+    </script>
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        $('#province').on('change', function(e) {
+            $.post("{{ config('app.url') }}" + "/cart/getcity", {
+                    _token: CSRF_TOKEN,
+                    province: $('#province').val(),
+                })
+                .done(function(data) {
+                    $('.tempprovince').remove();
+                    $('#city').prop("disabled", false);
+                    $('#city').html('');
+                    Object.values(data).forEach((element, index) => {
+                        if (index == 0) {
+                            get_shipment(element.city_id);
+                        }
+                        $('#city').append('<option onchange="get_shipment(' + element.city_id +
+                            ');" value="' + element.city_name +
+                            '">' +
+                            element.city_name + '</option>')
+                    });
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        });
+
+        function get_shipment(city_id) {
+            $.post("{{ config('app.url') }}" + "/cart/getshipment", {
+                    _token: CSRF_TOKEN,
+                    weight: {{ $weight }},
+                    city_id: city_id,
+                })
+                .done(function(data) {
+                    $('#container-shipment').html(data);
+                    refreshSummary();
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
     </script>
 @endsection

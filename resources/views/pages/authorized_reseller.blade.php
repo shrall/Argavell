@@ -57,14 +57,17 @@
             @endif
         @endforeach
     </div>
-    <div class="row w-100 landing-showcase-background text-center py-5 m-0"
-        style="background-image: url({{ asset('images/landing-argan-oil.jpg') }})">
-        <h1 class="font-bauer text-white my-5">Which Argavell Product Made<br>You Fall In Love?</h1>
-        <a href="#" class="text-decoration-none d-none d-sm-block">
-            <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
-        <a href="#" class="text-decoration-none d-block d-sm-none">
-            <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5">Browse Products</div>
-        </a>
+    <div class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative" style="height:45vh;">
+        <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
+            style="height: 100%;object-fit: cover;">
+        <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
+            <h1 class="font-bauer text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
+            <a href="#" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+            <a href="#" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
+            </a>
+        </div>
     </div>
 @endsection

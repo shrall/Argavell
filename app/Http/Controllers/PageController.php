@@ -11,6 +11,7 @@ use App\Models\Tnc;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class PageController extends Controller
 {
@@ -36,6 +37,11 @@ class PageController extends Controller
     {
         $tncs = Tnc::all();
         return view('pages.terms_conditions', compact('tncs'));
+    }
+
+    public function contactus()
+    {
+        return view('pages.contact_us');
     }
 
     public function authorizedreseller()
@@ -68,7 +74,13 @@ class PageController extends Controller
 
     public function paymentconfirmation()
     {
-        return view('pages.payment_confirmation');
+        if(Session::get('transaction.id')){
+            $latest_transaction_id = Session::get('transaction.id');
+            Session::forget('transaction.id');
+        }else{
+            $latest_transaction_id = '';
+        }
+        return view('pages.payment_confirmation', compact('latest_transaction_id'));
     }
 
     public function profile()
@@ -99,8 +111,30 @@ class PageController extends Controller
     public function dashboard()
     {
         $transactions = Transaction::all();
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->updated_at . ' +1 day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '4') {
+                $transaction->update([
+                    'status' => '2'
+                ]);
+            }
+        }
+        foreach ($transactions as $transaction) {
+            if ((strtotime($transaction->updated_at . ' +' . $transaction->shipment_etd . ' day') - strtotime(\Carbon\Carbon::now())) < 0 && $transaction->status == '3') {
+                $transaction->update([
+                    'status' => '1'
+                ]);
+            }
+        }
         $users = User::all();
         $carts = Cart::all();
         return view('admin.dashboard', compact('transactions', 'users', 'carts'));
+    }
+
+    public function redirect_login(Request $request){
+        Session::put('route.intended', $request->prev_route);
+        if($request->product_slug){
+            Session::put('product.slug', $request->product_slug);
+        }
+        return redirect()->route('login');
     }
 }

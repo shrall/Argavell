@@ -19,9 +19,9 @@ class CreateCartsTable extends Migration
             $table->string('size');
             $table->integer('price');
             $table->integer('price_discount')->nullable();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('transaction_id')->nullable()->constrained();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('transaction_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

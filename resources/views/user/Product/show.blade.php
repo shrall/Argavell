@@ -1,10 +1,17 @@
 @extends('layouts.app')
-
+@php
+function rupiah($angka)
+{
+    $hasil_rupiah = number_format($angka, 0, ',', '.');
+    return $hasil_rupiah;
+}
+@endphp
 @section('content')
     <div class="row w-100 m-0 p-0 py-5 align-items-center">
         <div class="col-md-2"></div>
         <div class="col-md-3">
-            <div class="w-100 product-detail" style="background-image: url({{ asset('products/' . $product->img) }})">
+            <div class="w-100 product-detail"
+                style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
             </div>
         </div>
         <div class="col-md-5">
@@ -15,15 +22,18 @@
             @endif
             @if ($product->price_discount != null)
                 <p class="my-0 text-danger">SALE!</p>
-                <h2 class="font-proxima-nova mb-4">
-                    <del class="text-secondary">IDR {{ $product->price }}</del>
-                    <span class="text-danger ms-2">IDR {{ $product->price - $product->price_discount }}</span>
+                <h2 class="font-proxima-nova mb-4 d-flex">
+                    <div class="position-relative">
+                        <span class="text-secondary cross">IDR {{ rupiah($product->price) }}</span>
+                    </div>
+                    <span class="text-danger font-weight-bold ms-2">IDR
+                        {{ rupiah($product->price - $product->price_discount) }}</span>
                 </h2>
             @else
                 @if ($product->type == '0')
-                    <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ $product->price }}</h2>
+                    <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
                 @else
-                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR {{ $product->price }}</h2>
+                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
                 @endif
             @endif
             <p class="font-proxima-nova font-weight-bold">Description</p>
@@ -72,7 +82,7 @@
                                     id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="subtractProductQuantity()"></span>
                                 <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
-                                    id="quantity-counter">1
+                                    id="quantity-counter">0
                                 </div>
                                 <span
                                     class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
@@ -84,14 +94,14 @@
                                     id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="subtractProductQuantity()"></span>
                                 <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
-                                    id="quantity-counter">1
+                                    id="quantity-counter">0
                                 </div>
                                 <span
                                     class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
                                     id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
                                     onclick="addProductQuantity()"></span>
                             @endif
-                            <input type="hidden" name="quantity" id="quantity" value=1>
+                            <input type="hidden" name="quantity" id="quantity" value=0>
                             <input type="hidden" name="id" id="id" value={{ $product->id }}>
                             <input type="hidden" name="price" id="price" value={{ $product->price }}>
                             <input type="hidden" name="price_discount" id="price_discount"
@@ -100,31 +110,70 @@
                     </div>
                 </div>
                 <div class="my-3">
-                    @if ($product->type == '0')
+                    @auth
+                        @if ($product->type == '0')
+                            <button type="submit"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                @if (Auth::user()->role != '0')
+                                onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                            @else
+                                onclick="event.preventDefault(); addToCart({{ $product->id }},
+                                '{{ config('app.url') }}');"
+                                data-bs-toggle="modal" data-bs-target="#cartModal"
+                        @endif disabled>Add to Cart</button>
                         <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                            @if (Auth::user()->role != '0')
+                            onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                        @else
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
-                            to Cart</button>
-                        <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
-                            to Cart</button>
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile"
+                            @endif disabled>Add to Cart</button>
                     @else
                         <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                            @if (Auth::user()->role != '0')
+                            onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                        @else
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal">Add
-                            to Cart</button>
+                            data-bs-toggle="modal" data-bs-target="#cartModal"
+                            @endif disabled>Add to Cart</button>
                         <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none"
+                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                            @if (Auth::user()->role != '0')
+                            onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                        @else
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile">Add
-                            to Cart</button>
-                    @endif
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile"
+                            @endif disabled>Add to Cart</button>
+                        @endif
+                    @endauth
+                    @guest
+                        @if ($product->type == '0')
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                Add to Cart</a>
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                Add to Cart</a>
+                        @else
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                Add to Cart</a>
+                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                Add to Cart</a>
+                        @endif
+                    @endguest
                 </div>
             </form>
+            @guest
+                <form action="{{ route('redirect.login') }}" method="post" id="redirect-form">
+                    @csrf
+                    <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                    <input type="hidden" name="product_slug" value="{{ $product->slug }}">
+                </form>
+            @endguest
         </div>
         <div class="col-md-2"></div>
     </div>
@@ -206,19 +255,23 @@
                         <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
                             <a href="{{ route('product.show', $bundle->slug) }}">
                                 <div class="landing-product position-relative w-100 mb-3"
-                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
+                                    style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
                                     @if ($bundle->price_discount != null)
                                         <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                         </div>
                                     @endif
                                 </div>
                             </a>
-                            <div style="height:15%" class="mb-3">
-                                <div class="font-weight-bold font-gotham">{{ $bundle->name }}</div>
+                            <div style="height:10%" class="mb-3">
+                                <div class="font-weight-bold font-gotham mb-1">{{ $bundle->name }}</div>
                                 @if ($bundle->price_discount != null)
-                                    <div class="font-gotham"><del class="text-secondary">IDR
-                                            {{ $bundle->price }}</del><span class="text-danger font-weight-bold ms-2">IDR
-                                            {{ $bundle->price - $bundle->price_discount }}</span></div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="position-relative">
+                                            <span class="text-secondary cross">IDR {{ $bundle->price }}</span>
+                                        </div>
+                                        <span class="text-danger font-weight-bold ms-2">IDR
+                                            {{ $bundle->price - $bundle->price_discount }}</span>
+                                    </div>
                                 @else
                                     <div class="font-gotham">IDR {{ $bundle->price }}</div>
                                 @endif
@@ -259,39 +312,42 @@
         <div class="row px-3 gap-3 flex-nowrap text-start">
             @if ($bundles->count() > 0)
                 @foreach ($bundles as $bundle)
-                    @if ($bundle->type == $product->type)
-                        <div class="col-10 p-0">
-                            <a href="{{ route('product.show', $bundle->slug) }}">
-                                <div class="landing-product position-relative w-100 mb-3"
-                                    style="background-image: url({{ asset('products/' . $bundle->img) }})">
-                                    @if ($bundle->price_discount != null)
-                                        <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
-                                        </div>
-                                    @endif
-                                </div>
-                            </a>
-                            <div class="mb-3">
-                                <div class="w-100" style="height: 50px">
-                                    <p class="w-100 font-weight-bold font-gotham text-break">{{ $bundle->name }}</p>
-                                </div>
+                    <div class="col-10 p-0">
+                        <a href="{{ route('product.show', $bundle->slug) }}">
+                            <div class="landing-product position-relative w-100 mb-3"
+                                style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
                                 @if ($bundle->price_discount != null)
-                                    <div class="font-gotham mb-3"><del class="text-secondary">IDR 130.000</del><span
-                                            class="text-danger font-weight-bold ms-2">IDR 130.000</span></div>
-                                @else
-                                    <div class="font-gotham mb-3">IDR {{ $bundle->price }}</div>
-                                @endif
-                                @if ($product->type == '0')
-                                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
-                                    </a>
-                                @else
-                                    <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
-                                        <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
-                                    </a>
+                                    <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
+                                    </div>
                                 @endif
                             </div>
+                        </a>
+                        <div class="mb-3">
+                            <div class="w-100" style="height: 50px">
+                                <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $bundle->name }}</p>
+                            </div>
+                            @if ($bundle->price_discount != null)
+                                <div class="d-flex mb-3">
+                                    <div class="position-relative">
+                                        <span class="text-secondary cross">IDR {{ $bundle->price }}</span>
+                                    </div>
+                                    <span class="text-danger font-weight-bold ms-2">IDR
+                                        {{ $bundle->price - $bundle->price_discount }}</span>
+                                </div>
+                            @else
+                                <div class="font-gotham mb-3">IDR {{ $bundle->price }}</div>
+                            @endif
+                            @if ($product->type == '0')
+                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                    <div class="btn-argavell text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
+                            @else
+                                <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
+                                    <div class="btn-kleanse text-center w-100 py-2 cursor-pointer">See Product</div>
+                                </a>
+                            @endif
                         </div>
-                    @endif
+                    </div>
                 @endforeach
             @else
                 <div class="col-12 p-0">
@@ -303,6 +359,11 @@
 @endsection
 
 @section('scripts')
+
+    <script>
+        var product = @json($product);
+        console.log(product);
+    </script>
 
     <script>
         var triggerTabList = [].slice.call(document.querySelectorAll('#detailTab a'))
@@ -318,14 +379,22 @@
 
     <script>
         function addProductQuantity() {
-            $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
-            $('#quantity').get(0).value++
+            if (parseInt($('#quantity-counter').html()) < product['stock']) {
+                $('#quantity-counter').html(parseInt($('#quantity-counter').html()) + 1);
+                $('#quantity').get(0).value++
+                if (parseInt($('#quantity-counter').html()) > 0) {
+                    $('.add-to-cart-button').prop("disabled", false);
+                }
+            }
         }
 
         function subtractProductQuantity() {
             if (parseInt($('#quantity-counter').html()) > 0) {
                 $('#quantity-counter').html(parseInt($('#quantity-counter').html()) - 1);
                 $('#quantity').get(0).value--
+                if (parseInt($('#quantity-counter').html()) == 0) {
+                    $('.add-to-cart-button').prop("disabled", true);
+                }
             }
         }
     </script>
@@ -341,41 +410,54 @@
                     quantity: parseInt($('#quantity').val()),
                 })
                 .done(function(data) {
-                    console.log(data)
-                    console.log("cart added");
-                    $('#cart-body').append(data);
-                    $('#cart-mobile-body').append(data);
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
-                        .val()));
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(
-                        '#quantity').val()));
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity')
-                        .val()));
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
-                        '#quantity').val()));
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (parseInt($('#price').val()) *
-                        parseInt($('#quantity').val())));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + ((parseInt($('#price').val()) * parseInt(
-                        $('#quantity').val())) - (parseInt({{ $product->price_discount ?: 0 }}) *
-                        parseInt(
-                            $('#quantity').val()))));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (parseInt($('#price')
-                        .val()) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + ((parseInt($('#price')
-                        .val()) * parseInt($('#quantity').val())) - (parseInt(
-                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val()))));
+                    if (data != 'false') {
+                        $('#cart-body').append(data);
+                        $('#cart-mobile-body').append(data);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
+                            .val()));
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(
+                            '#quantity').val()));
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + parseInt($('#quantity')
+                            .val()));
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
+                            '#quantity').val()));
+
+                        $('#cart-subtotal').html((parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($(
+                                '#price').val()) *
+                            parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
+                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                            .formatMoney(0, '.', ''));
+                        $('#cart-total').html((parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
+                                '#price').val()) *
+                            parseInt(
+                                $('#quantity').val())) - (parseInt(
+                                {{ $product->price_discount ?: 0 }}) *
+                            parseInt(
+                                $('#quantity').val())))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((parseInt($('#cart-mobile-subtotal').html().replace('.', '')) +
+                            (
+                                parseInt($(
+                                        '#price')
+                                    .val()) * parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((parseInt($('#cart-mobile-discount').html().replace('.', '')) +
+                                (
+                                    parseInt(
+                                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                            .formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html((parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
+                            parseInt($('#price')
+                                .val()) * parseInt($('#quantity').val())) - (parseInt(
+                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity')
+                        .val())))).formatMoney(0, '.', ''));
+                    }
                 })
-                .fail(function() {
-                    console.log("fail");
+                .fail(function(error) {
+                    console.log(error);
                 })
                 .always(function() {
-                    console.log("always");
+                    $('#cart-loader').addClass('d-none');
+                    $('#cart-mobile-loader').addClass('d-none');
                 });
         }
     </script>

@@ -18,17 +18,18 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call([
+            VoucherSeeder::class,
             PaymentSeeder::class,
             UserSeeder::class,
             ResellerSeeder::class,
             FaqSeeder::class,
             PolicySeeder::class,
-            RefundSeeder::class,
             TncSeeder::class,
-            ProofSeeder::class,
             AddressSeeder::class,
             ProductSeeder::class,
             TransactionSeeder::class,
+            RefundSeeder::class,
+            ProofSeeder::class,
             CartSeeder::class,
             BundleSeeder::class
         ]);

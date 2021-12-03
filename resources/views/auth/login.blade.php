@@ -51,7 +51,7 @@
                                 </a>
                             </div>
                             <div class="row px-2 mb-2">
-                                <button type="submit" class="btn btn-argavell col-12">
+                                <button type="submit" class="btn btn-argavell col-12 font-weight-bold">
                                     {{ __('Sign In') }}
                                 </button>
                             </div>

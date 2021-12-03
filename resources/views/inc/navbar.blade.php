@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-item mx-4">
-                    <a href="#"
+                    <a href="{{ route('page.contactus') }}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
                         Contact Us
                     </a>
@@ -76,27 +76,33 @@
         <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham">Argan Oil</a>
+        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham"
+            style="display: block;height: 3vh;">Argan Oil</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham">Argan
+        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham"
+            style="display: block;height: 3vh;">Argan
             Shampoo</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham">Kleanse</a>
+        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham"
+            style="display: block;height: 3vh;">Kleanse</a>
     </div>
     <div class="col-12 text-center my-3">
-        <a href="#" class="text-decoration-none text-white font-gotham">Contact Us</a>
+        <a href="{{ route('page.contactus') }}" class="text-decoration-none text-white font-gotham"
+            style="display: block;height: 3vh;">Contact Us</a>
     </div>
     @guest
         @if (Route::has('login'))
             <div class="col-12 text-center my-3">
-                <a class="text-decoration-none text-white font-gotham" href="{{ route('login') }}">Login</a>
+                <a class="text-decoration-none text-white font-gotham" href="{{ route('login') }}"
+                    style="display: block;height: 3vh;">Login</a>
             </div>
         @endif
     @else
         <div class="col-12 text-center my-3">
-            <a class="text-decoration-none text-white font-gotham" href="{{ route('user.user.index') }}">My Account</a>
+            <a class="text-decoration-none text-white font-gotham" href="{{ route('user.user.index') }}"
+                style="display: block;height: 3vh;">My Account</a>
         </div>
     @endguest
     <span class="fa fa-fw fa-times position-absolute text-white fs-1" style="top:10px; right:10px;"
@@ -152,9 +158,9 @@
     $discount = 0;
     $totalqty = 0;
     foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-    $totalqty += $item->qty;
-    $subtotal += $item->price * $item->qty;
-    $discount += $item->price_discount * $item->qty;
+        $totalqty += $item->qty;
+        $subtotal += $item->price * $item->qty;
+        $discount += $item->price_discount * $item->qty;
     }
     ?>
     {{-- cart modal desktop --}}
@@ -184,16 +190,17 @@
                                 <span class="text-secondary" id="modal-footer-qty">{{ $totalqty }}</span>
                                 <span class="text-secondary"> item(s)</span>
                             </div>
-                            <div>IDR <span id="cart-subtotal">{{ $subtotal }}</span></div>
+                            <div>IDR <span id="cart-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span></div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div>- IDR <span id="cart-discount">{{ $discount }}</span></div>
+                            <div>- IDR <span id="cart-discount">{{ number_format($discount, 0, ',', '.') }}</span></div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div>IDR <span id="cart-total">{{ $subtotal - $discount }}</span></div>
+                            <div>IDR <span id="cart-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                     </div>
                     <a href="{{ route('user.cart.index') }}"
@@ -231,16 +238,20 @@
                                 <span class="text-secondary" id="modal-footer-mobile-qty">{{ $totalqty }}</span>
                                 <span class="text-secondary">item(s)</span>
                             </div>
-                            <div>IDR <span id="cart-mobile-subtotal">{{ $subtotal }}</span></div>
+                            <div>IDR <span id="cart-mobile-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-between text-argavell">
                             <div>Discount</div>
-                            <div>- IDR <span id="cart-mobile-discount">{{ $discount }}</span></div>
+                            <div>- IDR <span id="cart-mobile-discount">{{ number_format($discount, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-between font-weight-bold">
                             <div>Total</div>
-                            <div>IDR <span id="cart-mobile-total">{{ $subtotal - $discount }}</span></div>
+                            <div>IDR <span
+                                    id="cart-mobile-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                     </div>
                     <a href="{{ route('user.cart.index') }}"
@@ -251,6 +262,18 @@
         </div>
     </div>
     <script>
+        Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+            var n = this,
+                decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+                decSeparator = decSeparator == undefined ? "." : decSeparator,
+                thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+                sign = n < 0 ? "-" : "",
+                i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+                j = (j = i.length) > 3 ? j % 3 : 0;
+            return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" +
+                thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+        };
+
         function overQuantity(button) {
             $(button).removeClass('far');
             $(button).addClass('fa');
@@ -277,18 +300,30 @@
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price'] * data['qty']));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount'] * data[
-                        'qty']));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) - ((data['price'] * data['qty']) - (data[
-                        'price_discount'] * data['qty'])));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price'] * data[
-                        'qty']));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
-                        'price_discount'] * data['qty']));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - ((data['price'] * data[
+
+                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                            'price'] *
+                        data['qty'])).formatMoney(0, '.', ''));
+                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                        'price_discount'] * data[
+                        'qty'])).formatMoney(0, '.', ''));
+                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - ((data[
+                        'price'] * data[
                         'qty']) - (data[
-                        'price_discount'] * data['qty'])));
+                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
+                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                        '')) - (
+                        data['price'] * data[
+                            'qty'])).formatMoney(0, '.', ''));
+                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                        '')) - (
+                        data[
+                            'price_discount'] * data['qty'])).formatMoney(0, '.', ''));
+                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) - ((
+                        data[
+                            'price'] * data[
+                            'qty']) - (data[
+                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
                 })
                 .fail(function() {
                     alert('Fail')
@@ -309,19 +344,34 @@
                     id: id
                 })
                 .done(function(data) {
-                    $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data['price_discount']));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
-                        'price_discount']));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
-                        'price_discount']));
+                    console.log(data)
+                    if (data != 'false') {
+                        $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+
+                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
+                            'price'])).formatMoney(0, '.', ''));
+                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data[
+                                'price'] -
+                            data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                '')) +
+                            (data['price'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                '')) +
+                            (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                            '')) + (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                    }
                 })
                 .fail(function() {
                     alert('Fail')
@@ -348,15 +398,26 @@
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
-                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price']));
-                        $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount']));
-                        $('#cart-total').html(parseInt($('#cart-total').html()) - (data['price'] - data[
-                            'price_discount']));
-                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price']));
-                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
-                            'price_discount']));
-                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - (data['price'] - data[
-                            'price_discount']));
+
+                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                            'price'])).formatMoney(0, '.', ''));
+                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
+                                'price'] -
+                            data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                '')) -
+                            (data['price'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                '')) -
+                            (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                            '')) - (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
                     })
                     .fail(function() {
                         alert('Fail')
@@ -383,14 +444,25 @@
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-                    $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) + (data['price']));
-                    $('#cart-discount').html(parseInt($('#cart-discount').html()) + (data['price_discount']));
-                    $('#cart-total').html(parseInt($('#cart-total').html()) + (data['price'] - data['price_discount']));
-                    $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) + (data['price']));
-                    $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) + (data[
-                        'price_discount']));
-                    $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) + (data['price'] - data[
-                        'price_discount']));
+
+                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
+                        'price'])).formatMoney(0, '.', ''));
+                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
+                        'price_discount'])).formatMoney(0, '.', ''));
+                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data['price'] -
+                        data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                            '')) +
+                        (data['price'])).formatMoney(0, '.', ''));
+                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                            '')) +
+                        (data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) + (
+                        data[
+                            'price'] - data[
+                            'price_discount'])).formatMoney(0, '.', ''));
                 })
                 .fail(function() {
                     alert('Fail')
@@ -418,15 +490,26 @@
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
-                        $('#cart-subtotal').html(parseInt($('#cart-subtotal').html()) - (data['price']));
-                        $('#cart-discount').html(parseInt($('#cart-discount').html()) - (data['price_discount']));
-                        $('#cart-total').html(parseInt($('#cart-total').html()) - (data['price'] - data[
-                            'price_discount']));
-                        $('#cart-mobile-subtotal').html(parseInt($('#cart-mobile-subtotal').html()) - (data['price']));
-                        $('#cart-mobile-discount').html(parseInt($('#cart-mobile-discount').html()) - (data[
-                            'price_discount']));
-                        $('#cart-mobile-total').html(parseInt($('#cart-mobile-total').html()) - (data['price'] - data[
-                            'price_discount']));
+
+                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                            'price'])).formatMoney(0, '.', ''));
+                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
+                                'price'] -
+                            data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                '')) -
+                            (data['price'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                '')) -
+                            (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                            '')) - (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
                     })
                     .fail(function() {
                         alert('Fail')
@@ -438,7 +521,6 @@
                     });
             }
         }
-
     </script>
 @endauth
 
@@ -453,5 +535,4 @@
         $("#navbar-mobile").removeClass('d-block');
         $("#navbar-mobile").addClass('d-none');
     }
-
 </script>

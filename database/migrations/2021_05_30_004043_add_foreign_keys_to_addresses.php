@@ -14,8 +14,8 @@ class AddForeignKeysToAddresses extends Migration
     public function up()
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->index()->after('postal_code');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->index()->after('postal_code')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

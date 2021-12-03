@@ -17,9 +17,9 @@ class RefundSeeder extends Seeder
         $refund = new Refund();
         $refund->name = 'Marshall Ovierdo';
         $refund->phone = '0';
-        $refund->order_number = '000000000000';
         $refund->condition = '1622660051-icon.png';
         $refund->user_id = 1;
+        $refund->transaction_id = 2;
         $refund->save();
     }
 }
