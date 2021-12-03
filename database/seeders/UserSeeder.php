@@ -16,23 +16,23 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->first_name = 'Marshall';
-        $user->last_name = 'Ovierdo';
-        $user->email = 'shrallvierdo@gmail.com';
-        $user->username = 'shrall';
-        $user->password = Hash::make('wars1234');
+        $user->first_name = 'User';
+        $user->last_name = 'Argavell';
+        $user->email = 'user@argavell.com';
+        $user->username = 'user_argavell';
+        $user->password = Hash::make('123456789');
         $user->gender = '0';
-        $user->dob = '2021-06-08';
+        $user->dob = '1970-01-01';
         $user->save();
 
         $user = new User();
-        $user->first_name = 'Marshall';
-        $user->last_name = 'Ovierdo';
-        $user->email = 'shralladmin@gmail.com';
-        $user->username = 'shralladmin';
-        $user->password = Hash::make('wars1234');
+        $user->first_name = 'Admin';
+        $user->last_name = 'Argavell';
+        $user->email = 'admin@argavell.com';
+        $user->username = 'admin';
+        $user->password = Hash::make('123456789');
         $user->gender = '0';
-        $user->dob = '2021-06-08';
+        $user->dob = '1970-01-01';
         $user->role = '1';
         $user->save();
     }
