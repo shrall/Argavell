@@ -35,16 +35,5 @@ class UserSeeder extends Seeder
         $user->dob = '1970-01-01';
         $user->role = '1';
         $user->save();
-
-        $user = new User();
-        $user->first_name = 'Admin';
-        $user->last_name = 'Argavell';
-        $user->email = 'admin@argavell.com';
-        $user->username = 'admin';
-        $user->password = Hash::make('wars1234');
-        $user->gender = '0';
-        $user->dob = '2021-06-08';
-        $user->role = '1';
-        $user->save();
     }
 }
