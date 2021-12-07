@@ -203,9 +203,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('user.cart.index') }}"
-                        class="text-decoration-none btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout
-                    </a>
+                    <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
+                        @csrf
+                        <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
+                            class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
+                            Checkout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -254,9 +258,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('user.cart.index') }}"
-                        class="text-decoration-none btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">Checkout
-                    </a>
+                    <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
+                        @csrf
+                        <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
+                            class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
+                            Checkout
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -324,6 +332,11 @@
                             'price'] * data[
                             'qty']) - (data[
                         'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
+                    if ($('#cart-total').html() == 0) {
+                        $(".button-checkout").prop("disabled", true);
+                    } else {
+                        $(".button-checkout").prop("disabled", false);
+                    }
                 })
                 .fail(function() {
                     alert('Fail')
@@ -369,8 +382,13 @@
                                 'price_discount'])).formatMoney(0, '.', ''));
                         $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
                             '')) + (data[
-                                'price'] - data[
-                                'price_discount'])).formatMoney(0, '.', ''));
+                            'price'] - data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        if ($('#cart-total').html() == 0) {
+                            $(".button-checkout").prop("disabled", true);
+                        } else {
+                            $(".button-checkout").prop("disabled", false);
+                        }
                     }
                 })
                 .fail(function() {
@@ -416,8 +434,17 @@
                                 'price_discount'])).formatMoney(0, '.', ''));
                         $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
                             '')) - (data[
-                                'price'] - data[
-                                'price_discount'])).formatMoney(0, '.', ''));
+                            'price'] - data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        if ($('#cart-total').html() == 0) {
+                            $(".button-checkout").prop("disabled", true);
+                        } else {
+                            $(".button-checkout").prop("disabled", false);
+                        }
+                        if (data['qty'] == 0) {
+                            $('.cart-row' + id).addClass('d-sm-none');
+                            $('.cart-mobile-row' + id).addClass('d-none');
+                        }
                     })
                     .fail(function() {
                         alert('Fail')
@@ -444,7 +471,6 @@
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-
                     $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
                         'price'])).formatMoney(0, '.', ''));
                     $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
@@ -463,6 +489,11 @@
                         data[
                             'price'] - data[
                             'price_discount'])).formatMoney(0, '.', ''));
+                    if ($('#cart-total').html() == 0) {
+                        $(".button-checkout").prop("disabled", true);
+                    } else {
+                        $(".button-checkout").prop("disabled", false);
+                    }
                 })
                 .fail(function() {
                     alert('Fail')
@@ -508,8 +539,17 @@
                                 'price_discount'])).formatMoney(0, '.', ''));
                         $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
                             '')) - (data[
-                                'price'] - data[
-                                'price_discount'])).formatMoney(0, '.', ''));
+                            'price'] - data[
+                            'price_discount'])).formatMoney(0, '.', ''));
+                        if ($('#cart-total').html() == 0) {
+                            $(".button-checkout").prop("disabled", true);
+                        } else {
+                            $(".button-checkout").prop("disabled", false);
+                        }
+                        if (data['qty'] == 0) {
+                            $('.cart-row' + id).addClass('d-sm-none');
+                            $('.cart-mobile-row' + id).addClass('d-none');
+                        }
                     })
                     .fail(function() {
                         alert('Fail')

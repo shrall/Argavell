@@ -97,7 +97,7 @@
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">
         @include('pages.inc.product_showcase_mobile')
     </div>
-    <div class="row w-100 m-0" style="background-color: #FCF3EE">
+    <div class="row w-100 m-0" style="background-color: #FCF3EE" id="our-story">
         <div class="col-md-4">
             <div class="row h-100">
                 <div class="col-md-4">

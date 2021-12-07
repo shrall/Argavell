@@ -200,6 +200,9 @@ class CartController extends Controller
         $item->update([
             'qty' => $item['qty'] - 1
         ]);
+        if($item->qty == 0){
+            $item->delete();
+        }
         return response()->json($item);
     }
 }

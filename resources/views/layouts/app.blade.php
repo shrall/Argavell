@@ -59,8 +59,17 @@
         $(document).ready(function() {
             var thetable = $('.table').DataTable({});
         });
-
     </script>
+    @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
+        <script>
+            $("#button-our-story").click(function() {
+                $('html,body').animate({
+                        scrollTop: $("#our-story").offset().top
+                    },
+                    'slow');
+            });
+        </script>
+    @endif
     @yield('scripts')
 </body>
 

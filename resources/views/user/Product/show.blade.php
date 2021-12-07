@@ -448,8 +448,13 @@ function rupiah($angka)
                         $('#cart-mobile-total').html((parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
                             parseInt($('#price')
                                 .val()) * parseInt($('#quantity').val())) - (parseInt(
-                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity')
-                        .val())))).formatMoney(0, '.', ''));
+                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity')
+                            .val())))).formatMoney(0, '.', ''));
+                        if ($('#cart-total').html() == 0) {
+                            $(".button-checkout").prop("disabled", true);
+                        } else {
+                            $(".button-checkout").prop("disabled", false);
+                        }
                     }
                 })
                 .fail(function(error) {
