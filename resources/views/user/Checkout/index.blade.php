@@ -97,12 +97,14 @@ function rupiah($angka)
                     </div>
                     <div class="row mb-3">
                         <div class="col-6">
-                            <input id="first_name" type="text" class="form-control" name="first_name" required disabled
+                            <input id="first_name" type="text" class="form-control" name="first_name" required
+                                @if(Auth::user()->first_name) disabled @endif
                                 autocomplete="first_name" placeholder="Enter your first name"
                                 value="{{ Auth::user()->first_name }}">
                         </div>
                         <div class="col-6">
-                            <input id="last_name" type="text" class="form-control" name="last_name" required disabled
+                            <input id="last_name" type="text" class="form-control" name="last_name" required
+                                @if(Auth::user()->last_name) disabled @endif
                                 autocomplete="last_name" placeholder="Enter your last name"
                                 value="{{ Auth::user()->last_name }}">
                         </div>

@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 px-0">
+        <div id="our-story" class="col-md-8 px-0">
             <div class="row">
                 <div class="col-md-6 align-self-center px-5 my-3">
                     <h1 class="text-argavell font-bauer font-weight-bold text-4xl py-3 d-block d-sm-none">Our Story</h1>
@@ -139,14 +139,12 @@
         <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
-            <h1 class="font-bauer text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
-            <a href="#" class="text-decoration-none d-none d-sm-block">
-                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse
-                    Products</div>
+            <h1 class="font-bauer text-white mt-5">Invest in Your Skin & Hair<br>with Argavell</h1>
+            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
             </a>
-            <a href="#" class="text-decoration-none d-block d-sm-none">
-                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse
-                    Products</div>
+            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
             </a>
         </div>
     </div>

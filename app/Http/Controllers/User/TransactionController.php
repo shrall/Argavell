@@ -61,9 +61,10 @@ class TransactionController extends Controller
                     'phone_number' => ['required'],
                     'address' => ['required'],
                 ]);
+
                 $address = Address::create([
-                    'first_name' => Auth::user()->first_name,
-                    'last_name' => Auth::user()->last_name,
+                    'first_name' => $request->first_name,
+                    'last_name' =>$request->last_name,
                     'phone' => $request->phone_number,
                     'address' => $request->address,
                     'address_type' => 'Home',
@@ -72,10 +73,14 @@ class TransactionController extends Controller
                     'postal_code' => $request->postal_code,
                     'user_id' => Auth::id(),
                 ]);
+
                 $user->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
                     'address_id' => $address['id'],
                 ]);
             }
+
             $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
             $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
 

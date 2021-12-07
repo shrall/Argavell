@@ -150,17 +150,17 @@ function rupiah($angka)
                     @endauth
                     @guest
                         @if ($product->type == '0')
-                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                            <a onclick="event.preventDefault(); showAuthPopup()"
                                 class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
                                 Add to Cart</a>
-                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                            <a onclick="event.preventDefault(); showAuthPopup()"
                                 class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
                                 Add to Cart</a>
                         @else
-                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                            <a onclick="event.preventDefault(); showAuthPopup()"
                                 class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
                                 Add to Cart</a>
-                            <a onclick="event.preventDefault(); document.getElementById('redirect-form').submit();"
+                            <a onclick="event.preventDefault(); showAuthPopup()"
                                 class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
                                 Add to Cart</a>
                         @endif
@@ -464,6 +464,40 @@ function rupiah($angka)
                     $('#cart-loader').addClass('d-none');
                     $('#cart-mobile-loader').addClass('d-none');
                 });
+        }
+    </script>
+
+    <script>
+        $('#overlay').click(function(){
+            $('#auth-popup').addClass("d-none");
+            $('body').removeClass("overflow-hidden");
+        })
+
+        function showAuthPopup(){
+            $('#auth-popup').removeClass("d-none");
+            $('body').addClass("overflow-hidden");
+        }
+
+        function moveToRegister(){
+            $('#login-form').addClass('d-none')
+            $('#register-form').removeClass('d-none')
+        }
+
+        function moveToLogin(){
+            $('#register-form').addClass('d-none')
+            $('#login-form').removeClass('d-none')
+        }
+
+        function togglePassword() {
+            if ($(".passwordInput").attr('type') == 'password') {
+                $(".passwordInput").attr('type', 'text');
+                $(".eyeToggle").removeClass('fa-eye');
+                $(".eyeToggle").addClass('fa-eye-slash');
+            } else {
+                $(".passwordInput").attr('type', 'password');
+                $(".eyeToggle").removeClass('fa-eye-slash');
+                $(".eyeToggle").addClass('fa-eye');
+            }
         }
     </script>
 @endsection
