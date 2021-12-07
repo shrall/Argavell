@@ -30,8 +30,13 @@
     @yield('header')
 </head>
 
-<body>
-    <div id="app" class="overflow-hidden font-proxima-nova">
+<body class="position-relative">
+        
+    <div id="auth-popup" class="d-none">
+        @include('inc.auth')
+    </div>
+    <div id="app" class="overflow-hidden font-proxima-nova position-relative">
+
         @if (Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
             @include('inc.navbar')
         @endif
