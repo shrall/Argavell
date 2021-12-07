@@ -30,7 +30,7 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Our Story</a>
+                                <a href="{{ url('/') }}#our-story" class="text-decoration-none text-white">Our Story</a>
                             </li>
                             <li>
                                 <a href="{{route('page.contactus')}}" class="text-decoration-none text-white">Contact Us</a>
@@ -123,7 +123,7 @@
                                 <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
-                                <a href="#" class="text-decoration-none text-white">Our Story</a>
+                                <a href="#our-story" class="text-decoration-none text-white">Our Story</a>
                             </li>
                             <li>
                                 <a href="{{route('page.contactus')}}" class="text-decoration-none text-white">Contact Us</a>

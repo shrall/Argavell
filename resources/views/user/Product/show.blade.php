@@ -482,5 +482,17 @@ function rupiah($angka)
             $('#register-form').addClass('d-none')
             $('#login-form').removeClass('d-none')
         }
+
+        function togglePassword() {
+            if ($(".passwordInput").attr('type') == 'password') {
+                $(".passwordInput").attr('type', 'text');
+                $(".eyeToggle").removeClass('fa-eye');
+                $(".eyeToggle").addClass('fa-eye-slash');
+            } else {
+                $(".passwordInput").attr('type', 'password');
+                $(".eyeToggle").removeClass('fa-eye-slash');
+                $(".eyeToggle").addClass('fa-eye');
+            }
+        }
     </script>
 @endsection

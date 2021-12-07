@@ -70,6 +70,8 @@ Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkou
 Route::get('/order', [PageController::class, 'order'])->name('page.order');
 
 Route::post('/redirect-login', [PageController::class, 'redirect_login'])->name('redirect.login');
+Route::post('/short-register', [PageController::class, 'short_register'])->name('short.register');
+Route::post('/short-login', [PageController::class, 'short_login'])->name('short.login');
 
 Route::resource('product', ProductController::class);
 

@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8 px-0">
+        <div id="our-story" class="col-md-8 px-0">
             <div class="row">
                 <div class="col-md-6 align-self-center px-5 my-3">
                     <h1 class="text-argavell font-bauer font-weight-bold text-4xl py-3 d-block d-sm-none">Our Story</h1>

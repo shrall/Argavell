@@ -3,17 +3,19 @@
     <div class="position-relative bg-white m-auto py-4 px-5" style="z-index: 100; width: 500px; max-width: 90%;">
         <div id="register-form" class="d-none">
             <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-4">Register</h1>
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('short.register') }}">
                 @csrf
+                <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                <input type="hidden" name="product_slug" value="{{ $product->slug ?? '' }}">
                 <div class="row font-weight-bold">
                     <label class="col-12">E-Mail<span class="text-danger">*</span> </label>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
-                        <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                        <input id="email" type="text" class="form-control @error('register-email') is-invalid @enderror"
                             name="email" value="{{ old('email') }}" required autocomplete="email"
                             placeholder="Enter your email">
-                        @error('email')
+                        @error('register-email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -72,8 +74,10 @@
 
         <div id="login-form" class="">
             <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-4">Login</h1>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('short.login') }}">
                 @csrf
+                <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                <input type="hidden" name="product_slug" value="{{ $product->slug ?? '' }}">
                 <div class="row font-weight-bold">
                     <label class="col-12">Username/Email</label>
                 </div>
@@ -81,7 +85,7 @@
                     <div class="col-12">
                         <input id="login" type="text"
                             class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}"
-                            name="login" value="{{ old('username') ?: old('email') }}" required autofocus
+                            name="email" value="{{ old('username') ?: old('email') }}" required autofocus
                             placeholder="Enter your username/email">
                         @if ($errors->has('username') || $errors->has('email'))
                             <span class="invalid-feedback">

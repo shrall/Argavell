@@ -12,6 +12,8 @@ use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+use Auth; 
 
 class PageController extends Controller
 {
@@ -136,5 +138,39 @@ class PageController extends Controller
             Session::put('product.slug', $request->product_slug);
         }
         return redirect()->route('login');
+    }
+
+    public function short_login(Request $request){
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+        
+        if (Auth::attempt($credentials)) {
+            $user = User::where('email','=', $request->email)->first();
+            Auth::login($user, TRUE);
+            return redirect()->route($request->prev_route, $request->product_slug);
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid Email/ Password',
+        ]);
+    }
+
+    public function short_register(Request $request){
+
+        $user = User::where('email','=', $request->email)->first();
+        if($user){
+            return back()->withErrors([
+                'register-email' => "Email already registered"
+            ]);
+        }
+
+        $params = [
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ];
+        User::create($params);
+        return $this->short_login($request);
     }
 }
