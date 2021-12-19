@@ -35,7 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary' => public_path('laravel-snappy/wkhtmltopdf.exe').' --viewport-size 1024x768',
+        'binary' => base_path('vendor/h4cc/wkhtmltopdf-amd64/bin/wkhtmltopdf-amd64').' --viewport-size 1024x768',
         'timeout' => false,
         'options' => [],
         'env'     => [],
