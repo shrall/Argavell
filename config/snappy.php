@@ -35,7 +35,7 @@ return [
 
     'pdf' => [
         'enabled' => true,
-        'binary' => '"../public/laravel-snappy/wkhtmltopdf" --viewport-size 1024x768',
+        'binary' => public_path('laravel-snappy/wkhtmltopdf.exe').' --viewport-size 1024x768',
         'timeout' => false,
         'options' => [],
         'env'     => [],
@@ -43,7 +43,7 @@ return [
 
     'image' => [
         'enabled' => true,
-        'binary' => '"../public/laravel-snappy/wkhtmltoimage"',
+        'binary' => public_path('laravel-snappy/wkhtmltoimage.exe'),
         'timeout' => false,
         'options' => [],
         'env'     => [],

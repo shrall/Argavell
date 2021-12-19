@@ -242,9 +242,6 @@
         });
 
         function fetch_data(page, method) {
-            emptyLabelArray();
-            emptyAcceptArray();
-            emptyDownloadArray();
             changePageMenu();
             $.ajax({
                     url: "transaction/pagination/fetch_data_" + method + "?page=" + page,
@@ -258,6 +255,7 @@
         }
 
         function fetch_data_by_name() {
+            changePageMenu();
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val(),
@@ -272,6 +270,7 @@
         }
 
         function fetch_data_sort() {
+            changePageMenu();
             $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val(),
@@ -286,6 +285,11 @@
         }
 
         function changePageMenu() {
+            $('#check-all').prop('checked', false);
+            emptyAcceptArray();
+            emptyDownloadArray();
+            emptyLabelArray();
+            refreshTransactionListOnAcceptModal();
             if (method == 'all' || method == 'waiting') {
                 $('#select-all-row').removeClass('d-flex').addClass('d-none')
             } else {

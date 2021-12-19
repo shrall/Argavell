@@ -221,14 +221,14 @@ class TransactionController extends Controller
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     $transaction = Transaction::where('order_number', $order_id)->first()->update([
-                        'status' => '3'
+                        'status' => '4'
                     ]);
                 }
             }
         } else if ($transaction == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
             $transaction = Transaction::where('order_number', $order_id)->first()->update([
-                'status' => '3'
+                'status' => '4'
             ]);
         } else if ($transaction == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'
@@ -323,5 +323,13 @@ class TransactionController extends Controller
             }
         }
         return redirect()->route('user.cart.index');
+    }
+    public function finish_order(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update([
+            'status' => '1',
+        ]);
+        return redirect()->route('user.transaction.index');
     }
 }

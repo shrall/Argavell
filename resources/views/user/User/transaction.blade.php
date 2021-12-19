@@ -57,7 +57,7 @@
                                 @elseif($transaction->status == '3')
                                     <p class="my-0 text-warning font-weight-bold">On Delivery</p>
                                 @elseif($transaction->status == '4')
-                                    <p class="my-0 text-warning font-weight-bold">Waiting for Confirmation</p>
+                                    <p class="my-0 text-black font-weight-bold">Waiting for Confirmation</p>
                                 @elseif($transaction->status == '5')
                                     <p class="my-0 text-primary font-weight-bold">Confirmed</p>
                                 @endif
@@ -73,6 +73,15 @@
                                             Now
                                         </a>
                                     @endif
+                                @elseif ($transaction->status == '3')
+                                <form action="{{ route('user.transaction.finishorder') }}" method="post"
+                                    id="finish-{{ $transaction->id }}">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <button type="submit"
+                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Finish Order
+                                    </button>
+                                </form>
                                 @else
                                     <form action="{{ route('user.transaction.buyagain') }}" method="post"
                                         id="buy-again-{{ $transaction->id }}">

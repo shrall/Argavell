@@ -11,7 +11,7 @@
                         aria-label="Close"></span>
                 </div>
                 <div class="modal-body font-proxima-nova px-5">
-                    <input type="hidden" name="transaction_id[]" id="input-transaction-accept-{{$transaction->id}}"
+                    <input type="hidden" name="transaction_id[]" id="input-transaction-accept-{{ $transaction->id }}"
                         value="{{ $transaction->id }}">
                     <input type="hidden" name="input_method" value="new">
                     <div class="row">

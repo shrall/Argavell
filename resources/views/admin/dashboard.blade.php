@@ -155,7 +155,7 @@
                         <thead>
                             <tr>
                                 <th width="25px">NO</th>
-                                <th width="50%">PRODUK</th>
+                                <th width="30%">PRODUK</th>
                                 <th>DETAIL</th>
                                 <th>BATAS RESPON</th>
                                 <th>ACTION</th>
@@ -167,11 +167,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <div class="row">
-                                            <div class="col-2"><img
+                                            <div class="col-3"><img
                                                     src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
                                                     class="rounded" width="75px">
                                             </div>
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                 @foreach ($transaction->carts as $item)
                                                     <h6 class="font-weight-black">{{ $item->product->name }}</h6>
                                                     <h6>{{ $item->qty }}x {{ $item->price }}</h6>
@@ -194,7 +194,16 @@
                                             </button>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-admin-argavell-light">See Details</a>
+                                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
+                                            data-bs-toggle="modal" data-bs-target="#acceptModal{{ $transaction->id }}">
+                                            Terima Pesanan
+                                        </button>
+                                        @include('admin.transaction.inc.modal.accept')
+                                        <button class="btn btn-danger text-white text-decoration-none me-2" data-bs-toggle="modal"
+                                            data-bs-target="#cancelModal{{ $transaction->id }}">
+                                            Tolak Pesanan
+                                        </button>
+                                        @include('admin.transaction.inc.modal.cancel')
                                     </td>
                                 </tr>
                             @endforeach

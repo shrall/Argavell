@@ -117,25 +117,29 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Stok</label>
                             <div class="col-12">
-                                <input type="number" name="stock" id="stock" class="form-control" value="{{ $product->stock }}" required />
+                                <input type="number" name="stock" id="stock" class="form-control"
+                                    value="{{ $product->stock }}" required />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Harga Produk</label>
                             <div class="col-12">
-                                <input type="number" name="price" id="price" class="form-control" value="{{ $product->price }}" required />
+                                <input type="number" name="price" id="price" class="form-control"
+                                    value="{{ $product->price }}" required />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Diskon</label>
                             <div class="col-12">
-                                <input type="number" name="price_discount" id="price_discount" class="form-control" value="{{ $product->price_discount }}" placeholder="Kosongkan apabila tidak ada diskon" />
+                                <input type="number" name="price_discount" id="price_discount" class="form-control"
+                                    value="{{ $product->price_discount }}"
+                                    placeholder="Kosongkan apabila tidak ada diskon" />
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <div class="btn btn-admin-gray w-100" onclick="event.preventDefault();
-                                        document.getElementById('delete-product-form').submit();">Hapus</div>
+                                                document.getElementById('delete-product-form').submit();">Hapus</div>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
@@ -165,7 +169,12 @@
     <script>
         $(function() {
             $('#date').daterangepicker({
-                opens: 'left'
+                opens: 'left',
+                startDate: "{{ date('Y-m-d', strtotime($product->bundle_start)) }}",
+                endDate: "{{ date('Y-m-d', strtotime($product->bundle_end)) }}",
+                    locale: {
+                        format: 'YYYY-MM-DD',
+                    },
             }, function(start, end, label) {
                 $('#date-start').val(start.format('YYYY-MM-DD'))
                 $('#date-end').val(end.format('YYYY-MM-DD'))

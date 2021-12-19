@@ -95,6 +95,7 @@ Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
     Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
     Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
     Route::post('transaction/buyagain', [TransactionController::class, 'buy_again'])->name('transaction.buyagain');
+    Route::post('transaction/finishorder', [TransactionController::class, 'finish_order'])->name('transaction.finishorder');
 });
 
 Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {

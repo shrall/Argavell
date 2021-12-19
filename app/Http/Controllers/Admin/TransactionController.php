@@ -436,6 +436,7 @@ class TransactionController extends Controller
                 ]);
             }
         }
+        // dd($transactions);
         $pdf = PDF::loadview('admin.transaction.label', ['transactions' => $transactions])
             ->setOption('page-width', 200)
             ->setOption('page-height', 180);
