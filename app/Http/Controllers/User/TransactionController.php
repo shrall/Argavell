@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AdminNewOrderMail;
 use App\Mail\InvoiceMail;
 use App\Models\Address;
 use App\Models\Cart;
@@ -116,6 +117,7 @@ class TransactionController extends Controller
             }
             Session::put('transaction.id', $transaction->order_number);
             Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
+            Mail::to('filberthtwn@gmail.com')->send(new AdminNewOrderMail($transaction));
         }
         return view('pages.order');
     }
