@@ -67,7 +67,7 @@
                     <div class="d-flex items-start justify-content-between mb-1 px-5 py-4">
                         <h1 style="font-size: 2rem">{{ $transaction->order_number }}</h1>
                     </div>
-                    <div class="px-5 border-0">
+                    <div class="px-5 border-0" style="border: 1px solid transparent;">
                         <table class="mx-auto w-100 py-4 mb-3 border-0">
                             <tr>
                                 <td>{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</td>
@@ -97,7 +97,7 @@
                                 otomatis.</i>
                         </h1>
                     </div>
-                    <div class="px-5">
+                    <div class="px-5" style="border: 1px solid transparent;">
                         <table class="mx-auto w-100 py-4 mb-3 border-0">
                             <tr>
                                 <td>
@@ -127,7 +127,7 @@
                         </table>
                     </div>
                     <hr>
-                    <div class="px-5">
+                    <div class="px-5" style="border: 1px solid transparent;">
                         <table class="mx-auto w-100 py-4 my-3 border-0">
                             <tr>
                                 <td>
