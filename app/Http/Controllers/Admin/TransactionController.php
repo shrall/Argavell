@@ -441,7 +441,7 @@ class TransactionController extends Controller
         }
         $pdf = PDF::loadview('admin.transaction.label', ['transactions' => $transactions])
             ->setOption('page-width', 200)
-            ->setOption('page-height', 180);
+            ->setOption('page-height', 280);
         return $pdf->download('label-' . Carbon::now() . '.pdf');
     }
 
