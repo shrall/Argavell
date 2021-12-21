@@ -30,7 +30,9 @@ class TransactionController extends Controller
         $this->check_response_limit();
         $this->check_shipping_etd();
         $transactions = Transaction::orderBy('created_at', 'desc')->paginate(2);
-        return view('admin.transaction.index', compact('transactions'));
+        $badges = Transaction::all();
+        $refunds = Refund::all();
+        return view('admin.transaction.index', compact('transactions', 'badges', 'refunds'));
     }
 
     /**
@@ -79,6 +81,7 @@ class TransactionController extends Controller
                 $transaction = Transaction::where('id', $transaction_id)->first();
                 $transaction->update([
                     'status' => '4',
+                    'payment_date' => Carbon::now()
                 ]);
                 if ($request->has('image')) {
                     $payment_file = time() . '-' . $request['image']->getClientOriginalName();
@@ -436,7 +439,6 @@ class TransactionController extends Controller
                 ]);
             }
         }
-        // dd($transactions);
         $pdf = PDF::loadview('admin.transaction.label', ['transactions' => $transactions])
             ->setOption('page-width', 200)
             ->setOption('page-height', 180);

@@ -44,6 +44,7 @@ class ProductController extends Controller
         if ($request->bundle == '0') {
             Product::create([
                 'name' => $request->name,
+                'sku' => $request->sku,
                 'description' => $request->detail,
                 'bundle' => $request->bundle,
                 'type' => $request->type,
@@ -61,6 +62,7 @@ class ProductController extends Controller
             $bundle_items = explode(",", $request->bundle_items);
             $product = Product::create([
                 'name' => $request->name,
+                'sku' => $request->sku,
                 'description' => $request->detail,
                 'bundle' => $request->bundle,
                 'bundle_start' => $request->date_start,
@@ -121,6 +123,7 @@ class ProductController extends Controller
         if ($request->bundle == '0') {
             $product->update([
                 'name' => $request->name,
+                'sku' => $request->sku,
                 'description' => $request->detail,
                 'bundle' => $request->bundle,
                 'bundle_start' => null,
@@ -139,6 +142,7 @@ class ProductController extends Controller
             $bundle_items = explode(",", $request->bundle_items);
             $product->update([
                 'name' => $request->name,
+                'sku' => $request->sku,
                 'description' => $request->detail,
                 'bundle' => $request->bundle,
                 'bundle_start' => $request->date_start,

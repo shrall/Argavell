@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -38,7 +38,7 @@
     </div>
     <div id="app" class="overflow-hidden font-proxima-nova position-relative">
 
-        @if (Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
+        @if (Route::current()->getName() != 'user.transaction.store')
             @include('inc.navbar')
         @endif
 
@@ -51,7 +51,7 @@
                 @yield('content')
             </main>
         @endif
-        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
+        @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'user.transaction.store')
             @include('inc.footer')
         @endif
     </div>
@@ -63,10 +63,12 @@
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap5.js"></script>
     <script>
         $(document).ready(function() {
-            var thetable = $('.table').DataTable({});
+            var thetable = $('.table').DataTable({
+                "ordering": false
+            });
         });
     </script>
-    @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'password.request' && Route::current()->getName() != 'password.reset' && Route::current()->getName() != 'user.transaction.store')
+    @if (Route::current()->getName() != 'register' && Route::current()->getName() != 'login' && Route::current()->getName() != 'user.transaction.store')
         <script>
             $("#button-our-story").click(function() {
                 $('html,body').animate({

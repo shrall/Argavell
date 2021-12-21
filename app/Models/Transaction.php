@@ -10,9 +10,9 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'status', 'order_number', 'date',
+        'status', 'order_number', 'date', 'nomor_resi',
         'shipment_name', 'shipment_etd', 'shipping_cost', 'price_total', 'qty_total', 'weight_total', 'notes', 'snaptoken', 'is_cetak',
-        'user_id', 'payment_id', 'address_id', 'updated_at'
+        'user_id', 'payment_id', 'address_id', 'updated_at', 'payment_date'
     ];
 
     public function user()
@@ -38,5 +38,10 @@ class Transaction extends Model
     public function proofs()
     {
         return $this->hasMany(Proof::class, 'transaction_id', 'id');
+    }
+
+    public function refunds()
+    {
+        return $this->hasMany(Refund::class, 'transaction_id', 'id');
     }
 }

@@ -66,6 +66,8 @@ class ProofController extends Controller
             } else {
                 return redirect()->route('page.paymentconfirmation')->with('Error', 'Invoice ID tidak terdaftar!')->with('Additional', ' Silahkan cek pesanan anda melalui email atau halaman my account.');
             }
+        } else {
+            return redirect()->route('page.paymentconfirmation')->with('Error', 'Sertakan bukti pembayaran!');
         }
     }
 

@@ -25,7 +25,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('user_id', Auth::id())->has('carts')->orderBy('created_at', 'desc')->get();
+        $transactions = Transaction::where('user_id', Auth::id())->has('carts')->orderBy('updated_at', 'desc')->get();
         return view('user.User.transaction', compact('transactions'));
     }
 
@@ -64,8 +64,8 @@ class TransactionController extends Controller
                 ]);
 
                 $address = Address::create([
-                    'first_name' => $request->first_name,
-                    'last_name' =>$request->last_name,
+                    'first_name' => Auth::user()->first_name,
+                    'last_name' => Auth::user()->last_name,
                     'phone' => $request->phone_number,
                     'address' => $request->address,
                     'address_type' => 'Home',
@@ -76,8 +76,6 @@ class TransactionController extends Controller
                 ]);
 
                 $user->update([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
                     'address_id' => $address['id'],
                 ]);
             }
@@ -117,7 +115,7 @@ class TransactionController extends Controller
             }
             Session::put('transaction.id', $transaction->order_number);
             Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
-            Mail::to('filberthtwn@gmail.com')->send(new AdminNewOrderMail($transaction));
+            Mail::to('hello@argavell.com')->send(new AdminNewOrderMail($transaction));
         }
         return view('pages.order');
     }
@@ -223,14 +221,16 @@ class TransactionController extends Controller
                 } else {
                     // TODO set payment status in merchant's database to 'Success'
                     $transaction = Transaction::where('order_number', $order_id)->first()->update([
-                        'status' => '4'
+                        'status' => '4',
+                        'payment_date' => Carbon::now()
                     ]);
                 }
             }
         } else if ($transaction == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
             $transaction = Transaction::where('order_number', $order_id)->first()->update([
-                'status' => '4'
+                'status' => '4',
+                'payment_date' => Carbon::now()
             ]);
         } else if ($transaction == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'

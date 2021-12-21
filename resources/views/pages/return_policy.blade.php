@@ -6,6 +6,23 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <h1 class="text-argavell font-bauer font-weight-bold">Return Policy</h1>
+            @if (session('Error'))
+                <div class="alert alert-danger">
+                    <ul class="mb-0 list-unstyled">
+                        <li>{{ session('Error') }}</li>
+                        @if (session('Additional'))
+                            <li>{{ session('Additional') }}</li>
+                        @endif
+                    </ul>
+                </div>
+            @endif
+            @if (session('Success'))
+                <div class="alert alert-success">
+                    <ul class="mb-0 list-unstyled">
+                        <li>{{ session('Success') }}</li>
+                    </ul>
+                </div>
+            @endif
             <div class="pe-4">
                 <ul class="list-unstyled">
                     @foreach ($policies as $policy)
@@ -69,13 +86,13 @@
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
                             </div>
                             <div class="mb-3">
-                                <label for="order_number" class="col-form-label font-weight-bold">Order Number<span
+                                <label for="order_number" class="col-form-label font-weight-bold">Invoice ID<span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="order_number" name="order_number"
-                                    placeholder="Enter your order number">
+                                    placeholder="Enter your Invoice ID">
                             </div>
                             <div>
-                                <label for="occasion" class="col-form-label font-weight-bold">Occasion<span
+                                <label for="occasion" class="col-form-label font-weight-bold">Request<span
                                         class="text-danger">*</span></label>
                             </div>
                             <div class="mb-3">
@@ -83,14 +100,14 @@
                                     <input class="form-check-input" type="radio" name="occasion" value="0"
                                         id="occasion_radio_wrong" checked>
                                     <label class="form-check-label" for="occasion_radio_wrong">
-                                        Wrong Item
+                                        Refund Money
                                     </label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="occasion" value="1"
                                         id="occasion_radio_broken">
                                     <label class="form-check-label" for="occasion_radio_broken">
-                                        Broken
+                                        Refund Item
                                     </label>
                                 </div>
                             </div>
@@ -106,6 +123,10 @@
                             </div>
                             <div class="mb-3">
                                 <input type="file" name="condition" id="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="notes" class="col-form-label font-weight-bold">Notes</label>
+                                <textarea class="form-control" id="notes" name="notes"></textarea>
                             </div>
                         </form>
                     </div>

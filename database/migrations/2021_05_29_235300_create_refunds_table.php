@@ -19,8 +19,12 @@ class CreateRefundsTable extends Migration
             $table->string('phone');
             $table->enum('occasion', ['0','1'])
             ->default('0')
-            ->comment('0 = Wrong Item, 1 = Broken');
+            ->comment('0 = Refund Money, 1 = Refund Item');
+            $table->enum('status', ['0','1','2'])
+            ->default('0')
+            ->comment('0 = Pending, 1 = Accepted, 2 = Rejected');
             $table->text('condition');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

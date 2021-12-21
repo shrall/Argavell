@@ -32,23 +32,23 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="menunggu-pembayaran-tab" type="button"
-                            data-bs-toggle="tab">MENUNGGU PEMBAYARAN</button>
+                            data-bs-toggle="tab">MENUNGGU PEMBAYARAN <span class="badge-argavell">{{count($badges->where('status', '0'))}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="pesanan-baru-tab" type="button"
-                            data-bs-toggle="tab">PESANAN BARU</button>
+                            data-bs-toggle="tab">PESANAN BARU <span class="badge-argavell">{{count($badges->where('status', '4'))}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="siap-dikirim-tab" type="button"
-                            data-bs-toggle="tab">SIAP DIKIRIM</button>
+                            data-bs-toggle="tab">SIAP DIKIRIM <span class="badge-argavell">{{count($badges->where('status', '5'))}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="dalam-pengiriman-tab" type="button"
-                            data-bs-toggle="tab">DALAM PENGIRIMAN</button>
+                            data-bs-toggle="tab">DALAM PENGIRIMAN <span class="badge-argavell">{{count($badges->where('status', '3'))}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="dikomplain-tab" type="button"
-                            data-bs-toggle="tab">DIKOMPLAIN</button>
+                            data-bs-toggle="tab">DIKOMPLAIN <span class="badge-argavell">{{count($refunds->where('status', '0'))}}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="pesanan-selesai-tab" type="button"

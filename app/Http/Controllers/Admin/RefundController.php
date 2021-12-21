@@ -83,4 +83,18 @@ class RefundController extends Controller
     {
         //
     }
+
+    public function accept(Request $request){
+        Refund::where('id', $request->id)->first()->update([
+            'status' => '1'
+        ]);
+        return redirect()->route('admin.transaction.index');
+    }
+
+    public function reject(Request $request){
+        Refund::where('id', $request->id)->first()->update([
+            'status' => '2'
+        ]);
+        return redirect()->route('admin.transaction.index');
+    }
 }

@@ -38,24 +38,32 @@ class RefundController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has('condition')) {
-            $condition = time() . '-' . $request['condition']->getClientOriginalName();
-            $request->condition->move(public_path('refunds'), $condition);
+        if (Transaction::where('order_number', '=', $request['order_number'])->exists()) {
+            $transaction = Transaction::where('order_number', $request['order_number'])->first();
+            if ($transaction->status == '1') {
+                if ($request->has('condition')) {
+                    $condition = time() . '-' . $request['condition']->getClientOriginalName();
+                    $request->condition->move(public_path('refunds'), $condition);
+                } else {
+                    $condition = null;
+                }
+
+                Refund::create([
+                    'name' => $request['name'],
+                    'notes' => $request['notes'],
+                    'occasion' => $request['occasion'],
+                    'phone' => $request['phone_number'],
+                    'condition' => $condition,
+                    'transaction_id' => $transaction->id,
+                    'user_id' => Auth::id(),
+                ]);
+                return redirect()->route('page.policy')->with('Success', 'Pengajuan Berhasil Terkirim!');
+            } else {
+                return redirect()->route('page.policy')->with('Error', 'Order Belum Terselesaikan!');
+            }
         } else {
-            $condition = null;
+            return redirect()->route('page.policy')->with('Error', 'Invoice ID tidak terdaftar!')->with('Additional', ' Silahkan cek pesanan anda melalui email atau halaman my account.');
         }
-
-        $transaction = Transaction::where('order_number', $request['order_number'])->first();
-        Refund::create([
-            'name' => $request['name'],
-            'occasion' => $request['occasion'],
-            'phone' => $request['phone_number'],
-            'condition' => $condition,
-            'transaction_id' => $transaction->id,
-            'user_id' => Auth::id(),
-        ]);
-
-        return redirect()->route('page.policy');
     }
 
     /**

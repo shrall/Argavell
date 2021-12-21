@@ -3,10 +3,10 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center align-items-center vh-100">
-            <div class="col-sm-12 col-md-3">
-                <div class="card">
+            <div class="col-sm-12 col-md-5">
+                <div class="card py-4">
                     <div class="card-body font-proxima-nova mx-4">
-                        <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-2">Welcome Back!</h1>
+                        <h1 class="font-bauer font-weight-bold text-center text-argavell mb-2">Welcome Back!</h1>
                         <h1 class="fs-6 text-center text-secondary mb-4">Reset your password</h1>
                         <form method="POST" action="{{ route('password.update') }}">
                             @csrf

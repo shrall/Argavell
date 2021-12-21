@@ -4,8 +4,9 @@
             <div class="d-flex align-items-center gx-3">
                 <div class="mx-2">
                     <input type="checkbox" name="transaction_checkbox_download{{ $refund->transaction->id }}"
-                        id="checkbox-transaction-download{{ $refund->transaction->id }}" class="checkbox-transaction-download"
-                        value={{ $refund->transaction->id }} onclick="addDownloadToArray({{ $refund->transaction->id }});" />
+                        id="checkbox-transaction-download{{ $refund->transaction->id }}"
+                        class="checkbox-transaction-download" value={{ $refund->transaction->id }}
+                        onclick="addDownloadToArray({{ $refund->transaction->id }});" />
                     <span class="font-weight-bold">Dikomplain</span>
                 </div>
                 <div class="mx-2">
@@ -15,9 +16,18 @@
                     <span class="far fa-fw fa-user me-1"></span>
                     {{ $refund->name }}
                 </div>
-                <div class="mx-2">
+                <div class="mx-2 pe-2 border-end border-2">
                     <span
                         class="far fa-fw fa-clock me-1"></span>{{ date('j F Y, g:i a', strtotime($refund->transaction->created_at)) }}
+                </div>
+                <div class="mx-2">
+                    @if ($refund->status == '0')
+                        <span class="text-warning font-weight-bold">Pending</span>
+                    @elseif($refund->status == '1')
+                        <span class="text-success font-weight-bold">Accepted</span>
+                    @elseif($refund->status == '2')
+                        <span class="text-danger font-weight-bold">Rejected</span>
+                    @endif
                 </div>
             </div>
         </div>
@@ -50,18 +60,21 @@
                         {{ $refund->transaction->user->last_name }} ({{ $refund->transaction->address->phone }})
                     </p>
                     <p class="my-0 text-secondary">{{ $refund->transaction->address->address }}</p>
+                    <p class="my-0">Notes</p>
+                    <p class="my-0 text-secondary">{{ $refund->notes ?? '-' }}</p>
                 </div>
                 <div class="col-4 row">
                     <div class="col-6">
-                        <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus Sesuai</span></p>
+                        <p class="my-0">Kurir <span class="btn btn-gray btn-panel p-0 px-2">Harus
+                                Sesuai</span></p>
                         <p class="my-0 mb-2 text-secondary">{{ $refund->transaction->shipment_name }}</p>
                     </div>
                     <div class="col-6">
-                        <p class="my-0">Occasion</p>
+                        <p class="my-0">Request</p>
                         @if ($refund->occasion == '0')
-                            <p class="my-0 mb-2 text-secondary">Wrong Item</p>
+                            <p class="my-0 mb-2 text-secondary">Refund Money</p>
                         @elseif ($refund->occasion == '1')
-                            <p class="my-0 mb-2 text-secondary">Broken</p>
+                            <p class="my-0 mb-2 text-secondary">Refund Item</p>
                         @endif
                     </div>
                     <div class="col-6">
@@ -89,12 +102,32 @@
         <div class="card-footer">
             <div class="d-flex align-items-center gx-3">
                 <div class="ms-auto">
+                    @if ($refund->status == '0')
+                        <a class="btn btn-success text-white text-decoration-none ms-2" type="submit" onclick="event.preventDefault();
+                    document.getElementById('form-refund-accept').submit();">
+                            Accept
+                        </a>
+                        <a class="btn btn-danger text-white text-decoration-none me-2" type="submit" onclick="event.preventDefault();
+                    document.getElementById('form-refund-reject').submit();">
+                            Reject
+                        </a>
+                    @endif
                     <a href="https://api.whatsapp.com/send?phone={{ $refund->user->address->phone ?? '#' }}"
                         target="_blank" class="btn btn-admin-argavell text-white text-decoration-none me-2">
                         Kontak Pembeli
                     </a>
                 </div>
             </div>
+            <form action="{{ route('admin.refund.accept') }}" id="form-refund-accept" method="post"
+                class="d-none">
+                @csrf
+                <input type="hidden" name="id" value={{ $refund->id }}>
+            </form>
+            <form action="{{ route('admin.refund.reject') }}" id="form-refund-reject" method="post"
+                class="d-none">
+                @csrf
+                <input type="hidden" name="id" value={{ $refund->id }}>
+            </form>
         </div>
     </div>
 @endforeach

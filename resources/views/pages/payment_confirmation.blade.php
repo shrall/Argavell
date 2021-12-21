@@ -57,12 +57,12 @@
                     <input type="hidden" name="product_slug" value="{{ $product->slug ?? '' }}">
                     <div class="pe-4">
                         <div class="row font-weight-bold">
-                            <label class="col-12">Order Number<span class="text-danger">*</span> </label>
+                            <label class="col-12">Invoice ID<span class="text-danger">*</span> </label>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
                                 <input id="order_number" type="text" class="form-control" name="order_number" required
-                                    autocomplete="order_number" placeholder="Enter Order Number">
+                                    autocomplete="order_number" placeholder="Enter Invoice ID">
                             </div>
                         </div>
                         <div class="row font-weight-bold">
@@ -93,12 +93,12 @@
                     @csrf
                     <div class="pe-4">
                         <div class="row font-weight-bold">
-                            <label class="col-12">Order Number<span class="text-danger">*</span> </label>
+                            <label class="col-12">Invoice ID<span class="text-danger">*</span> </label>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
                                 <input id="order_number" type="text" class="form-control" name="order_number" required
-                                    autocomplete="order_number" placeholder="Enter Order Number"
+                                    autocomplete="order_number" placeholder="Enter Invoice ID"
                                     value="{{ $latest_transaction_id }}">
                             </div>
                         </div>

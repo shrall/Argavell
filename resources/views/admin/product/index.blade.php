@@ -35,6 +35,7 @@ function rupiah($angka)
                             <tr>
                                 <th width="25px">NO</th>
                                 <th>NAMA PRODUK</th>
+                                <th>SKU</th>
                                 <th>TYPE</th>
                                 <th>STOCK</th>
                                 <th>PRICE</th>
@@ -69,6 +70,7 @@ function rupiah($angka)
                                             @endif
                                         @endif
                                     </td>
+                                    <td>{{ $product->sku ?? '-' }}</td>
                                     <td>
                                     @if ($product->bundle == '0')Single @else Bundle
                                         @endif

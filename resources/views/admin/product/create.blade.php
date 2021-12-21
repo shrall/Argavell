@@ -26,6 +26,13 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">SKU Produk</label>
+                            <div class="col-12">
+                                <input id="sku" type="text" class="form-control" name="sku" required
+                                    placeholder="SKU" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Detail Produk</label>
                             <div class="col-12">
                                 <textarea id="detail" type="textarea" class="form-control" name="detail" required

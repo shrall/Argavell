@@ -141,6 +141,9 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('transaction/label/export', [AdminTransactionController::class, 'export'])->name('transaction.export');
     Route::post('transaction/label/downloadproductlist', [AdminTransactionController::class, 'download_product_list'])->name('transaction.downloadproductlist');
 
+    Route::post('refund/accept', [AdminRefundController::class, 'accept'])->name('refund.accept');
+    Route::post('refund/reject', [AdminRefundController::class, 'reject'])->name('refund.reject');
+
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
 
     Route::resource('user', AdminUserController::class);

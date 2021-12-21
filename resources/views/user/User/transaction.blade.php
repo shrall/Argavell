@@ -50,6 +50,18 @@
                             <td>
                                 @if ($transaction->status == '0')
                                     <p class="my-0 text-secondary font-weight-bold">Waiting for Payment</p>
+                                @elseif ($transaction->status == '1' &&
+                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
+                                    1)) > 0)
+                                    <p class="my-0 text-success font-weight-bold">Refund Status: Accepted</p>
+                                @elseif ($transaction->status == '1' &&
+                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
+                                    0)) > 0)
+                                    <p class="my-0 text-warning font-weight-bold">Refund Status: Pending</p>
+                                @elseif ($transaction->status == '1' &&
+                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
+                                    2)) > 0)
+                                    <p class="my-0 text-danger font-weight-bold">Refund Status: Rejected</p>
                                 @elseif($transaction->status == '1')
                                     <p class="my-0 text-success font-weight-bold">Shipped</p>
                                 @elseif($transaction->status == '2')
@@ -74,14 +86,15 @@
                                         </a>
                                     @endif
                                 @elseif ($transaction->status == '3')
-                                <form action="{{ route('user.transaction.finishorder') }}" method="post"
-                                    id="finish-{{ $transaction->id }}">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
-                                    <button type="submit"
-                                        class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Finish Order
-                                    </button>
-                                </form>
+                                    <form action="{{ route('user.transaction.finishorder') }}" method="post"
+                                        id="finish-{{ $transaction->id }}">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                        <button type="submit"
+                                            class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Finish
+                                            Order
+                                        </button>
+                                    </form>
                                 @else
                                     <form action="{{ route('user.transaction.buyagain') }}" method="post"
                                         id="buy-again-{{ $transaction->id }}">
@@ -167,6 +180,10 @@
                             <div class="d-flex justify-content-between">
                                 <div class="text-secondary">Payment Method</div>
                                 <div class="font-weight-bold">{{ $transaction->payment->name }}</div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="text-secondary"></div>
+                                <div class="font-weight-bold">a.n Filbert Hartawan - {{ $transaction->payment->account_number }}</div>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-secondary">Shipment Method</div>

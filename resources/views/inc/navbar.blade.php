@@ -53,7 +53,7 @@
                     <li class="nav-item mx-4">
                         <a href="{{ route('user.user.index') }}"
                             class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                            <span class="fa fa-fw fa-user me-2"></span>My Account
+                            <span class="fa fa-fw fa-user me-2"></span>Hi, {{Auth::user()->first_name}} !
                         </a>
                     </li>
                     @if (Route::current()->getName() != 'user.cart.index')

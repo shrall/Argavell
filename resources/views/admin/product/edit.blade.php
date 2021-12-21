@@ -27,6 +27,13 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">SKU Produk</label>
+                            <div class="col-12">
+                                <input id="sku" type="text" class="form-control" name="sku" required placeholder="SKU"
+                                    required value="{{ $product->sku }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Detail Produk</label>
                             <div class="col-12">
                                 <textarea id="detail" type="textarea" class="form-control" name="detail" required
@@ -139,7 +146,7 @@
                         <div class="row mb-3">
                             <div class="col-6">
                                 <div class="btn btn-admin-gray w-100" onclick="event.preventDefault();
-                                                document.getElementById('delete-product-form').submit();">Hapus</div>
+                                                    document.getElementById('delete-product-form').submit();">Hapus</div>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
@@ -172,9 +179,9 @@
                 opens: 'left',
                 startDate: "{{ date('Y-m-d', strtotime($product->bundle_start)) }}",
                 endDate: "{{ date('Y-m-d', strtotime($product->bundle_end)) }}",
-                    locale: {
-                        format: 'YYYY-MM-DD',
-                    },
+                locale: {
+                    format: 'YYYY-MM-DD',
+                },
             }, function(start, end, label) {
                 $('#date-start').val(start.format('YYYY-MM-DD'))
                 $('#date-end').val(end.format('YYYY-MM-DD'))

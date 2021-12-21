@@ -32,6 +32,7 @@ class CreateTransactionsTable extends Migration
             $table->string('nomor_resi')->nullable();
             $table->string('notes')->nullable();
             $table->string('snaptoken')->nullable();
+            $table->dateTime('payment_date')->nullable();
             $table->timestamps();
         });
     }

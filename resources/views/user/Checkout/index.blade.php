@@ -214,10 +214,20 @@ function rupiah($angka)
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="payment_method"
                                     value="{{ $payment->id }}" id="payment_radio_{{ $payment->id }}"
+                                    data-bs-toggle="collapse" data-bs-target="#collapse{{ $payment->id }}"
                                     @if ($loop->iteration == 1) checked @endif>
                                 <label class="form-check-label" for="payment_radio_{{ $payment->id }}">
                                     {{ $payment->name }}
                                 </label>
+                                <div class="collapse @if ($loop->iteration == 1) show @endif" id="collapse{{ $payment->id }}"
+                                    data-bs-parent="#paymentGroup">
+                                    <div class="row mb-2">
+                                        <div class="col-md-7 bg-light font-weight-bold rounded py-2 px-3">
+                                            Account Number : {{ $payment->account_number }}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
                             </div>
                         @endforeach
                         <div class="form-check">
