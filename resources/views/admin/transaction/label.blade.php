@@ -31,7 +31,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
-        @page { margin: 0; }
+        @page {
+            margin: 0;
+        }
+
         table {
             border-left: 0;
             border-right: 0;
@@ -41,6 +44,7 @@
         }
 
         table td,
+        table tr,
         table th {
             border-left: 0;
             border-right: 0;
