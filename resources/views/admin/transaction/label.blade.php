@@ -42,6 +42,7 @@
             border-bottom: 0;
             border-spacing: -1px;
             border-style : hidden!important;
+            border-collapse: collapse;
         }
 
         table td,
@@ -70,7 +71,7 @@
                         <h1 style="font-size: 2rem">{{ $transaction->order_number }}</h1>
                     </div>
                     <div class="px-5 border-0">
-                        <table class="mx-auto w-100 py-4 mb-3 border-0">
+                        <table class="mx-auto w-100 py-4 mb-3 border-0" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td>{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</td>
                                 <td>
@@ -100,7 +101,7 @@
                         </h1>
                     </div>
                     <div class="px-5">
-                        <table class="mx-auto w-100 py-4 mb-3 border-0">
+                        <table class="mx-auto w-100 py-4 mb-3 border-0" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td>
                                     <h1 class="font-weight-bold" style="font-size: 2rem">Kepada:</h1>
@@ -130,7 +131,7 @@
                     </div>
                     <hr>
                     <div class="px-5">
-                        <table class="mx-auto w-100 py-4 my-3 border-0">
+                        <table class="mx-auto w-100 py-4 my-3 border-0" border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td>
                                     <h1 class="font-weight-bold" style="font-size: 2rem">Produk</h1>
