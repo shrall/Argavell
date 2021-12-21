@@ -53,6 +53,9 @@ Auth::routes();
 Route::get('/invoice', function(){
     return new InvoiceMail(new Transaction());
 });
+Route::get('/labelcheck', function(){
+    return view('admin.transaction.label')->with('transactions', Transaction::all());
+});
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');

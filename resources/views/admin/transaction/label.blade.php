@@ -41,6 +41,7 @@
             border-top: 0;
             border-bottom: 0;
             border-spacing: -1px;
+            border-style : hidden!important;
         }
 
         table td,
@@ -50,6 +51,7 @@
             border-right: 0;
             border-top: 0;
             border-bottom: 0;
+            border-style : hidden!important;
         }
 
     </style>
@@ -67,7 +69,7 @@
                     <div class="d-flex items-start justify-content-between mb-1 px-5 py-4">
                         <h1 style="font-size: 2rem">{{ $transaction->order_number }}</h1>
                     </div>
-                    <div class="px-5 border-0" style="border: 1px solid transparent;">
+                    <div class="px-5 border-0">
                         <table class="mx-auto w-100 py-4 mb-3 border-0">
                             <tr>
                                 <td>{!! DNS1D::getBarcodeHTML('0A', 'CODABAR', 7, 100) !!}</td>
@@ -97,7 +99,7 @@
                                 otomatis.</i>
                         </h1>
                     </div>
-                    <div class="px-5" style="border: 1px solid transparent;">
+                    <div class="px-5">
                         <table class="mx-auto w-100 py-4 mb-3 border-0">
                             <tr>
                                 <td>
@@ -127,7 +129,7 @@
                         </table>
                     </div>
                     <hr>
-                    <div class="px-5" style="border: 1px solid transparent;">
+                    <div class="px-5">
                         <table class="mx-auto w-100 py-4 my-3 border-0">
                             <tr>
                                 <td>
