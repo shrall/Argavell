@@ -140,20 +140,18 @@
                                     <h1 class="font-weight-bold" style="font-size: 2rem">Jumlah</h1>
                                 </td>
                             </tr>
-                            @foreach ($transactions as $key => $transaction)
-                                @foreach ($transaction->carts as $item)
-                                    <tr>
-                                        <td>
-                                            <h1 style="font-size: 2rem">{{ $item->product->name }}</h1>
-                                        </td>
-                                        <td>
-                                            <h1 style="font-size: 2rem">{{ $item->product->sku }}</h1>
-                                        </td>
-                                        <td>
-                                            <h1 style="font-size: 2rem">{{ $item->qty }}</h1>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($transaction->carts as $item)
+                                <tr>
+                                    <td>
+                                        <h1 style="font-size: 2rem">{{ $item->product->name }}</h1>
+                                    </td>
+                                    <td>
+                                        <h1 style="font-size: 2rem">{{ $item->product->sku }}</h1>
+                                    </td>
+                                    <td>
+                                        <h1 style="font-size: 2rem">{{ $item->qty }} pcs</h1>
+                                    </td>
+                                </tr>
                             @endforeach
                         </table>
                     </div>
