@@ -79,7 +79,7 @@
                     <td>{{ $transaction->user->address->postal_code ?? '-' }}</td>
                     <td>{{ $transaction->shipment_name }}</td>
                     <td>{{ $transaction->shipping_cost }}</td>
-                    <td>{{ $transaction->price_total + $item->product->price_discount }}</td>
+                    <td>{{ $transaction->price_total + $transaction->shipping_cost }}</td>
                 </tr>
             @endforeach
         @endforeach

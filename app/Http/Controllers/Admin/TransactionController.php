@@ -471,7 +471,7 @@ class TransactionController extends Controller
 
     function export(Request $request)
     {
-        return Excel::download(new TransactionExport($request->type, $request->report_date_start, $request->report_date_end), 'laporan_penjualan_' . Carbon::now() . '.xlsx');
+        return Excel::download(new TransactionExport($request->type, $request->report_date_start, date('Y-m-d H:i:s', strtotime($request->report_date_end . ' +1 day'))), 'laporan_penjualan_' . Carbon::now() . '.xlsx');
     }
 
     function download_product_list(Request $request)

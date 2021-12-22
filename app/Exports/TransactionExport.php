@@ -45,13 +45,13 @@ class TransactionExport implements FromView, ShouldAutoSize, WithStyles, WithCol
     }
     public function styles(Worksheet $sheet)
     {
-        $sheet->getStyle('A1:W1000')->getAlignment()->setWrapText(true);
-        $sheet->getStyle('A1:W1000')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-        $sheet->getStyle('A1:W1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('A1:X1000')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A1:X1000')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A1:X1000')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         return [
             // Style the first row as bold text.
             1    => ['font' => ['bold' => true]],
-            'A1:W1000' =>
+            'A1:X1000' =>
             [
                 'borders' => [
                     'allBorders' => [
