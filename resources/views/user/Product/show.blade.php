@@ -415,7 +415,6 @@ function rupiah($angka)
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
             $.post(url + "/cart", {
-                    _token: CSRF_TOKEN,
                     id: id,
                     size: $('#size').val(),
                     quantity: parseInt($('#quantity').val()),
