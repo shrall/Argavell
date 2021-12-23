@@ -8,13 +8,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($products as $product)
+        @foreach ($items as $key => $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->price }}</td>
+                <td>{{ $products->where('id', $item)->first()->name }}
+                    ({{ $products->where('id', $item)->first()->size[$keys[$key]] }} ml)</td>
+                <td>{{ $products->where('id', $item)->first()->price[$keys[$key]] }}</td>
                 <td>
-                    <div class="btn btn-admin-gray" onclick="deleteItem({{ $product->id }})">Hapus</div>
+                    <div class="btn btn-admin-gray" onclick="deleteItem({{ $item }})">Hapus</div>
                 </td>
             </tr>
         @endforeach

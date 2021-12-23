@@ -50,9 +50,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/invoice', function(){
-    return new InvoiceMail(new Transaction());
-});
 Route::get('/labelcheck', function(){
     return view('admin.transaction.label')->with('transactions', Transaction::all());
 });
@@ -148,6 +145,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('refund/reject', [AdminRefundController::class, 'reject'])->name('refund.reject');
 
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
+    Route::post('product/add_sizes', [AdminProductController::class, 'add_sizes'])->name('product.addsizes');
 
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');

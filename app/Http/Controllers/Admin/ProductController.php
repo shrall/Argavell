@@ -42,6 +42,17 @@ class ProductController extends Controller
         $image = time() . '-' . $request['image']->getClientOriginalName();
         $request->image->move(public_path('uploads/products'), $image);
         if ($request->bundle == '0') {
+            $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
+            $stocks = [];
+            $sizes = [];
+            $prices = [];
+            $price_discounts = [];
+            foreach ($the_sizes as $key => $ts) {
+                array_push($stocks, $ts[0]);
+                array_push($sizes, $ts[1]);
+                array_push($prices, $ts[2]);
+                array_push($price_discounts, $ts[3]);
+            }
             Product::create([
                 'name' => $request->name,
                 'sku' => $request->sku,
@@ -49,17 +60,19 @@ class ProductController extends Controller
                 'bundle' => $request->bundle,
                 'type' => $request->type,
                 'weight' => $request->weight,
-                'stock' => $request->stock,
-                'price' => $request->price,
-                'price_discount' => $request->price_discount,
+                'stock' => $stocks,
+                'price' => $prices,
+                'price_discount' => $price_discounts,
                 'img' => $image,
-                'size' => [10],
+                'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'ingredients' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             ]);
         } else {
             $bundle_items = explode(",", $request->bundle_items);
+            $bundle_item_sizes = explode(",", $request->bundle_item_sizes);
+            $bundle_item_keys = explode(",", $request->bundle_item_keys);
             $product = Product::create([
                 'name' => $request->name,
                 'sku' => $request->sku,
@@ -69,19 +82,21 @@ class ProductController extends Controller
                 'bundle_end' => $request->date_end,
                 'type' => $request->type,
                 'weight' => $request->weight,
-                'stock' => $request->stock,
-                'price' => $request->price,
-                'price_discount' => $request->price_discount,
+                'stock' => [$request->stock],
+                'price' => [$request->price],
+                'price_discount' => [$request->price_discount ? $request->price_discount : 0],
                 'img' => $image,
-                'size' => [10],
+                'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'ingredients' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             ]);
-            foreach ($bundle_items as $item) {
+            foreach ($bundle_items as $key => $item) {
                 Bundle::create([
                     'bundle_id' => $product->id,
                     'product_id' => $item,
+                    'size' => $bundle_item_sizes[$key],
+                    'key' => $bundle_item_keys[$key]
                 ]);
             }
         }
@@ -121,6 +136,21 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         if ($request->bundle == '0') {
+            $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
+            $stocks = [];
+            $sizes = [];
+            $prices = [];
+            $price_discounts = [];
+            foreach ($the_sizes as $key => $ts) {
+                array_push($stocks, $ts[0]);
+                array_push($sizes, $ts[1]);
+                array_push($prices, $ts[2]);
+                if (!$ts[3] == 'NaN') {
+                    array_push($price_discounts, $ts[3]);
+                } else {
+                    array_push($price_discounts, 0);
+                }
+            }
             $product->update([
                 'name' => $request->name,
                 'sku' => $request->sku,
@@ -130,16 +160,18 @@ class ProductController extends Controller
                 'bundle_end' => null,
                 'type' => $request->type,
                 'weight' => $request->weight,
-                'stock' => $request->stock,
-                'price' => $request->price,
-                'price_discount' => $request->price_discount,
-                'size' => [10],
+                'stock' => $stocks,
+                'price' => $prices,
+                'price_discount' => $price_discounts,
+                'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'ingredients' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             ]);
         } else {
             $bundle_items = explode(",", $request->bundle_items);
+            $bundle_item_sizes = explode(",", $request->bundle_item_sizes);
+            $bundle_item_keys = explode(",", $request->bundle_item_keys);
             $product->update([
                 'name' => $request->name,
                 'sku' => $request->sku,
@@ -149,19 +181,21 @@ class ProductController extends Controller
                 'bundle_end' => $request->date_end,
                 'type' => $request->type,
                 'weight' => $request->weight,
-                'stock' => $request->stock,
-                'price' => $request->price,
-                'price_discount' => $request->price_discount,
-                'size' => [10],
+                'stock' => [$request->stock],
+                'price' => [$request->price],
+                'price_discount' => [$request->price_discount ?? 0],
+                'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'ingredients' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
             ]);
             Bundle::where('bundle_id', $product->id)->delete();
-            foreach ($bundle_items as $item) {
+            foreach ($bundle_items as $key => $item) {
                 Bundle::create([
                     'bundle_id' => $product->id,
                     'product_id' => $item,
+                    'size' => $bundle_item_sizes[$key],
+                    'key' => $bundle_item_keys[$key]
                 ]);
             }
         };
@@ -182,11 +216,15 @@ class ProductController extends Controller
 
     function add_bundle_item(Request $request)
     {
-        if (!$request->has('items')) {
-            $products = Product::where('id', 'asd')->get();
-        } else {
-            $products = Product::whereIn('id', array_unique($request->items, SORT_REGULAR))->get();
-        }
-        return view('admin.product.inc.table.bundle', compact('products'));
+        $items = $request->items;
+        $keys = $request->keys;
+        $products = Product::all();
+        return view('admin.product.inc.table.bundle', compact('items', 'keys', 'products'));
+    }
+
+    function add_sizes(Request $request)
+    {
+        $sizes = $request->sizes;
+        return view('admin.product.inc.size', compact('sizes'));
     }
 }

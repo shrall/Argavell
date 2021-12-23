@@ -54,7 +54,7 @@ class ProductController extends Controller
             ->get();
 
         if ($product->bundle == '1') {
-            if ($product->bundle_start >= Carbon::now() && $product->bundle_end <= Carbon::now()) {
+            if ($product->bundle_start <= Carbon::now() && $product->bundle_end >= Carbon::now()) {
                 return view('user.Product.show', compact('product', 'bundles'));
             } else {
                 return redirect()->route('home');

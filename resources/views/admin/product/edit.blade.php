@@ -92,6 +92,8 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <h6 class="font-weight-black">Produk Bundle</h6>
                                 <input type="hidden" name="bundle_items" id="bundle-items">
+                                <input type="hidden" name="bundle_item_sizes" id="bundle-item-sizes">
+                                <input type="hidden" name="bundle_item_keys" id="bundle-item-keys">
                                 <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
                                     data-bs-target="#bundleModal">+Add Item</h6>
                             </div>
@@ -109,8 +111,9 @@
                                         @foreach ($product->bundles as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->product->name }}</td>
-                                                <td>{{ $item->product->price }}</td>
+                                                <td>{{ $item->product->name }} ({{ $item->product->size[$item->key] }}
+                                                    ml)</td>
+                                                <td>{{ $item->product->price[$item->key] }}</td>
                                                 <td>
                                                     <div class="btn btn-admin-gray"
                                                         onclick="deleteItem({{ $item->id }})">Hapus</div>
@@ -120,33 +123,82 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Stok</label>
-                            <div class="col-12">
-                                <input type="number" name="stock" id="stock" class="form-control"
-                                    value="{{ $product->stock }}" required />
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Stok</label>
+                                <div class="col-12">
+                                    <input type="number" name="stock" id="stock" class="form-control"
+                                        value="{{ $product->stock[0] }}" required />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Harga Produk</label>
+                                <div class="col-12">
+                                    <input type="number" name="price" id="price" class="form-control"
+                                        value="{{ $product->price[0] }}" required />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Diskon</label>
+                                <div class="col-12">
+                                    <input type="number" name="price_discount" id="price_discount" class="form-control"
+                                        value="{{ $product->price_discount[0] }}"
+                                        placeholder="Kosongkan apabila tidak ada diskon" />
+                                </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Harga Produk</label>
-                            <div class="col-12">
-                                <input type="number" name="price" id="price" class="form-control"
-                                    value="{{ $product->price }}" required />
+                        <div id="non-bundle-table" @if ($product->bundle == '1') class="d-none" @endif>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Info Produk</h6>
+                                <input type="hidden" name="item_sizes" id="item-sizes">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" onclick="addSize();">+Add Size
+                                </h6>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Diskon</label>
-                            <div class="col-12">
-                                <input type="number" name="price_discount" id="price_discount" class="form-control"
-                                    value="{{ $product->price_discount }}"
-                                    placeholder="Kosongkan apabila tidak ada diskon" />
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label class="col-2 text-start font-weight-bold">Stok</label>
+                                <label class="col-2 text-start font-weight-bold">Size (ml)</label>
+                                <label class="col-3 text-start font-weight-bold">Harga Produk</label>
+                                <label class="col-3 text-start font-weight-bold">Diskon</label>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row mb-3" id="product-info-sizes">
+                                @foreach ($product->size as $key => $size)
+                                    <div class="col-1 mb-2">{{ $loop->iteration }}.</div>
+                                    <div class="col-2 mb-2">
+                                        <input type="number" id="size-0{{ $key }}" class="form-control"
+                                            value={{ $product->stock[$key] }}
+                                            onkeyup="changeSize(0, {{ $key }});" />
+                                    </div>
+                                    <div class="col-2 mb-2">
+                                        <input type="number" id="size-1{{ $key }}" class="form-control"
+                                            value={{ $product->size[$key] }}
+                                            onkeyup="changeSize(1, {{ $key }});" />
+                                    </div>
+                                    <div class="col-3 mb-2">
+                                        <input type="number" id="size-2{{ $key }}" class="form-control"
+                                            value={{ $product->price[$key] }}
+                                            onkeyup="changeSize(2, {{ $key }});" />
+                                    </div>
+                                    <div class="col-3 mb-2">
+                                        <input type="number" id="size-3{{ $key }}" class="form-control"
+                                            value={{ $product->price_discount[$key] }}
+                                            onkeyup="changeSize(3, {{ $key }});" />
+                                    </div>
+                                    <div class="col-1 mb-2">
+                                        <span class="fa fa-fw fa-trash-alt cursor-pointer"
+                                            onclick="deleteSize({{ $key }});"></span>
+                                    </div>
+                                @endforeach
+
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
-                                <div class="btn btn-admin-gray w-100" onclick="event.preventDefault();
-                                                    document.getElementById('delete-product-form').submit();">Hapus</div>
+                                <div class="btn btn-admin-gray w-100"
+                                    onclick="event.preventDefault();
+                                                                                        document.getElementById('delete-product-form').submit();">
+                                    Hapus
+                                </div>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
@@ -165,13 +217,57 @@
 
 @section('scripts')
     <script>
-        var bundleItemsTemp = @json($product->bundles);
-        var bundleItems = []
-        bundleItemsTemp.forEach(element => {
-            bundleItems.push(element.product_id)
+        var sizes = []
+        var sizestemparray = []
+        var the_product = @json($product);
+        the_product.size.forEach(function(value, i) {
+            sizestemparray.push(the_product.stock[i]);
+            sizestemparray.push(the_product.size[i]);
+            sizestemparray.push(the_product.price[i]);
+            sizestemparray.push(the_product.price_discount[i]);
+            sizes.push(sizestemparray);
+            sizestemparray = [];
         });
-        $('#bundle-items').val(bundleItems);
-        console.log(bundleItems);
+        $('#item-sizes').val(sizes);
+
+        function changeSize(index, order) {
+            sizes[order][index] = parseInt($('#size-' + index + order).val());
+            $('#item-sizes').val(sizes);
+            console.log(sizes);
+            console.log($('#item-sizes').val());
+        }
+
+        function addSize() {
+            sizes.push([0, 0, 0, 0]);
+            $('#item-sizes').val(sizes);
+            $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                    _token: CSRF_TOKEN,
+                    sizes: sizes
+                })
+                .done(function(data) {
+                    $('#product-info-sizes').html(data);
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function deleteSize(index) {
+            if (sizes.length > 1) {
+                sizes.splice(index, 1);
+                $('#item-sizes').val(sizes);
+                $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                        _token: CSRF_TOKEN,
+                        sizes: sizes
+                    })
+                    .done(function(data) {
+                        $('#product-info-sizes').html(data);
+                    })
+                    .fail(function(error) {
+                        console.log(error);
+                    });
+            }
+        }
     </script>
     <script>
         $(function() {
@@ -203,11 +299,30 @@
             if ($('#bundle').val() == '0') {
                 $('#product-bundle-date').removeClass('d-block').addClass('d-none');
                 $('#bundle-table').removeClass('d-block').addClass('d-none');
+                $('#non-bundle-table').removeClass('d-none').addClass('d-block');
             } else if ($('#bundle').val() == '1') {
                 $('#product-bundle-date').removeClass('d-none').addClass('d-block');
                 $('#bundle-table').removeClass('d-none').addClass('d-block');
+                $('#non-bundle-table').removeClass('d-block').addClass('d-none');
             }
         });
+    </script>
+    <script>
+        var bundleItemsTemp = @json($product->bundles);
+        var bundleItems = []
+        var bundleItemSizes = [];
+        var bundleItemKeys = [];
+        bundleItemsTemp.forEach(element => {
+            bundleItems.push(element.product_id)
+            bundleItemSizes.push(element.size)
+            bundleItemKeys.push(element.key)
+        });
+        $('#bundle-items').val(bundleItems);
+        $('#bundle-item-sizes').val(bundleItemSizes);
+        $('#bundle-item-keys').val(bundleItemKeys);
+        console.log(bundleItems);
+        console.log(bundleItemSizes);
+        console.log(bundleItemKeys);
     </script>
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -218,10 +333,15 @@
 
         function addItem() {
             bundleItems.push($('#bundle-item').find(":selected").val());
+            bundleItemSizes.push($('#bundle-item').find(":selected").data("size"));
+            bundleItemKeys.push($('#bundle-item').find(":selected").data("key"));
             $('#bundle-items').val(bundleItems);
+            $('#bundle-item-sizes').val(bundleItemSizes);
+            $('#bundle-item-keys').val(bundleItemKeys);
             $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
-                    items: bundleItems
+                    items: bundleItems,
+                    keys: bundleItemKeys
                 })
                 .done(function(data) {
                     $('#bundle-item-table').html(data);
@@ -235,10 +355,18 @@
         function deleteItem(id) {
             const index = bundleItems.indexOf(id);
             bundleItems.splice(index, 1);
+            bundleItemSizes.splice(index, 1);
+            bundleItemKeys.splice(index, 1);
+        console.log(bundleItems);
+        console.log(bundleItemSizes);
+        console.log(bundleItemKeys);
             $('#bundle-items').val(bundleItems);
+            $('#bundle-item-sizes').val(bundleItemSizes);
+            $('#bundle-item-keys').val(bundleItemKeys);
             $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
-                    items: bundleItems
+                    items: bundleItems,
+                    keys: bundleItemKeys
                 })
                 .done(function(data) {
                     $('#bundle-item-table').html(data);

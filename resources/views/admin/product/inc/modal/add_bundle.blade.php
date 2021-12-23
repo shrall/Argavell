@@ -16,8 +16,11 @@
                         <div class="col-12">
                             <select name="bundle_item" id="bundle-item" class="form-select" onchange="setPrice()">
                                 @foreach ($products as $product)
-                                    <option value="{{ $product->id }}" data-price="{{ $product->price }}">
-                                        {{ $product->name }}</option>
+                                    @foreach ($product->size as $key => $size)
+                                        <option value="{{ $product->id }}" data-price="{{ $product->price[$key] }}"
+                                            data-size="{{ $product->size[$key] }}" data-key="{{ $key }}">
+                                            {{ $product->name }} ({{ $product->size[$key] }} ml)</option>
+                                    @endforeach
                                 @endforeach
                             </select>
                         </div>
@@ -26,7 +29,7 @@
                         <label class="col-12 text-start font-weight-bold">Price</label>
                         <div class="col-12">
                             <input type="text" name="bundle_item_price" id="bundle-item-price" class="form-control"
-                                value="{{ $products[0]->price }}" disabled>
+                                value="{{ $products[0]->price[0] }}" disabled>
                         </div>
                     </div>
                 </div>

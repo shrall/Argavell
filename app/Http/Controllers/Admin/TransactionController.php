@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\ProductExport;
 use App\Exports\TransactionExport;
 use App\Http\Controllers\Controller;
+use App\Mail\AdminNewOrderMail;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Proof;
@@ -14,6 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 use SnappyImage;
@@ -83,6 +85,7 @@ class TransactionController extends Controller
                     'status' => '4',
                     'payment_date' => Carbon::now()
                 ]);
+                Mail::to('hello@argavell.com')->send(new AdminNewOrderMail($transaction, route('admin.transaction.index')));
                 if ($request->has('image')) {
                     $payment_file = time() . '-' . $request['image']->getClientOriginalName();
                     $request->image->move(public_path('payment'), $payment_file);

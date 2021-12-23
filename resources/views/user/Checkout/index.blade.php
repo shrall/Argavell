@@ -41,8 +41,8 @@ function rupiah($angka)
                             <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
-                            {{ $item->qty }}x {{ $item->product->name }}<span
-                                class="ms-1 text-secondary">({{ $item->size }})</span>
+                            {{ $item->qty }}x {{ $item->product->name }}
+                            @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
                         </div>
                         <div class="col-4">IDR {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}
                         </div>
@@ -98,14 +98,12 @@ function rupiah($angka)
                     <div class="row mb-3">
                         <div class="col-6">
                             <input id="first_name" type="text" class="form-control" name="first_name" required
-                                @if(Auth::user()->first_name) disabled @endif
-                                autocomplete="first_name" placeholder="Enter your first name"
+                                @if (Auth::user()->first_name) disabled @endif autocomplete="first_name" placeholder="Enter your first name"
                                 value="{{ Auth::user()->first_name }}">
                         </div>
                         <div class="col-6">
                             <input id="last_name" type="text" class="form-control" name="last_name" required
-                                @if(Auth::user()->last_name) disabled @endif
-                                autocomplete="last_name" placeholder="Enter your last name"
+                                @if (Auth::user()->last_name) disabled @endif autocomplete="last_name" placeholder="Enter your last name"
                                 value="{{ Auth::user()->last_name }}">
                         </div>
                     </div>
@@ -190,14 +188,15 @@ function rupiah($angka)
                             @foreach ($shipments['costs'] as $shipment)
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="shipping_method"
-                                        value="{{ $shipment['service'] }}" id="shipping_radio_{{ $loop->iteration }}"
-                                        @if ($loop->iteration == 1) checked @endif>
+                                        data-order={{ $loop->iteration }}
+                                        value="{{ $shipments['name'] . ' - ' . $shipment['service'] }}"
+                                        id="shipping_radio_{{ $loop->iteration }}" @if ($loop->iteration == 1) checked @endif>
                                     <input class="form-check-input" type="hidden" name="shipping_etd"
                                         value="{{ $shipment['cost'][0]['etd'] }}">
                                     <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
                                         <span class="font-weight-bold">{{ $shipment['description'] }} -
                                             {{ $shipment['service'] }}</span> : IDR <span
-                                            id="shipping_cost_{{ $shipment['service'] }}">{{ rupiah($shipment['cost'][0]['value']) }}</span>
+                                            id="shipping_cost_{{ $loop->iteration }}">{{ rupiah($shipment['cost'][0]['value']) }}</span>
                                     </label>
                                 </div>
                             @endforeach
@@ -264,8 +263,8 @@ function rupiah($angka)
                             <img src="{{ asset('uploads/products/' . $item->product->img) }}" class="w-100 rounded">
                         </div>
                         <div class="col-5 font-weight-bold">
-                            {{ $item->qty }}x {{ $item->product->name }}<span
-                                class="ms-1 text-secondary">({{ $item->size }})</span>
+                            {{ $item->qty }}x {{ $item->product->name }}
+                            @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
                         </div>
                         <div class="col-4">IDR
                             {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}</div>
@@ -314,13 +313,17 @@ function rupiah($angka)
         };
 
         function refreshSummary() {
-            $('.summary_shipping_cost').html($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html())
+            console.log($('input[name=shipping_method]:checked').data("order"))
+            $('.summary_shipping_cost').html($('#shipping_cost_' + $('input[name=shipping_method]:checked').data("order"))
+                .html())
             $('.summary_total').html(
-                (parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html().replace('.',
+                (parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').data("order")).html().replace(
+                    '.',
                     '')) + parseInt($('#summary_subtotal').val())).formatMoney(0, '.', ''));
-            $('#shipping_cost').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val())
+            $('#shipping_cost').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').data("order"))
                 .html().replace('.', '')));
-            $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').val()).html()
+            $('#summary_total').val(parseInt($('#shipping_cost_' + $('input[name=shipping_method]:checked').data("order"))
+                .html()
                 .replace('.', '')) + parseInt($('#summary_subtotal').val()));
         }
         @if (Auth::user()->address_id)
@@ -362,6 +365,8 @@ function rupiah($angka)
                 });
         }
 
+        var payButtonClicked = false;
+
         $('#pay-button').click(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var price = parseInt($('#summary_total').val());
@@ -390,7 +395,10 @@ function rupiah($angka)
                         console.log(e);
                     });
             } else {
-                document.getElementById('form-checkout').submit();
+                if (!payButtonClicked) {
+                    document.getElementById('form-checkout').submit();
+                    payButtonClicked = true;
+                }
             }
         });
     </script>

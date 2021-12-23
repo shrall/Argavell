@@ -1,11 +1,4 @@
 @extends('layouts.admin')
-@php
-function rupiah($angka)
-{
-    $hasil_rupiah = 'Rp ' . number_format($angka, 0, ',', '.');
-    return $hasil_rupiah;
-}
-@endphp
 @section('content')
     <div class="row mb-3">
         <div class="col-4">
@@ -37,6 +30,7 @@ function rupiah($angka)
                                 <th>NAMA PRODUK</th>
                                 <th>SKU</th>
                                 <th>TYPE</th>
+                                <th>SIZE</th>
                                 <th>STOCK</th>
                                 <th>PRICE</th>
                                 <th>ACTION</th>
@@ -75,8 +69,33 @@ function rupiah($angka)
                                     @if ($product->bundle == '0')Single @else Bundle
                                         @endif
                                     </td>
-                                    <td>{{ $product->stock }}</td>
-                                    <td>{{ rupiah($product->price) }}</td>
+                                    <td>
+                                        @if ($product->bundle == '0')
+                                            @foreach ($product->size as $size)
+                                                {{ $size }} ml
+                                                @if (!$loop->last)
+                                                    <br>
+                                                @endif
+                                            @endforeach
+                                        @else -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @foreach ($product->stock as $stock)
+                                            {{ $stock }}
+                                            @if (!$loop->last)
+                                                <br>
+                                            @endif
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($product->price as $price)
+                                            Rp. {{ number_format($price, 0, ',', '.') }}
+                                            @if (!$loop->last)
+                                                <br>
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.product.edit', $product->slug) }}"
                                             class="btn btn-admin-argavell-light">See Details</a>

@@ -6,18 +6,19 @@
         <div class="row">
             <div class="col-md-10 pe-0">
                 <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
-                    <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                    @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
                 </p>
                 @if ($item->price_discount != null)
                     <div class="d-flex font-proxima-nova">
                         <div class="position-relative">
-                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                            <span class="text-secondary cross">IDR
+                                {{ number_format($item->product->price[$item->key], 0, ',', '.') }}</span>
                         </div>
                         <span class="text-danger font-weight-bold ms-2">IDR
-                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
+                            {{ number_format($item->product->price[$item->key] - $item->product->price_discount[$item->key], 0, ',', '.') }}</span>
                     </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price[$item->key], 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">
@@ -48,18 +49,19 @@
         <div class="row">
             <div class="col-md-10 pe-0">
                 <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
-                    <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                    @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
                 </p>
                 @if ($item->price_discount != null)
                     <div class="d-flex font-proxima-nova">
                         <div class="position-relative">
-                            <span class="text-secondary cross">IDR {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                            <span class="text-secondary cross">IDR
+                                {{ number_format($item->product->price[$item->key], 0, ',', '.') }}</span>
                         </div>
                         <span class="text-danger font-weight-bold ms-2">IDR
-                            {{ number_format($item->product->price - $item->product->price_discount, 0, ',', '.') }}</span>
+                            {{ number_format($item->product->price[$item->key] - $item->product->price_discount[$item->key], 0, ',', '.') }}</span>
                     </div>
                 @else
-                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price, 0, ',', '.') }}</p>
+                    <p class="font-proxima-nova">IDR {{ number_format($item->product->price[$item->key], 0, ',', '.') }}</p>
                 @endif
             </div>
             <div class="col-1">

@@ -22,6 +22,9 @@ class Product extends Model
     ];
 
     protected $casts = [
+        'price' => 'array',
+        'price_discount' => 'array',
+        'stock' => 'array',
         'facts' => 'array',
         'size' => 'array',
         'howtouse' => 'array'

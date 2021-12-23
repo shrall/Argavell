@@ -79,6 +79,7 @@
                                 <th width="25px">NO</th>
                                 <th>NAMA PRODUK</th>
                                 <th>HARGA</th>
+                                <th>DISKON</th>
                                 <th>QTY</th>
                                 <th>SUBTOTAL</th>
                             </tr>
@@ -87,8 +88,9 @@
                             @foreach ($user->carts->where('transaction_id', null) as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->product->name }}</td>
-                                    <td>Rp. {{ number_format($item->product->price, 0, ',', '.') }}</td>
+                                    <td>{{ $item->product->name }} ({{ $item->size }})</td>
+                                    <td>Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+                                    <td>Rp. {{ number_format($item->price_discount, 0, ',', '.') }}</td>
                                     <td>{{ $item->qty }}</td>
                                     <td>Rp.
                                         {{ number_format(($item->price - $item->price_discount) * $item->qty, 0, ',', '.') }}

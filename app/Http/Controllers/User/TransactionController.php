@@ -100,22 +100,23 @@ class TransactionController extends Controller
             ]);
             $carts = Cart::where('transaction_id', null)->where('user_id', Auth::id())->get();
             foreach ($carts as $cart) {
+                $cart_stock = $cart->product->stock;
+                $cart_stock[$cart->key] -= 1;
                 $cart->product->update([
-                    'stock' => $cart->product->stock - $cart->qty
+                    'stock' => $cart_stock
                 ]);
                 $cart->update([
                     'transaction_id' => $transaction->id
                 ]);
                 $othercarts = $cart->product->carts->where('transaction_id', null);
                 foreach ($othercarts as $othercart) {
-                    if ($othercart->qty > $cart->product->stock) {
+                    if ($othercart->qty > $cart->product->stock[$cart->key]) {
                         $othercart->delete();
                     }
                 }
             }
             Session::put('transaction.id', $transaction->order_number);
-            Mail::to(Auth::user()->email)->send(new InvoiceMail($transaction));
-            Mail::to('hello@argavell.com')->send(new AdminNewOrderMail($transaction));
+            Mail::to($transaction->user->email)->send(new InvoiceMail($transaction, route('page.paymentconfirmation')));
         }
         return view('pages.order');
     }
@@ -294,19 +295,22 @@ class TransactionController extends Controller
         ]);
         $carts = Cart::where('transaction_id', null)->get();
         foreach ($carts as $cart) {
+            $cart_stock = $cart->product->stock;
+            $cart_stock[$cart->key] -= 1;
             $cart->product->update([
-                'stock' => $cart->product->stock - $cart->qty
+                'stock' => $cart_stock
             ]);
             $cart->update([
                 'transaction_id' => $transaction->id
             ]);
             $othercarts = $cart->product->carts->where('transaction_id', null);
             foreach ($othercarts as $othercart) {
-                if ($othercart->qty > $cart->product->stock) {
+                if ($othercart->qty > $cart->product->stock[$cart->key]) {
                     $othercart->delete();
                 }
             }
         }
+        Mail::to($transaction->user->email)->send(new InvoiceMail($transaction, route('page.paymentconfirmation')));
     }
     public function buy_again(Request $request)
     {
@@ -316,8 +320,9 @@ class TransactionController extends Controller
                 Cart::create([
                     'qty' => $item->qty,
                     'size' => $item->size,
-                    'price' => $item->product->price,
-                    'price_discount' => $item->product->price_discount,
+                    'key' => $item->key,
+                    'price' => $item->product->price[$item->key],
+                    'price_discount' => $item->product->price_discount[$item->key],
                     'product_id' => $item->product_id,
                     'user_id' => Auth::id(),
                     'transaction_id' => null

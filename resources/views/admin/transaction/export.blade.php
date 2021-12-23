@@ -52,7 +52,7 @@
                         {{ $item->product_id }}
                     </td>
                     <td>
-                        {{ $item->product->name }}
+                        {{ $item->product->name }} ({{ $item->size }})
                     </td>
                     <td>
                         {{ $item->product->sku }}
@@ -60,13 +60,13 @@
                     <td> {{ $item->qty }} </td>
                     <td>{{ $transaction->notes }}</td>
                     <td>
-                        {{ $item->product->price }}
+                        {{ $item->price }}
                     </td>
                     <td>
-                        {{ $item->product->price_discount }}
+                        {{ $item->price_discount }}
                     </td>
                     <td>
-                        {{ $item->product->price - $item->product->price_discount }}
+                        {{ $item->price - $item->price_discount }}
                     </td>
                     <td>{{ $transaction->user->first_name }} {{ $transaction->user->last_name }}</td>
                     <td>{{ $transaction->user->address->phone ?? '-' }}</td>

@@ -28,8 +28,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">SKU Produk</label>
                             <div class="col-12">
-                                <input id="sku" type="text" class="form-control" name="sku" required
-                                    placeholder="SKU" required>
+                                <input id="sku" type="text" class="form-control" name="sku" required placeholder="SKU"
+                                    required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -95,6 +95,8 @@
                             <div class="d-flex align-items-center justify-content-between">
                                 <h6 class="font-weight-black">Produk Bundle</h6>
                                 <input type="hidden" name="bundle_items" id="bundle-items">
+                                <input type="hidden" name="bundle_item_sizes" id="bundle-item-sizes">
+                                <input type="hidden" name="bundle_item_keys" id="bundle-item-keys">
                                 <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
                                     data-bs-target="#bundleModal">+Add Item</h6>
                             </div>
@@ -112,24 +114,62 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Stok</label>
-                            <div class="col-12">
-                                <input type="number" name="stock" id="stock" class="form-control" required />
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Stok</label>
+                                <div class="col-12">
+                                    <input type="number" name="stock" id="stock" class="form-control" value=0 />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Harga Produk</label>
+                                <div class="col-12">
+                                    <input type="number" name="price" id="price" class="form-control" value=0 />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-12 text-start font-weight-bold">Diskon</label>
+                                <div class="col-12">
+                                    <input type="number" name="price_discount" id="price_discount" class="form-control"
+                                        placeholder="Kosongkan apabila tidak ada diskon" />
+                                </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Harga Produk</label>
-                            <div class="col-12">
-                                <input type="number" name="price" id="price" class="form-control" required />
+                        <div id="non-bundle-table" class="d-block">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Info Produk</h6>
+                                <input type="hidden" name="item_sizes" id="item-sizes">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" onclick="addSize();">+Add Size
+                                </h6>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Diskon</label>
-                            <div class="col-12">
-                                <input type="number" name="price_discount" id="price_discount" class="form-control"
-                                    placeholder="Kosongkan apabila tidak ada diskon" />
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label class="col-2 text-start font-weight-bold">Stok</label>
+                                <label class="col-2 text-start font-weight-bold">Size (ml)</label>
+                                <label class="col-3 text-start font-weight-bold">Harga Produk</label>
+                                <label class="col-3 text-start font-weight-bold">Diskon</label>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row mb-3" id="product-info-sizes">
+                                <div class="col-1">1.</div>
+                                <div class="col-2">
+                                    <input type="number" id="size-00" class="form-control" value=0
+                                        onkeyup="changeSize(0, 0);" />
+                                </div>
+                                <div class="col-2">
+                                    <input type="number" id="size-10" class="form-control" value=0
+                                        onkeyup="changeSize(1, 0);" />
+                                </div>
+                                <div class="col-3">
+                                    <input type="number" id="size-20" class="form-control" value=0
+                                        onkeyup="changeSize(2, 0);" />
+                                </div>
+                                <div class="col-3">
+                                    <input type="number" id="size-30" class="form-control" value="0"
+                                        onkeyup="changeSize(3, 0);" />
+                                </div>
+                                <div class="col-1">
+                                    <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteSize(0);"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -149,6 +189,51 @@
 
 @section('scripts')
     <script>
+        var sizes = [
+            [0, 0, 0, 0]
+        ]
+        $('#item-sizes').val(sizes);
+
+        function changeSize(index, order) {
+            sizes[order][index] = parseInt($('#size-' + index + order).val());
+            $('#item-sizes').val(sizes);
+            console.log(sizes);
+            console.log($('#item-sizes').val());
+        }
+
+        function addSize() {
+            sizes.push([0, 0, 0, 0]);
+            $('#item-sizes').val(sizes);
+            $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                    _token: CSRF_TOKEN,
+                    sizes: sizes
+                })
+                .done(function(data) {
+                    $('#product-info-sizes').html(data);
+                })
+                .fail(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function deleteSize(index) {
+            if (sizes.length > 1) {
+                sizes.splice(index, 1);
+                $('#item-sizes').val(sizes);
+                $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                        _token: CSRF_TOKEN,
+                        sizes: sizes
+                    })
+                    .done(function(data) {
+                        $('#product-info-sizes').html(data);
+                    })
+                    .fail(function(error) {
+                        console.log(error);
+                    });
+            }
+        }
+    </script>
+    <script>
         $(function() {
             $('#date').daterangepicker({
                 opens: 'left'
@@ -160,7 +245,6 @@
     </script>
     <script>
         var loadFile = function(event) {
-            console.log($('#image')[0].files[0].size);
             if ($('#image')[0].files[0].size > 1048576) {
                 alert("Ukuran gambar tidak bisa melebihi 1MB!");
                 $('#image').val(null);
@@ -180,9 +264,11 @@
             if ($('#bundle').val() == '0') {
                 $('#product-bundle-date').removeClass('d-block').addClass('d-none');
                 $('#bundle-table').removeClass('d-block').addClass('d-none');
+                $('#non-bundle-table').removeClass('d-none').addClass('d-block');
             } else if ($('#bundle').val() == '1') {
                 $('#product-bundle-date').removeClass('d-none').addClass('d-block');
                 $('#bundle-table').removeClass('d-none').addClass('d-block');
+                $('#non-bundle-table').removeClass('d-block').addClass('d-none');
             }
         });
     </script>
@@ -193,13 +279,20 @@
             $('#bundle-item-price').val($('#bundle-item').find(":selected").data("price"))
         }
         var bundleItems = [];
+        var bundleItemSizes = [];
+        var bundleItemKeys = [];
 
         function addItem() {
             bundleItems.push($('#bundle-item').find(":selected").val());
+            bundleItemSizes.push($('#bundle-item').find(":selected").data("size"));
+            bundleItemKeys.push($('#bundle-item').find(":selected").data("key"));
             $('#bundle-items').val(bundleItems);
+            $('#bundle-item-sizes').val(bundleItemSizes);
+            $('#bundle-item-keys').val(bundleItemKeys);
             $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
-                    items: bundleItems
+                    items: bundleItems,
+                    keys: bundleItemKeys
                 })
                 .done(function(data) {
                     $('#bundle-item-table').html(data);
@@ -213,10 +306,15 @@
         function deleteItem(id) {
             const index = bundleItems.indexOf(id);
             bundleItems.splice(index, 1);
+            bundleItemSizes.splice(index, 1);
+            bundleItemKeys.splice(index, 1);
             $('#bundle-items').val(bundleItems);
+            $('#bundle-item-sizes').val(bundleItemSizes);
+            $('#bundle-item-keys').val(bundleItemKeys);
             $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
-                    items: bundleItems
+                    items: bundleItems,
+                    keys: bundleItemKeys
                 })
                 .done(function(data) {
                     $('#bundle-item-table').html(data);

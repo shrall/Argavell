@@ -34,13 +34,17 @@
                                     <div class="col-4 col-sm-6">
                                         <ul class="list-unstyled">
                                             @foreach ($transaction->carts as $item)
-                                                <li>{{ $item->qty }}x {{ $item->product->name }}</li>
+                                                <li>{{ $item->qty }}x {{ $item->product->name }}
+                                                    @if ($item->product->bundle == '0')
+                                                        ({{ $item->product->size[$item->key] }} ml)
+                                                    @endif
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </td>
-                            <td>IDR {{ number_format($transaction->price_total, 0, ',', '.') }}</td>
+                            <td>IDR {{ number_format(($transaction->price_total + $transaction->shipping_cost), 0, ',', '.') }}</td>
                             <td>
                                 <p class="my-0">{{ $transaction->date }}</p>
                                 <p class="my-0">{{ $transaction->order_number }}</p>
@@ -161,7 +165,11 @@
                                             src="{{ asset('uploads/products/' . $item->product->img) }}"
                                             class="w-100 rounded">
                                     </div>
-                                    <div class="col-7">{{ $item->qty }}x {{ $item->product->name }}</div>
+                                    <div class="col-7">{{ $item->qty }}x {{ $item->product->name }}
+                                        @if ($item->product->bundle == '0')
+                                            ({{ $item->product->size[$item->key] }} ml)
+                                        @endif
+                                    </div>
                                     <div class="col-3 pe-4 text-end">IDR {{ $item->price - $item->price_discount }}</div>
                                 </div>
                             </div>
@@ -183,7 +191,8 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-secondary"></div>
-                                <div class="font-weight-bold">a.n Filbert Hartawan - {{ $transaction->payment->account_number }}</div>
+                                <div class="font-weight-bold">a.n Filbert Hartawan -
+                                    {{ $transaction->payment->account_number }}</div>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-secondary">Shipment Method</div>

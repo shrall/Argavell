@@ -1,11 +1,4 @@
 @extends('layouts.app')
-@php
-function rupiah($angka)
-{
-    $hasil_rupiah = number_format($angka, 0, ',', '.');
-    return $hasil_rupiah;
-}
-@endphp
 @section('content')
     <div class="row w-100 m-0 p-0 py-5 align-items-center">
         <div class="col-md-2"></div>
@@ -20,21 +13,28 @@ function rupiah($angka)
             @else
                 <h1 class="text-kleanse font-gotham font-weight-bold">{{ $product->name }}</h1>
             @endif
-            @if ($product->price_discount != null)
+            <div id="price-text-discount" class="d-none">
                 <p class="my-0 text-danger">SALE!</p>
                 <h2 class="font-proxima-nova mb-4 d-flex">
                     <div class="position-relative">
-                        <span class="text-secondary cross">IDR {{ rupiah($product->price) }}</span>
+                        <span class="text-secondary cross">IDR <span
+                                class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></span>
                     </div>
                     <span class="text-danger font-weight-bold ms-2">IDR
-                        {{ rupiah($product->price - $product->price_discount) }}</span>
+                        <span
+                            class="product-price-with-discount">{{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}</span></span>
                 </h2>
+            </div>
+            @if ($product->type == '0')
+                <div id="price-text" class="d-none">
+                    <h2 class="text-argavell font-proxima-nova mb-4">IDR <span
+                            class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
+                </div>
             @else
-                @if ($product->type == '0')
-                    <h2 class="text-argavell font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
-                @else
-                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR {{ rupiah($product->price) }}</h2>
-                @endif
+                <div id="price-text" class="d-none">
+                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR <span
+                            class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
+                </div>
             @endif
             <p class="font-proxima-nova font-weight-bold">Description</p>
             <p>{{ $product->description }}</p>
@@ -58,17 +58,17 @@ function rupiah($angka)
                     <div class="col-8">
                         <p class="font-proxima-nova font-weight-bold">Size</p>
                         @if ($product->type == '0')
-                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
+                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size" @if ($product->bundle == '1') disabled @endif
                                 name="size">
-                                @foreach ($product->size as $size)
-                                    <option value="{{ $size }}">{{ $size }} ml</option>
+                                @foreach ($product->size as $key => $size)
+                                    <option value="{{ $key }}">{{ $size }} ml</option>
                                 @endforeach
                             </select>
                         @else
-                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
+                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size" @if ($product->bundle == '1') disabled @endif
                                 name="size">
-                                @foreach ($product->size as $size)
-                                    <option value="{{ $size }}">{{ $size }} ml</option>
+                                @foreach ($product->size as $key => $size)
+                                    <option value="{{ $key }}">{{ $size }} ml</option>
                                 @endforeach
                             </select>
                         @endif
@@ -103,9 +103,9 @@ function rupiah($angka)
                             @endif
                             <input type="hidden" name="quantity" id="quantity" value=1>
                             <input type="hidden" name="id" id="id" value={{ $product->id }}>
-                            <input type="hidden" name="price" id="price" value={{ $product->price }}>
+                            <input type="hidden" name="price" id="price" value={{ $product->price[0] }}>
                             <input type="hidden" name="price_discount" id="price_discount"
-                                value={{ $product->price_discount }}>
+                                value={{ $product->price_discount[0] }}>
                         </div>
                     </div>
                 </div>
@@ -255,7 +255,7 @@ function rupiah($angka)
                             <a href="{{ route('product.show', $bundle->slug) }}">
                                 <div class="landing-product position-relative w-100 mb-3"
                                     style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
-                                    @if ($bundle->price_discount != null)
+                                    @if ($bundle->price_discount[0] != 0)
                                         <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                         </div>
                                     @endif
@@ -263,16 +263,18 @@ function rupiah($angka)
                             </a>
                             <div style="height:10%" class="mb-3">
                                 <div class="font-weight-bold font-gotham mb-1">{{ $bundle->name }}</div>
-                                @if ($bundle->price_discount != null)
+                                @if ($bundle->price_discount[0] != 0)
                                     <div class="d-flex justify-content-center">
                                         <div class="position-relative">
-                                            <span class="text-secondary cross">IDR {{ $bundle->price }}</span>
+                                            <span class="text-secondary cross">IDR
+                                                {{ number_format($bundle->price[0], 0, ',', '.') }}</span>
                                         </div>
                                         <span class="text-danger font-weight-bold ms-2">IDR
-                                            {{ $bundle->price - $bundle->price_discount }}</span>
+                                            {{ number_format($bundle->price[0] - $bundle->price_discount[0], 0, ',', '.') }}</span>
                                     </div>
                                 @else
-                                    <div class="font-gotham">IDR {{ $bundle->price }}</div>
+                                    <div class="font-gotham">IDR {{ number_format($bundle->price[0], 0, ',', '.') }}
+                                    </div>
                                 @endif
                             </div>
                             @if ($bundle->type == '0')
@@ -315,7 +317,7 @@ function rupiah($angka)
                         <a href="{{ route('product.show', $bundle->slug) }}">
                             <div class="landing-product position-relative w-100 mb-3"
                                 style="background-image: url({{ asset('uploads/products/' . $bundle->img) }})">
-                                @if ($bundle->price_discount != null)
+                                @if ($bundle->price_discount[0] != 0)
                                     <div class="position-absolute top-0 start-0 px-3 py-1 bg-danger sale-alert">Sale!
                                     </div>
                                 @endif
@@ -325,16 +327,18 @@ function rupiah($angka)
                             <div class="w-100" style="height: 50px">
                                 <p class="w-100 font-weight-bold font-gotham text-break mb-1">{{ $bundle->name }}</p>
                             </div>
-                            @if ($bundle->price_discount != null)
+                            @if ($bundle->price_discount[0] != 0)
                                 <div class="d-flex mb-3">
                                     <div class="position-relative">
-                                        <span class="text-secondary cross">IDR {{ $bundle->price }}</span>
+                                        <span class="text-secondary cross">IDR
+                                            {{ number_format($bundle->price[0], 0, ',', '.') }}</span>
                                     </div>
                                     <span class="text-danger font-weight-bold ms-2">IDR
-                                        {{ $bundle->price - $bundle->price_discount }}</span>
+                                        {{ number_format($bundle->price[0] - $bundle->price_discount[0], 0, ',', '.') }}</span>
                                 </div>
                             @else
-                                <div class="font-gotham mb-3">IDR {{ $bundle->price }}</div>
+                                <div class="font-gotham mb-3">IDR {{ number_format($bundle->price[0], 0, ',', '.') }}
+                                </div>
                             @endif
                             @if ($product->type == '0')
                                 <a href="{{ route('product.show', $product->slug) }}" class="text-decoration-none">
@@ -361,7 +365,25 @@ function rupiah($angka)
 
     <script>
         var product = @json($product);
-        console.log(product);
+    </script>
+    <script>
+        function refreshPriceText() {
+            if (product['price_discount'][$('#size').val()] == 0) {
+                $('#price-text-discount').removeClass('d-block').addClass('d-none');
+                $('#price-text').removeClass('d-none').addClass('d-block');
+            } else {
+                $('#price-text-discount').removeClass('d-none').addClass('d-block');
+                $('#price-text').removeClass('d-block').addClass('d-none');
+            }
+            if (parseInt($('#quantity-counter').html()) > product['stock'][$('#size').val()]) {
+                $('.add-to-cart-button').prop("disabled", true);
+                $('.add-to-cart-button').html('SOLD OUT');
+            }else{
+                $('.add-to-cart-button').prop("disabled", false);
+                $('.add-to-cart-button').html('Add to Cart');
+            }
+        }
+        refreshPriceText();
     </script>
 
     <script>
@@ -384,7 +406,7 @@ function rupiah($angka)
             if (parseInt($('#quantity-counter').html()) > 0) {
                 $('.add-to-cart-button').prop("disabled", false);
             }
-            if (parseInt($('#quantity-counter').html()) > product['stock']) {
+            if (parseInt($('#quantity-counter').html()) > product['stock'][$('#size').val()]) {
                 $('.add-to-cart-button').prop("disabled", true);
                 $('.add-to-cart-button').html('SOLD OUT');
             }
@@ -397,10 +419,10 @@ function rupiah($angka)
             }
             if (parseInt($('#quantity-counter').html()) == 0) {
                 $('.add-to-cart-button').prop("disabled", true);
-            } else if (parseInt($('#quantity-counter').html()) <= product['stock']) {
+            } else if (parseInt($('#quantity-counter').html()) <= product['stock'][$('#size').val()]) {
                 $('.add-to-cart-button').prop("disabled", false);
                 $('.add-to-cart-button').html('Add to Cart');
-            }else{
+            } else {
                 $('.add-to-cart-button').html('SOLD OUT');
             }
         }
@@ -436,13 +458,14 @@ function rupiah($angka)
                                 '#price').val()) *
                             parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
                         $('#cart-discount').html((parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
-                                {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                                product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
+                                .val())))
                             .formatMoney(0, '.', ''));
                         $('#cart-total').html((parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
                                 '#price').val()) *
                             parseInt(
                                 $('#quantity').val())) - (parseInt(
-                                {{ $product->price_discount ?: 0 }}) *
+                                product['price_discount'][$('#size').val()]) *
                             parseInt(
                                 $('#quantity').val())))).formatMoney(0, '.', ''));
                         $('#cart-mobile-subtotal').html((parseInt($('#cart-mobile-subtotal').html().replace('.', '')) +
@@ -453,12 +476,13 @@ function rupiah($angka)
                         $('#cart-mobile-discount').html((parseInt($('#cart-mobile-discount').html().replace('.', '')) +
                                 (
                                     parseInt(
-                                        {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity').val())))
+                                        product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
+                                        .val())))
                             .formatMoney(0, '.', ''));
                         $('#cart-mobile-total').html((parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
                             parseInt($('#price')
                                 .val()) * parseInt($('#quantity').val())) - (parseInt(
-                            {{ $product->price_discount ?: 0 }}) * parseInt($('#quantity')
+                            product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
                             .val())))).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
@@ -475,6 +499,16 @@ function rupiah($angka)
                     $('#cart-mobile-loader').addClass('d-none');
                 });
         }
+    </script>
+    <script>
+        $('#size').on('change', function(e) {
+            $('#price').val(product['price'][$('#size').val()]);
+            $('#price_discount').val(product['price_discount'][$('#size').val()]);
+            $('.product-price').html(product['price'][$('#size').val()]);
+            $('.product-price-with-discount').html(product['price'][$('#size').val()] - product['price_discount'][$(
+                '#size').val()]);
+            refreshPriceText();
+        });
     </script>
 
     <script>

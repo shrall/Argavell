@@ -25,7 +25,7 @@
                 <a target="_blank" href="https://www.instagram.com/argavell.id/" style="">
                     <img src="https://github.com/shrall/datasets/raw/main/images/argavell-ig.png" width="50px">
                 </a>
-                <a target="_blank" href="mailto:hello@argavell.id" style="">
+                <a target="_blank" href="mailto:hello@argavell.com" style="margin-left: 4px; margin-right: 4px;">
                     <img src="https://github.com/shrall/datasets/raw/main/images/argavell-email.png" width="50px">
                 </a>
                 <a target="_blank" href="https://api.whatsapp.com/send?phone=6282143211310" style="">

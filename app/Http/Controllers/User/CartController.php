@@ -70,7 +70,7 @@ class CartController extends Controller
         $shipments = Http::withHeaders([
             'key' => config('services.rajaongkir.token'),
         ])->post('https://api.rajaongkir.com/starter/cost', [
-            'origin' => $request->city_id, //@marshall ini perlu dirubah ke asal pengirim
+            'origin' => 444, //@marshall ini perlu dirubah ke asal pengirim
             'destination' => $request->city_id,
             'weight' => $request->weight,
             'courier' => 'jne',
@@ -106,25 +106,27 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->id);
-        if (Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->first()) {
+        if (Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->where('size', '=', $product['size'][$request->size] . "ml")->first()) {
             return 'false';
         }
-        if ($product['stock'] > $request->quantity) {
+        if ($product['stock'][$request->size] > $request->quantity) {
             $cart = Cart::create([
                 'qty' => $request->quantity,
-                'size' => $request->size . "ml",
-                'price' => $product['price'],
-                'price_discount' => $product['price_discount'],
+                'size' => $product['size'][$request->size] . "ml",
+                'key' => $request->size,
+                'price' => $product['price'][$request->size],
+                'price_discount' => $product['price_discount'][$request->size],
                 'product_id' => $request->id,
                 'user_id' => Auth::id(),
                 'transaction_id' => null
             ]);
         } else {
             $cart = Cart::create([
-                'qty' => $product['stock'],
-                'size' => $request->size . "ml",
-                'price' => $product['price'],
-                'price_discount' => $product['price_discount'],
+                'qty' => $product['stock'][$request->size],
+                'size' => $product['size'][$request->size] . "ml",
+                'key' => $request->size,
+                'price' => $product['price'][$request->size],
+                'price_discount' => $product['price_discount'][$request->size],
                 'product_id' => $request->id,
                 'user_id' => Auth::id(),
                 'transaction_id' => null
@@ -200,7 +202,7 @@ class CartController extends Controller
         $item->update([
             'qty' => $item['qty'] - 1
         ]);
-        if($item->qty == 0){
+        if ($item->qty == 0) {
             $item->delete();
         }
         return response()->json($item);

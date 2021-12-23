@@ -154,10 +154,10 @@
                     <table id="table_id" class="table table-responsive">
                         <thead>
                             <tr>
-                                <th width="25px">NO</th>
-                                <th width="30%">PRODUK</th>
+                                <th width="10px">NO</th>
+                                <th width="35%">PRODUK</th>
                                 <th>DETAIL</th>
-                                <th>BATAS RESPON</th>
+                                <th width="70px">BATAS RESPON</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -173,8 +173,8 @@
                                             </div>
                                             <div class="col-9">
                                                 @foreach ($transaction->carts as $item)
-                                                    <h6 class="font-weight-black">{{ $item->product->name }}</h6>
-                                                    <h6>{{ $item->qty }}x {{ $item->price }}</h6>
+                                                    <h6 class="font-weight-black">{{ $item->product->name }} ({{ $item->size }})</h6>
+                                                    <h6>{{ $item->qty }}x Rp. {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}</h6>
                                                 @endforeach
                                             </div>
                                         </div>

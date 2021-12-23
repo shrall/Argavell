@@ -23,7 +23,7 @@
                 <tr>
                     <td style="font-size:12px;">Order Total</td>
                     <td style="font-size:12px;">:</td>
-                    <td style="font-size:12px;">Rp. {{number_format($transaction->price_total, 0, ',', '.')}}</td>
+                    <td style="font-size:12px;">Rp. {{number_format(($transaction->price_total + $transaction->shipping_cost), 0, ',', '.')}}</td>
                 </tr>
             </table>
         </div>

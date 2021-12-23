@@ -12,16 +12,17 @@ class AdminNewOrderMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $transaction;
+    public $transaction, $url;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Transaction $transaction)
+    public function __construct(Transaction $transaction, String $url)
     {
         $this->transaction = $transaction;
+        $this->url = $url;
     }
 
     /**
@@ -31,6 +32,6 @@ class AdminNewOrderMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Argavell - Terdapat pesanan baru!')->markdown('emails.invoice');
+        return $this->subject('Argavell - Terdapat pesanan baru!')->markdown('emails.admin_invoice');
     }
 }

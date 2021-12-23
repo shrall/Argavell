@@ -80,8 +80,8 @@ function rupiah($angka)
                             <div class="row">
                                 @foreach ($transaction->carts as $item)
                                     <div class="col-6">
-                                        <h6 class="font-weight-black">{{ $item->product->name }}</h6>
-                                        <h6>{{ $item->qty }}x {{ rupiah($item->price) }}</h6>
+                                        <h6 class="font-weight-black">{{ $item->product->name }} ({{ $item->size }})</h6>
+                                        <h6>{{ $item->qty }}x Rp. {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}</h6>
                                     </div>
                                 @endforeach
                             </div>
@@ -156,7 +156,7 @@ function rupiah($angka)
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
                 <div class="col-2 text-end">
-                    <span class="font-weight-bold">{{ rupiah($transaction->price_total) }}</span>
+                    <span class="font-weight-bold">{{ rupiah($transaction->price_total + $transaction->shipping_cost) }}</span>
                 </div>
             </div>
         </div>
