@@ -24,21 +24,21 @@ class BundleSeeder extends Seeder
         $bundle = new Bundle();
         $bundle->bundle_id = 3;
         $bundle->product_id = 2;
-        $bundle->size = 10;
+        $bundle->size = 300;
         $bundle->key = 0;
         $bundle->save();
 
         $bundle = new Bundle();
         $bundle->bundle_id = 6;
         $bundle->product_id = 4;
-        $bundle->size = 10;
+        $bundle->size = 300;
         $bundle->key = 0;
         $bundle->save();
 
         $bundle = new Bundle();
         $bundle->bundle_id = 6;
         $bundle->product_id = 5;
-        $bundle->size = 10;
+        $bundle->size = 300;
         $bundle->key = 0;
         $bundle->save();
     }
