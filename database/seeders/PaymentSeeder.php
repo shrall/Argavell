@@ -16,14 +16,8 @@ class PaymentSeeder extends Seeder
     {
         $payment = new Payment();
         $payment->name = "Transfer BCA";
-        $payment->account_number = 130000789;
+        $payment->account_number = 8292791789;
         $payment->howto = ["BCA Lorem Ipsum", "Dolor Sit", "Amet"];
-        $payment->save();
-
-        $payment = new Payment();
-        $payment->name = "Transfer Mandiri";
-        $payment->account_number = 8785485289;
-        $payment->howto = ["Mandiri Lorem Ipsum", "Dolor Sit", "Amet"];
         $payment->save();
 
         $payment = new Payment();

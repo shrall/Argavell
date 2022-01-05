@@ -222,7 +222,7 @@ function rupiah($angka)
                                     data-bs-parent="#paymentGroup">
                                     <div class="row mb-2">
                                         <div class="col-md-7 bg-light font-weight-bold rounded py-2 px-3">
-                                            Account Number : {{ $payment->account_number }}
+                                            Account Number : {{ $payment->account_number }} - a/n Louis Yuwono
                                         </div>
                                     </div>
                                     <hr>
@@ -231,10 +231,13 @@ function rupiah($angka)
                         @endforeach
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="payment_method" value="1001"
-                                id="payment_radio_1001">
+                                id="payment_radio_1001" data-bs-toggle="collapse" data-bs-target="#collapse1001">
                             <label class="form-check-label" for="payment_radio_1001">
                                 Online Payment
                             </label>
+                            <div class="collapse" id="collapse1001"
+                                data-bs-parent="#paymentGroup">
+                            </div>
                         </div>
                     </div>
                 </div>
