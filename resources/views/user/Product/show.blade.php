@@ -58,15 +58,15 @@
                     <div class="col-8">
                         <p class="font-proxima-nova font-weight-bold">Size</p>
                         @if ($product->type == '0')
-                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size" @if ($product->bundle == '1') disabled @endif
-                                name="size">
+                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
+                                @if ($product->bundle == '1') disabled @endif name="size">
                                 @foreach ($product->size as $key => $size)
                                     <option value="{{ $key }}">{{ $size }} ml</option>
                                 @endforeach
                             </select>
                         @else
-                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size" @if ($product->bundle == '1') disabled @endif
-                                name="size">
+                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
+                                @if ($product->bundle == '1') disabled @endif name="size">
                                 @foreach ($product->size as $key => $size)
                                     <option value="{{ $key }}">{{ $size }} ml</option>
                                 @endforeach
@@ -378,7 +378,7 @@
             if (parseInt($('#quantity-counter').html()) > product['stock'][$('#size').val()]) {
                 $('.add-to-cart-button').prop("disabled", true);
                 $('.add-to-cart-button').html('SOLD OUT');
-            }else{
+            } else {
                 $('.add-to-cart-button').prop("disabled", false);
                 $('.add-to-cart-button').html('Add to Cart');
             }
@@ -437,6 +437,7 @@
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
             console.log(url);
+            console.log("{{ request()->getHost() }}")
             $.post(url + "/cart", {
                     id: id,
                     size: $('#size').val(),
