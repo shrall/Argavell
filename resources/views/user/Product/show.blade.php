@@ -436,6 +436,7 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
+            console.log(url);
             $.post(url + "/cart", {
                     id: id,
                     size: $('#size').val(),
