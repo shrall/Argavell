@@ -438,6 +438,10 @@
             $('#cart-mobile-loader').removeClass('d-none');
             console.log(url);
             console.log("{{ request()->getHost() }}")
+            var hostname = "{{ request()->getHost() }}"
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            }
             $.post(url + "/cart", {
                     id: id,
                     size: $('#size').val(),
