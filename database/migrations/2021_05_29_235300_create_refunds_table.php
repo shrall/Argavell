@@ -17,9 +17,9 @@ class CreateRefundsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('phone');
-            $table->enum('occasion', ['0','1'])
+            $table->enum('occasion', ['0','1', '2'])
             ->default('0')
-            ->comment('0 = Refund Money, 1 = Refund Item');
+            ->comment('0 = Full Refund, 1 = Item Replacement, 2 = Item Trade');
             $table->enum('status', ['0','1','2'])
             ->default('0')
             ->comment('0 = Pending, 1 = Accepted, 2 = Rejected');

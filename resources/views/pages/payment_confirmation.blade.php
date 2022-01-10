@@ -86,7 +86,6 @@
                     </div>
                     <button class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer">Submit</button>
                 </form>
-                </form>
             @endguest
             @auth
                 <form action="{{ route('user.proof.store') }}" method="post" enctype="multipart/form-data">
@@ -128,23 +127,44 @@
         <div class="col-md-5 p-0">
             <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
         </div>
-        {{-- mobile --}}
-        <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
-            <div class="col-12 p-0">
-                <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
-            </div>
-            <div class="col-md-5 mb-4">
-                <h1 class="text-argavell font-bauer font-weight-bold py-4">Payment Confirmation</h1>
-                <form action="{{ route('user.proof.store') }}" method="post" enctype="multipart/form-data">
+    </div>
+    {{-- mobile --}}
+    <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
+        <div class="col-12 p-0">
+            <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
+        </div>
+        <div class="col-md-5 mb-4">
+            <h1 class="text-argavell font-bauer font-weight-bold py-4">Payment Confirmation</h1>
+            @if (session('Error'))
+                <div class="alert alert-danger">
+                    <ul class="mb-0 list-unstyled">
+                        <li>{{ session('Error') }}</li>
+                        @if (session('Additional'))
+                            <li>{{ session('Additional') }}</li>
+                        @endif
+                    </ul>
+                </div>
+            @endif
+            @if (session('Success'))
+                <div class="alert alert-success">
+                    <ul class="mb-0 list-unstyled">
+                        <li>{{ session('Success') }}</li>
+                    </ul>
+                </div>
+            @endif
+            @guest
+                <form action="{{ route('redirect.login') }}" method="post" id="redirect-form">
                     @csrf
-                    <div class="px-2">
+                    <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                    <input type="hidden" name="product_slug" value="{{ $product->slug ?? '' }}">
+                    <div class="pe-4">
                         <div class="row font-weight-bold">
-                            <label class="col-12">Order Number<span class="text-danger">*</span> </label>
+                            <label class="col-12">Invoice ID<span class="text-danger">*</span> </label>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
                                 <input id="order_number" type="text" class="form-control" name="order_number" required
-                                    autocomplete="order_number" placeholder="Enter your phone number">
+                                    autocomplete="order_number" placeholder="Enter Invoice ID">
                             </div>
                         </div>
                         <div class="row font-weight-bold">
@@ -166,9 +186,45 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit"
-                        class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer">Submit</button>
+                    <button class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer">Submit</button>
                 </form>
-            </div>
+            @endguest
+            @auth
+                <form action="{{ route('user.proof.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="px-2">
+                        <div class="row font-weight-bold">
+                            <label class="col-12">Order Number<span class="text-danger">*</span> </label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <input id="order_number" type="text" class="form-control" name="order_number" required
+                                    autocomplete="order_number" placeholder="Enter Invoice ID"
+                                    value="{{ $latest_transaction_id }}">
+                            </div>
+                        </div>
+                        <div class="row font-weight-bold">
+                            <label class="col-12">Sender Name<span class="text-danger">*</span> </label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <input id="sender_name" type="text" class="form-control" name="sender_name" required
+                                    autocomplete="sender_name" placeholder="Enter sender name">
+                            </div>
+                        </div>
+                        <div class="row font-weight-bold">
+                            <label class="col-12">Payment File<span class="text-danger">*</span> </label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <input id="payment_file" type="file" class="form-control" name="payment_file" required
+                                    autocomplete="payment_file">
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer">Submit</button>
+                </form>
+            @endauth
         </div>
-    @endsection
+    </div>
+@endsection

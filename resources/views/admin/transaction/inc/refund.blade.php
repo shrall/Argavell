@@ -43,8 +43,11 @@
                             <div class="row">
                                 @foreach ($refund->transaction->carts as $item)
                                     <div class="col-6">
-                                        <h6 class="font-weight-black">{{ $item->product->name }} ({{ $item->size }})</h6>
-                                        <h6>{{ $item->qty }}x Rp. {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}</h6>
+                                        <h6 class="font-weight-black">{{ $item->product->name }} ({{ $item->size }})
+                                        </h6>
+                                        <h6>{{ $item->qty }}x Rp.
+                                            {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}
+                                        </h6>
                                     </div>
                                 @endforeach
                             </div>
@@ -72,9 +75,11 @@
                     <div class="col-6">
                         <p class="my-0">Request</p>
                         @if ($refund->occasion == '0')
-                            <p class="my-0 mb-2 text-secondary">Refund Money</p>
+                            <p class="my-0 mb-2 text-secondary">Full Refund</p>
                         @elseif ($refund->occasion == '1')
-                            <p class="my-0 mb-2 text-secondary">Refund Item</p>
+                            <p class="my-0 mb-2 text-secondary">Item Replacement</p>
+                        @elseif ($refund->occasion == '2')
+                            <p class="my-0 mb-2 text-secondary">Item Trade</p>
                         @endif
                     </div>
                     <div class="col-6">
@@ -95,7 +100,8 @@
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
                 <div class="col-2 text-end">
-                    <span class="font-weight-bold">Rp. {{ $refund->transaction->price_total + $refund->transaction->shipping_cost }}</span>
+                    <span class="font-weight-bold">Rp.
+                        {{ $refund->transaction->price_total + $refund->transaction->shipping_cost }}</span>
                 </div>
             </div>
         </div>

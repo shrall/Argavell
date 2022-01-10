@@ -44,7 +44,9 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>IDR {{ number_format(($transaction->price_total + $transaction->shipping_cost), 0, ',', '.') }}</td>
+                            <td>IDR
+                                {{ number_format($transaction->price_total + $transaction->shipping_cost, 0, ',', '.') }}
+                            </td>
                             <td>
                                 <p class="my-0">{{ $transaction->date }}</p>
                                 <p class="my-0">{{ $transaction->order_number }}</p>
@@ -52,19 +54,15 @@
                                     data-bs-target="#transactionModal{{ $transaction->id }}" role="button">See Details</a>
                             </td>
                             <td>
-                                @if ($transaction->status == '0')
+                                @if ($transaction->status == '0' && count($transaction->proofs) > 0)
+                                    <p class="my-0 text-secondary font-weight-bold">Payment Info in Progress</p>
+                                @elseif ($transaction->status == '0')
                                     <p class="my-0 text-secondary font-weight-bold">Waiting for Payment</p>
-                                @elseif ($transaction->status == '1' &&
-                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
-                                    1)) > 0)
+                                @elseif ($transaction->status == '1' && count($transaction->refunds->where('transaction_id', $transaction->id)->where('status', 1)) > 0)
                                     <p class="my-0 text-success font-weight-bold">Refund Status: Accepted</p>
-                                @elseif ($transaction->status == '1' &&
-                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
-                                    0)) > 0)
+                                @elseif ($transaction->status == '1' && count($transaction->refunds->where('transaction_id', $transaction->id)->where('status', 0)) > 0)
                                     <p class="my-0 text-warning font-weight-bold">Refund Status: Pending</p>
-                                @elseif ($transaction->status == '1' &&
-                                    count($transaction->refunds->where('transaction_id', $transaction->id)->where('status',
-                                    2)) > 0)
+                                @elseif ($transaction->status == '1' && count($transaction->refunds->where('transaction_id', $transaction->id)->where('status', 2)) > 0)
                                     <p class="my-0 text-danger font-weight-bold">Refund Status: Rejected</p>
                                 @elseif($transaction->status == '1')
                                     <p class="my-0 text-success font-weight-bold">Shipped</p>
@@ -79,10 +77,16 @@
                                 @endif
                                 @if ($transaction->status == '0')
                                     @if ($transaction->payment_id != 1001)
-                                        <a href="{{ route('page.paymentconfirmation') }}"
+                                        <a onclick="event.preventDefault();
+                                                document.getElementById('paynowform').submit();"
                                             class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
                                             Now
                                         </a>
+                                        <form action="{{ route('page.paymentconfirmation') }}" method="post"
+                                            id="paynowform">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $transaction->order_number }}">
+                                        </form>
                                     @else
                                         <a onclick="event.preventDefault(); opensnap('{{ $transaction->snaptoken }}')"
                                             class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
