@@ -53,7 +53,7 @@
                     <li class="nav-item mx-4">
                         <a href="{{ route('user.user.index') }}"
                             class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                            <span class="fa fa-fw fa-user me-2"></span>Hi, {{Auth::user()->first_name}} !
+                            <span class="fa fa-fw fa-user me-2"></span>Hi, {{ Auth::user()->first_name }} !
                         </a>
                     </li>
                     @if (Route::current()->getName() != 'user.cart.index')
@@ -296,6 +296,10 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
+            var hostname = "{{ request()->getHost() }}"
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            }
             $.post(url + "/cart/" + id, {
                     _token: CSRF_TOKEN,
                     _method: "DELETE",
@@ -352,6 +356,10 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
+            var hostname = "{{ request()->getHost() }}"
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            }
             $.post(url + "/cart/additem", {
                     _token: CSRF_TOKEN,
                     id: id
@@ -406,6 +414,10 @@
             if (parseInt($('.quantity-counter' + id).html()) > 0) {
                 $('#cart-loader').removeClass('d-none');
                 $('#cart-mobile-loader').removeClass('d-none');
+                var hostname = "{{ request()->getHost() }}"
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                }
                 $.post(url + "/cart/subtractitem", {
                         _token: CSRF_TOKEN,
                         id: id
@@ -461,6 +473,10 @@
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $('#cart-loader').removeClass('d-none');
             $('#cart-mobile-loader').removeClass('d-none');
+            var hostname = "{{ request()->getHost() }}"
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            }
             $.post(url + "/cart/additem", {
                     _token: CSRF_TOKEN,
                     id: id
@@ -510,6 +526,10 @@
             if (parseInt($('.quantity-counter-mobile' + id).html()) > 0) {
                 $('#cart-loader').removeClass('d-none');
                 $('#cart-mobile-loader').removeClass('d-none');
+                var hostname = "{{ request()->getHost() }}"
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                }
                 $.post(url + "/cart/subtractitem", {
                         _token: CSRF_TOKEN,
                         id: id

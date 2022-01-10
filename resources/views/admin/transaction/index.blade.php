@@ -32,23 +32,28 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="menunggu-pembayaran-tab" type="button"
-                            data-bs-toggle="tab">MENUNGGU PEMBAYARAN <span class="badge-argavell">{{count($badges->where('status', '0'))}}</span></button>
+                            data-bs-toggle="tab">MENUNGGU PEMBAYARAN <span
+                                class="badge-argavell">{{ count($badges->where('status', '0')) }}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="pesanan-baru-tab" type="button"
-                            data-bs-toggle="tab">PESANAN BARU <span class="badge-argavell">{{count($badges->where('status', '4'))}}</span></button>
+                            data-bs-toggle="tab">PESANAN BARU <span
+                                class="badge-argavell">{{ count($badges->where('status', '4')) }}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="siap-dikirim-tab" type="button"
-                            data-bs-toggle="tab">SIAP DIKIRIM <span class="badge-argavell">{{count($badges->where('status', '5'))}}</span></button>
+                            data-bs-toggle="tab">SIAP DIKIRIM <span
+                                class="badge-argavell">{{ count($badges->where('status', '5')) }}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="dalam-pengiriman-tab" type="button"
-                            data-bs-toggle="tab">DALAM PENGIRIMAN <span class="badge-argavell">{{count($badges->where('status', '3'))}}</span></button>
+                            data-bs-toggle="tab">DALAM PENGIRIMAN <span
+                                class="badge-argavell">{{ count($badges->where('status', '3')) }}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="dikomplain-tab" type="button"
-                            data-bs-toggle="tab">DIKOMPLAIN <span class="badge-argavell">{{count($refunds->where('status', '0'))}}</span></button>
+                            data-bs-toggle="tab">DIKOMPLAIN <span
+                                class="badge-argavell">{{ count($refunds->where('status', '0')) }}</span></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link font-weight-bold" id="pesanan-selesai-tab" type="button"
@@ -109,7 +114,7 @@
         </div> --}}
         <div class="mx-2" id="select-all-download">
             <button class="btn btn-admin-light shadow-sm text-decoration-none" id="button-download-submit" onclick="event.preventDefault();
-                                    document.getElementById('download-product-list-form').submit();">
+                                        document.getElementById('download-product-list-form').submit();">
                 Download Daftar Produk
             </button>
         </div>
@@ -132,7 +137,7 @@
             $('#file-bukti').html(event.target.files[0].name);
             $('#no-bukti').removeClass('d-block').addClass('d-none');
             $('#yes-bukti').removeClass('d-none').addClass('d-block');
-            $('#transaction-button-'+order).prop("disabled", false);
+            $('#transaction-button-' + order).prop("disabled", false);
         };
     </script>
     <script>
@@ -141,7 +146,14 @@
             $('#filter-date').daterangepicker({
                 opens: 'left'
             }, function(start, end, label) {
-                $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+                var hostname = "{{ request()->getHost() }}"
+                var url = ""
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                } else {
+                    url = "{{ config('app.url') }}"
+                }
+                $.post(url + "/admin/transaction/fetch_data_" + method, {
                         _token: CSRF_TOKEN,
                         start: start.format('YYYY-MM-DD'),
                         end: end.format('YYYY-MM-DD')
@@ -256,7 +268,14 @@
 
         function fetch_data_by_name() {
             changePageMenu();
-            $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val(),
                     sort: $('#sort').val()
@@ -271,7 +290,14 @@
 
         function fetch_data_sort() {
             changePageMenu();
-            $.post('{{ config('app.url') }}' + "/admin/transaction/fetch_data_" + method, {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/transaction/fetch_data_" + method, {
                     _token: CSRF_TOKEN,
                     data: $('#input-search').val(),
                     sort: $('#sort').val()
@@ -521,7 +547,14 @@
         }
 
         function refreshTransactionListOnAcceptModal() {
-            $.post('{{ config('app.url') }}' + "/admin/transaction/refresh_transaction_list_on_accept_modal", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/transaction/refresh_transaction_list_on_accept_modal", {
                     _token: CSRF_TOKEN,
                     data: accept_array,
                 })

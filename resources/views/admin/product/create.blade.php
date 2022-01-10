@@ -204,7 +204,14 @@
         function addSize() {
             sizes.push([0, 0, 0, 0]);
             $('#item-sizes').val(sizes);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_sizes", {
                     _token: CSRF_TOKEN,
                     sizes: sizes
                 })
@@ -220,7 +227,14 @@
             if (sizes.length > 1) {
                 sizes.splice(index, 1);
                 $('#item-sizes').val(sizes);
-                $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                var hostname = "{{ request()->getHost() }}"
+                var url = ""
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                } else {
+                    url = "{{ config('app.url') }}"
+                }
+                $.post(url + "/admin/product/add_sizes", {
                         _token: CSRF_TOKEN,
                         sizes: sizes
                     })
@@ -289,7 +303,14 @@
             $('#bundle-items').val(bundleItems);
             $('#bundle-item-sizes').val(bundleItemSizes);
             $('#bundle-item-keys').val(bundleItemKeys);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
                     items: bundleItems,
                     keys: bundleItemKeys
@@ -311,7 +332,14 @@
             $('#bundle-items').val(bundleItems);
             $('#bundle-item-sizes').val(bundleItemSizes);
             $('#bundle-item-keys').val(bundleItemKeys);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
                     items: bundleItems,
                     keys: bundleItemKeys

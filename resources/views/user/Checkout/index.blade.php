@@ -235,8 +235,7 @@ function rupiah($angka)
                             <label class="form-check-label" for="payment_radio_1001">
                                 Online Payment
                             </label>
-                            <div class="collapse" id="collapse1001"
-                                data-bs-parent="#paymentGroup">
+                            <div class="collapse" id="collapse1001" data-bs-parent="#paymentGroup">
                             </div>
                         </div>
                     </div>
@@ -339,7 +338,14 @@ function rupiah($angka)
         });
 
         function newTransactionOnline(token, status, snaptoken) {
-            $.post('{{ config('app.url') }}' + "/transaction/online/store", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/transaction/online/store", {
                     _token: token,
                     shipping_method: $("input[name=shipping_method]:checked").val(),
                     shipping_cost: $("input[name=shipping_cost]").val(),
@@ -374,7 +380,14 @@ function rupiah($angka)
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var price = parseInt($('#summary_total').val());
             if ($('#payment_radio_1001').is(':checked')) {
-                $.post('{{ config('app.url') }}' + "/transaction/getsnap", {
+                var hostname = "{{ request()->getHost() }}"
+                var url = ""
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                } else {
+                    url = "{{ config('app.url') }}"
+                }
+                $.post(url + "/transaction/getsnap", {
                         _token: CSRF_TOKEN,
                         price: price,
                         phone: $('#phone_number').val()
@@ -408,7 +421,14 @@ function rupiah($angka)
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         $('#province').on('change', function(e) {
-            $.post("{{ config('app.url') }}" + "/cart/getcity", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/cart/getcity", {
                     _token: CSRF_TOKEN,
                     province: $('#province').val(),
                 })
@@ -432,7 +452,14 @@ function rupiah($angka)
         });
 
         function get_shipment(city_id) {
-            $.post("{{ config('app.url') }}" + "/cart/getshipment", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/cart/getshipment", {
                     _token: CSRF_TOKEN,
                     weight: {{ $weight }},
                     city_id: city_id,

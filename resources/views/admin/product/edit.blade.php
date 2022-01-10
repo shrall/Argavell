@@ -196,7 +196,7 @@
                             <div class="col-6">
                                 <div class="btn btn-admin-gray w-100"
                                     onclick="event.preventDefault();
-                                                                                        document.getElementById('delete-product-form').submit();">
+                                                                                            document.getElementById('delete-product-form').submit();">
                                     Hapus
                                 </div>
                             </div>
@@ -240,7 +240,14 @@
         function addSize() {
             sizes.push([0, 0, 0, 0]);
             $('#item-sizes').val(sizes);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_sizes", {
                     _token: CSRF_TOKEN,
                     sizes: sizes
                 })
@@ -256,7 +263,14 @@
             if (sizes.length > 1) {
                 sizes.splice(index, 1);
                 $('#item-sizes').val(sizes);
-                $.post('{{ config('app.url') }}' + "/admin/product/add_sizes", {
+                var hostname = "{{ request()->getHost() }}"
+                var url = ""
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                } else {
+                    url = "{{ config('app.url') }}"
+                }
+                $.post(url + "/admin/product/add_sizes", {
                         _token: CSRF_TOKEN,
                         sizes: sizes
                     })
@@ -338,7 +352,14 @@
             $('#bundle-items').val(bundleItems);
             $('#bundle-item-sizes').val(bundleItemSizes);
             $('#bundle-item-keys').val(bundleItemKeys);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
                     items: bundleItems,
                     keys: bundleItemKeys
@@ -357,13 +378,20 @@
             bundleItems.splice(index, 1);
             bundleItemSizes.splice(index, 1);
             bundleItemKeys.splice(index, 1);
-        console.log(bundleItems);
-        console.log(bundleItemSizes);
-        console.log(bundleItemKeys);
+            console.log(bundleItems);
+            console.log(bundleItemSizes);
+            console.log(bundleItemKeys);
             $('#bundle-items').val(bundleItems);
             $('#bundle-item-sizes').val(bundleItemSizes);
             $('#bundle-item-keys').val(bundleItemKeys);
-            $.post('{{ config('app.url') }}' + "/admin/product/add_bundle_item", {
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/admin/product/add_bundle_item", {
                     _token: CSRF_TOKEN,
                     items: bundleItems,
                     keys: bundleItemKeys
