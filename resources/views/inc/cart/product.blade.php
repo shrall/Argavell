@@ -51,7 +51,7 @@
                 <p class="font-proxima-nova font-weight-bold mb-1">{{ $item->product->name }}
                     @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
                 </p>
-                @if ($item->price_discount != null)
+                @if ($item->price_discount != null || $item->price_discount != 0)
                     <div class="d-flex font-proxima-nova">
                         <div class="position-relative">
                             <span class="text-secondary cross">IDR
