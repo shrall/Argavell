@@ -40,7 +40,7 @@ class RefundController extends Controller
     {
         if (Transaction::where('order_number', '=', $request['order_number'])->exists()) {
             $transaction = Transaction::where('order_number', $request['order_number'])->first();
-            if ($transaction->status == '1') {
+            if ($transaction->status == '1' || $transaction->status == '3') {
                 if ($request->has('condition')) {
                     $condition = time() . '-' . $request['condition']->getClientOriginalName();
                     $request->condition->move(public_path('refunds'), $condition);

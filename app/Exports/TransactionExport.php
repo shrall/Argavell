@@ -33,13 +33,13 @@ class TransactionExport implements FromView, ShouldAutoSize, WithStyles, WithCol
             return view('admin.transaction.export', [
                 'transactions' => Transaction::where('created_at', '>=', $this->start)
                     ->where('created_at', '<=', $this->end)
-                    ->where('status', 4)->get()
+                    ->where('status', '4')->get()
             ]);
         } else if ($this->type == 'canceled') {
             return view('admin.transaction.export', [
                 'transactions' => Transaction::where('created_at', '>=', $this->start)
                     ->where('created_at', '<=', $this->end)
-                    ->where('status', 2)->get()
+                    ->where('status', '2')->get()
             ]);
         }
     }

@@ -155,48 +155,42 @@
                             </div>
                             <div class="row">
                                 <div class="col-1"></div>
-                                <label class="col-2 text-start font-weight-bold">Stok</label>
-                                <label class="col-2 text-start font-weight-bold">Size (ml)</label>
-                                <label class="col-3 text-start font-weight-bold">Harga Produk</label>
-                                <label class="col-3 text-start font-weight-bold">Diskon</label>
+                                <label class="col-3 text-start font-weight-bold">Stok</label>
+                                <label class="col-3 text-start font-weight-bold">Size (ml)</label>
+                                <label class="col-4 text-start font-weight-bold">Harga Produk</label>
                                 <div class="col-1"></div>
                             </div>
                             <div class="row mb-3" id="product-info-sizes">
                                 @foreach ($product->size as $key => $size)
-                                    <div class="col-1 mb-2">{{ $loop->iteration }}.</div>
-                                    <div class="col-2 mb-2">
-                                        <input type="number" id="size-0{{ $key }}" class="form-control"
-                                            value={{ $product->stock[$key] }}
-                                            onkeyup="changeSize(0, {{ $key }});" />
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <input type="number" id="size-1{{ $key }}" class="form-control"
-                                            value={{ $product->size[$key] }}
-                                            onkeyup="changeSize(1, {{ $key }});" />
-                                    </div>
-                                    <div class="col-3 mb-2">
-                                        <input type="number" id="size-2{{ $key }}" class="form-control"
-                                            value={{ $product->price[$key] }}
-                                            onkeyup="changeSize(2, {{ $key }});" />
-                                    </div>
-                                    <div class="col-3 mb-2">
-                                        <input type="number" id="size-3{{ $key }}" class="form-control"
-                                            value={{ $product->price_discount[$key] }}
-                                            onkeyup="changeSize(3, {{ $key }});" />
-                                    </div>
-                                    <div class="col-1 mb-2">
-                                        <span class="fa fa-fw fa-trash-alt cursor-pointer"
-                                            onclick="deleteSize({{ $key }});"></span>
+                                    <div id="product-size-{{ $key }}" class="row">
+                                        <div class="col-1 mb-2">{{ $loop->iteration }}.</div>
+                                        <div class="col-3 mb-2">
+                                            <input type="number" id="size-0{{ $key }}" class="form-control"
+                                                value={{ $product->stock[$key] }}
+                                                onkeyup="changeSize(0, {{ $key }});" />
+                                        </div>
+                                        <div class="col-3 mb-2">
+                                            <input type="number" id="size-1{{ $key }}" class="form-control"
+                                                value={{ $product->size[$key] }}
+                                                onkeyup="changeSize(1, {{ $key }});" />
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            <input type="number" id="size-2{{ $key }}" class="form-control"
+                                                value={{ $product->price[$key] }}
+                                                onkeyup="changeSize(2, {{ $key }});" />
+                                        </div>
+                                        <div class="col-1 mb-2">
+                                            <span class="fa fa-fw fa-trash-alt cursor-pointer"
+                                                onclick="deleteSize({{ $key }});"></span>
+                                        </div>
                                     </div>
                                 @endforeach
-
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <div class="btn btn-admin-gray w-100"
-                                    onclick="event.preventDefault();
-                                                                                            document.getElementById('delete-product-form').submit();">
+                                    onclick="event.preventDefault(); document.getElementById('delete-product-form').submit();">
                                     Hapus
                                 </div>
                             </div>
@@ -261,6 +255,7 @@
 
         function deleteSize(index) {
             if (sizes.length > 1) {
+                $('#product-size-' + index).remove();
                 sizes.splice(index, 1);
                 $('#item-sizes').val(sizes);
                 var hostname = "{{ request()->getHost() }}"
@@ -378,9 +373,6 @@
             bundleItems.splice(index, 1);
             bundleItemSizes.splice(index, 1);
             bundleItemKeys.splice(index, 1);
-            console.log(bundleItems);
-            console.log(bundleItemSizes);
-            console.log(bundleItemKeys);
             $('#bundle-items').val(bundleItems);
             $('#bundle-item-sizes').val(bundleItemSizes);
             $('#bundle-item-keys').val(bundleItemKeys);

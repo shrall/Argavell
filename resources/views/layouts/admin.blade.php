@@ -67,11 +67,11 @@
                                     class="ms-1 d-none d-sm-inline">Products</span>
                             </a>
                         </li>
-                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.voucher.index' || Route::current()->getName() == 'admin.voucher.create' || Route::current()->getName() == 'admin.voucher.edit') active @endif">
-                            <a href="{{ route('admin.voucher.index') }}"
+                        <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.promotion.index' || Route::current()->getName() == 'admin.promotion.create' || Route::current()->getName() == 'admin.promotion.edit') active @endif">
+                            <a href="{{ route('admin.promotion.index') }}"
                                 class="text-decoration-none font-proxima-nova font-weight-bold align-middle px-0">
                                 <span class="fa fa-fw fa-ticket-alt mr-2"></span><span
-                                    class="ms-1 d-none d-sm-inline">Vouchers</span>
+                                    class="ms-1 d-none d-sm-inline">Promotions</span>
                             </a>
                         </li>
                         <li class="nav-item mb-4 w-100 pe-5 @if (Route::current()->getName() == 'admin.user.index' || Route::current()->getName() == 'admin.user.show') active @endif">

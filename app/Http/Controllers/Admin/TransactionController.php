@@ -31,7 +31,7 @@ class TransactionController extends Controller
     {
         $this->check_response_limit();
         $this->check_shipping_etd();
-        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(15);
         $badges = Transaction::all();
         $refunds = Refund::all();
         return view('admin.transaction.index', compact('transactions', 'badges', 'refunds'));
@@ -150,48 +150,48 @@ class TransactionController extends Controller
 
     function fetch_data_all()
     {
-        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_waiting()
     {
-        $transactions = Transaction::where('status', '0')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '0')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_new()
     {
-        $transactions = Transaction::where('status', '4')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '4')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_ready()
     {
-        $transactions = Transaction::where('status', '5')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '5')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_ondelivery()
     {
-        $transactions = Transaction::where('status', '3')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '3')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_complain()
     {
-        $refunds = Refund::orderBy('created_at', 'desc')->paginate(2);
+        $refunds = Refund::orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.refund', compact('refunds'))->render();
     }
     function fetch_data_canceled()
     {
-        $transactions = Transaction::where('status', '2')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '2')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 
     function fetch_data_delivered()
     {
-        $transactions = Transaction::where('status', '1')->orderBy('created_at', 'desc')->paginate(2);
+        $transactions = Transaction::where('status', '1')->orderBy('created_at', 'desc')->paginate(15);
         return view('admin.transaction.inc.transaction', compact('transactions'))->render();
     }
 

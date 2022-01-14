@@ -143,32 +143,29 @@
                             </div>
                             <div class="row">
                                 <div class="col-1"></div>
-                                <label class="col-2 text-start font-weight-bold">Stok</label>
-                                <label class="col-2 text-start font-weight-bold">Size (ml)</label>
+                                <label class="col-3 text-start font-weight-bold">Stok</label>
+                                <label class="col-3 text-start font-weight-bold">Size (ml)</label>
                                 <label class="col-3 text-start font-weight-bold">Harga Produk</label>
-                                <label class="col-3 text-start font-weight-bold">Diskon</label>
                                 <div class="col-1"></div>
                             </div>
                             <div class="row mb-3" id="product-info-sizes">
-                                <div class="col-1">1.</div>
-                                <div class="col-2">
-                                    <input type="number" id="size-00" class="form-control" value=0
-                                        onkeyup="changeSize(0, 0);" />
-                                </div>
-                                <div class="col-2">
-                                    <input type="number" id="size-10" class="form-control" value=0
-                                        onkeyup="changeSize(1, 0);" />
-                                </div>
-                                <div class="col-3">
-                                    <input type="number" id="size-20" class="form-control" value=0
-                                        onkeyup="changeSize(2, 0);" />
-                                </div>
-                                <div class="col-3">
-                                    <input type="number" id="size-30" class="form-control" value="0"
-                                        onkeyup="changeSize(3, 0);" />
-                                </div>
-                                <div class="col-1">
-                                    <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteSize(0);"></span>
+                                <div id="product-size-1" class="row">
+                                    <div class="col-1">1.</div>
+                                    <div class="col-3">
+                                        <input type="number" id="size-00" class="form-control" value=0
+                                            onkeyup="changeSize(0, 0);" />
+                                    </div>
+                                    <div class="col-3">
+                                        <input type="number" id="size-10" class="form-control" value=0
+                                            onkeyup="changeSize(1, 0);" />
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="number" id="size-20" class="form-control" value=0
+                                            onkeyup="changeSize(2, 0);" />
+                                    </div>
+                                    <div class="col-1">
+                                        <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteSize(0);"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -225,6 +222,7 @@
 
         function deleteSize(index) {
             if (sizes.length > 1) {
+                $('#product-size-' + index).remove();
                 sizes.splice(index, 1);
                 $('#item-sizes').val(sizes);
                 var hostname = "{{ request()->getHost() }}"

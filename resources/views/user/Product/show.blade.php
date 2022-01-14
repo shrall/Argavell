@@ -508,9 +508,8 @@
         $('#size').on('change', function(e) {
             $('#price').val(product['price'][$('#size').val()]);
             $('#price_discount').val(product['price_discount'][$('#size').val()]);
-            $('.product-price').html(product['price'][$('#size').val()]);
-            $('.product-price-with-discount').html(product['price'][$('#size').val()] - product['price_discount'][$(
-                '#size').val()]);
+            $('.product-price').html((product['price'][$('#size').val()]).formatMoney(0, '.', ''));
+            $('.product-price-with-discount').html((product['price'][$('#size').val()] - product['price_discount'][$('#size').val()]).formatMoney(0, '.', ''));
             refreshPriceText();
         });
     </script>

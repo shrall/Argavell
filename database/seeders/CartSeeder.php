@@ -100,7 +100,7 @@ class CartSeeder extends Seeder
         $cart->size = "300ml";
         $cart->key = 0;
         $cart->price = 130000;
-        $cart->product_id = 4;
+        $cart->product_id = 2;
         $cart->user_id = 1;
         $cart->save();
 
@@ -110,7 +110,7 @@ class CartSeeder extends Seeder
         $cart->key = 0;
         $cart->price = 130000;
         $cart->price_discount = 30000;
-        $cart->product_id = 1;
+        $cart->product_id = 2;
         $cart->user_id = 1;
         $cart->save();
 
@@ -120,7 +120,7 @@ class CartSeeder extends Seeder
         $cart->key = 0;
         $cart->price = 130000;
         $cart->price_discount = 30000;
-        $cart->product_id = 1;
+        $cart->product_id = 2;
         $cart->user_id = 1;
         $cart->save();
 

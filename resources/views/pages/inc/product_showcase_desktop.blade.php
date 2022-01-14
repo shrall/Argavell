@@ -2,7 +2,7 @@
     @foreach ($products as $product)
         @if ($product->type == '0')
             @if ($product->bundle == '1')
-                @if ($product->bundle_start >= now() && $product->bundle_end <= now())
+                @if ($product->bundle_start <= now() && $product->bundle_end >= now())
                     <div class="col-sm-12 col-md-3 p-0" style="width: 18vw;">
                         <a href="{{ route('product.show', $product->slug) }}">
                             <div class="landing-product position-relative w-100 mb-3"

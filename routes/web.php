@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\HourController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PolicyController as AdminPolicyController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\PromotionController as AdminPromotionController;
 use App\Http\Controllers\Admin\ProofController as AdminProofController;
 use App\Http\Controllers\Admin\RefundController as AdminRefundController;
 use App\Http\Controllers\Admin\ResellerController as AdminResellerController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\User\AddressController;
 use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\FaqController;
@@ -115,6 +117,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::resource('tnc', AdminTncController::class);
     Route::resource('transaction', AdminTransactionController::class);
     Route::resource('voucher', AdminVoucherController::class);
+    Route::resource('promotion', AdminPromotionController::class);
 
     Route::post('transaction/label/view', [AdminTransactionController::class, 'view_label_transaction'])->name('transaction.viewlabeltransaction');
     Route::post('transaction/label/download', [AdminTransactionController::class, 'download_label_transaction'])->name('transaction.downloadlabeltransaction');
@@ -147,6 +150,8 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
 
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
     Route::post('product/add_sizes', [AdminProductController::class, 'add_sizes'])->name('product.addsizes');
+
+    Route::post('promotion/get_product', [AdminPromotionController::class, 'get_product'])->name('promotion.getproduct');
 
     Route::resource('user', AdminUserController::class);
     Route::get('change-password', [AdminUserController::class, 'changepassword'])->name('changepassword');

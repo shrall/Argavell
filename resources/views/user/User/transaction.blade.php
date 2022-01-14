@@ -78,7 +78,7 @@
                                 @if ($transaction->status == '0')
                                     @if ($transaction->payment_id != 1001)
                                         <a onclick="event.preventDefault();
-                                                document.getElementById('paynowform').submit();"
+                                                        document.getElementById('paynowform').submit();"
                                             class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Pay
                                             Now
                                         </a>
@@ -99,10 +99,26 @@
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $transaction->id }}">
                                         <button type="submit"
-                                            class="btn btn-argavell text-center w-100 mt-2 mb-4 py-2 cursor-pointer border-0">Finish
+                                            class="btn btn-argavell text-center w-100 mt-2 py-2 cursor-pointer border-0">Finish
                                             Order
                                         </button>
                                     </form>
+                                    <a href="{{ route('page.policy') }}"
+                                        class="btn btn-argavell text-center w-100 mt-2 py-2 cursor-pointer border-0">Complain
+                                    </a>
+                                @elseif ($transaction->status == '1')
+                                    <form action="{{ route('user.transaction.buyagain') }}" method="post"
+                                        id="buy-again-{{ $transaction->id }}">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                        <button type="submit"
+                                            class="btn btn-argavell text-center w-100 mt-2 py-2 cursor-pointer border-0">Buy
+                                            again
+                                        </button>
+                                    </form>
+                                    <a href="{{ route('page.policy') }}"
+                                        class="btn btn-argavell text-center w-100 mt-2 py-2 cursor-pointer border-0">Complain
+                                    </a>
                                 @else
                                     <form action="{{ route('user.transaction.buyagain') }}" method="post"
                                         id="buy-again-{{ $transaction->id }}">

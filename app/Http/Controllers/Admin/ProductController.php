@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bundle;
+use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -51,7 +53,7 @@ class ProductController extends Controller
                 array_push($stocks, $ts[0]);
                 array_push($sizes, $ts[1]);
                 array_push($prices, $ts[2]);
-                array_push($price_discounts, $ts[3]);
+                array_push($price_discounts, 0);
             }
             Product::create([
                 'name' => $request->name,
@@ -125,6 +127,11 @@ class ProductController extends Controller
         $products = Product::where('bundle', '0')->get();
         return view('admin.product.edit', compact('products', 'product'));
     }
+    public function edit_promotion(Product $product)
+    {
+        $products = Product::where('bundle', '0')->get();
+        return view('admin.voucher.edit', compact('products', 'product'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -145,11 +152,7 @@ class ProductController extends Controller
                 array_push($stocks, $ts[0]);
                 array_push($sizes, $ts[1]);
                 array_push($prices, $ts[2]);
-                if (!$ts[3] == 'NaN') {
-                    array_push($price_discounts, $ts[3]);
-                } else {
-                    array_push($price_discounts, 0);
-                }
+                array_push($price_discounts, 0);
             }
             $product->update([
                 'name' => $request->name,
@@ -210,6 +213,18 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $bundles = Bundle::where('product_id', $product->id)->get();
+        foreach ($bundles as $key => $bundle) {
+            $bundle->delete();
+        }
+        $carts = Cart::where('product_id', $product->id)->where('transaction_id', null)->get();
+        foreach ($carts as $key => $cart) {
+            $cart->delete();
+        }
+        $promotions = Promotion::where('product_id', $product->id)->get();
+        foreach ($promotions as $key => $promotion) {
+            $promotion->delete();
+        }
         $product->delete();
         return redirect()->route('admin.product.index');
     }

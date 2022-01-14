@@ -80,8 +80,11 @@ function rupiah($angka)
                             <div class="row">
                                 @foreach ($transaction->carts as $item)
                                     <div class="col-6">
-                                        <h6 class="font-weight-black">{{ $item->product->name }} ({{ $item->size }})</h6>
-                                        <h6>{{ $item->qty }}x Rp. {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}</h6>
+                                        <h6 class="font-weight-black">{{ $item->product->name }}
+                                            ({{ $item->size }})</h6>
+                                        <h6>{{ $item->qty }}x Rp.
+                                            {{ number_format($item->price - $item->price_discount, 0, ',', '.') }}
+                                        </h6>
                                     </div>
                                 @endforeach
                             </div>
@@ -89,8 +92,8 @@ function rupiah($angka)
                     </div>
                 </div>
                 <div class="col-3 px-4 border-start border-end border-2">
-                    <p class="my-0">Address @if ($transaction->is_cetak == '1')<span
-                                class="btn btn-gray btn-panel p-0 px-2">Sudah dicetak</span> @endif
+                    <p class="my-0">Address @if ($transaction->is_cetak == '1')
+                            <span class="btn btn-gray btn-panel p-0 px-2">Sudah dicetak</span> @endif
                     </p>
                     <p class="my-0 text-secondary">{{ $transaction->user->first_name }}
                         {{ $transaction->user->last_name }} ({{ $transaction->address->phone }})
@@ -115,7 +118,7 @@ function rupiah($angka)
                                 <input type="hidden" name="input_method" value="send">
                                 <input type="text" name="resi" id="input-resi{{ $loop->iteration }}"
                                     class="form-control" placeholder="Ketik Nomor Resi Disini"
-                                    value="{{ $transaction->nomor_resi ?? null }}" @if ($transaction->status != '5') disabled @endif>
+                                    value="{{ $transaction->nomor_resi ?? null }}" @if ($transaction->status != '5' && $transaction->status != '3') disabled @endif>
                             </form>
                             @if ($transaction->status == 0 || $transaction->status == 4)
                                 <p class="my-0 text-danger fst-italic">*Terima pesanan terlebih dahulu</p>
@@ -156,7 +159,8 @@ function rupiah($angka)
                     <span class="font-weight-bold">Total Bayar</span>
                 </div>
                 <div class="col-2 text-end">
-                    <span class="font-weight-bold">{{ rupiah($transaction->price_total + $transaction->shipping_cost) }}</span>
+                    <span
+                        class="font-weight-bold">{{ rupiah($transaction->price_total + $transaction->shipping_cost) }}</span>
                 </div>
             </div>
         </div>
@@ -169,7 +173,7 @@ function rupiah($angka)
                     </a>
                 </div>
                 <div class="ms-auto">
-                    @if ($transaction->status == '4')
+                    @if ($transaction->status == '4' || $transaction->status == '5')
                         <button class="btn btn-danger text-white text-decoration-none me-2" data-bs-toggle="modal"
                             data-bs-target="#cancelModal{{ $transaction->id }}">
                             Tolak Pesanan
@@ -187,9 +191,15 @@ function rupiah($angka)
                             document.getElementById('form-send-transaction-{{ $transaction->id }}').submit();">
                             Kirim Pesanan
                         </button>
+                    @elseif ($transaction->status == '3')
+                        <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" onclick="event.preventDefault();
+                                document.getElementById('form-send-transaction-{{ $transaction->id }}').submit();">
+                            Update Nomor Resi
+                        </button>
                     @elseif ($transaction->status == '0')
                         <form action="{{ route('admin.transaction.store') }}"
-                            id="form-waiting-transaction-{{ $transaction->id }}" method="post" enctype="multipart/form-data">
+                            id="form-waiting-transaction-{{ $transaction->id }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="transaction_id[]"
                                 id="input-transaction-waiting{{ $transaction->id }}"
@@ -199,11 +209,11 @@ function rupiah($angka)
                                 <div class="btn btn-admin-argavell">
                                     <label for="image" class="cursor-pointer">Upload Pembayaran</label>
                                     <input type="file" name="image" id="image" class="d-none" accept="image/*"
-                                        required onchange="loadFile(event, {{$loop->iteration}})">
+                                        required onchange="loadFile(event, {{ $loop->iteration }})">
                                 </div>
                             @endif
-                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2" id="transaction-button-{{$loop->iteration}}"
-                                @if (count($transaction->proofs) <= 0) disabled @endif>
+                            <button class="btn btn-admin-argavell text-white text-decoration-none ms-2"
+                                id="transaction-button-{{ $loop->iteration }}" @if (count($transaction->proofs) <= 0) disabled @endif>
                                 Konfirmasi Pembayaran
                             </button>
                         </form>
