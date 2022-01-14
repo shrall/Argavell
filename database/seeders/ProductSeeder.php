@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
         $product->name = "Argan Oil";
         $product->slug = "argan-oil";
         $product->price = [100000, 200000, 300000];
-        $product->price_discount = [30000, 0, 30000];
+        $product->price_discount = [0, 0, 0];
         $product->stock = [10, 20, 30];
         $product->weight = 100;
         $product->description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
         $product->name = "Argan Bundle";
         $product->slug = "argan-bundle";
         $product->price = [100000, 200000, 300000];
-        $product->price_discount = [30000, 0, 30000];
+        $product->price_discount = [0, 0, 0];
         $product->stock = [10, 20, 30];
         $product->weight = 100;
         $product->description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -72,7 +72,7 @@ class ProductSeeder extends Seeder
         $product->name = "Kleanse Hand Gel";
         $product->slug = "kleanse-hand-gel";
         $product->price = [100000, 200000];
-        $product->price_discount = [20000, 0];
+        $product->price_discount = [0, 0];
         $product->stock = [10, 20];
         $product->weight = 100;
         $product->description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -89,7 +89,7 @@ class ProductSeeder extends Seeder
         $product->name = "Kleanse Antiseptic Handwash";
         $product->slug = "kleanse-antiseptic-handwash";
         $product->price = [100000, 200000];
-        $product->price_discount = [10000, 0];
+        $product->price_discount = [0, 0];
         $product->stock = [10, 20];
         $product->weight = 100;
         $product->description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
@@ -106,7 +106,7 @@ class ProductSeeder extends Seeder
         $product->name = "Kleanse Bundle";
         $product->slug = "kleanse-bundle";
         $product->price = [100000, 200000];
-        $product->price_discount = [10000, 0];
+        $product->price_discount = [0, 0];
         $product->stock = [10, 20];
         $product->weight = 100;
         $product->description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
