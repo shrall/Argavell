@@ -1,488 +1,494 @@
 @font-face {
-  font-family: Bauer;
-  src: url(../fonts/Bauer/03922_BAUBODN.ttf);
+    font-family: Bauer;
+    src: url(../fonts/Bauer/03922_BAUBODN.ttf);
 }
 @font-face {
-  font-family: Bauer;
-  src: url(../fonts/Bauer/03938_BauerBBd.ttf);
-  font-weight: bold;
+    font-family: Bauer;
+    src: url(../fonts/Bauer/03938_BauerBBd.ttf);
+    font-weight: bold;
 }
 @font-face {
-  font-family: ProximaNova;
-  src: url(../fonts/ProximaNova/ProximaNovaRegular.otf);
+    font-family: ProximaNova;
+    src: url(../fonts/ProximaNova/ProximaNovaRegular.otf);
 }
 @font-face {
-  font-family: ProximaNova;
-  src: url(../fonts/ProximaNova/ProximaNovaBold.otf);
-  font-weight: bold;
+    font-family: ProximaNova;
+    src: url(../fonts/ProximaNova/ProximaNovaBold.otf);
+    font-weight: bold;
 }
 @font-face {
-  font-family: Gotham;
-  src: url(../fonts/Gotham/GothamBook.ttf);
+    font-family: Gotham;
+    src: url(../fonts/Gotham/GothamBook.ttf);
 }
 @font-face {
-  font-family: Gotham;
-  src: url(../fonts/Gotham/Gotham-Bold.otf);
-  font-weight: bold;
+    font-family: Gotham;
+    src: url(../fonts/Gotham/Gotham-Bold.otf);
+    font-weight: bold;
 }
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 /* background colors */
 .bg-footer {
-  background-color: #caac7b;
+    background-color: #caac7b;
 }
 .bg-navbar-mobile {
-  background-color: #bb9164;
+    background-color: #bb9164;
 }
 .bg-gray-light {
-  background-color: #f2f2f2;
+    background-color: #f2f2f2;
 }
 
 /* font settings */
 .font-bauer {
-  font-family: 'Bauer';
+    font-family: "Bauer";
 }
 
 .font-proxima-nova {
-  font-family: 'ProximaNova';
+    font-family: "ProximaNova";
 }
 
 .font-gotham {
-  font-family: 'Gotham';
+    font-family: "Gotham";
 }
 
 .font-weight-bold {
-  font-weight: 800 !important;
+    font-weight: 800 !important;
 }
 
 .font-weight-black {
-  font-weight: 900 !important;
+    font-weight: 900 !important;
 }
 
 /* text settings */
 .text-argavell {
-  color: #8a5b32;
+    color: #8a5b32;
 }
 .text-argavell:hover {
-  color: #8a5b32;
+    color: #8a5b32;
 }
 .text-argavell-link {
-  color: #8a5b32 !important;
+    color: #8a5b32 !important;
 }
 .text-argavell-link:hover {
-  color: #6a3b12 !important;
+    color: #6a3b12 !important;
 }
 .text-argavell-light {
-  color: #bb9164;
+    color: #bb9164;
 }
 .text-argavell-light:hover {
-  color: #bb9164;
+    color: #bb9164;
 }
 .text-argavell-lighter {
-  color: #c9ae98;
+    color: #c9ae98;
 }
 .text-argavell-lighter:hover {
-  color: #c9ae98;
+    color: #c9ae98;
 }
 .text-kleanse {
-  color: #4ac8e2;
+    color: #4ac8e2;
 }
 .text-kleanse:hover {
-  color: #4ac8e2;
+    color: #4ac8e2;
 }
 .text-kleanse-dark {
-  color: #177dbf;
+    color: #177dbf;
 }
 .text-kleanse-dark:hover {
-  color: #177dbf;
+    color: #177dbf;
 }
 .text-line {
-  color: #00b900;
+    color: #00b900;
 }
 .text-line:hover {
-  color: #00b900;
+    color: #00b900;
 }
 .text-whatsapp {
-  color: #4fce5d;
+    color: #4fce5d;
 }
 .text-whatsapp:hover {
-  color: #4fce5d;
+    color: #4fce5d;
 }
 .text-red {
-  color: #af6f80;
+    color: #af6f80;
 }
 .text-red:hover {
-  color: #af6f80;
+    color: #af6f80;
 }
 .text-blue {
-  color: #6f74af;
+    color: #6f74af;
 }
 .text-blue:hover {
-  color: #6f74af;
+    color: #6f74af;
 }
 .text-yellow {
-  color: #af9e6f;
+    color: #af9e6f;
 }
 .text-yellow:hover {
-  color: #af9e6f;
+    color: #af9e6f;
 }
 
 .text-decoration-none {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
 }
 .text-5xl {
-  font-size: 3rem;
-  line-height: 1;
+    font-size: 3rem;
+    line-height: 1;
 }
 .text-6xl {
-  font-size: 3.75rem;
-  line-height: 1;
+    font-size: 3.75rem;
+    line-height: 1;
 }
 .text-8xl {
-  font-size: 6rem;
-  line-height: 1;
+    font-size: 6rem;
+    line-height: 1;
 }
 .text-9xl {
-  font-size: 8rem;
-  line-height: 1;
+    font-size: 8rem;
+    line-height: 1;
 }
 .cross {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 .cross::after {
-  content: '';
-  width: 100%;
-  position: absolute;
-  right: 0;
-  top: 50%;
+    content: "";
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 50%;
 }
 .cross::after {
-  border-bottom: 1px solid #6c757d !important;
-  -webkit-transform: skewY(-10deg);
-  transform: skewY(-10deg);
+    border-bottom: 1px solid #6c757d !important;
+    -webkit-transform: skewY(-10deg);
+    transform: skewY(-10deg);
 }
 
 /* button settings */
 a:hover,
 .btn:hover {
-  color: #fff;
+    color: #fff;
 }
 .btn-argavell {
-  background-color: #8a5b32;
-  color: #fff;
-  border-radius: 50px;
+    background-color: #8a5b32;
+    color: #fff;
+    border-radius: 50px;
 }
 .btn-argavell:hover {
-  background-color: #6a3b12;
+    background-color: #6a3b12;
 }
 
 .btn-argavell-light {
-  background-color: #bb9164;
-  color: #fff;
-  border-radius: 50px;
+    background-color: #bb9164;
+    color: #fff;
+    border-radius: 50px;
 }
 .btn-argavell-light:hover {
-  background-color: #8a5b32;
+    background-color: #8a5b32;
 }
 
 .btn-kleanse {
-  background-color: #4ac8e2;
-  color: #fff;
-  border-radius: 50px;
+    background-color: #4ac8e2;
+    color: #fff;
+    border-radius: 50px;
 }
 .btn-kleanse:hover {
-  background-color: #2aa8c2;
+    background-color: #2aa8c2;
 }
 
 .btn-gray {
-  background-color: #adadad;
-  color: #fff;
-  border-radius: 50px;
+    background-color: #adadad;
+    color: #fff;
+    border-radius: 50px;
 }
 .btn-gray {
-  background-color: #8d8d8d;
+    background-color: #8d8d8d;
 }
 
 .btn-admin-argavell {
-  background-color: #8a5b32;
-  color: #fff;
+    background-color: #8a5b32;
+    color: #fff;
 }
 .btn-admin-argavell:hover {
-  background-color: #6a3b12;
+    background-color: #6a3b12;
 }
 
 .btn-admin-argavell-light {
-  background-color: #bb9164;
-  color: #fff;
+    background-color: #bb9164;
+    color: #fff;
 }
 .btn-admin-argavell-light:hover {
-  background-color: #8a5b32;
+    background-color: #8a5b32;
 }
 
 .btn-admin-light {
-  background-color: #fff;
-  color: #888;
+    background-color: #fff;
+    color: #888;
 }
 .btn-admin-light:hover {
-  background-color: #ddd;
-  color: #888 !important;
+    background-color: #ddd;
+    color: #888 !important;
 }
 
 .btn-admin-gray {
-  background-color: #adadad;
-  color: #fff;
+    background-color: #adadad;
+    color: #fff;
 }
 .btn-admin-gray:hover {
-  background-color: #8d8d8d;
+    background-color: #8d8d8d;
 }
 
 .btn-panel {
-  cursor: context-menu !important;
+    cursor: context-menu !important;
 }
 
 /* badge settings */
 
 .badge-argavell {
-  background-color:#bb9164;
-  color: #fff;
-  border-radius: 4px;
-  padding: 4px;
+    background-color: #bb9164;
+    color: #fff;
+    border-radius: 4px;
+    padding: 4px;
 }
 
 /* border settings */
 .border-argavell {
-  border-color: #8a5b32 !important;
+    border-color: #8a5b32 !important;
 }
 .border-kleanse {
-  border-color: #4ac8e2 !important;
+    border-color: #4ac8e2 !important;
 }
 /* other */
 
 .cursor-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /* custom */
 
 /* cart modal  */
 .modal-cart {
-  width: 30vw;
-  max-width: none;
-  height: 100%;
-  margin: 0 0 0 auto;
+    width: 30vw;
+    max-width: none;
+    height: 100%;
+    margin: 0 0 0 auto;
 }
 .modal-cart .modal-content {
-  height: 100%;
-  border: 0;
-  border-radius: 0;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
 }
 
 /* set background for auth pages */
 .auth-background {
-  background-image: url(../images/auth-background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
+    background-image: url(../images/auth-background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
 }
 /* landing page mid showcase */
 .landing-showcase-background {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
 }
 
 /* landing page product show case */
 .landing-product {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-  height: 50vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    height: 50vh;
+}
+.landing-product-new {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    height: 30vh;
 }
 
 .landing-product .sale-alert {
-  border-bottom-right-radius: 0.75rem;
-  color: #fff;
+    border-bottom-right-radius: 0.75rem;
+    color: #fff;
 }
 
 /* mobile landing page */
 
 .horizontal-scrollable > .row {
-  overflow-x: scroll;
+    overflow-x: scroll;
 }
 
 /* product detail */
 .product-detail {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center top;
-  height: 70vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    height: 70vh;
 }
 
 .nav-argavell .nav-link.active,
 .nav-argavell .show > .nav-link {
-  color: #8a5b32;
-  background-color: #fff;
-  border: 0;
-  border-bottom: 2px solid #8a5b32 !important;
+    color: #8a5b32;
+    background-color: #fff;
+    border: 0;
+    border-bottom: 2px solid #8a5b32 !important;
 }
 
 .nav-argavell .nav-link {
-  color: #afafaf;
-  background-color: #fff;
-  background: 0 0;
-  border: 0;
-  border-bottom: 2px solid #afafaf !important;
+    color: #afafaf;
+    background-color: #fff;
+    background: 0 0;
+    border: 0;
+    border-bottom: 2px solid #afafaf !important;
 }
 
 .nav-kleanse .nav-link.active,
 .nav-kleanse .show > .nav-link {
-  color: #4ac8e2;
-  background-color: #fff;
-  border: 0;
-  border-bottom: 2px solid #4ac8e2 !important;
+    color: #4ac8e2;
+    background-color: #fff;
+    border: 0;
+    border-bottom: 2px solid #4ac8e2 !important;
 }
 
 .nav-kleanse .nav-link {
-  color: #afafaf;
-  background-color: #fff;
-  background: 0 0;
-  border: 0;
-  border-bottom: 2px solid #afafaf !important;
+    color: #afafaf;
+    background-color: #fff;
+    background: 0 0;
+    border: 0;
+    border-bottom: 2px solid #afafaf !important;
 }
 
 /* payment confirmation  */
 .payment-confirmation-background {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
 }
 
 /* profile  */
 #account-sidebar li.active {
-  border-right: 4px solid #8a5b32 !important;
-  border-radius: 3px;
+    border-right: 4px solid #8a5b32 !important;
+    border-radius: 3px;
 }
 
 #account-sidebar li .active {
-  color: #8a5b32 !important;
-  font-weight: 600;
+    color: #8a5b32 !important;
+    font-weight: 600;
 }
 
 /* overwrite datatable  */
 .page-item.active .page-link {
-  background-color: #8a5b32 !important;
-  border-color: #8a5b32 !important;
+    background-color: #8a5b32 !important;
+    border-color: #8a5b32 !important;
 }
 
 /* overwrite radio buttons  */
 .form-check-input:checked {
-  background-color: #8a5b32 !important;
-  border-color: #8a5b32 !important;
+    background-color: #8a5b32 !important;
+    border-color: #8a5b32 !important;
 }
 
 /* admin page  */
 #admin-sidebar li a {
-  color: grey !important;
+    color: grey !important;
 }
 #admin-sidebar li.active {
-  border-right: 4px solid #8a5b32 !important;
-  border-radius: 3px;
+    border-right: 4px solid #8a5b32 !important;
+    border-radius: 3px;
 }
 #admin-sidebar li.active a {
-  color: #8a5b32 !important;
+    color: #8a5b32 !important;
 }
 
 /* admin dashboard  */
 .left-chart-gauge-box {
-  background-color: #eef0f5;
-  border-radius: 12px;
-  width: 100%;
-  height: 1vh;
+    background-color: #eef0f5;
+    border-radius: 12px;
+    width: 100%;
+    height: 1vh;
 }
 .left-chart-gauge {
-  border-radius: 12px;
-  height: 1vh;
+    border-radius: 12px;
+    height: 1vh;
 }
 .dot {
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
 }
 
 /* admin transactions */
 .card-admin-transactions {
-  border-left: 4px solid #bb9164 !important;
+    border-left: 4px solid #bb9164 !important;
 }
 .card-admin-transactions .card-header,
 .card-admin-transactions .card-footer {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 /* transaction label  */
 .argavell-label {
-  border-top: 25px solid #bb9164;
-  border-left: 1px solid #000;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
+    border-top: 25px solid #bb9164;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
 }
 .label-info {
-  border: 1px solid #b7b7b7;
-  color: #7e7e7e;
+    border: 1px solid #b7b7b7;
+    color: #7e7e7e;
 }
 
 /* design update */
 /* home */
 .carousel-overlay {
-  background-color: #000;
-  opacity: 20%;
-  z-index: 10;
-  height: 100%;
-  top: 0;
+    background-color: #000;
+    opacity: 20%;
+    z-index: 10;
+    height: 100%;
+    top: 0;
 }
 
 .landing-showcase-overlay {
-  background-color: #000;
-  opacity: 10%;
-  z-index: 10;
-  height: 100%;
-  top: 0;
+    background-color: #000;
+    opacity: 10%;
+    z-index: 10;
+    height: 100%;
+    top: 0;
 }
 
 /* argan products */
 .argan-benefits {
-  background: linear-gradient(358deg, #bb9164, #ffffff 95%);
-  background-size: 400% 400%;
+    background: linear-gradient(358deg, #bb9164, #ffffff 95%);
+    background-size: 400% 400%;
 }
 
 /* components */
 .inset-0 {
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .bg-white {
-  background-color: white;
+    background-color: white;
 }
 
 .bg-black-50 {
-  background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }

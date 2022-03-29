@@ -36,9 +36,9 @@
                             class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
                 </div>
             @endif
-            <p class="font-proxima-nova font-weight-bold">Description</p>
-            <p>{{ $product->description }}</p>
-            @if ($product->type == '0')
+            {{-- <p class="font-proxima-nova font-weight-bold">Description</p>
+            <p>{{ $product->description }}</p> --}}
+            {{-- @if ($product->type == '0')
                 <p class="font-proxima-nova font-weight-bold">Argavell Facts</p>
             @else
                 <p class="font-proxima-nova font-weight-bold">Kleanse Facts</p>
@@ -51,7 +51,7 @@
                         <li><span class="fa fa-fw fa-tint text-kleanse me-2"></span>{{ $fact }}</li>
                     @endif
                 @endforeach
-            </ul>
+            </ul> --}}
             <form action="{{ route('user.cart.store') }}" method="post" id="form-product">
                 @csrf
                 <div class="row mb-3">
@@ -114,37 +114,34 @@
                         @if ($product->type == '0')
                             <button type="submit"
                                 class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                                @if (Auth::user()->role != '0')
-                                onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
                             @else onclick="event.preventDefault(); addToCart({{ $product->id }},
-                                '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModal"
-                        @endif>Add to Cart
-                        </button>
-                        <button type="submit"
-                            class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                            @if (Auth::user()->role != '0') onclick="event.preventDefault();
+                                '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
+                                to Cart
+                            </button>
+                            <button type="submit"
+                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                @if (Auth::user()->role != '0') onclick="event.preventDefault();
                             alert('Kamu sedang login sebagai admin!');"
                         @else onclick="event.preventDefault(); addToCart({{ $product->id }},
-                            '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModalMobile"
-                            @endif>Add to Cart
-                        </button>
-                    @else
-                        <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                            @if (Auth::user()->role != '0')
-                            onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                            '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
+                                to Cart
+                            </button>
+                        @else
+                            <button type="submit"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
                         @else
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal"
-                            @endif>Add to Cart</button>
-                        <button type="submit"
-                            class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                            @if (Auth::user()->role != '0')
-                            onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                            data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
+                                to Cart</button>
+                            <button type="submit"
+                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
                         @else
                             onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile"
-                            @endif>Add to Cart</button>
+                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
+                                to Cart</button>
                         @endif
                     @endauth
                     @guest
@@ -173,22 +170,21 @@
                     <input type="hidden" name="product_slug" value="{{ $product->slug }}">
                 </form>
             @endguest
-        </div>
-        <div class="col-md-2"></div>
-    </div>
-    <div class="row pb-5 mb-5">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
             <div class="card border-0">
                 @if ($product->type == '0')
                     <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active font-bauer fs-3" id="how-to-use-tab" data-bs-toggle="tab"
+                            <button class="nav-link active font-bauer fs-4 p-0" id="description-tab" data-bs-toggle="tab"
+                                data-bs-target="#description" type="button" role="tab" aria-controls="description"
+                                aria-selected="true">Description</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link font-bauer fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
                                 data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
                                 aria-selected="true">How To Use</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link font-bauer fs-3" id="ingredients-tab" data-bs-toggle="tab"
+                            <button class="nav-link font-bauer fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
                                 data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
                                 aria-selected="false">Ingredients</button>
                         </li>
@@ -196,12 +192,17 @@
                 @else
                     <ul class="nav nav-kleanse nav-fill" id="detailTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active font-bauer fs-3" id="how-to-use-tab" data-bs-toggle="tab"
+                            <button class="nav-link active font-gotham fs-4 p-0" id="description-tab" data-bs-toggle="tab"
+                                data-bs-target="#description" type="button" role="tab" aria-controls="description"
+                                aria-selected="true">Description</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link font-gotham fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
                                 data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
                                 aria-selected="true">How To Use</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link font-bauer fs-3" id="ingredients-tab" data-bs-toggle="tab"
+                            <button class="nav-link font-gotham fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
                                 data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
                                 aria-selected="false">Ingredients</button>
                         </li>
@@ -209,7 +210,9 @@
                 @endif
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane active" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
+                        <div class="tab-pane active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                            {{ $product->description }}</div>
+                        <div class="tab-pane" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
                             <p class="font-proxima-nova font-weight-bold">HOW TO USE ARGAN OIL</p>
                             <ul class="list-unstyled">
                                 @foreach ($product->howtouse as $htu)
@@ -229,7 +232,298 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-2"></div>
     </div>
+
+    @if ($product->id == 1)
+        {{-- benefits 1 desktop --}}
+        <div class="argan-benefits">
+            <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
+                <div class="col-md-2"></div>
+                <div class="col-md-3">
+                    <div class="position-relative">
+                        <img src="{{ asset('images/argan-oil-detail-2.jpg') }}" class="w-100">
+                        <div
+                            class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                            1</div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="mb-5">
+                        <img src="{{ asset('images/oil-1.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Improves skin elasticity & prevents premature
+                            aging
+                        </h3>
+                        <div>Reduces depth & severity of wrinkles, restores elasticity, fades
+                            age spots & increases regenerative rate of healthy skin cells.
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('images/oil-2.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Treat Oily Skin & Acne</h3>
+                        <div>Reduces sebum production level on individuals with oily skins;
+                            Argan Oil’s high linoleic acid also reduces acne-associated
+                            inflammation while healing damaged skin
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            {{-- benefits 2 desktop --}}
+            <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
+                <div class="col-md-3"></div>
+                <div class="col-md-4">
+                    <div class="mb-4">
+                        <img src="{{ asset('images/oil-3.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Natural Moisturiser</h3>
+                        <div>Rich in Vitamin E (tocopherol), essential fatty acids & natural
+                            anti-oxidant, Argan Oil is fantastically hydrating, also softens &
+                            protects skin from free-radicals.
+                        </div>
+                    </div>
+                    <div>
+                        <img src="{{ asset('images/oil-4.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Heal Skin Problems</h3>
+                        <div>Soothes all skin problems associated with “dry or sensitive
+                            skins” (eczema, psoriasis, dermatitis, cracked heel, etc)
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <div class="position-relative">
+                        <img src="{{ asset('images/argan-oil-detail-3.jpg') }}" class="w-100">
+                        <div
+                            class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                            2</div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+        {{-- mobile --}}
+        <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
+            <div class="col-12 p-0">
+                <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
+            </div>
+            <div class="col-md-5">
+                <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
+                <h1 class="text-argavell font-bauer font-weight-bold">Argan Oil Benefits</h1>
+                <div class="px-4"><strong>Argan oil is extremely rich in Vitamin E</strong> (more than 2x richer
+                    than
+                    Olive Oil, for about 620mg/l) with loads of antioxidants, linoleic acid
+                    (omega-6) that are known for its calming & healing properties on skin.</div>
+            </div>
+        </div>
+        {{-- benefits 1 mobile --}}
+        <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 px-5">
+                <div class="position-relative">
+                    <img src="{{ asset('images/argan-oil-detail-2.jpg') }}" class="w-100">
+                    <div
+                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        1</div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 px-5 pt-4">
+                <div class="mb-3">
+                    <img src="{{ asset('images/oil-1.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Improves skin elasticity & prevents premature
+                        aging
+                    </h2>
+                    <div>Reduces depth & severity of wrinkles, restores elasticity, fades
+                        age spots & increases regenerative rate of healthy skin cells.
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ asset('images/oil-2.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Treat Oily Skin & Acne</h2>
+                    <div>Reduces sebum production level on individuals with oily skins;
+                        Argan Oil’s high linoleic acid also reduces acne-associated
+                        inflammation while healing damaged skin
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        {{-- benefits 2 mobile --}}
+        <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 px-5">
+                <div class="position-relative">
+                    <img src="{{ asset('images/argan-oil-detail-3.jpg') }}" class="w-100">
+                    <div
+                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        2</div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 px-5 pt-4">
+                <div class="mb-3">
+                    <img src="{{ asset('images/oil-3.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Natural Moisturiser</h2>
+                    <div>Rich in Vitamin E (tocopherol), essential fatty acids & natural
+                        anti-oxidant, Argan Oil is fantastically hydrating, also softens &
+                        protects skin from free-radicals.
+                    </div>
+                </div>
+                <div>
+                    <img src="{{ asset('images/oil-4.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Heal Skin Problems</h2>
+                    <div>Soothes all skin problems associated with “dry or sensitive
+                        skins” (eczema, psoriasis, dermatitis, cracked heel, etc)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    @elseif($product->id == 2)
+        {{-- benefits 1 desktop --}}
+        <div class="argan-benefits">
+            <div class="row w-100 m-0 align-items-center my-5 d-none d-sm-flex">
+                <div class="col-md-2"></div>
+                <div class="col-md-3">
+                    <div class="position-relative">
+                        <img src="{{ asset('images/argan-shampoo-detail-2.jpg') }}" class="w-100">
+                        <div
+                            class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                            1</div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <img src="{{ asset('images/hair-1.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Great Care for Hair
+                        </h3>
+                        <div>
+                            <ul>
+                                <li>Shinier & Glowing Hair</li>
+                                <li>Leave-in conditioner & tames frizzes, flyaways, & repairs split ends</li>
+                                <li>Moisturizes Dry & Brittle Hair</li>
+                                <li>Eliminate Dandruffs & Dry Scalp</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            {{-- benefits 2 desktop --}}
+            <div class="row w-100 m-0 align-items-center my-5 d-none d-sm-flex">
+                <div class="col-md-3"></div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <img src="{{ asset('images/hair-2.png') }}" width="75px" class="mb-2">
+                        <h3 class="text-argavell font-bauer font-weight-bold">Reduces Hairfall</h3>
+                        <div>
+                            <ul>
+                                <li>Argan Oil <strong>ensures</strong> that one does not lose more follicles than
+                                    one is able to grow.</li>
+                                <li>Studies show that Argan Oil <strong>helps to stimulate the scalp</strong> due
+                                    to its rich nutrient content to produce more hair.
+                                </li>
+                                <li><strong>Research from South Korea found that 44%</strong> of participants
+                                    experienced “clear hair regrowth” with Argan Oil treatment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <div class="position-relative">
+                        <img src="{{ asset('images/argan-shampoo-detail-3.jpg') }}" class="w-100">
+                        <div
+                            class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                            2</div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+        {{-- mobile --}}
+        <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
+            <div class="col-12 p-0">
+                <img src="{{ asset('images/argan-shampoo-detail-1.jpg') }}" class="w-100">
+            </div>
+            <div class="col-md-5">
+                <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
+                <h1 class="text-argavell font-bauer font-weight-bold">Argan Shampoo Benefits</h1>
+                <div><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong> It also
+                    contains aloe vera & olive oil that will nourish your hair with
+                    vitamin E to moisturise & strengthen your hair all day long. Daily use of
+                    the shampoo will restore the hair’s natural protective layer that will
+                    restores shine & volume on your hair.
+                </div>
+                <a href="{{ route('product.show', 'argan-shampoo') }}" class="text-decoration-none">
+                    <div class="btn-argavell text-center w-25 my-2 py-2 cursor-pointer mx-auto font-weight-bold">Shop Now
+                    </div>
+                </a>
+            </div>
+        </div>
+        {{-- benefits 1 mobile --}}
+        <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 px-5">
+                <div class="position-relative">
+                    <img src="{{ asset('images/argan-shampoo-detail-2.jpg') }}" class="w-100">
+                    <div
+                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        1</div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 px-5 pt-4">
+                <div class="mb-3">
+                    <img src="{{ asset('images/hair-1.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Great Care for Hair
+                    </h2>
+                    <div>
+                        <ul>
+                            <li>Shinier & Glowing Hair</li>
+                            <li>Leave-in conditioner & tames frizzes, flyaways, & repairs split ends</li>
+                            <li>Moisturizes Dry & Brittle Hair</li>
+                            <li>Eliminate Dandruffs & Dry Scalp</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        {{-- benefits 2 mobile --}}
+        <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
+            <div class="col-md-2"></div>
+            <div class="col-md-3 px-5">
+                <div class="position-relative">
+                    <img src="{{ asset('images/argan-shampoo-detail-3.jpg') }}" class="w-100">
+                    <div
+                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        2</div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 px-5 pt-4">
+                <div class="mb-3">
+                    <img src="{{ asset('images/hair-2.png') }}" width="75px" class="mb-2">
+                    <h2 class="text-argavell font-bauer font-weight-bold">Reduces Hairfall</h2>
+                    <div>
+                        <ul>
+                            <li>Argan Oil <strong>ensures</strong> that one does not lose more follicles than
+                                one is able to grow.</li>
+                            <li>Studies show that Argan Oil <strong>helps to stimulate the scalp</strong> due
+                                to its rich nutrient content to produce more hair.
+                            </li>
+                            <li><strong>Research from South Korea found that 44%</strong> of participants
+                                experienced “clear hair regrowth” with Argan Oil treatment.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    @endif
 
     <div class="row w-100 p-0 m-0 mb-5">
         @if ($product->type == '0')
@@ -359,10 +653,107 @@
             @endif
         </div>
     </div>
+
+    @if ($product->id == 1)
+        <div class="container text-center py-5">
+            <img src="{{ asset('images/leaf.png') }}" width="100px">
+            <h1 class="text-argavell font-bauer font-weight-bold">How to Use</h1>
+            <span class="mb-5 text-center text-secondary">This guide may be able to help you.</span>
+            <div class="row mt-3">
+                <div class="col-md-1"></div>
+                <div class="col-xs-12 col-md-10">
+                    <div class="row align-items-center">
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/for-face.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">For Face</h2>
+                                <span class="text-secondary text-center">Rub 2-3 drops (as needed) evenly every morning &
+                                    night
+                                    after cleansing.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/for-eyelash.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">For Eyelash</h2>
+                                <span class="text-secondary text-center">Rub a drops (as needed) Use it to coat your
+                                    lashes fully and use it on your eyes overnight.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/for-body.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">For Body</h2>
+                                <span class="text-secondary text-center">Massage a few drops (as needed) on nail
+                                    culticuls, hand, feet or body before bed.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/mix-with-skincare.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">Mix with Skincare</h2>
+                                <span class="text-secondary text-center">Rub 2-3 drops (as needed) and mix
+                                    with scrub.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row align-items-center">
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/for-lips.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">For Lips</h2>
+                                <span class="text-secondary text-center">Rub 1-2 dropsevenly every night before bed.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-xs-12 col-md-5 row align-items-center mb-4">
+                            <div class="col-3">
+                                <img src="{{ asset('images/for-hair.png') }}" width="75px">
+                            </div>
+                            <div class="col-9 text-start">
+                                <h2 class="text-argavell font-bauer font-weight-bold">For Hair</h2>
+                                <span class="text-secondary text-center">Massage 5-6 drops to scalp, hair & it’s tips;
+                                    cover hair & leave overnight for maximum
+                                    outcome.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+        {{-- video desktop --}}
+        <div class="row w-100 m-0 d-none d-sm-block">
+            <video class="w-100 p-0" height="800px" title="YouTube video player" frameborder="0" controls
+                allowfullscreen>
+                <source src="{{ asset('videos/argavell.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+        {{-- video mobile --}}
+        <div class="row w-100 m-0 d-block d-sm-none">
+            <video class="w-100 p-0" height="200px" title="YouTube video player" frameborder="0" controls
+                allowfullscreen>
+                <source src="{{ asset('videos/argavell.mp4') }}" type="video/mp4">
+            </video>
+        </div>
+    @endif
 @endsection
 
 @section('scripts')
-
     <script>
         var product = @json($product);
     </script>
@@ -509,7 +900,9 @@
             $('#price').val(product['price'][$('#size').val()]);
             $('#price_discount').val(product['price_discount'][$('#size').val()]);
             $('.product-price').html((product['price'][$('#size').val()]).formatMoney(0, '.', ''));
-            $('.product-price-with-discount').html((product['price'][$('#size').val()] - product['price_discount'][$('#size').val()]).formatMoney(0, '.', ''));
+            $('.product-price-with-discount').html((product['price'][$('#size').val()] - product['price_discount'][
+                $('#size').val()
+            ]).formatMoney(0, '.', ''));
             refreshPriceText();
         });
     </script>

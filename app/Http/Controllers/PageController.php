@@ -17,6 +17,11 @@ use Auth;
 
 class PageController extends Controller
 {
+    public function ourproduct()
+    {
+        $products = Product::all();
+        return view('pages.our_product', compact('products'));
+    }
     public function arganoil()
     {
         $products = Product::where('type', '0')->get();

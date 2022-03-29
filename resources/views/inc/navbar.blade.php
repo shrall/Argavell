@@ -17,21 +17,9 @@
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item mx-4">
-                    <a href="{{ route('page.arganoil') }}"
+                    <a href="{{ route('page.ourproduct') }}"
                         class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                        Argan Oil
-                    </a>
-                </li>
-                <li class="nav-item mx-4">
-                    <a href="{{ route('page.arganshampoo') }}"
-                        class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                        Argan Shampoo
-                    </a>
-                </li>
-                <li class="nav-item mx-4">
-                    <a href="{{ route('page.kleanse') }}"
-                        class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer">
-                        Kleanse
+                        Our Products
                     </a>
                 </li>
                 <li class="nav-item mx-4">
@@ -76,17 +64,8 @@
         <img src="{{ asset('images/logo-argavell-white.png') }}" width="100px" class="pb-5 mb-5">
     </div>
     <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganoil') }}" class="text-decoration-none text-white font-gotham"
-            style="display: block;height: 3vh;">Argan Oil</a>
-    </div>
-    <div class="col-12 text-center my-3">
-        <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none text-white font-gotham"
-            style="display: block;height: 3vh;">Argan
-            Shampoo</a>
-    </div>
-    <div class="col-12 text-center my-3">
-        <a href="{{ route('page.kleanse') }}" class="text-decoration-none text-white font-gotham"
-            style="display: block;height: 3vh;">Kleanse</a>
+        <a href="{{ route('page.ourproduct') }}" class="text-decoration-none text-white font-gotham"
+            style="display: block;height: 3vh;">Our Product</a>
     </div>
     <div class="col-12 text-center my-3">
         <a href="{{ route('page.contactus') }}" class="text-decoration-none text-white font-gotham"
