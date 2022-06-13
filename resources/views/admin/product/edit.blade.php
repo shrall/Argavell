@@ -82,6 +82,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Ingredients</label>
+                            <div class="col-12">
+                                <textarea id="ingredients" type="text" class="form-control" name="ingredients" required>{{ $product->ingredients }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label class="col-6 text-start font-weight-bold">Gambar</label>
                             <label class="col-6 text-start font-weight-bold">Banner</label>
                             <div class="col-6 text-argavell">

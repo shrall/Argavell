@@ -75,8 +75,14 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Link Video Produk</label>
                             <div class="col-12">
-                                <input id="link_video" type="text" class="form-control" name="link_video" required
+                                <input id="link_video" type="text" class="form-control" name="link_video"
                                     placeholder="Link Video Produk" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Ingredients</label>
+                            <div class="col-12">
+                                <textarea id="ingredient" type="text" class="form-control" name="ingredient" required></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
