@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Benefit;
 use App\Models\Bundle;
 use App\Models\Cart;
 use App\Models\Guide;
@@ -45,6 +46,11 @@ class ProductController extends Controller
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
         $descriptions = explode(",", $request->item_guide_descriptions);
+
+        $bimages = explode(",", $request->item_benefit_images);
+        $bbanners = explode(",", $request->item_benefit_banners);
+        $btitles = explode(",", $request->item_benefit_titles);
+        $bdescriptions = explode(",", $request->item_benefit_descriptions);
 
         $image = time() . '-' . $request['image']->getClientOriginalName();
         $request->image->move(public_path('uploads/products'), $image);
@@ -115,12 +121,25 @@ class ProductController extends Controller
         }
 
         foreach ($titles as $key => $title) {
-            Guide::create([
-                'logo' => $images[$key],
-                'title' => $titles[$key],
-                'description' => $descriptions[$key],
-                'product_id' => $product->id
-            ]);
+            if ($title) {
+                Guide::create([
+                    'logo' => $images[$key],
+                    'title' => $titles[$key],
+                    'description' => $descriptions[$key],
+                    'product_id' => $product->id
+                ]);
+            }
+        }
+        foreach ($btitles as $key => $title) {
+            if ($title) {
+                Benefit::create([
+                    'icon' => $bimages[$key],
+                    'banner' => $bbanners[$key],
+                    'title' => $btitles[$key],
+                    'content' => $bdescriptions[$key],
+                    'product_id' => $product->id
+                ]);
+            }
         }
         return redirect()->route('admin.product.index');
     }
@@ -165,17 +184,43 @@ class ProductController extends Controller
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
         $descriptions = explode(",", $request->item_guide_descriptions);
+
+        $bimages = explode(",", $request->item_benefit_images);
+        $bbanners = explode(",", $request->item_benefit_banners);
+        $btitles = explode(",", $request->item_benefit_titles);
+        $bdescriptions = explode(",", $request->item_benefit_descriptions);
+
         foreach ($product->guides as $guide) {
             $guide->delete();
         }
+
+        foreach ($product->benefits as $benefit) {
+            $benefit->delete();
+        }
+
         if (count($titles) > 0) {
             foreach ($titles as $key => $title) {
-                Guide::create([
-                    'logo' => $images[$key],
-                    'title' => $titles[$key],
-                    'description' => $descriptions[$key],
-                    'product_id' => $product->id
-                ]);
+                if ($title) {
+                    Guide::create([
+                        'logo' => $images[$key],
+                        'title' => $titles[$key],
+                        'description' => $descriptions[$key],
+                        'product_id' => $product->id
+                    ]);
+                }
+            }
+        }
+        if (count($btitles) > 0) {
+            foreach ($btitles as $key => $title) {
+                if ($title) {
+                    Benefit::create([
+                        'icon' => $bimages[$key],
+                        'banner' => $bbanners[$key],
+                        'title' => $btitles[$key],
+                        'content' => $bdescriptions[$key],
+                        'product_id' => $product->id
+                    ]);
+                }
             }
         }
         if ($request->bundle == '0') {
@@ -289,5 +334,22 @@ class ProductController extends Controller
         $titles = explode(",", $request->guide_title);
         $descriptions = explode(",", $request->guide_description);
         return view('admin.product.inc.guide', compact('images', 'titles', 'descriptions'));
+    }
+
+    function add_benefits(Request $request)
+    {
+        if ($request->benefit) {
+            $image = $request['benefit']->getClientOriginalName();
+            $request->benefit->move(public_path('uploads/benefits'), $image);
+        }
+        if ($request->benefit) {
+            $image = $request['benefitbanner']->getClientOriginalName();
+            $request->benefitbanner->move(public_path('uploads/benefits'), $image);
+        }
+        $images = explode(",", $request->benefit_image);
+        $banners = explode(",", $request->benefit_banner);
+        $titles = explode(",", $request->benefit_title);
+        $descriptions = explode(",", $request->benefit_description);
+        return view('admin.product.inc.benefit', compact('banners', 'images', 'titles', 'descriptions'));
     }
 }

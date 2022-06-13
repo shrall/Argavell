@@ -13,6 +13,7 @@
     </div>
     @include('admin.product.inc.modal.add_bundle')
     @include('admin.product.inc.modal.add_guide')
+    @include('admin.product.inc.modal.add_benefit')
     <form action="{{ route('admin.product.update', $product->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="_method" value="PUT">
@@ -215,30 +216,78 @@
                                     data-bs-target="#guideModal">+Add</h6>
                             </div>
                             <div class="row">
-                                <div class="col-1"></div>
                                 <label class="col-2 text-start font-weight-bold">Gambar</label>
                                 <label class="col-2 text-start font-weight-bold">Judul</label>
-                                <label class="col-5 text-start font-weight-bold">Deskripsi</label>
+                                <label class="col-7 text-start font-weight-bold">Deskripsi</label>
                                 <div class="col-1"></div>
                             </div>
                             <div class="row mb-3" id="product-info-guides">
                                 @foreach ($product->guides as $key => $guide)
                                     <div id="product-guide-{{ $key }}" class="row">
-                                        <div class="col-1 mb-2">{{ $loop->iteration }}.</div>
-                                        <div class="col-3 mb-2">
+                                        <div class="col-2 mb-2">
                                             <a target="_blank" href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
                                                 class="text-argavell"
                                                 style="text-decoration: underline;">{{ $guide->logo }}</a>
                                         </div>
-                                        <div class="col-3 mb-2">
+                                        <div class="col-2 mb-2">
                                             {{ $guide->title }}
                                         </div>
-                                        <div class="col-4 mb-2">
+                                        <div class="col-7 mb-2">
                                             {{ $guide->description }}
                                         </div>
                                         <div class="col-1 mb-2">
                                             <span class="fa fa-fw fa-trash-alt cursor-pointer"
                                                 onclick="deleteGuide({{ $key }});"></span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
+                        <div id="guide-table" class="d-block">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Keunggulan Produk</h6>
+                                <input type="hidden" name="item_benefit_titles" id="item-benefit-titles">
+                                <input type="hidden" name="item_benefit_images" id="item-benefit-images">
+                                <input type="hidden" name="item_benefit_banners" id="item-benefit-banners">
+                                <input type="hidden" name="item_benefit_descriptions" id="item-benefit-descriptions">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
+                                    data-bs-target="#benefitModal">+Add</h6>
+                            </div>
+                            <div class="row">
+                                <label class="col-2 text-start font-weight-bold">Gambar</label>
+                                <label class="col-2 text-start font-weight-bold">Logo</label>
+                                <label class="col-2 text-start font-weight-bold">Judul</label>
+                                <label class="col-5 text-start font-weight-bold">Deskripsi</label>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row mb-3" id="product-info-benefits">
+                                @foreach ($product->benefits as $key => $benefit)
+                                    <div id="product-benefit-{{ $key }}" class="row">
+                                        <div class="col-2 mb-2">
+                                            <a target="_blank"
+                                                href="{{ asset('uploads/benefits') . '/' . $benefit->banner }}"
+                                                class="text-argavell"
+                                                style="text-decoration: underline;">{{ $benefit->banner }}</a>
+                                        </div>
+                                        <div class="col-2 mb-2">
+                                            <a target="_blank"
+                                                href="{{ asset('uploads/benefits') . '/' . $benefit->icon }}"
+                                                class="text-argavell"
+                                                style="text-decoration: underline;">{{ $benefit->icon }}</a>
+                                        </div>
+                                        <div class="col-2 mb-2">
+                                            {{ $benefit->title }}
+                                        </div>
+                                        <div class="col-5 mb-2">
+                                            {!! $benefit->content !!}
+                                        </div>
+                                        <div class="col-1 mb-2">
+                                            <span class="fa fa-fw fa-trash-alt cursor-pointer"
+                                                onclick="deleteBenefit({{ $key }});"></span>
                                         </div>
                                     </div>
                                 @endforeach
@@ -469,6 +518,26 @@
                 $(`#${type}-imaged`).attr('src', URL.createObjectURL(event.target.files[0]));
             }
         };
+        var loadBenefitImage = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $(`#${type}`).val(null);
+            } else {
+                benefitimages[benefitIndex] = event.target.files[0]['name'];
+                $('#benefit-image').val(benefitimages)
+                $(`#${type}-imaged`).attr('src', URL.createObjectURL(event.target.files[0]));
+            }
+        };
+        var loadBenefitBanner = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $(`#${type}`).val(null);
+            } else {
+                benefitbanners[benefitIndex] = event.target.files[0]['name'];
+                $('#benefit-banner').val(benefitbanners)
+                $(`#${type}-imaged`).attr('src', URL.createObjectURL(event.target.files[0]));
+            }
+        };
     </script>
     <script>
         var productGuides = @json($product->guides);
@@ -533,7 +602,151 @@
             $('#item-guide-titles').val(guidetitles)
             $('#item-guide-descriptions').val(guidedescriptions)
             $('#item-guide-images').val(guideimages)
+            $('#guide-title').val(guidetitles)
+            $('#guide-description').val(guidedescriptions)
+            $('#guide-image').val(guideimages)
             guideIndex--;
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.ajax({
+                url: url + "/admin/product/add_guides",
+                type: 'POST',
+                _token: CSRF_TOKEN,
+                data: new FormData($('#add-guide')[0]),
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                $('#product-info-guides').html(data);
+            }).fail(function(error) {
+                console.log(error)
+            });
+        }
+    </script>
+    <script src="{{ asset('js/ckeditor.js') }}"></script>
+    <script>
+        var editored;
+        ClassicEditor.create(document.querySelector('#benefit_description'), {
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle',
+                    'ImageToolbar', 'ImageUpload', 'MediaEmbed', 'Table'
+                ],
+            }).then(editor => {
+                editored = editor
+                editor.model.document.on('change:data', () => {
+                    benefitdescriptions[benefitIndex] = editor.getData()
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                console.error(error.stack);
+            });
+        ClassicEditor.editorConfig = function(config) {
+            // misc options
+            config.height = '350px';
+        };
+    </script>
+    <script>
+        var productBenefits = @json($product->benefits);
+        var benefittitles = []
+        var benefitbanners = []
+        var benefitdescriptions = []
+        var benefitimages = []
+        var benefitIndex = productBenefits.length;
+        productBenefits.forEach(setBenefits)
+
+        function setBenefits(item, index, arr) {
+            benefittitles.push(item.title)
+            benefitdescriptions.push(item.content)
+            benefitimages.push(item.icon)
+            benefitbanners.push(item.banner)
+
+            $('#item-benefit-titles').val(benefittitles)
+            $('#item-benefit-descriptions').val(benefitdescriptions)
+            $('#item-benefit-images').val(benefitimages)
+            $('#item-benefit-banners').val(benefitbanners)
+            $('#benefit-title').val(benefittitles)
+            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-banner').val(benefitbanners)
+            $('#benefit-image').val(benefitimages)
+        }
+
+        function addBenefit() {
+            benefittitles[benefitIndex] = $('#benefit_title').val()
+            $('#benefit-title').val(benefittitles)
+            $('#benefit-description').val(benefitdescriptions)
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.ajax({
+                url: url + "/admin/product/add_benefits",
+                type: 'POST',
+                _token: CSRF_TOKEN,
+                data: new FormData($('#add-benefit')[0]),
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                $('#item-benefit-titles').val(benefittitles)
+                $('#item-benefit-descriptions').val(benefitdescriptions)
+                $('#item-benefit-images').val(benefitimages)
+                $('#item-benefit-banners').val(benefitbanners)
+                benefitIndex++;
+                $('#benefit_title').val(null)
+                editored.setData('')
+                $('#benefit').val(null)
+                $('#benefit-imaged').attr('src', @json(asset('images/argan-fruit.png')));
+                $('#benefitbanner').val(null)
+                $('#benefitbanner-imaged').attr('src', @json(asset('images/argan-oil-detail-3.jpg')));
+                $('#product-info-benefits').html(data);
+            }).fail(function(error) {
+                console.log(error)
+            });
+        }
+
+        function deleteBenefit(index) {
+            $('#product-benefit-' + index).remove();
+            benefittitles.splice(index, 1);
+            benefitdescriptions.splice(index, 1);
+            benefitimages.splice(index, 1);
+            benefitbanners.splice(index, 1);
+            $('#item-benefit-titles').val(benefittitles)
+            $('#item-benefit-descriptions').val(benefitdescriptions)
+            $('#item-benefit-images').val(benefitimages)
+            $('#item-benefit-banners').val(benefitbanners)
+            $('#benefit-title').val(benefittitles)
+            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-image').val(benefitimages)
+            $('#benefit-banner').val(benefitbanners)
+            benefitIndex--;
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.ajax({
+                url: url + "/admin/product/add_benefits",
+                type: 'POST',
+                _token: CSRF_TOKEN,
+                data: new FormData($('#add-benefit')[0]),
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                $('#product-info-benefits').html(data);
+            }).fail(function(error) {
+                console.log(error)
+            });
         }
     </script>
 @endsection

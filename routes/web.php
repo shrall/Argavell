@@ -152,6 +152,7 @@ Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'],
     Route::post('product/add_bundle_item', [AdminProductController::class, 'add_bundle_item'])->name('product.addbundleitem');
     Route::post('product/add_sizes', [AdminProductController::class, 'add_sizes'])->name('product.addsizes');
     Route::post('product/add_guides', [AdminProductController::class, 'add_guides'])->name('product.addguides');
+    Route::post('product/add_benefits', [AdminProductController::class, 'add_benefits'])->name('product.addbenefits');
 
     Route::post('promotion/get_product', [AdminPromotionController::class, 'get_product'])->name('promotion.getproduct');
 
