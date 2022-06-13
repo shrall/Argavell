@@ -477,6 +477,11 @@ a:hover,
     background-size: 400% 400%;
 }
 
+.kleanse-benefits {
+    background: linear-gradient(358deg, #4ac8e2, #ffffff 95%);
+    background-size: 400% 400%;
+}
+
 /* components */
 .inset-0 {
     top: 0;

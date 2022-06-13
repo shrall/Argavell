@@ -74,13 +74,13 @@
                                 <input type="hidden" name="date_end" id="date-end" value="{{ $product->bundle_end }}">
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Link Video Produk</label>
                             <div class="col-12">
                                 <input id="link_video" type="text" class="form-control" name="link_video" required
                                     placeholder="Link Video Produk" value="{{ $product->link_video }}" required>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Ingredients</label>
                             <div class="col-12">
@@ -88,23 +88,30 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-6 text-start font-weight-bold">Gambar</label>
-                            <label class="col-6 text-start font-weight-bold">Banner</label>
-                            <div class="col-6 text-argavell">
+                            <label class="col-4 text-start font-weight-bold">Gambar</label>
+                            <label class="col-4 text-start font-weight-bold">Banner</label>
+                            <label class="col-4 text-start font-weight-bold">Video</label>
+                            <div class="col-4 text-argavell">
                                 <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productimageModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->img }}</div>
                             </div>
-                            <div class="col-6 text-argavell">
+                            <div class="col-4 text-argavell">
                                 <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productbannerModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->banner }}</div>
+                            </div>
+                            <div class="col-4 text-argavell">
+                                <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
+                                    data-bs-toggle="modal" data-bs-target="#productvideoModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>{{ $product->link_video }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @include('admin.product.inc.modal.product_image_preview')
                 @include('admin.product.inc.modal.product_banner_preview')
+                @include('admin.product.inc.modal.product_video_preview')
             </div>
             <div class="col-6">
                 <div class="card shadow-sm border-0 mb-2">

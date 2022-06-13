@@ -72,42 +72,54 @@
                                 <input type="hidden" name="date_end" id="date-end" value="{{ \Carbon\Carbon::now() }}">
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Link Video Produk</label>
                             <div class="col-12">
                                 <input id="link_video" type="text" class="form-control" name="link_video"
                                     placeholder="Link Video Produk" required>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Ingredients</label>
                             <div class="col-12">
-                                <textarea id="ingredient" type="text" class="form-control" name="ingredient" required></textarea>
+                                <textarea id="ingredients" type="text" class="form-control" name="ingredients" required></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-6 text-start font-weight-bold">Gambar</label>
-                            <label class="col-6 text-start font-weight-bold">Banner</label>
-                            <div class="col-6 text-argavell">
+                            <label class="col-4 text-start font-weight-bold">Gambar</label>
+                            <label class="col-4 text-start font-weight-bold">Banner</label>
+                            <label class="col-4 text-start font-weight-bold">Video</label>
+                            <div class="col-4 text-argavell">
                                 <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productimageModal"></div>
                             </div>
-                            <div class="col-6 text-argavell">
+                            <div class="col-4 text-argavell">
                                 <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productbannerModal"></div>
                             </div>
-                            <div class="col-6 d-block" id="image-upload-button">
+                            <div class="col-4 text-argavell">
+                                <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
+                                    data-bs-toggle="modal" data-bs-target="#productvideoModal"></div>
+                            </div>
+                            <div class="col-4 d-block" id="image-upload-button">
                                 <div class="btn btn-admin-argavell">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="image" id="image" class="d-none" accept="image/*"
                                         required onchange="loadFile(event, 'image')">
                                 </div>
                             </div>
-                            <div class="col-6 d-block" id="banner-upload-button">
+                            <div class="col-4 d-block" id="banner-upload-button">
                                 <div class="btn btn-admin-argavell">
                                     <label for="banner" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="banner" id="banner" class="d-none" accept="image/*"
                                         required onchange="loadFile(event, 'banner')">
+                                </div>
+                            </div>
+                            <div class="col-4 d-block" id="video-upload-button">
+                                <div class="btn btn-admin-argavell">
+                                    <label for="video" class="cursor-pointer">Upload Video</label>
+                                    <input type="file" name="video" id="video" class="d-none" accept="video/*"
+                                        required onchange="loadVideo(event, 'video')">
                                 </div>
                             </div>
                         </div>
@@ -115,6 +127,7 @@
                 </div>
                 @include('admin.product.inc.modal.product_image_preview')
                 @include('admin.product.inc.modal.product_banner_preview')
+                @include('admin.product.inc.modal.product_video_preview')
             </div>
             <div class="col-6">
                 <div class="card shadow-sm border-0 mb-2">
@@ -347,6 +360,17 @@
                 $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
+        };
+        var loadVideo = function(event, type) {
+            let file = event.target.files[0];
+            let blobURL = URL.createObjectURL(file);
+            document.querySelector("video").src = blobURL;
+            $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                .files[0][
+                    'name'
+                ])
+            $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+            $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
         };
     </script>
     <script>

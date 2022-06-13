@@ -56,6 +56,8 @@ class ProductController extends Controller
         $request->image->move(public_path('uploads/products'), $image);
         $banner = time() . '-' . $request['banner']->getClientOriginalName();
         $request->banner->move(public_path('uploads/products'), $banner);
+        $video = time() . '-' . $request['video']->getClientOriginalName();
+        $request->video->move(public_path('uploads/products'), $video);
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
             $stocks = [];
@@ -80,7 +82,7 @@ class ProductController extends Controller
                 'price_discount' => $price_discounts,
                 'img' => $image,
                 'banner' => $banner,
-                'link_video' => $request->link_video,
+                'link_video' => $video,
                 'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
@@ -104,11 +106,11 @@ class ProductController extends Controller
                 'price_discount' => [$request->price_discount ? $request->price_discount : 0],
                 'img' => $image,
                 'banner' => $banner,
-                'link_video' => $request->link_video,
+                'link_video' => $video,
                 'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
-                'ingredients' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                'ingredients' => $request->ingredients
             ]);
             foreach ($bundle_items as $key => $item) {
                 Bundle::create([
