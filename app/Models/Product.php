@@ -20,7 +20,8 @@ class Product extends Model
         'price', 'price_discount', 'stock',
         'description', 'size', 'facts', 'howtouse', 'ingredients',
         'img', 'type', 'weight',
-        'bundle', 'bundle_start', 'bundle_end'
+        'bundle', 'bundle_start', 'bundle_end',
+        'banner', 'link_video'
     ];
 
     protected $casts = [
@@ -55,5 +56,13 @@ class Product extends Model
 
     public function promotions() {
         return $this->hasMany(Promotion::class, 'product_id', 'id');
+    }
+
+    public function guides() {
+        return $this->hasMany(Guide::class, 'product_id', 'id');
+    }
+
+    public function benefits() {
+        return $this->hasMany(Benefit::class, 'product_id', 'id');
     }
 }

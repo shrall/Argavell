@@ -12,6 +12,7 @@
         <div class="col-2"></div>
     </div>
     @include('admin.product.inc.modal.add_bundle')
+    @include('admin.product.inc.modal.add_guide')
     <form action="{{ route('admin.product.update', $product->slug) }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="_method" value="PUT">
@@ -36,9 +37,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Detail Produk</label>
                             <div class="col-12">
-                                <textarea id="detail" type="textarea" class="form-control" name="detail" required
-                                    autocomplete="detail" placeholder="Detail Produk"
-                                    style="resize: none;">{{ $product->description }}</textarea>
+                                <textarea id="detail" type="textarea" class="form-control" name="detail" required autocomplete="detail"
+                                    placeholder="Detail Produk" style="resize: none;">{{ $product->description }}</textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -74,19 +74,33 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Gambar</label>
-                            <div class="col-12 text-argavell">
+                            <label class="col-12 text-start font-weight-bold">Link Video Produk</label>
+                            <div class="col-12">
+                                <input id="link_video" type="text" class="form-control" name="link_video" required
+                                    placeholder="Link Video Produk" value="{{ $product->link_video }}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-6 text-start font-weight-bold">Gambar</label>
+                            <label class="col-6 text-start font-weight-bold">Banner</label>
+                            <div class="col-6 text-argavell">
                                 <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productPreviewModal"><span
+                                    data-bs-toggle="modal" data-bs-target="#productimageModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->img }}</div>
+                            </div>
+                            <div class="col-6 text-argavell">
+                                <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
+                                    data-bs-toggle="modal" data-bs-target="#productbannerModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>{{ $product->banner }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @include('admin.product.inc.modal.product_image_preview')
+                @include('admin.product.inc.modal.product_banner_preview')
             </div>
             <div class="col-6">
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 mb-2">
                     <div class="card-body">
                         <div id="bundle-table" @if ($product->bundle == '0') class="d-none" @endif>
                             <div class="d-flex align-items-center justify-content-between">
@@ -187,12 +201,56 @@
                                 @endforeach
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
+                        <div id="guide-table" class="d-block">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Petunjuk Pemakaian</h6>
+                                <input type="hidden" name="item_guide_titles" id="item-guide-titles">
+                                <input type="hidden" name="item_guide_images" id="item-guide-images">
+                                <input type="hidden" name="item_guide_descriptions" id="item-guide-descriptions">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
+                                    data-bs-target="#guideModal">+Add</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label class="col-2 text-start font-weight-bold">Gambar</label>
+                                <label class="col-2 text-start font-weight-bold">Judul</label>
+                                <label class="col-5 text-start font-weight-bold">Deskripsi</label>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row mb-3" id="product-info-guides">
+                                @foreach ($product->guides as $key => $guide)
+                                    <div id="product-guide-{{ $key }}" class="row">
+                                        <div class="col-1 mb-2">{{ $loop->iteration }}.</div>
+                                        <div class="col-3 mb-2">
+                                            <a target="_blank" href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
+                                                class="text-argavell"
+                                                style="text-decoration: underline;">{{ $guide->logo }}</a>
+                                        </div>
+                                        <div class="col-3 mb-2">
+                                            {{ $guide->title }}
+                                        </div>
+                                        <div class="col-4 mb-2">
+                                            {{ $guide->description }}
+                                        </div>
+                                        <div class="col-1 mb-2">
+                                            <span class="fa fa-fw fa-trash-alt cursor-pointer"
+                                                onclick="deleteGuide({{ $key }});"></span>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-6">
-                                <div class="btn btn-admin-gray w-100"
-                                    onclick="event.preventDefault(); document.getElementById('delete-product-form').submit();">
-                                    Hapus
-                                </div>
+                                <button type="submit" class="btn btn-admin-gray w-100" disabled>Hapus</button>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
@@ -294,13 +352,19 @@
         });
     </script>
     <script>
-        var loadFile = function(event) {
-            $('.product-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
-            $('#image-upload-preview').html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target.files[0][
-                'name'
-            ])
-            $('#image-upload-button').removeClass('d-block').addClass('d-none');
-            $('#image-upload-preview').removeClass('d-none').addClass('d-block');
+        var loadFile = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $(`#${type}`).val(null);
+            } else {
+                $(`.product-${type}-preview`).attr('src', URL.createObjectURL(event.target.files[0]));
+                $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                    .files[0][
+                        'name'
+                    ])
+                $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+                $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
+            }
         };
     </script>
     <script>
@@ -329,9 +393,6 @@
         $('#bundle-items').val(bundleItems);
         $('#bundle-item-sizes').val(bundleItemSizes);
         $('#bundle-item-keys').val(bundleItemKeys);
-        console.log(bundleItems);
-        console.log(bundleItemSizes);
-        console.log(bundleItemKeys);
     </script>
     <script>
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -395,6 +456,84 @@
                 .fail(function(error) {
                     console.log(error);
                 });
+        }
+    </script>
+    <script>
+        var loadModalFile = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $(`#${type}`).val(null);
+            } else {
+                guideimages[guideIndex] = event.target.files[0]['name'];
+                $('#guide-image').val(guideimages)
+                $(`#${type}-imaged`).attr('src', URL.createObjectURL(event.target.files[0]));
+            }
+        };
+    </script>
+    <script>
+        var productGuides = @json($product->guides);
+        var guidetitles = []
+        var guidedescriptions = []
+        var guideimages = []
+        var guideIndex = productGuides.length;
+        productGuides.forEach(setGuides)
+
+        function setGuides(item, index, arr) {
+            guidetitles.push(item.title)
+            guidedescriptions.push(item.description)
+            guideimages.push(item.logo)
+        }
+        $('#item-guide-titles').val(guidetitles)
+        $('#item-guide-descriptions').val(guidedescriptions)
+        $('#item-guide-images').val(guideimages)
+        $('#guide-title').val(guidetitles)
+        $('#guide-description').val(guidedescriptions)
+        $('#guide-image').val(guideimages)
+
+
+        function addGuide() {
+            guidetitles[guideIndex] = $('#guide_title').val()
+            guidedescriptions[guideIndex] = $('#guide_description').val()
+            $('#guide-title').val(guidetitles)
+            $('#guide-description').val(guidedescriptions)
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.ajax({
+                url: url + "/admin/product/add_guides",
+                type: 'POST',
+                _token: CSRF_TOKEN,
+                data: new FormData($('#add-guide')[0]),
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                $('#item-guide-titles').val(guidetitles)
+                $('#item-guide-descriptions').val(guidedescriptions)
+                $('#item-guide-images').val(guideimages)
+                guideIndex++;
+                $('#guide_title').val(null)
+                $('#guide_description').val(null)
+                $('#guide').val(null)
+                $('#guide-imaged').attr('src', @json(asset('images/argan-fruit.png')));
+                $('#product-info-guides').html(data);
+            }).fail(function(error) {
+                console.log(error)
+            });
+        }
+
+        function deleteGuide(index) {
+            $('#product-guide-' + index).remove();
+            guidetitles.splice(index, 1);
+            guidedescriptions.splice(index, 1);
+            guideimages.splice(index, 1);
+            $('#item-guide-titles').val(guidetitles)
+            $('#item-guide-descriptions').val(guidedescriptions)
+            $('#item-guide-images').val(guideimages)
+            guideIndex--;
         }
     </script>
 @endsection

@@ -12,6 +12,8 @@
         <div class="col-2"></div>
     </div>
     @include('admin.product.inc.modal.add_bundle')
+    @include('admin.product.inc.modal.add_guide')
+    {{-- @include('admin.product.inc.modal.add_bundle') --}}
     <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
@@ -35,8 +37,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">Detail Produk</label>
                             <div class="col-12">
-                                <textarea id="detail" type="textarea" class="form-control" name="detail" required
-                                    autocomplete="detail" placeholder="Detail Produk" style="resize: none;"></textarea>
+                                <textarea id="detail" type="textarea" class="form-control" name="detail" required autocomplete="detail"
+                                    placeholder="Detail Produk" style="resize: none;"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -71,25 +73,45 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-12 text-start font-weight-bold">Gambar</label>
-                            <div class="col-12 d-block" id="image-upload-button">
+                            <label class="col-12 text-start font-weight-bold">Link Video Produk</label>
+                            <div class="col-12">
+                                <input id="link_video" type="text" class="form-control" name="link_video" required
+                                    placeholder="Link Video Produk" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-6 text-start font-weight-bold">Gambar</label>
+                            <label class="col-6 text-start font-weight-bold">Banner</label>
+                            <div class="col-6 text-argavell">
+                                <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
+                                    data-bs-toggle="modal" data-bs-target="#productimageModal"></div>
+                            </div>
+                            <div class="col-6 text-argavell">
+                                <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
+                                    data-bs-toggle="modal" data-bs-target="#productbannerModal"></div>
+                            </div>
+                            <div class="col-6 d-block" id="image-upload-button">
                                 <div class="btn btn-admin-argavell">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="image" id="image" class="d-none" accept="image/*"
-                                        required onchange="loadFile(event)">
+                                        required onchange="loadFile(event, 'image')">
                                 </div>
                             </div>
-                            <div class="col-12 text-argavell">
-                                <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productPreviewModal"></div>
+                            <div class="col-6 d-block" id="banner-upload-button">
+                                <div class="btn btn-admin-argavell">
+                                    <label for="banner" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="banner" id="banner" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event, 'banner')">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 @include('admin.product.inc.modal.product_image_preview')
+                @include('admin.product.inc.modal.product_banner_preview')
             </div>
             <div class="col-6">
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 mb-2">
                     <div class="card-body">
                         <div id="bundle-table" class="d-none">
                             <div class="d-flex align-items-center justify-content-between">
@@ -169,6 +191,56 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
+                        <div id="guide-table" class="d-block">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Petunjuk Pemakaian</h6>
+                                <input type="hidden" name="item_guide_titles" id="item-guide-titles">
+                                <input type="hidden" name="item_guide_images" id="item-guide-images">
+                                <input type="hidden" name="item_guide_descriptions" id="item-guide-descriptions">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
+                                    data-bs-target="#guideModal">+Add</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label class="col-2 text-start font-weight-bold">Gambar</label>
+                                <label class="col-2 text-start font-weight-bold">Judul</label>
+                                <label class="col-5 text-start font-weight-bold">Deskripsi</label>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row mb-3" id="product-info-guides">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
+                        <div id="benefit-table" class="d-block">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h6 class="font-weight-black">Keunggulan Produk</h6>
+                                <input type="hidden" name="item_benefits" id="item-benefits">
+                                <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
+                                    data-bs-target="#benefitModal">+Add</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <label class="col-2 text-start font-weight-bold">Gambar</label>
+                                <label class="col-2 text-start font-weight-bold">Logo</label>
+                                <label class="col-2 text-start font-weight-bold">Judul</label>
+                                <label class="col-5 text-start font-weight-bold">Deskripsi</label>
+                            </div>
+                            <div class="row mb-3" id="product-info-benefits">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm border-0 mb-2">
+                    <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-gray w-100" disabled>Hapus</button>
@@ -186,6 +258,69 @@
 
 @section('scripts')
     <script>
+        var loadModalFile = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
+                alert("Ukuran gambar tidak bisa melebihi 1MB!");
+                $(`#${type}`).val(null);
+            } else {
+                guideimages[guideIndex] = event.target.files[0]['name'];
+                $('#guide-image').val(guideimages)
+                $(`#${type}-imaged`).attr('src', URL.createObjectURL(event.target.files[0]));
+            }
+        };
+    </script>
+    <script>
+        var guidetitles = []
+        var guidedescriptions = []
+        var guideimages = []
+        var guideIndex = 0;
+
+        function addGuide() {
+            guidetitles[guideIndex] = $('#guide_title').val()
+            guidedescriptions[guideIndex] = $('#guide_description').val()
+            $('#guide-title').val(guidetitles)
+            $('#guide-description').val(guidedescriptions)
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.ajax({
+                url: url + "/admin/product/add_guides",
+                type: 'POST',
+                _token: CSRF_TOKEN,
+                data: new FormData($('#add-guide')[0]),
+                processData: false,
+                contentType: false
+            }).done(function(data) {
+                $('#item-guide-titles').val(guidetitles)
+                $('#item-guide-descriptions').val(guidedescriptions)
+                $('#item-guide-images').val(guideimages)
+                guideIndex++;
+                $('#guide_title').val(null)
+                $('#guide_description').val(null)
+                $('#guide').val(null)
+                $('#guide-imaged').attr('src', @json(asset('images/argan-fruit.png')));
+                $('#product-info-guides').html(data);
+            }).fail(function(error) {
+                console.log(error)
+            });
+        }
+
+        function deleteGuide(index) {
+            $('#product-guide-' + index).remove();
+            guidetitles.splice(index, 1);
+            guidedescriptions.splice(index, 1);
+            guideimages.splice(index, 1);
+            $('#item-guide-titles').val(guidetitles)
+            $('#item-guide-descriptions').val(guidedescriptions)
+            $('#item-guide-images').val(guideimages)
+            guideIndex--;
+        }
+    </script>
+    <script>
         var sizes = [
             [0, 0, 0, 0]
         ]
@@ -194,8 +329,6 @@
         function changeSize(index, order) {
             sizes[order][index] = parseInt($('#size-' + index + order).val());
             $('#item-sizes').val(sizes);
-            console.log(sizes);
-            console.log($('#item-sizes').val());
         }
 
         function addSize() {
@@ -256,18 +389,18 @@
         });
     </script>
     <script>
-        var loadFile = function(event) {
-            if ($('#image')[0].files[0].size > 1048576) {
+        var loadFile = function(event, type) {
+            if ($(`#${type}`)[0].files[0].size > 1048576) {
                 alert("Ukuran gambar tidak bisa melebihi 1MB!");
-                $('#image').val(null);
+                $(`#${type}`).val(null);
             } else {
-                $('.product-image-preview').attr('src', URL.createObjectURL(event.target.files[0]));
-                $('#image-upload-preview').html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                $(`.product-${type}-preview`).attr('src', URL.createObjectURL(event.target.files[0]));
+                $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
                     .files[0][
                         'name'
                     ])
-                $('#image-upload-button').removeClass('d-block').addClass('d-none');
-                $('#image-upload-preview').removeClass('d-none').addClass('d-block');
+                $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+                $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
         };
     </script>

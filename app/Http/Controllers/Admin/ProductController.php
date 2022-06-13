@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Bundle;
 use App\Models\Cart;
+use App\Models\Guide;
 use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
@@ -41,8 +42,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $images = explode(",", $request->item_guide_images);
+        $titles = explode(",", $request->item_guide_titles);
+        $descriptions = explode(",", $request->item_guide_descriptions);
+
         $image = time() . '-' . $request['image']->getClientOriginalName();
         $request->image->move(public_path('uploads/products'), $image);
+        $banner = time() . '-' . $request['banner']->getClientOriginalName();
+        $request->banner->move(public_path('uploads/products'), $banner);
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
             $stocks = [];
@@ -55,7 +62,7 @@ class ProductController extends Controller
                 array_push($prices, $ts[2]);
                 array_push($price_discounts, 0);
             }
-            Product::create([
+            $product = Product::create([
                 'name' => $request->name,
                 'sku' => $request->sku,
                 'description' => $request->detail,
@@ -66,6 +73,8 @@ class ProductController extends Controller
                 'price' => $prices,
                 'price_discount' => $price_discounts,
                 'img' => $image,
+                'banner' => $banner,
+                'link_video' => $request->link_video,
                 'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
@@ -88,6 +97,8 @@ class ProductController extends Controller
                 'price' => [$request->price],
                 'price_discount' => [$request->price_discount ? $request->price_discount : 0],
                 'img' => $image,
+                'banner' => $banner,
+                'link_video' => $request->link_video,
                 'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
@@ -101,6 +112,15 @@ class ProductController extends Controller
                     'key' => $bundle_item_keys[$key]
                 ]);
             }
+        }
+
+        foreach ($titles as $key => $title) {
+            Guide::create([
+                'logo' => $images[$key],
+                'title' => $titles[$key],
+                'description' => $descriptions[$key],
+                'product_id' => $product->id
+            ]);
         }
         return redirect()->route('admin.product.index');
     }
@@ -142,6 +162,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $images = explode(",", $request->item_guide_images);
+        $titles = explode(",", $request->item_guide_titles);
+        $descriptions = explode(",", $request->item_guide_descriptions);
+        foreach ($product->guides as $guide) {
+            $guide->delete();
+        }
+        if (count($titles) > 0) {
+            foreach ($titles as $key => $title) {
+                Guide::create([
+                    'logo' => $images[$key],
+                    'title' => $titles[$key],
+                    'description' => $descriptions[$key],
+                    'product_id' => $product->id
+                ]);
+            }
+        }
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
             $stocks = [];
@@ -241,5 +277,17 @@ class ProductController extends Controller
     {
         $sizes = $request->sizes;
         return view('admin.product.inc.size', compact('sizes'));
+    }
+
+    function add_guides(Request $request)
+    {
+        if ($request->guide) {
+            $image = $request['guide']->getClientOriginalName();
+            $request->guide->move(public_path('uploads/guides'), $image);
+        }
+        $images = explode(",", $request->guide_image);
+        $titles = explode(",", $request->guide_title);
+        $descriptions = explode(",", $request->guide_description);
+        return view('admin.product.inc.guide', compact('images', 'titles', 'descriptions'));
     }
 }
