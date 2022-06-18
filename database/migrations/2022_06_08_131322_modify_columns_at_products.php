@@ -14,9 +14,8 @@ class ModifyColumnsAtProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->text('banner')->default(null);
-            $table->text('link_video')->default(null);
-
+            $table->text('banner')->nullable();
+            $table->text('link_video')->nullable();
         });
     }
 
