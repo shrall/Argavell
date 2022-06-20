@@ -183,6 +183,24 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        if ($request->image) {
+            $image = time() . '-' . $request['image']->getClientOriginalName();
+            $request->image->move(public_path('uploads/products'), $image);
+        } else {
+            $image = $product->image;
+        }
+        if ($request->banner) {
+            $banner = time() . '-' . $request['banner']->getClientOriginalName();
+            $request->banner->move(public_path('uploads/products'), $banner);
+        } else {
+            $banner = $product->banner;
+        }
+        if ($request->video) {
+            $video = time() . '-' . $request['video']->getClientOriginalName();
+            $request->video->move(public_path('uploads/products'), $video);
+        } else {
+            $video = $product->video;
+        }
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
         $descriptions = explode(",", $request->item_guide_descriptions);
@@ -252,7 +270,10 @@ class ProductController extends Controller
                 'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
-                'ingredients' => $request->ingredients
+                'ingredients' => $request->ingredients,
+                'img' => $image,
+                'banner' => $banner,
+                'link_video' => $video,
             ]);
         } else {
             $bundle_items = explode(",", $request->bundle_items);

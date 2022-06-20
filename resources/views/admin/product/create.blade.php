@@ -14,7 +14,7 @@
     @include('admin.product.inc.modal.add_bundle')
     @include('admin.product.inc.modal.add_guide')
     @include('admin.product.inc.modal.add_benefit')
-    <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data" id="create-product-form">
         @csrf
         <div class="row">
             <div class="col-6">
@@ -30,8 +30,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">SKU Produk</label>
                             <div class="col-12">
-                                <input id="sku" type="text" class="form-control" name="sku" required placeholder="SKU"
-                                    required>
+                                <input id="sku" type="text" class="form-control" name="sku" required
+                                    placeholder="SKU" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -86,37 +86,43 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-4 text-start font-weight-bold">Gambar</label>
-                            <label class="col-4 text-start font-weight-bold">Banner</label>
-                            <label class="col-4 text-start font-weight-bold">Video</label>
-                            <div class="col-4 text-argavell">
-                                <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productimageModal"></div>
+                            <label class="col-4 text-start font-weight-bold">Gambar
+                                <div style="color: red;" id="alert-image" class="d-none">Required</div>
+                            </label>
+                            <label class="col-4 text-start font-weight-bold">Banner
+                                <div style="color: red;" id="alert-banner" class="d-none">Required</div>
+                            </label>
+                            <label class="col-4 text-start font-weight-bold">Video
+                                <div style="color: red;" id="alert-video" class="d-none">Required</div>
+                            </label>
+                            <div class="col-4 text-argavell d-none" id="image-upload-preview">
+                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productimageModal"></div>
                             </div>
-                            <div class="col-4 text-argavell">
-                                <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productbannerModal"></div>
+                            <div class="col-4 text-argavell d-none" id="banner-upload-preview">
+                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productbannerModal"></div>
                             </div>
-                            <div class="col-4 text-argavell">
-                                <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productvideoModal"></div>
+                            <div class="col-4 text-argavell d-none" id="video-upload-preview">
+                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productvideoModal"></div>
                             </div>
                             <div class="col-4 d-block" id="image-upload-button">
-                                <div class="btn btn-admin-argavell">
+                                <div class="btn btn-admin-argavell" id="image-act-button">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="image" id="image" class="d-none" accept="image/*"
                                         required onchange="loadFile(event, 'image')">
                                 </div>
                             </div>
                             <div class="col-4 d-block" id="banner-upload-button">
-                                <div class="btn btn-admin-argavell">
+                                <div class="btn btn-admin-argavell" id="banner-act-button">
                                     <label for="banner" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="banner" id="banner" class="d-none" accept="image/*"
                                         required onchange="loadFile(event, 'banner')">
                                 </div>
                             </div>
                             <div class="col-4 d-block" id="video-upload-button">
-                                <div class="btn btn-admin-argavell">
+                                <div class="btn btn-admin-argavell" id="video-act-button">
                                     <label for="video" class="cursor-pointer">Upload Video</label>
                                     <input type="file" name="video" id="video" class="d-none" accept="video/*"
                                         required onchange="loadVideo(event, 'video')">
@@ -205,7 +211,8 @@
                                             onkeyup="changeSize(2, 0);" />
                                     </div>
                                     <div class="col-1">
-                                        <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteSize(0);"></span>
+                                        <span class="fa fa-fw fa-trash-alt cursor-pointer"
+                                            onclick="deleteSize(0);"></span>
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +274,7 @@
                                 <button type="submit" class="btn btn-admin-gray w-100" disabled>Hapus</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
+                                <div onclick="onSubmit();" class="btn btn-admin-argavell w-100">Simpan</div>
                             </div>
                         </div>
                     </div>
@@ -278,6 +285,27 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function onSubmit() {
+            if ($('#image').get(0).files.length === 0) {
+                $('#image-act-button').addClass('empty-input')
+                $('#alert-image').removeClass('d-none').addClass('d-block');
+            }
+            if ($('#banner').get(0).files.length === 0) {
+                $('#banner-act-button').addClass('empty-input')
+                $('#alert-banner').removeClass('d-none').addClass('d-block');
+            }
+            if ($('#video').get(0).files.length === 0) {
+                $('#video-act-button').addClass('empty-input')
+                $('#alert-video').removeClass('d-none').addClass('d-block');
+            }
+            if ($('#image').get(0).files.length === 1 &&
+                $('#banner').get(0).files.length === 1 &&
+                $('#video').get(0).files.length === 1) {
+                $('#create-product-form').submit();
+            }
+        }
+    </script>
     <script>
         var sizes = [
             [0, 0, 0, 0]
@@ -557,7 +585,6 @@
                 console.error(error.stack);
             });
         ClassicEditor.editorConfig = function(config) {
-            // misc options
             config.height = '350px';
         };
     </script>
@@ -615,6 +642,28 @@
             $('#item-benefit-images').val(benefitimages)
             $('#item-benefit-banners').val(benefitbanners)
             benefitIndex--;
+        }
+    </script>
+
+    <script type="text/javascript">
+        function limitTextarea(textarea, maxLines, maxChar) {
+            var lines = textarea.value.replace(/\r/g, '').split('\n'),
+                lines_removed, char_removed, i;
+            if (maxLines && lines.length > maxLines) {
+                lines = lines.slice(0, maxLines);
+                lines_removed = 1
+            }
+            if (maxChar) {
+                i = lines.length;
+                while (i-- > 0)
+                    if (lines[i].length > maxChar) {
+                        lines[i] = lines[i].slice(0, maxChar);
+                        char_removed = 1
+                    }
+                if (char_removed || lines_removed) {
+                    textarea.value = lines.join('\n')
+                }
+            }
         }
     </script>
 @endsection

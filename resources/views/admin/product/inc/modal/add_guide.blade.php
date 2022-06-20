@@ -27,8 +27,8 @@
                                 </div>
                                 <label class="col-12 text-start font-weight-bold">Description</label>
                                 <div class="col-12">
-                                    <input id="guide_description" type="text" class="form-control" name="description"
-                                        required placeholder="Deskripsi" required>
+                                    <textarea id="guide_description" type="text" class="form-control" onkeyup="limitTextarea(this,3,1000)" rows="3"
+                                        name="description" required placeholder="Deskripsi" required></textarea>
                                 </div>
                             </div>
                         </div>

@@ -16,7 +16,7 @@ class CreateBenefitsTable extends Migration
         Schema::create('benefits', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('content')->nullable();
+            $table->mediumText('content')->nullable();
             $table->text('icon')->nullable();
             $table->text('banner')->nullable();
             $table->unsignedBigInteger('product_id')->index();

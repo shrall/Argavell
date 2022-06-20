@@ -14,7 +14,8 @@
     @include('admin.product.inc.modal.add_bundle')
     @include('admin.product.inc.modal.add_guide')
     @include('admin.product.inc.modal.add_benefit')
-    <form action="{{ route('admin.product.update', $product->slug) }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('admin.product.update', $product->slug) }}" method="post" enctype="multipart/form-data"
+        id="edit-product-form">
         @csrf
         <input type="hidden" name="_method" value="PUT">
         <div class="row">
@@ -31,8 +32,8 @@
                         <div class="row mb-3">
                             <label class="col-12 text-start font-weight-bold">SKU Produk</label>
                             <div class="col-12">
-                                <input id="sku" type="text" class="form-control" name="sku" required placeholder="SKU"
-                                    required value="{{ $product->sku }}">
+                                <input id="sku" type="text" class="form-control" name="sku" required
+                                    placeholder="SKU" required value="{{ $product->sku }}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -47,8 +48,10 @@
                             <label class="col-6 text-start font-weight-bold">Berat (gram)</label>
                             <div class="col-6">
                                 <select name="type" id="type" class="form-select">
-                                    <option value="0" @if ($product->type == '0') selected @endif>Argavell</option>
-                                    <option value="1" @if ($product->type == '1') selected @endif>Kleanse</option>
+                                    <option value="0" @if ($product->type == '0') selected @endif>Argavell
+                                    </option>
+                                    <option value="1" @if ($product->type == '1') selected @endif>Kleanse
+                                    </option>
                                 </select>
                             </div>
                             <div class="col-6">
@@ -97,14 +100,36 @@
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->img }}</div>
                             </div>
                             <div class="col-4 text-argavell">
-                                <div id="banner-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productbannerModal"><span
+                                <div id="banner-upload-preview" class="cursor-pointer"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productbannerModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->banner }}</div>
                             </div>
                             <div class="col-4 text-argavell">
                                 <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productvideoModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>{{ $product->link_video }}</div>
+                            </div>
+                            <div class="col-4 d-block" id="image-upload-button">
+                                <div class="btn btn-admin-argavell" id="image-act-button">
+                                    <label for="image" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="image" id="image" class="d-none" accept="image/*"
+                                        onchange="loadFile(event, 'image')">
+                                </div>
+                            </div>
+                            <div class="col-4 d-block" id="banner-upload-button">
+                                <div class="btn btn-admin-argavell" id="banner-act-button">
+                                    <label for="banner" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="banner" id="banner" class="d-none" accept="image/*"
+                                        onchange="loadFile(event, 'banner')">
+                                </div>
+                            </div>
+                            <div class="col-4 d-block" id="video-upload-button">
+                                <div class="btn btn-admin-argavell" id="video-act-button">
+                                    <label for="video" class="cursor-pointer">Upload Video</label>
+                                    <input type="file" name="video" id="video" class="d-none" accept="video/*"
+                                        onchange="loadVideo(event, 'video')">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -238,7 +263,8 @@
                                 @foreach ($product->guides as $key => $guide)
                                     <div id="product-guide-{{ $key }}" class="row">
                                         <div class="col-2 mb-2">
-                                            <a target="_blank" href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
+                                            <a target="_blank"
+                                                href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
                                                 class="text-argavell"
                                                 style="text-decoration: underline;">{{ $guide->logo }}</a>
                                         </div>
@@ -312,7 +338,8 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-admin-gray w-100" disabled>Hapus</button>
+                                <button type="submit" class="btn btn-admin-gray w-100" onclick="event.preventDefault();
+                                    document.getElementById('delete-product-form').submit();">Hapus</button>
                             </div>
                             <div class="col-6">
                                 <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
@@ -424,8 +451,6 @@
                     .files[0][
                         'name'
                     ])
-                $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
-                $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
         };
     </script>
