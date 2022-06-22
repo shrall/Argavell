@@ -184,6 +184,12 @@ a:hover,
 .btn:hover {
     color: #fff;
 }
+.btn:focus {
+    box-shadow: none !important;
+}
+.btn-normalize:hover {
+    color: #8a5b32;
+}
 .btn-argavell {
     background-color: #8a5b32;
     color: #fff;
@@ -500,4 +506,17 @@ a:hover,
 
 .empty-input{
     border: 3px solid red;
+}
+
+/* Dropdown Content */
+.dropdown-content {
+    opacity: 0;
+    max-height: 0px;
+    transition: all 0.25s ease-in-out;
+}
+
+.dropdown-content.active {
+    opacity: 1;
+    max-height: 200px;
+    transition: all 0.25s ease-in-out;
 }

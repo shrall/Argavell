@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\TncController as AdminTncController;
 use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\VoucherController as AdminVoucherController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PromotionController;
@@ -50,57 +51,105 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Auth::routes();
-
 Route::get('/labelcheck', function(){
     return view('admin.transaction.label')->with('transactions', Transaction::all());
 });
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/argan-oil', [PageController::class, 'arganoil'])->name('page.arganoil');
-Route::get('/argan-shampoo', [PageController::class, 'arganshampoo'])->name('page.arganshampoo');
-Route::get('/kleanse', [PageController::class, 'kleanse'])->name('page.kleanse');
-Route::get('/contact-us', [PageController::class, 'contactus'])->name('page.contactus');
-Route::get('/our-products', [PageController::class, 'ourproduct'])->name('page.ourproduct');
-
-Route::get('/terms-and-conditions', [TncController::class, 'index'])->name('page.termsconditions');
-Route::get('/return-policy', [PolicyController::class, 'index'])->name('page.policy');
-Route::get('/authorized-reseller', [ResellerController::class, 'index'])->name('page.reseller');
-Route::get('/faqs', [FaqController::class, 'index'])->name('page.faq');
-Route::get('/payment-confirmation', [ProofController::class, 'index'])->name('page.paymentconfirmation');
-
-Route::get('/checkout', [PageController::class, 'checkout'])->name('page.checkout');
-Route::get('/order', [PageController::class, 'order'])->name('page.order');
-
-Route::post('/redirect-login', [PageController::class, 'redirect_login'])->name('redirect.login');
-Route::post('/short-register', [PageController::class, 'short_register'])->name('short.register');
-Route::post('/short-login', [PageController::class, 'short_login'])->name('short.login');
+Route::group(['middleware' => 'customer'], function () {
+    Auth::routes();
+    Route::get(
+        '/',
+        [HomeController::class, 'index']
+    )->name('home');
+    Route::get(
+        '/our-products',
+        [PageController::class, 'ourproduct']
+    )->name('page.ourproduct');
+    Route::get(
+        '/contact-us',
+        [PageController::class, 'contactus']
+    )->name('page.contactus');
+    Route::get(
+        '/argan-oil',
+        [PageController::class, 'arganoil']
+    )->name('page.arganoil');
+    Route::get(
+        '/argan-shampoo',
+        [PageController::class, 'arganshampoo']
+    )->name('page.arganshampoo');
+    Route::get(
+        '/kleanse',
+        [PageController::class, 'kleanse']
+    )->name('page.kleanse');
+    Route::get(
+        '/terms-and-conditions',
+        [TncController::class, 'index']
+    )->name('page.termsconditions');
+    Route::get(
+        '/return-policy',
+        [PolicyController::class, 'index']
+    )->name('page.policy');
+    Route::get(
+        '/authorized-reseller',
+        [ResellerController::class, 'index']
+    )->name('page.reseller');
+    Route::get(
+        '/faqs',
+        [FaqController::class, 'index']
+    )->name('page.faq');
+    Route::get(
+        '/payment-confirmation',
+        [ProofController::class, 'index']
+    )->name('page.paymentconfirmation');
+    Route::get(
+        '/checkout',
+        [PageController::class, 'checkout']
+    )->name('page.checkout');
+    Route::get(
+        '/order',
+        [PageController::class, 'order']
+    )->name('page.order');
+    Route::post(
+        '/redirect-login',
+        [PageController::class, 'redirect_login']
+    )->name('redirect.login');
+    Route::post(
+        '/short-login',
+        [PageController::class, 'short_login']
+    )->name('short.login');
+    Route::post(
+        '/short-register',
+        [PageController::class, 'short_register']
+    )->name('short.register');
+    Route::group(
+        ['middleware' => ['user'], 'as' => 'user.'],
+        function () {
+            Route::resource('user', UserController::class);
+            Route::resource('reseller', ResellerController::class);
+            Route::resource('faq', FaqController::class);
+            Route::resource('tnc', TncController::class);
+            Route::resource('policy', PolicyController::class);
+            Route::resource('refund', RefundController::class);
+            Route::resource('proof', ProofController::class);
+            Route::resource('address', AddressController::class);
+            Route::resource('transaction', TransactionController::class);
+            Route::resource('cart', CartController::class);
+            Route::post('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
+            Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
+            Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
+            Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
+            Route::post('cart/getcity', [CartController::class, 'get_city'])->name('cart.getcity');
+            Route::post('cart/getshipment', [CartController::class, 'get_shipment'])->name('cart.getshipment');
+            Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
+            Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
+            Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
+            Route::post('transaction/buyagain', [TransactionController::class, 'buy_again'])->name('transaction.buyagain');
+            Route::post('transaction/finishorder', [TransactionController::class, 'finish_order'])->name('transaction.finishorder');
+        }
+    );
+});
 
 Route::resource('product', ProductController::class);
-
-Route::group(['middleware' => ['user'], 'as' => 'user.'], function () {
-    Route::resource('user', UserController::class);
-    Route::resource('reseller', ResellerController::class);
-    Route::resource('faq', FaqController::class);
-    Route::resource('tnc', TncController::class);
-    Route::resource('policy', PolicyController::class);
-    Route::resource('refund', RefundController::class);
-    Route::resource('proof', ProofController::class);
-    Route::resource('address', AddressController::class);
-    Route::resource('transaction', TransactionController::class);
-    Route::resource('cart', CartController::class);
-    Route::post('/payment-confirmation', [PageController::class, 'paymentconfirmation'])->name('page.paymentconfirmation');
-    Route::get('change-password', [UserController::class, 'changepassword'])->name('changepassword');
-    Route::post('change-password', [UserController::class, 'updatepassword'])->name('updatepassword');
-    Route::post('cart/additem', [CartController::class, 'add_item'])->name('cart.additem');
-    Route::post('cart/getcity', [CartController::class, 'get_city'])->name('cart.getcity');
-    Route::post('cart/getshipment', [CartController::class, 'get_shipment'])->name('cart.getshipment');
-    Route::post('cart/subtractitem', [CartController::class, 'subtract_item'])->name('cart.subtractitem');
-    Route::post('transaction/getsnap', [TransactionController::class, 'get_snap'])->name('transaction.getsnap');
-    Route::post('transaction/online/store', [TransactionController::class, 'online_store'])->name('transaction.onlinestore');
-    Route::post('transaction/buyagain', [TransactionController::class, 'buy_again'])->name('transaction.buyagain');
-    Route::post('transaction/finishorder', [TransactionController::class, 'finish_order'])->name('transaction.finishorder');
-});
 
 Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('page.dashboard');
