@@ -187,7 +187,7 @@ class ProductController extends Controller
             $image = time() . '-' . $request['image']->getClientOriginalName();
             $request->image->move(public_path('uploads/products'), $image);
         } else {
-            $image = $product->image;
+            $image = $product->img;
         }
         if ($request->banner) {
             $banner = time() . '-' . $request['banner']->getClientOriginalName();
