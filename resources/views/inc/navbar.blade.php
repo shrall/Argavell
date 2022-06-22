@@ -22,7 +22,7 @@
                             Our Products
                         </span>
                         <img
-                            class="my-auto"
+                            class="dropdown-icon my-auto"
                             src="{{ asset('images/icon-chevron-down-brown.png') }}"
                             style="width: 14px; height: 14px;"
                             alt="chevron-down">
@@ -583,9 +583,17 @@
     function toggleOurProductMenu() {
         const dropdownContent = $("#OurProductMenu");
         if (dropdownContent.hasClass('active')) {
+            $(".dropdown-icon").prop(
+                'src',
+                '{{ asset('images/icon-chevron-down-brown.png') }}'
+            )
             dropdownContent.removeClass('active');
             return;
         }
+        $(".dropdown-icon").prop(
+            'src',
+            '{{ asset("images/icon-chevron-up-brown.png") }}'
+        )
         dropdownContent.addClass('active');
     }
 </script>
