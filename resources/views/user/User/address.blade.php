@@ -52,8 +52,9 @@
                             @csrf
                             @foreach ($addresses as $address)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="address" value="{{ $address->id }}"
-                                        id="radio_address_{{ $address->id }}" @if (Auth::user()->address_id == $address->id) checked @endif>
+                                    <input class="form-check-input" type="radio" name="address"
+                                        value="{{ $address->id }}" id="radio_address_{{ $address->id }}"
+                                        @if (Auth::user()->address_id == $address->id) checked @endif>
                                     <div class="row m-0 p-0 ms-2">
                                         <div class="col-3 p-0 text-start">
                                             <p class="my-0 font-weight-bold">{{ $address->first_name }}
@@ -139,7 +140,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <input type="text" class="form-control" id="first_name" name="first_name"
-                                        placeholder="Enter your first name" value="{{ $address->first_name }}" required>
+                                        placeholder="Enter your first name" value="{{ $address->first_name }}"
+                                        required>
                                 </div>
                                 <div class="col-6">
                                     <input type="text" class="form-control" id="last_name" name="last_name"
@@ -172,30 +174,30 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="city" class="col-form-label font-weight-bold">City<span
+                                    <label for="province" class="col-form-label font-weight-bold">Province<span
                                             class="text-danger">*</span></label>
                                 </div>
                                 <div class="col-6">
-                                    <label for="province" class="col-form-label font-weight-bold">Province<span
+                                    <label for="city" class="col-form-label font-weight-bold">City<span
                                             class="text-danger">*</span></label>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-6">
-                                    <select class="form-select font-proxima-nova font-weight-bold" id="city" name="city"
-                                        required>
-                                        @foreach ($cities as $city)
-                                            <option value="{{ $city['city_name'] }}" @if ($city['city_name'] == $address->city) selected @endif>{{ $city['city_name'] }}</option>
+                                    <select class="form-select font-proxima-nova font-weight-bold"
+                                        id="province-{{ $address->id }}" name="province" required
+                                        onchange="getCity({{ $address->id }})">
+                                        @foreach ($provinces as $province)
+                                            <option value="{{ $province['province'] }}"
+                                                @if ($province['province'] == $address->province) selected @endif>
+                                                {{ $province['province'] }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <select class="form-select font-proxima-nova font-weight-bold" id="province"
-                                        name="province" required>
-                                        @foreach ($provinces as $province)
-                                            <option value="{{ $province['province'] }}" @if ($province['province'] == $address->province) selected @endif>{{ $province['province'] }}
-                                            </option>
-                                        @endforeach
+                                    <select class="form-select font-proxima-nova font-weight-bold"
+                                        id="city-{{ $address->id }}" name="city" required disabled>
                                     </select>
                                 </div>
                             </div>
@@ -293,30 +295,28 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <label for="city" class="col-form-label font-weight-bold">City<span
+                                <label for="province" class="col-form-label font-weight-bold">Province<span
                                         class="text-danger">*</span></label>
                             </div>
                             <div class="col-6">
-                                <label for="province" class="col-form-label font-weight-bold">Province<span
+                                <label for="city" class="col-form-label font-weight-bold">City<span
                                         class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
-                                <select class="form-select font-proxima-nova font-weight-bold" id="city" name="city"
-                                    required>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ $city['city_name'] }}">{{ $city['city_name'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select font-proxima-nova font-weight-bold" id="province" name="province"
-                                    required>
+                                <select class="form-select font-proxima-nova font-weight-bold" id="province-0"
+                                    onchange="getCity(0)" name="province" required>
+                                    <option class="tempprovince" selected>Please select your province</option>
                                     @foreach ($provinces as $province)
                                         <option value="{{ $province['province'] }}">{{ $province['province'] }}
                                         </option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select font-proxima-nova font-weight-bold" id="city-0"
+                                    name="city" required disabled>
                                 </select>
                             </div>
                         </div>
@@ -351,4 +351,45 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+        function getCity(id) {
+            $('#city-' + id).prop("disabled", true);
+            $('#city-' + id).html('');
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $.post(url + "/cart/getcity", {
+                    _token: CSRF_TOKEN,
+                    province: $('#province-' + id).val(),
+                })
+                .done(function(data) {
+                    $('.tempprovince').remove();
+                    $('#city-' + id).prop("disabled", false);
+                    $('#city-' + id).html('');
+                    Object.values(data).forEach((element, index) => {
+                        $('#city-' + id).append('<option value="' + element.city_name +
+                            '">' +
+                            element.city_name + '</option>')
+                    });
+                })
+                .fail(function(e) {
+                    console.log(e);
+                });
+        }
+    </script>
+    <script>
+        var addresses = @json($addresses);
+        addresses.forEach(address => {
+            getCity(address.id)
+        });
+    </script>
 @endsection
