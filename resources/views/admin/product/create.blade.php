@@ -93,7 +93,6 @@
                                 <div style="color: red;" id="alert-banner" class="d-none">Required</div>
                             </label>
                             <label class="col-4 text-start font-weight-bold">Video
-                                <div style="color: red;" id="alert-video" class="d-none">Required</div>
                             </label>
                             <div class="col-4 text-argavell d-none" id="image-upload-preview">
                                 <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
@@ -107,6 +106,8 @@
                                 <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
                                     data-bs-target="#productvideoModal"></div>
                             </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-4 d-block" id="image-upload-button">
                                 <div class="btn btn-admin-argavell" id="image-act-button">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
@@ -124,8 +125,7 @@
                             <div class="col-4 d-block" id="video-upload-button">
                                 <div class="btn btn-admin-argavell" id="video-act-button">
                                     <label for="video" class="cursor-pointer">Upload Video</label>
-                                    <input type="file" name="video" id="video" class="d-none" accept="video/*"
-                                        required onchange="loadVideo(event, 'video')">
+                                    <input type="file" name="video" id="video" class="d-none" accept="video/*" onchange="loadVideo(event, 'video')">
                                 </div>
                             </div>
                         </div>
@@ -295,13 +295,8 @@
                 $('#banner-act-button').addClass('empty-input')
                 $('#alert-banner').removeClass('d-none').addClass('d-block');
             }
-            if ($('#video').get(0).files.length === 0) {
-                $('#video-act-button').addClass('empty-input')
-                $('#alert-video').removeClass('d-none').addClass('d-block');
-            }
             if ($('#image').get(0).files.length === 1 &&
-                $('#banner').get(0).files.length === 1 &&
-                $('#video').get(0).files.length === 1) {
+                $('#banner').get(0).files.length === 1) {
                 $('#create-product-form').submit();
             }
         }
@@ -385,7 +380,7 @@
                     .files[0][
                         'name'
                     ])
-                $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+                // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
         };
@@ -397,7 +392,7 @@
                 .files[0][
                     'name'
                 ])
-            $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+            // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
             $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
         };
     </script>
@@ -521,7 +516,7 @@
 
         function addGuide() {
             guidetitles[guideIndex] = $('#guide_title').val()
-            guidedescriptions[guideIndex] = $('#guide_description').val()
+            // guidedescriptions[guideIndex] = $('#guide_description').val()
             $('#guide-title').val(guidetitles)
             $('#guide-description').val(guidedescriptions)
             var hostname = "{{ request()->getHost() }}"
@@ -544,7 +539,7 @@
                 $('#item-guide-images').val(guideimages)
                 guideIndex++;
                 $('#guide_title').val(null)
-                $('#guide_description').val(null)
+                editoreds.setData('')
                 $('#guide').val(null)
                 $('#guide-imaged').attr('src', @json(asset('images/argan-fruit.png')));
                 $('#product-info-guides').html(data);
@@ -585,6 +580,30 @@
                 console.error(error.stack);
             });
         ClassicEditor.editorConfig = function(config) {
+            config.height = '350px';
+        };
+    </script>
+    <script>
+        var editoreds;
+        ClassicEditor.create(document.querySelector('#guide_description'), {
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle',
+                    'ImageToolbar', 'ImageUpload', 'MediaEmbed', 'Table'
+                ],
+            }).then(editore => {
+                editoreds = editore
+                editore.model.document.on('change:data', () => {
+                    guidedescriptions[guideIndex] = editore.getData()
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                console.error(error.stack);
+            });
+        ClassicEditor.editorConfig = function(config) {
+            // misc options
             config.height = '350px';
         };
     </script>
@@ -642,28 +661,6 @@
             $('#item-benefit-images').val(benefitimages)
             $('#item-benefit-banners').val(benefitbanners)
             benefitIndex--;
-        }
-    </script>
-
-    <script type="text/javascript">
-        function limitTextarea(textarea, maxLines, maxChar) {
-            var lines = textarea.value.replace(/\r/g, '').split('\n'),
-                lines_removed, char_removed, i;
-            if (maxLines && lines.length > maxLines) {
-                lines = lines.slice(0, maxLines);
-                lines_removed = 1
-            }
-            if (maxChar) {
-                i = lines.length;
-                while (i-- > 0)
-                    if (lines[i].length > maxChar) {
-                        lines[i] = lines[i].slice(0, maxChar);
-                        char_removed = 1
-                    }
-                if (char_removed || lines_removed) {
-                    textarea.value = lines.join('\n')
-                }
-            }
         }
     </script>
 @endsection

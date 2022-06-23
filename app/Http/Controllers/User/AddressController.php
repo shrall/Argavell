@@ -19,15 +19,11 @@ class AddressController extends Controller
     public function index()
     {
         $addresses = Address::where('user_id', Auth::id())->get();
-        $cities = Http::withHeaders([
-            'key' => config('services.rajaongkir.token'),
-        ])->get('https://api.rajaongkir.com/starter/city')
-            ->json()['rajaongkir']['results'];
         $provinces = Http::withHeaders([
             'key' => config('services.rajaongkir.token'),
         ])->get('https://api.rajaongkir.com/starter/province')
             ->json()['rajaongkir']['results'];
-        return view('user.User.address', compact('addresses', 'cities', 'provinces'));
+        return view('user.User.address', compact('addresses', 'provinces'));
     }
 
     /**

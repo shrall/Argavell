@@ -97,19 +97,21 @@
                             <div class="col-4 text-argavell">
                                 <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productimageModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>{{ $product->img }}</div>
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
                             <div class="col-4 text-argavell">
                                 <div id="banner-upload-preview" class="cursor-pointer"
                                     style="text-decoration: underline;" data-bs-toggle="modal"
                                     data-bs-target="#productbannerModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>{{ $product->banner }}</div>
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
                             <div class="col-4 text-argavell">
                                 <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
                                     data-bs-toggle="modal" data-bs-target="#productvideoModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>{{ $product->link_video }}</div>
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Video</div>
                             </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col-4 d-block" id="image-upload-button">
                                 <div class="btn btn-admin-argavell" id="image-act-button">
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
@@ -272,7 +274,7 @@
                                             {{ $guide->title }}
                                         </div>
                                         <div class="col-7 mb-2">
-                                            {{ $guide->description }}
+                                            {!! $guide->description !!}
                                         </div>
                                         <div class="col-1 mb-2">
                                             <span class="fa fa-fw fa-trash-alt cursor-pointer"
@@ -338,7 +340,8 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-6">
-                                <button type="submit" class="btn btn-admin-gray w-100" onclick="event.preventDefault();
+                                <button type="submit" class="btn btn-admin-gray w-100"
+                                    onclick="event.preventDefault();
                                     document.getElementById('delete-product-form').submit();">Hapus</button>
                             </div>
                             <div class="col-6">
@@ -600,7 +603,7 @@
 
         function addGuide() {
             guidetitles[guideIndex] = $('#guide_title').val()
-            guidedescriptions[guideIndex] = $('#guide_description').val()
+            // guidedescriptions[guideIndex] = $('#guide_description').val()
             $('#guide-title').val(guidetitles)
             $('#guide-description').val(guidedescriptions)
             var hostname = "{{ request()->getHost() }}"
@@ -666,6 +669,30 @@
         }
     </script>
     <script src="{{ asset('js/ckeditor.js') }}"></script>
+    <script>
+        var editoreds;
+        ClassicEditor.create(document.querySelector('#guide_description'), {
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle',
+                    'ImageToolbar', 'ImageUpload', 'MediaEmbed', 'Table'
+                ],
+            }).then(editore => {
+                editoreds = editore
+                editore.model.document.on('change:data', () => {
+                    guidedescriptions[guideIndex] = editore.getData()
+                });
+            })
+            .catch(error => {
+                console.error(error);
+                console.error(error.stack);
+            });
+        ClassicEditor.editorConfig = function(config) {
+            // misc options
+            config.height = '350px';
+        };
+    </script>
     <script>
         var editored;
         ClassicEditor.create(document.querySelector('#benefit_description'), {

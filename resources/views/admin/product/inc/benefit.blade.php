@@ -12,7 +12,7 @@
             <div class="col-2 mb-2">
                 {{ $titles[$key] }}
             </div>
-            <div class="col-5 mb-2">
+            <div class="col-4 mb-2 mx-2">
                 {!! $descriptions[$key] !!}
             </div>
             <div class="col-1 mb-2">

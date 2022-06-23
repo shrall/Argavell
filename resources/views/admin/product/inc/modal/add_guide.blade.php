@@ -13,7 +13,7 @@
                     <input type="hidden" name="guide_description" id="guide-description">
                     <div class="row mb-3">
                         <div class="col-3 d-flex flex-column">
-                            <img src="{{ asset('images/argan-fruit.png') }}" id="guide-imaged" style="width: 100%;">
+                            <img src="{{ asset('images/argan-fruit.png') }}" id="guide-imaged" class="mb-1" style="width: 100%;">
                             <label for="guide" class="cursor-pointer btn btn-admin-argavell">Ubah</label>
                             <input type="file" name="guide" id="guide" class="d-none" accept="image/*" required
                                 onchange="loadModalFile(event, 'guide')">
@@ -27,7 +27,7 @@
                                 </div>
                                 <label class="col-12 text-start font-weight-bold">Description</label>
                                 <div class="col-12">
-                                    <textarea id="guide_description" type="text" class="form-control" onkeyup="limitTextarea(this,3,1000)" rows="3"
+                                    <textarea id="guide_description" type="text" class="form-control" rows="3"
                                         name="description" required placeholder="Deskripsi" required></textarea>
                                 </div>
                             </div>

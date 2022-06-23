@@ -192,9 +192,9 @@
                 @else
                     <ul class="nav nav-kleanse nav-fill" id="detailTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active font-gotham fs-4 p-0" id="description-tab" data-bs-toggle="tab"
-                                data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                aria-selected="true">Description</button>
+                            <button class="nav-link active font-gotham fs-4 p-0" id="description-tab"
+                                data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
+                                aria-controls="description" aria-selected="true">Description</button>
                         </li>
                         {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link font-gotham fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
@@ -235,65 +235,96 @@
         <div class="col-md-2"></div>
     </div>
     <div @if ($product->type == 0) class="argan-benefits" @else class="kleanse-benefits" @endif>
-        @foreach ($product->benefits as $benefit)
-            @if ($loop->iteration % 2 == 0)
-                <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-4">
-                        <div class="mb-5">
-                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
-                                class="mb-2">
-                            <h3 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
-                            </h3>
-                            <div>{!! $benefit->content !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
-                            @if ($product->type == 0)
-                                <div
-                                    class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
-                                    {{ $loop->iteration }}</div>
-                            @else
-                                <div
-                                    class="position-absolute top-0 start-0 text-kleanse font-proxima-nova font-weight-bold text-8xl translate-middle">
-                                    {{ $loop->iteration }}</div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-1"></div>
-                </div>
-            @else
-                <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-3">
-                        <div class="position-relative">
-                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
-                            @if ($product->type == 0)
-                                <div
-                                    class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
-                                    {{ $loop->iteration }}</div>
-                            @else
-                                <div
-                                    class="position-absolute top-0 start-0 text-kleanse font-proxima-nova font-weight-bold text-8xl translate-middle">
-                                    {{ $loop->iteration }}</div>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-4">
-                        <div class="mb-5">
-                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
-                                class="mb-2">
-                            @if ($product->type == 0)
+        @if (count($product->benefits) > 0)
+            @foreach ($product->benefits as $benefit)
+                @if ($loop->iteration % 2 == 0)
+                    <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-4">
+                            <div class="mb-5">
+                                <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
+                                    class="mb-2">
                                 <h3 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
                                 </h3>
+                                <div>{!! $benefit->content !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
+                            <div class="position-relative">
+                                <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
+                                @if ($product->type == 0)
+                                    <div
+                                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                        {{ $loop->iteration }}</div>
+                                @else
+                                    <div
+                                        class="position-absolute top-0 start-0 text-kleanse font-proxima-nova font-weight-bold text-8xl translate-middle">
+                                        {{ $loop->iteration }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                @else
+                    <div class="row w-100 m-0 align-items-center py-5 d-none d-sm-flex">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3">
+                            <div class="position-relative">
+                                <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
+                                @if ($product->type == 0)
+                                    <div
+                                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                        {{ $loop->iteration }}</div>
+                                @else
+                                    <div
+                                        class="position-absolute top-0 start-0 text-kleanse font-proxima-nova font-weight-bold text-8xl translate-middle">
+                                        {{ $loop->iteration }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <div class="mb-5">
+                                <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
+                                    class="mb-2">
+                                @if ($product->type == 0)
+                                    <h3 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
+                                    </h3>
+                                @else
+                                    <h3 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
+                                    </h3>
+                                @endif
+                                <div>{!! $benefit->content !!}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                @endif
+                {{-- benefits 1 mobile --}}
+                <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3 px-5">
+                        <div class="position-relative">
+                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
+                            <div
+                                class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                {{ $loop->iteration }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-4 px-5 pt-4">
+                        <div class="mb-3">
+                            <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
+                                class="mb-2">
+                            @if ($product->type == 0)
+                                <h2 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
+                                </h2>
                             @else
-                                <h3 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
-                                </h3>
+                                <h2 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
+                                </h2>
                             @endif
                             <div>{!! $benefit->content !!}
                             </div>
@@ -301,37 +332,8 @@
                     </div>
                     <div class="col-md-2"></div>
                 </div>
-            @endif
-            {{-- benefits 1 mobile --}}
-            <div class="row w-100 m-0 align-items-center my-5 d-block d-sm-none">
-                <div class="col-md-2"></div>
-                <div class="col-md-3 px-5">
-                    <div class="position-relative">
-                        <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
-                        <div
-                            class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
-                            {{ $loop->iteration }}</div>
-                    </div>
-                </div>
-                <div class="col-md-1"></div>
-                <div class="col-md-4 px-5 pt-4">
-                    <div class="mb-3">
-                        <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
-                            class="mb-2">
-                        @if ($product->type == 0)
-                            <h2 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
-                            </h2>
-                        @else
-                            <h2 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
-                            </h2>
-                        @endif
-                        <div>{!! $benefit->content !!}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2"></div>
-            </div>
-        @endforeach
+            @endforeach
+        @endif
     </div>
     {{-- mobile
         <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
@@ -503,7 +505,7 @@
                                         <h2 class="text-kleanse font-proxima-nova font-weight-bold">{{ $guide->title }}
                                         </h2>
                                     @endif
-                                    <span class="text-secondary text-center">{{ $guide->description }}</span>
+                                    <span class="text-secondary">{!! $guide->description !!}</span>
                                 </div>
                             </div>
                         @endforeach
