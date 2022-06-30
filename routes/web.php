@@ -121,6 +121,10 @@ Route::group(['middleware' => 'customer'], function () {
         '/short-register',
         [PageController::class, 'short_register']
     )->name('short.register');
+    Route::resource(
+        'product',
+        ProductController::class
+    );
     Route::group(
         ['middleware' => ['user'], 'as' => 'user.'],
         function () {
@@ -148,8 +152,6 @@ Route::group(['middleware' => 'customer'], function () {
         }
     );
 });
-
-Route::resource('product', ProductController::class);
 
 Route::group(['middleware' => ['admin'], 'as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::get('/', [PageController::class, 'dashboard'])->name('page.dashboard');
