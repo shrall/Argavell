@@ -3,11 +3,11 @@
         <div id="product-benefit-{{ $key }}" class="row">
             <div class="col-2 mb-2">
                 <a target="_blank" href="{{ asset('uploads/benefits') . '/' . $banners[$key] }}" class="text-argavell"
-                    style="text-decoration: underline;">{{ $banners[$key] }}</a>
+                    style="text-decoration: underline;">Lihat Gambar</a>
             </div>
             <div class="col-2 mb-2">
                 <a target="_blank" href="{{ asset('uploads/benefits') . '/' . $images[$key] }}" class="text-argavell"
-                    style="text-decoration: underline;">{{ $images[$key] }}</a>
+                    style="text-decoration: underline;">Lihat Gambar</a>
             </div>
             <div class="col-2 mb-2">
                 {{ $titles[$key] }}

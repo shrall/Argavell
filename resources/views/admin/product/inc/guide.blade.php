@@ -3,7 +3,7 @@
         <div id="product-guide-{{ $key }}" class="row">
             <div class="col-2 mb-2">
                 <a target="_blank" href="{{ asset('uploads/guides') . '/' . $images[$key] }}" class="text-argavell"
-                    style="text-decoration: underline;">{{ $images[$key] }}</a>
+                    style="text-decoration: underline;">Lihat Gambar</a>
             </div>
             <div class="col-2 mb-2">
                 {{ $titles[$key] }}
