@@ -52,12 +52,24 @@ class ProductController extends Controller
         $btitles = explode(",", $request->item_benefit_titles);
         $bdescriptions = explode(",", $request->item_benefit_descriptions);
 
-        $image = time() . '-' . $request['image']->getClientOriginalName();
-        $request->image->move(public_path('uploads/products'), $image);
-        $banner = time() . '-' . $request['banner']->getClientOriginalName();
-        $request->banner->move(public_path('uploads/products'), $banner);
-        $video = time() . '-' . $request['video']->getClientOriginalName();
-        $request->video->move(public_path('uploads/products'), $video);
+        if ($request->image) {
+            $image = time() . '-' . $request['image']->getClientOriginalName();
+            $request->image->move(public_path('uploads/products'), $image);
+        } else {
+            $image = null;
+        }
+        if ($request->banner) {
+            $banner = time() . '-' . $request['banner']->getClientOriginalName();
+            $request->banner->move(public_path('uploads/products'), $banner);
+        } else {
+            $image = null;
+        }
+        if ($request->video) {
+            $video = time() . '-' . $request['video']->getClientOriginalName();
+            $request->video->move(public_path('uploads/products'), $video);
+        } else {
+            $image = null;
+        }
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
             $stocks = [];
