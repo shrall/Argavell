@@ -268,7 +268,7 @@
                                             <a target="_blank"
                                                 href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
                                                 class="text-argavell"
-                                                style="text-decoration: underline;">{{ $guide->logo }}</a>
+                                                style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             {{ $guide->title }}
@@ -312,13 +312,13 @@
                                             <a target="_blank"
                                                 href="{{ asset('uploads/benefits') . '/' . $benefit->banner }}"
                                                 class="text-argavell"
-                                                style="text-decoration: underline;">{{ $benefit->banner }}</a>
+                                                style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             <a target="_blank"
                                                 href="{{ asset('uploads/benefits') . '/' . $benefit->icon }}"
                                                 class="text-argavell"
-                                                style="text-decoration: underline;">{{ $benefit->icon }}</a>
+                                                style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             {{ $benefit->title }}
