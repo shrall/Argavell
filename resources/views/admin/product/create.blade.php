@@ -94,17 +94,20 @@
                             </label>
                             <label class="col-4 text-start font-weight-bold">Video
                             </label>
-                            <div class="col-4 text-argavell d-none" id="image-upload-preview">
-                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
-                                    data-bs-target="#productimageModal"></div>
+                            <div class="col-4 text-argavell">
+                                <div id="image-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productimageModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
-                            <div class="col-4 text-argavell d-none" id="banner-upload-preview">
-                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
-                                    data-bs-target="#productbannerModal"></div>
+                            <div class="col-4 text-argavell">
+                                <div id="banner-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productbannerModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
-                            <div class="col-4 text-argavell d-none" id="video-upload-preview">
-                                <div class="cursor-pointer" style="text-decoration: underline;" data-bs-toggle="modal"
-                                    data-bs-target="#productvideoModal"></div>
+                            <div class="col-4 text-argavell">
+                                <div id="video-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productvideoModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Video</div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -125,7 +128,8 @@
                             <div class="col-4 d-block" id="video-upload-button">
                                 <div class="btn btn-admin-argavell" id="video-act-button">
                                     <label for="video" class="cursor-pointer">Upload Video</label>
-                                    <input type="file" name="video" id="video" class="d-none" accept="video/*" onchange="loadVideo(event, 'video')">
+                                    <input type="file" name="video" id="video" class="d-none" accept="video/*"
+                                        onchange="loadVideo(event, 'video')">
                                 </div>
                             </div>
                         </div>
@@ -376,10 +380,10 @@
                 $(`#${type}`).val(null);
             } else {
                 $(`.product-${type}-preview`).attr('src', URL.createObjectURL(event.target.files[0]));
-                $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
-                    .files[0][
-                        'name'
-                    ])
+                // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                //     .files[0][
+                //         'name'
+                //     ])
                 // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
@@ -388,10 +392,10 @@
             let file = event.target.files[0];
             let blobURL = URL.createObjectURL(file);
             document.querySelector("video").src = blobURL;
-            $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
-                .files[0][
-                    'name'
-                ])
+            // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+            //     .files[0][
+            //         'name'
+            //     ])
             // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
             $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
         };
