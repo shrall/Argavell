@@ -450,11 +450,24 @@
                 $(`#${type}`).val(null);
             } else {
                 $(`.product-${type}-preview`).attr('src', URL.createObjectURL(event.target.files[0]));
-                $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
-                    .files[0][
-                        'name'
-                    ])
+                // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+                //     .files[0][
+                //         'name'
+                //     ])
+                // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+                $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
             }
+        };
+        var loadVideo = function(event, type) {
+            let file = event.target.files[0];
+            let blobURL = URL.createObjectURL(file);
+            document.querySelector("video").src = blobURL;
+            // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
+            //     .files[0][
+            //         'name'
+            //     ])
+            // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
+            $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
         };
     </script>
     <script>
