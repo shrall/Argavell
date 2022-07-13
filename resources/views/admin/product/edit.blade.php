@@ -626,7 +626,7 @@
                 $('#item-guide-images').val(guideimages)
                 guideIndex++;
                 $('#guide_title').val(null)
-                $('#guide_description').val(null)
+                editoreds.setData('')
                 $('#guide').val(null)
                 $('#guide-imaged').attr('src', @json(asset('images/argan-fruit.png')));
                 $('#product-info-guides').html(data);
