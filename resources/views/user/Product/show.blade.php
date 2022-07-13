@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="row w-100 m-0 p-0 py-5 align-items-center">
+    <div class="row w-100 m-0 p-0 py-5 mt-5 align-items-center">
         <div class="col-md-2"></div>
         <div class="col-md-3">
             <div class="w-100 product-detail"
