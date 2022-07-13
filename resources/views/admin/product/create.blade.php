@@ -95,17 +95,20 @@
                             <label class="col-4 text-start font-weight-bold">Video
                             </label>
                             <div class="col-4 text-argavell">
-                                <div id="image-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                <div id="image-upload-preview" class="cursor-pointer d-none"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
                                     data-bs-target="#productimageModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
                             <div class="col-4 text-argavell">
-                                <div id="banner-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                <div id="banner-upload-preview" class="cursor-pointer d-none"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
                                     data-bs-target="#productbannerModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
                             </div>
                             <div class="col-4 text-argavell">
-                                <div id="video-upload-preview" class="cursor-pointer d-none" style="text-decoration: underline;" data-bs-toggle="modal"
+                                <div id="video-upload-preview" class="cursor-pointer d-none"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
                                     data-bs-target="#productvideoModal"><span
                                         class="fas fa-fw fa-paperclip me-2"></span>Lihat Video</div>
                             </div>

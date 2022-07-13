@@ -199,19 +199,31 @@ class ProductController extends Controller
             $image = time() . '-' . $request['image']->getClientOriginalName();
             $request->image->move(public_path('uploads/products'), $image);
         } else {
-            $image = $product->img;
+            if ($request->image_delete == '1') {
+                $image = null;
+            } else {
+                $image = $product->img;
+            }
         }
         if ($request->banner) {
             $banner = time() . '-' . $request['banner']->getClientOriginalName();
             $request->banner->move(public_path('uploads/products'), $banner);
         } else {
-            $banner = $product->banner;
+            if ($request->banner_delete == '1') {
+                $banner = null;
+            } else {
+                $banner = $product->banner;
+            }
         }
         if ($request->video) {
             $video = time() . '-' . $request['video']->getClientOriginalName();
             $request->video->move(public_path('uploads/products'), $video);
         } else {
-            $video = $product->video;
+            if ($request->video_delete == '1') {
+                $video = null;
+            } else {
+                $video = $product->video;
+            }
         }
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);

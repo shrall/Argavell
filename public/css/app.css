@@ -259,6 +259,14 @@ a:hover,
     background-color: #8d8d8d;
 }
 
+.btn-admin-argavell-red {
+    background-color: #af6f80;
+    color: #fff;
+}
+.btn-admin-argavell-red:hover {
+    background-color: #8f4f60;
+}
+
 .btn-panel {
     cursor: context-menu !important;
 }

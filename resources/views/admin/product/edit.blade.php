@@ -95,42 +95,92 @@
                             <label class="col-4 text-start font-weight-bold">Banner</label>
                             <label class="col-4 text-start font-weight-bold">Video</label>
                             <div class="col-4 text-argavell">
-                                <div id="image-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productimageModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @if ($product->img)
+                                    <div id="image-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline;" data-bs-toggle="modal"
+                                        data-bs-target="#productimageModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar
+                                    </div>
+                                @else
+                                    <div id="image-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline; display:none;" data-bs-toggle="modal"
+                                        data-bs-target="#productimageModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-4 text-argavell">
-                                <div id="banner-upload-preview" class="cursor-pointer"
-                                    style="text-decoration: underline;" data-bs-toggle="modal"
-                                    data-bs-target="#productbannerModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @if ($product->banner)
+                                    <div id="banner-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline;" data-bs-toggle="modal"
+                                        data-bs-target="#productbannerModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar
+                                    </div>
+                                @else
+                                    <div id="banner-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline; display: none;" data-bs-toggle="modal"
+                                        data-bs-target="#productbannerModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-4 text-argavell">
-                                <div id="video-upload-preview" class="cursor-pointer" style="text-decoration: underline;"
-                                    data-bs-toggle="modal" data-bs-target="#productvideoModal"><span
-                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Video</div>
+                                @if ($product->link_video)
+                                    <div id="video-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline;" data-bs-toggle="modal"
+                                        data-bs-target="#productvideoModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Video
+                                    </div>
+                                @else
+                                    <div id="video-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline; display: none;" data-bs-toggle="modal"
+                                        data-bs-target="#productvideoModal">
+                                        <span class="fas fa-fw fa-paperclip me-2"></span>Lihat Video
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                        <input type="hidden" name="image_delete" id="image-delete" value='0'>
+                        <input type="hidden" name="banner_delete" id="banner-delete" value='0'>
+                        <input type="hidden" name="video_delete" id="video-delete" value='0'>
                         <div class="row mb-3">
                             <div class="col-4 d-block" id="image-upload-button">
-                                <div class="btn btn-admin-argavell" id="image-act-button">
+                                <div class="btn btn-admin-argavell" id="image-act-button"
+                                    @if ($product->img) style="display:none;" @endif>
                                     <label for="image" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="image" id="image" class="d-none" accept="image/*"
                                         onchange="loadFile(event, 'image')">
                                 </div>
+                                <div class="btn btn-admin-argavell-red" id="image-delete-button"
+                                    onclick="deleteMedia('image');"
+                                    @if (!$product->img) style="display:none;" @endif>
+                                    <label class="cursor-pointer">Hapus Gambar</label>
+                                </div>
                             </div>
                             <div class="col-4 d-block" id="banner-upload-button">
-                                <div class="btn btn-admin-argavell" id="banner-act-button">
+                                <div class="btn btn-admin-argavell" id="banner-act-button"
+                                    @if ($product->banner) style="display:none;" @endif>
                                     <label for="banner" class="cursor-pointer">Upload Gambar</label>
                                     <input type="file" name="banner" id="banner" class="d-none" accept="image/*"
                                         onchange="loadFile(event, 'banner')">
                                 </div>
+                                <div class="btn btn-admin-argavell-red" id="banner-delete-button"
+                                    onclick="deleteMedia('banner');"
+                                    @if (!$product->banner) style="display:none;" @endif>
+                                    <label class="cursor-pointer">Hapus Gambar</label>
+                                </div>
                             </div>
                             <div class="col-4 d-block" id="video-upload-button">
-                                <div class="btn btn-admin-argavell" id="video-act-button">
+                                <div class="btn btn-admin-argavell" id="video-act-button"
+                                    @if ($product->link_video) style="display:none;" @endif>
                                     <label for="video" class="cursor-pointer">Upload Video</label>
                                     <input type="file" name="video" id="video" class="d-none" accept="video/*"
                                         onchange="loadVideo(event, 'video')">
+                                </div>
+                                <div class="btn btn-admin-argavell-red" id="video-delete-button"
+                                    onclick="deleteMedia('video');"
+                                    @if (!$product->link_video) style="display:none;" @endif>
+                                    <label class="cursor-pointer">Hapus Video</label>
                                 </div>
                             </div>
                         </div>
@@ -267,8 +317,7 @@
                                         <div class="col-2 mb-2">
                                             <a target="_blank"
                                                 href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
-                                                class="text-argavell"
-                                                style="text-decoration: underline;">Lihat Gambar</a>
+                                                class="text-argavell" style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             {{ $guide->title }}
@@ -311,14 +360,12 @@
                                         <div class="col-2 mb-2">
                                             <a target="_blank"
                                                 href="{{ asset('uploads/benefits') . '/' . $benefit->banner }}"
-                                                class="text-argavell"
-                                                style="text-decoration: underline;">Lihat Gambar</a>
+                                                class="text-argavell" style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             <a target="_blank"
                                                 href="{{ asset('uploads/benefits') . '/' . $benefit->icon }}"
-                                                class="text-argavell"
-                                                style="text-decoration: underline;">Lihat Gambar</a>
+                                                class="text-argavell" style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
                                             {{ $benefit->title }}
@@ -456,6 +503,9 @@
                 //     ])
                 // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
+                $('#' + type + '-delete').val('0')
+                $('#' + type + '-act-button').removeClass('d-block').addClass('d-none');
+                $('#' + type + '-delete-button').removeClass('d-none').addClass('d-block');
             }
         };
         var loadVideo = function(event, type) {
@@ -468,6 +518,9 @@
             //     ])
             // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
             $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
+            $('#' + type + '-delete').val('0')
+            $('#' + type + '-act-button').removeClass('d-block').addClass('d-none');
+            $('#' + type + '-delete-button').removeClass('d-none').addClass('d-block');
         };
     </script>
     <script>
@@ -825,6 +878,15 @@
             }).fail(function(error) {
                 console.log(error)
             });
+        }
+    </script>
+    <script>
+        function deleteMedia(media) {
+            $('#' + media + '-act-button').removeClass('d-none').addClass('d-block');
+            $('#' + media + '-delete-button').removeClass('d-block').addClass('d-none');
+            $('#' + media + '-upload-preview').removeClass('d-block').addClass('d-none');
+            $('#' + media + '-delete').val('1')
+            $(`#${media}`).val(null)
         }
     </script>
 @endsection
