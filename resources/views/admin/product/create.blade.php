@@ -389,6 +389,8 @@
                 //     ])
                 // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
+                $('#alert-' + type).removeClass('d-block').addClass('d-none');
+                $('#' + type + '-act-button').removeClass('empty-input');
             }
         };
         var loadVideo = function(event, type) {
@@ -525,7 +527,7 @@
             guidetitles[guideIndex] = $('#guide_title').val()
             // guidedescriptions[guideIndex] = $('#guide_description').val()
             $('#guide-title').val(guidetitles)
-            $('#guide-description').val(guidedescriptions)
+            $('#guide-description').val(JSON.stringify(guidedescriptions))
             var hostname = "{{ request()->getHost() }}"
             var url = ""
             if (hostname.includes('www')) {
@@ -542,7 +544,7 @@
                 contentType: false
             }).done(function(data) {
                 $('#item-guide-titles').val(guidetitles)
-                $('#item-guide-descriptions').val(guidedescriptions)
+                $('#item-guide-descriptions').val(JSON.stringify(guidedescriptions))
                 $('#item-guide-images').val(guideimages)
                 guideIndex++;
                 $('#guide_title').val(null)
@@ -561,7 +563,7 @@
             guidedescriptions.splice(index, 1);
             guideimages.splice(index, 1);
             $('#item-guide-titles').val(guidetitles)
-            $('#item-guide-descriptions').val(guidedescriptions)
+            $('#item-guide-descriptions').val(JSON.stringify(guidedescriptions))
             $('#item-guide-images').val(guideimages)
             guideIndex--;
         }
@@ -624,7 +626,7 @@
         function addBenefit() {
             benefittitles[benefitIndex] = $('#benefit_title').val()
             $('#benefit-title').val(benefittitles)
-            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-description').val(JSON.stringify(benefitdescriptions))
             var hostname = "{{ request()->getHost() }}"
             var url = ""
             if (hostname.includes('www')) {
@@ -641,7 +643,7 @@
                 contentType: false
             }).done(function(data) {
                 $('#item-benefit-titles').val(benefittitles)
-                $('#item-benefit-descriptions').val(benefitdescriptions)
+                $('#item-benefit-descriptions').val(JSON.stringify(benefitdescriptions))
                 $('#item-benefit-images').val(benefitimages)
                 $('#item-benefit-banners').val(benefitbanners)
                 benefitIndex++;
@@ -664,7 +666,7 @@
             benefitimages.splice(index, 1);
             benefitbanners.splice(index, 1);
             $('#item-benefit-titles').val(benefittitles)
-            $('#item-benefit-descriptions').val(benefitdescriptions)
+            $('#item-benefit-descriptions').val(JSON.stringify(benefitdescriptions))
             $('#item-benefit-images').val(benefitimages)
             $('#item-benefit-banners').val(benefitbanners)
             benefitIndex--;

@@ -45,12 +45,12 @@ class ProductController extends Controller
     {
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
-        $descriptions = explode(",", $request->item_guide_descriptions);
+        $descriptions = json_decode($request->item_guide_descriptions, true);
 
         $bimages = explode(",", $request->item_benefit_images);
         $bbanners = explode(",", $request->item_benefit_banners);
         $btitles = explode(",", $request->item_benefit_titles);
-        $bdescriptions = explode(",", $request->item_benefit_descriptions);
+        $bdescriptions = json_decode($request->item_benefit_descriptions, true);
 
         if ($request->image) {
             $image = time() . '-' . $request['image']->getClientOriginalName();
@@ -227,12 +227,11 @@ class ProductController extends Controller
         }
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
-        $descriptions = explode(",", $request->item_guide_descriptions);
-
+        $descriptions = json_decode($request->item_guide_descriptions, true);
         $bimages = explode(",", $request->item_benefit_images);
         $bbanners = explode(",", $request->item_benefit_banners);
         $btitles = explode(",", $request->item_benefit_titles);
-        $bdescriptions = explode(",", $request->item_benefit_descriptions);
+        $bdescriptions = json_decode($request->item_benefit_descriptions, true);
 
         foreach ($product->guides as $guide) {
             $guide->delete();
@@ -379,7 +378,7 @@ class ProductController extends Controller
         }
         $images = explode(",", $request->guide_image);
         $titles = explode(",", $request->guide_title);
-        $descriptions = explode(",", $request->guide_description);
+        $descriptions = json_decode($request->guide_description, true);
         return view('admin.product.inc.guide', compact('images', 'titles', 'descriptions'));
     }
 
@@ -396,7 +395,7 @@ class ProductController extends Controller
         $images = explode(",", $request->benefit_image);
         $banners = explode(",", $request->benefit_banner);
         $titles = explode(",", $request->benefit_title);
-        $descriptions = explode(",", $request->benefit_description);
+        $descriptions = json_decode($request->benefit_description, true);
         return view('admin.product.inc.benefit', compact('banners', 'images', 'titles', 'descriptions'));
     }
 }

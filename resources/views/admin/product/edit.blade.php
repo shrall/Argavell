@@ -91,8 +91,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label class="col-4 text-start font-weight-bold">Gambar</label>
-                            <label class="col-4 text-start font-weight-bold">Banner</label>
+                            <label class="col-4 text-start font-weight-bold">Gambar
+                                <div style="color: red;" id="alert-image" class="d-none">Required</div>
+                            </label>
+                            <label class="col-4 text-start font-weight-bold">Banner
+                                <div style="color: red;" id="alert-banner" class="d-none">Required</div>
+                            </label>
                             <label class="col-4 text-start font-weight-bold">Video</label>
                             <div class="col-4 text-argavell">
                                 @if ($product->img)
@@ -392,7 +396,7 @@
                                     document.getElementById('delete-product-form').submit();">Hapus</button>
                             </div>
                             <div class="col-6">
-                                <button type="submit" class="btn btn-admin-argavell w-100">Simpan</button>
+                                <div onclick="onSubmit();" class="btn btn-admin-argavell w-100">Simpan</div>
                             </div>
                         </div>
                     </div>
@@ -407,6 +411,22 @@
 @endsection
 
 @section('scripts')
+    <script>
+        function onSubmit() {
+            if ($('#image-delete').val() === '1') {
+                $('#image-act-button').addClass('empty-input')
+                $('#alert-image').removeClass('d-none').addClass('d-block');
+            }
+            if ($('#banner-delete').val() === '1') {
+                $('#banner-act-button').addClass('empty-input')
+                $('#alert-banner').removeClass('d-none').addClass('d-block');
+            }
+            if ($('#image-delete').val() === '0' &&
+                $('#banner-delete').val() === '0') {
+                $('#edit-product-form').submit();
+            }
+        }
+    </script>
     <script>
         var sizes = []
         var sizestemparray = []
@@ -506,6 +526,8 @@
                 $('#' + type + '-delete').val('0')
                 $('#' + type + '-act-button').removeClass('d-block').addClass('d-none');
                 $('#' + type + '-delete-button').removeClass('d-none').addClass('d-block');
+                $('#alert-' + type).removeClass('d-block').addClass('d-none');
+                $('#' + type + '-act-button').removeClass('empty-input');
             }
         };
         var loadVideo = function(event, type) {
@@ -660,10 +682,10 @@
             guideimages.push(item.logo)
         }
         $('#item-guide-titles').val(guidetitles)
-        $('#item-guide-descriptions').val(guidedescriptions)
+        $('#item-guide-descriptions').val(JSON.stringify(guidedescriptions))
         $('#item-guide-images').val(guideimages)
         $('#guide-title').val(guidetitles)
-        $('#guide-description').val(guidedescriptions)
+        $('#guide-description').val(JSON.stringify(guidedescriptions))
         $('#guide-image').val(guideimages)
 
 
@@ -671,7 +693,7 @@
             guidetitles[guideIndex] = $('#guide_title').val()
             // guidedescriptions[guideIndex] = $('#guide_description').val()
             $('#guide-title').val(guidetitles)
-            $('#guide-description').val(guidedescriptions)
+            $('#guide-description').val(JSON.stringify(guidedescriptions))
             var hostname = "{{ request()->getHost() }}"
             var url = ""
             if (hostname.includes('www')) {
@@ -688,7 +710,7 @@
                 contentType: false
             }).done(function(data) {
                 $('#item-guide-titles').val(guidetitles)
-                $('#item-guide-descriptions').val(guidedescriptions)
+                $('#item-guide-descriptions').val(JSON.stringify(guidedescriptions))
                 $('#item-guide-images').val(guideimages)
                 guideIndex++;
                 $('#guide_title').val(null)
@@ -707,10 +729,10 @@
             guidedescriptions.splice(index, 1);
             guideimages.splice(index, 1);
             $('#item-guide-titles').val(guidetitles)
-            $('#item-guide-descriptions').val(guidedescriptions)
+            $('#item-guide-descriptions').val(JSON.stringify(guidedescriptions))
             $('#item-guide-images').val(guideimages)
             $('#guide-title').val(guidetitles)
-            $('#guide-description').val(guidedescriptions)
+            $('#guide-description').val(JSON.stringify(guidedescriptions))
             $('#guide-image').val(guideimages)
             guideIndex--;
             var hostname = "{{ request()->getHost() }}"
@@ -799,11 +821,11 @@
             benefitbanners.push(item.banner)
 
             $('#item-benefit-titles').val(benefittitles)
-            $('#item-benefit-descriptions').val(benefitdescriptions)
+            $('#item-benefit-descriptions').val(JSON.stringify(benefitdescriptions))
             $('#item-benefit-images').val(benefitimages)
             $('#item-benefit-banners').val(benefitbanners)
             $('#benefit-title').val(benefittitles)
-            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-description').val(JSON.stringify(benefitdescriptions))
             $('#benefit-banner').val(benefitbanners)
             $('#benefit-image').val(benefitimages)
         }
@@ -811,7 +833,7 @@
         function addBenefit() {
             benefittitles[benefitIndex] = $('#benefit_title').val()
             $('#benefit-title').val(benefittitles)
-            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-description').val(JSON.stringify(benefitdescriptions))
             var hostname = "{{ request()->getHost() }}"
             var url = ""
             if (hostname.includes('www')) {
@@ -828,7 +850,7 @@
                 contentType: false
             }).done(function(data) {
                 $('#item-benefit-titles').val(benefittitles)
-                $('#item-benefit-descriptions').val(benefitdescriptions)
+                $('#item-benefit-descriptions').val(JSON.stringify(benefitdescriptions))
                 $('#item-benefit-images').val(benefitimages)
                 $('#item-benefit-banners').val(benefitbanners)
                 benefitIndex++;
@@ -851,11 +873,11 @@
             benefitimages.splice(index, 1);
             benefitbanners.splice(index, 1);
             $('#item-benefit-titles').val(benefittitles)
-            $('#item-benefit-descriptions').val(benefitdescriptions)
+            $('#item-benefit-descriptions').val(JSON.stringify(benefitdescriptions))
             $('#item-benefit-images').val(benefitimages)
             $('#item-benefit-banners').val(benefitbanners)
             $('#benefit-title').val(benefittitles)
-            $('#benefit-description').val(benefitdescriptions)
+            $('#benefit-description').val(JSON.stringify(benefitdescriptions))
             $('#benefit-image').val(benefitimages)
             $('#benefit-banner').val(benefitbanners)
             benefitIndex--;
