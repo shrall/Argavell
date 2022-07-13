@@ -306,8 +306,8 @@
                                 <input type="hidden" name="item_guide_titles" id="item-guide-titles">
                                 <input type="hidden" name="item_guide_images" id="item-guide-images">
                                 <input type="hidden" name="item_guide_descriptions" id="item-guide-descriptions">
-                                <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
-                                    data-bs-target="#guideModal">+Add</h6>
+                                <h6 class="text-argavell font-weight-black cursor-pointer" onclick="addGuideClicked();"
+                                    data-bs-toggle="modal" data-bs-target="#guideModal">+Add</h6>
                             </div>
                             <div class="row">
                                 <label class="col-2 text-start font-weight-bold">Gambar</label>
@@ -330,6 +330,9 @@
                                             {!! $guide->description !!}
                                         </div>
                                         <div class="col-1 mb-2">
+                                            <span class="fa fa-fw fa-edit cursor-pointer" data-bs-toggle="modal"
+                                                data-bs-target="#guideModal"
+                                                onclick="editGuide({{ $key }});"></span>
                                             <span class="fa fa-fw fa-trash-alt cursor-pointer"
                                                 onclick="deleteGuide({{ $key }});"></span>
                                         </div>
@@ -349,7 +352,7 @@
                                 <input type="hidden" name="item_benefit_banners" id="item-benefit-banners">
                                 <input type="hidden" name="item_benefit_descriptions" id="item-benefit-descriptions">
                                 <h6 class="text-argavell font-weight-black cursor-pointer" data-bs-toggle="modal"
-                                    data-bs-target="#benefitModal">+Add</h6>
+                                    onclick="addBenefitClicked();" data-bs-target="#benefitModal">+Add</h6>
                             </div>
                             <div class="row">
                                 <label class="col-2 text-start font-weight-bold">Gambar</label>
@@ -378,6 +381,9 @@
                                             {!! $benefit->content !!}
                                         </div>
                                         <div class="col-1 mb-2">
+                                            <span class="fa fa-fw fa-edit cursor-pointer" data-bs-toggle="modal"
+                                                data-bs-target="#benefitModal"
+                                                onclick="editBenefit({{ $key }});"></span>
                                             <span class="fa fa-fw fa-trash-alt cursor-pointer"
                                                 onclick="deleteBenefit({{ $key }});"></span>
                                         </div>
@@ -909,6 +915,61 @@
             $('#' + media + '-upload-preview').removeClass('d-block').addClass('d-none');
             $('#' + media + '-delete').val('1')
             $(`#${media}`).val(null)
+        }
+    </script>
+    <script>
+        function editGuide(index) {
+            guideIndex = index
+            $('#modal-guide-title').html('Edit Guide');
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $('#guide_title').val(guidetitles[index])
+            editoreds.setData(guidedescriptions[index])
+            $('#guide-imaged').attr('src', url + '/uploads/guides/' + guideimages[index]);
+        }
+    </script>
+    <script>
+        function addGuideClicked() {
+            guideIndex = productGuides.length;
+            $('#modal-guide-title').html('Add New Guide');
+            $('#guide_title').val(null)
+            editoreds.setData('')
+            $('#guide').val(null)
+            $('#guide-imaged').attr('src', @json(asset('images/argan-fruit.png')));
+        }
+    </script>
+    <script>
+        function editBenefit(index) {
+            benefitIndex = index
+            $('#modal-benefit-title').html('Edit Benefit');
+            var hostname = "{{ request()->getHost() }}"
+            var url = ""
+            if (hostname.includes('www')) {
+                url = "https://" + hostname
+            } else {
+                url = "{{ config('app.url') }}"
+            }
+            $('#benefit_title').val(benefittitles[index])
+            editored.setData(benefitdescriptions[index])
+            $('#benefit-imaged').attr('src', url + '/uploads/benefits/' + benefitimages[index]);
+            $('#benefitbanner-imaged').attr('src', url + '/uploads/benefits/' + benefitbanners[index]);
+        }
+    </script>
+    <script>
+        function addBenefitClicked() {
+            benefitIndex = productBenefits.length;
+            $('#modal-benefit-title').html('Add New Benefit');
+            $('#benefit_title').val(null)
+            editored.setData('')
+            $('#benefit').val(null)
+            $('#benefit-imaged').attr('src', @json(asset('images/argan-fruit.png')));
+            $('#benefitbanner').val(null)
+            $('#benefitbanner-imaged').attr('src', @json(asset('images/argan-oil-detail-3.jpg')));
         }
     </script>
 @endsection

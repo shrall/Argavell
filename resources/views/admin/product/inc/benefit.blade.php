@@ -16,6 +16,8 @@
                 {!! $descriptions[$key] !!}
             </div>
             <div class="col-1 mb-2">
+                <span class="fa fa-fw fa-edit cursor-pointer" data-bs-toggle="modal" data-bs-target="#benefitModal"
+                    onclick="editBenefit({{ $key }});"></span>
                 <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteBenefit({{ $key }});"></span>
             </div>
         </div>

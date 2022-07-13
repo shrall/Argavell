@@ -44,7 +44,7 @@
             </div>
             <div class="modal-footer">
                 <div id="button-benefit-add" data-bs-dismiss="modal" onclick="addBenefit()"
-                    class="btn btn-admin-argavell text-center flex-grow-1 py-2 cursor-pointer border-0">Add New</div>
+                    class="btn btn-admin-argavell text-center flex-grow-1 py-2 cursor-pointer border-0">Submit</div>
             </div>
         </div>
     </div>

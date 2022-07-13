@@ -12,6 +12,9 @@
                 {!! $descriptions[$key] !!}
             </div>
             <div class="col-1 mb-2">
+                <span class="fa fa-fw fa-edit cursor-pointer" data-bs-toggle="modal"
+                    data-bs-target="#guideModal"
+                    onclick="editGuide({{ $key }});"></span>
                 <span class="fa fa-fw fa-trash-alt cursor-pointer" onclick="deleteGuide({{ $key }});"></span>
             </div>
         </div>

@@ -388,7 +388,7 @@ class ProductController extends Controller
             $image = $request['benefit']->getClientOriginalName();
             $request->benefit->move(public_path('uploads/benefits'), $image);
         }
-        if ($request->benefit) {
+        if ($request->benefitbanner) {
             $image = $request['benefitbanner']->getClientOriginalName();
             $request->benefitbanner->move(public_path('uploads/benefits'), $image);
         }
