@@ -349,11 +349,12 @@
                     (omega-6) that are known for its calming & healing properties on skin.</div>
             </div>
         </div> --}}
-
-    <div class="row w-100 p-0 m-0 mb-5">
-        <img src="{{ asset('uploads/products/') . '/' . $product->banner }}" class="w-100 p-0"
-            style="height: 250px; object-fit: cover;">
-    </div>
+    @if ($product->banner)
+        <div class="row w-100 p-0 m-0 mb-5">
+            <img src="{{ asset('uploads/products/') . '/' . $product->banner }}" class="w-100 p-0"
+                style="height: 250px; object-fit: cover;">
+        </div>
+    @endif
 
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
