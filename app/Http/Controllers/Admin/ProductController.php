@@ -68,7 +68,7 @@ class ProductController extends Controller
             $video = time() . '-' . $request['video']->getClientOriginalName();
             $request->video->move(public_path('uploads/products'), $video);
         } else {
-            $image = null;
+            $video = null;
         }
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);

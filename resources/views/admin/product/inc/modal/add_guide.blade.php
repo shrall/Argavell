@@ -27,7 +27,7 @@
                                 </div>
                                 <label class="col-12 text-start font-weight-bold">Description</label>
                                 <div class="col-12">
-                                    <textarea id="guide_description" type="text" class="form-control" rows="3"
+                                    <textarea id="guide_description" type="text" class="form-control"
                                         name="description" required placeholder="Deskripsi" required></textarea>
                                 </div>
                             </div>
