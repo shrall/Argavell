@@ -73,8 +73,11 @@ function rupiah($angka)
                 <div class="col-5">
                     <div class="row">
                         <div class="col-3 col-xxl-2">
-                            <img src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
-                                class="rounded" width="75px">
+                            @if(count($transaction->carts) > 0)
+                                <img
+                                    src="{{ asset('uploads/products/' . $transaction->carts[0]->product->img) }}"
+                                    class="rounded" width="75px">
+                            @endif
                         </div>
                         <div class="col-9 col-xxl-10">
                             <div class="row">
