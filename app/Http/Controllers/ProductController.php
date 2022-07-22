@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -50,8 +51,9 @@ class ProductController extends Controller
         $bundles = Product::where('bundle', '1')
             ->where('bundle_start', '<=', Carbon::now())
             ->where('bundle_end', '>=', Carbon::now())
-            ->where('type', $product->type)
-            ->get();
+            ->whereHas('bundles', function (Builder $query)  use ($product) {
+                $query->where('product_id',  $product->id);
+            })->get();
 
         if ($product->bundle == '1') {
             if ($product->bundle_start <= Carbon::now() && $product->bundle_end >= Carbon::now()) {
