@@ -1,3 +1,17 @@
+
+<?php
+    $subtotal = 0;
+    $discount = 0;
+    $totalqty = 0;
+    if (Auth::user()) {
+        foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
+            $totalqty += $item->qty;
+            $subtotal += $item->price * $item->qty;
+            $discount += $item->price_discount * $item->qty;
+        }
+     }
+?>
+
 {{-- navbar desktop --}}
 <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow-sm d-none d-sm-block">
     <div class="container">
@@ -74,9 +88,10 @@
                             class="d-flex position-absolute rounded-circle"
                             style="top: -3px; right: -3px; min-width: 14px; height: 14px; background: red;">
                             <span
+                                id="cartQuantityLabel"
                                 class="m-auto text-white"
                                 style="font-size: 8px;">
-                                {{ count(Auth::user()->carts->where('transaction_id', null)) }}
+                                {{ $totalqty }}
                             </span>
                         </div>
                     </a>
@@ -149,229 +164,351 @@
     </div>
 </nav>
 
-@auth
-<?php
-    $subtotal = 0;
-    $discount = 0;
-    $totalqty = 0;
-    foreach (Auth::user()->carts->where('transaction_id', null) as $item) {
-        $totalqty += $item->qty;
-        $subtotal += $item->price * $item->qty;
-        $discount += $item->price_discount * $item->qty;
-    }
-    ?>
-{{-- cart modal desktop --}}
-<div class="modal fade p-0" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-cart">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cartModalLabel">
-                    <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
-                    <span class="text-secondary fs-6" id="modal-header-qty">{{ $totalqty }}</span>
-                    <span class="text-secondary fs-6"> item(s)</span>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-0 pe-0 position-relative" id="cart-body" style="overflow-x: hidden">
-                <div id="cart-loader" class="d-flex d-none justify-content-center">
-                    <div class="position-fixed h-100" style="background-color: #fff; opacity: 70%; width: 30vw"></div>
-                    <img src="{{ asset('cart-loading.svg') }}" class="position-fixed top-50 translate-middle-y" style="z-index: 100" />
+
+@if(Auth::user())
+    {{-- cart modal desktop --}}
+    <div class="modal fade p-0" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-cart">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">
+                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-secondary fs-6" id="modal-header-qty">{{ $totalqty }}</span>
+                        <span class="text-secondary fs-6"> item(s)</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                @each('inc.cart.product', Auth::user()->carts->where('transaction_id', null), 'item')
-            </div>
-            <div class="modal-footer ">
-                <div class="col-12 px-3 font-proxima-nova">
-                    <div class="d-flex justify-content-between">
-                        <div>Subtotal
-                            <span class="text-secondary" id="modal-footer-qty">{{ $totalqty }}</span>
-                            <span class="text-secondary"> item(s)</span>
+                <div class="modal-body pt-0 pe-0 position-relative" id="cart-body" style="overflow-x: hidden">
+                    <div id="cart-loader" class="d-flex d-none justify-content-center">
+                        <div class="position-fixed h-100" style="background-color: #fff; opacity: 70%; width: 30vw"></div>
+                        <img src="{{ asset('cart-loading.svg') }}" class="position-fixed top-50 translate-middle-y" style="z-index: 100" />
+                    </div>
+                    @each(
+                        'inc.cart.product',
+                        Auth::user()->carts->where('transaction_id', null), 'item'
+                    )
+                </div>
+                <div class="modal-footer ">
+                    <div class="col-12 px-3 font-proxima-nova">
+                        <div class="d-flex justify-content-between">
+                            <div>Subtotal
+                                <span class="text-secondary" id="modal-footer-qty">{{ $totalqty }}</span>
+                                <span class="text-secondary"> item(s)</span>
+                            </div>
+                            <div>IDR <span id="cart-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span></div>
                         </div>
-                        <div>IDR <span id="cart-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span></div>
-                    </div>
-                    <div class="d-flex justify-content-between text-argavell">
-                        <div>Discount</div>
-                        <div>- IDR <span id="cart-discount">{{ number_format($discount, 0, ',', '.') }}</span></div>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between font-weight-bold">
-                        <div>Total</div>
-                        <div>IDR <span id="cart-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
+                        <div class="d-flex justify-content-between text-argavell">
+                            <div>Discount</div>
+                            <div>- IDR <span id="cart-discount">{{ number_format($discount, 0, ',', '.') }}</span></div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-weight-bold">
+                            <div>Total</div>
+                            <div>IDR <span id="cart-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
+                            </div>
                         </div>
                     </div>
+                    <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
+                        @csrf
+                        <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
+                            class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
+                            Checkout
+                        </button>
+                    </form>
                 </div>
-                <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
-                    @csrf
-                    <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
-                        class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
-                        Checkout
-                    </button>
-                </form>
             </div>
         </div>
     </div>
-</div>
-{{-- cart modal mobile --}}
-<div class="modal fade p-0" id="cartModalMobile" tabindex="-1" aria-labelledby="cartModalMobileLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="cartModalMobileLabel">
-                    <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
-                    <span class="text-secondary fs-6" id="modal-header-mobile-qty">{{ $totalqty }}</span>
-                    <span class="text-secondary fs-6"> item(s)</span>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-0 pe-0 position-relative" id="cart-mobile-body" style="overflow-x: hidden">
-                <div id="cart-mobile-loader" class="d-flex d-none justify-content-center">
-                    <div class="position-fixed start-0 h-100 w-100" style="background-color: #fff; opacity: 70%;"></div>
-                    <img src="{{ asset('cart-loading.svg') }}" class="position-fixed top-50 start-50 translate-middle" style="z-index: 100" />
+    {{-- cart modal mobile --}}
+    <div class="modal fade p-0" id="cartModalMobile" tabindex="-1" aria-labelledby="cartModalMobileLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalMobileLabel">
+                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-secondary fs-6" id="modal-header-mobile-qty">{{ $totalqty }}</span>
+                        <span class="text-secondary fs-6"> item(s)</span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                @each('inc.cart.product', Auth::user()->carts->where('transaction_id', null), 'item')
-            </div>
-            <div class="modal-footer ">
-                <div class="col-12 px-3 font-proxima-nova">
-                    <div class="d-flex justify-content-between">
-                        <div>Subtotal
-                            <span class="text-secondary" id="modal-footer-mobile-qty">{{ $totalqty }}</span>
-                            <span class="text-secondary">item(s)</span>
-                        </div>
-                        <div>IDR <span id="cart-mobile-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span>
-                        </div>
+                <div class="modal-body pt-0 pe-0 position-relative" id="cart-mobile-body" style="overflow-x: hidden">
+                    <div id="cart-mobile-loader" class="d-flex d-none justify-content-center">
+                        <div class="position-fixed start-0 h-100 w-100" style="background-color: #fff; opacity: 70%;"></div>
+                        <img src="{{ asset('cart-loading.svg') }}" class="position-fixed top-50 start-50 translate-middle" style="z-index: 100" />
                     </div>
-                    <div class="d-flex justify-content-between text-argavell">
-                        <div>Discount</div>
-                        <div>- IDR <span id="cart-mobile-discount">{{ number_format($discount, 0, ',', '.') }}</span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between font-weight-bold">
-                        <div>Total</div>
-                        <div>IDR <span id="cart-mobile-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
-                        </div>
-                    </div>
+                    @each(
+                        'inc.cart.product',
+                        Auth::user()->carts->where('transaction_id', null),
+                        'item'
+                    )
                 </div>
-                <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
-                    @csrf
-                    <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
-                        class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
-                        Checkout
-                    </button>
-                </form>
+                <div class="modal-footer ">
+                    <div class="col-12 px-3 font-proxima-nova">
+                        <div class="d-flex justify-content-between">
+                            <div>Subtotal
+                                <span class="text-secondary" id="modal-footer-mobile-qty">{{ $totalqty }}</span>
+                                <span class="text-secondary">item(s)</span>
+                            </div>
+                            <div>IDR <span id="cart-mobile-subtotal">{{ number_format($subtotal, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between text-argavell">
+                            <div>Discount</div>
+                            <div>- IDR <span id="cart-mobile-discount">{{ number_format($discount, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between font-weight-bold">
+                            <div>Total</div>
+                            <div>IDR <span id="cart-mobile-total">{{ number_format($subtotal - $discount, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="{{ route('user.cart.index') }}" method="get" class="w-100">
+                        @csrf
+                        <button @if (!count(Auth::user()->carts->where('transaction_id', null)) > 0) disabled @endif
+                            class="button-checkout text-decoration-none btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer border-0">
+                            Checkout
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script>
-    Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
-            var n = this,
-                decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-                decSeparator = decSeparator == undefined ? "." : decSeparator,
-                thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-                sign = n < 0 ? "-" : "",
-                i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-                j = (j = i.length) > 3 ? j % 3 : 0;
-            return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" +
-                thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-        };
+    <script>
+        Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
+                var n = this,
+                    decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+                    decSeparator = decSeparator == undefined ? "." : decSeparator,
+                    thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+                    sign = n < 0 ? "-" : "",
+                    i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+                    j = (j = i.length) > 3 ? j % 3 : 0;
+                return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" +
+                    thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+            };
 
-        function overQuantity(button) {
-            $(button).removeClass('far');
-            $(button).addClass('fa');
-        }
-
-        function outQuantity(button) {
-            $(button).removeClass('fa');
-            $(button).addClass('far');
-        }
-
-        function deleteItem(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#cart-loader').removeClass('d-none');
-            $('#cart-mobile-loader').removeClass('d-none');
-            var hostname = "{{ request()->getHost() }}"
-            if (hostname.includes('www')) {
-                url = "https://" + hostname
+            function overQuantity(button) {
+                $(button).removeClass('far');
+                $(button).addClass('fa');
             }
-            $.post(url + "/cart/" + id, {
-                    _token: CSRF_TOKEN,
-                    _method: "DELETE",
-                    id: id
-                })
-                .done(function(data) {
-                    $('.cart-row' + id).addClass('d-sm-none');
-                    $('.cart-mobile-row' + id).addClass('d-none');
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - data['qty']);
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
 
-                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'] *
-                        data['qty'])).formatMoney(0, '.', ''));
-                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                        'price_discount'] * data[
-                        'qty'])).formatMoney(0, '.', ''));
-                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - ((data[
-                        'price'] * data[
-                        'qty']) - (data[
-                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
-                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                        '')) - (
-                        data['price'] * data[
+            function outQuantity(button) {
+                $(button).removeClass('fa');
+                $(button).addClass('far');
+            }
+
+            function deleteItem(id, url) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $('#cart-loader').removeClass('d-none');
+                $('#cart-mobile-loader').removeClass('d-none');
+                var hostname = "{{ request()->getHost() }}"
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                }
+                $.post(url + "/cart/" + id, {
+                        _token: CSRF_TOKEN,
+                        _method: "DELETE",
+                        id: id
+                    })
+                    .done(function(data) {
+                        $('#cartQuantityLabel').html(
+                            parseInt($('#cartQuantityLabel').html()) - data['qty']
+                        );
+                        $('.cart-row' + id).addClass('d-sm-none');
+                        $('.cart-mobile-row' + id).addClass('d-none');
+                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - data['qty']);
+                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
+                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
+                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
+
+                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                                'price'] *
+                            data['qty'])).formatMoney(0, '.', ''));
+                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                            'price_discount'] * data[
                             'qty'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                        '')) - (
-                        data[
-                            'price_discount'] * data['qty'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) - ((
-                        data[
+                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - ((data[
                             'price'] * data[
                             'qty']) - (data[
-                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
-                    if ($('#cart-total').html() == 0) {
-                        $(".button-checkout").prop("disabled", true);
-                    } else {
-                        $(".button-checkout").prop("disabled", false);
-                    }
-                })
-                .fail(function() {
-                    alert('Fail')
-                })
-                .always(function() {
-                    console.log("quantity added");
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                });
-        }
-
-        function addQuantity(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#cart-loader').removeClass('d-none');
-            $('#cart-mobile-loader').removeClass('d-none');
-            var hostname = "{{ request()->getHost() }}"
-            if (hostname.includes('www')) {
-                url = "https://" + hostname
+                            'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                            '')) - (
+                            data['price'] * data[
+                                'qty'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                            '')) - (
+                            data[
+                                'price_discount'] * data['qty'])).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) - ((
+                            data[
+                                'price'] * data[
+                                'qty']) - (data[
+                            'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
+                        if ($('#cart-total').html() == 0) {
+                            $(".button-checkout").prop("disabled", true);
+                        } else {
+                            $(".button-checkout").prop("disabled", false);
+                        }
+                    })
+                    .fail(function() {
+                        alert('Fail')
+                    })
+                    .always(function() {
+                        console.log("quantity added");
+                        $('#cart-loader').addClass('d-none');
+                        $('#cart-mobile-loader').addClass('d-none');
+                    });
             }
-            $.post(url + "/cart/additem", {
-                    _token: CSRF_TOKEN,
-                    id: id
-                })
-                .done(function(data) {
-                    console.log(data)
-                    if (data != 'false') {
-                        $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
+
+            function addQuantity(id, url) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $('#cart-loader').removeClass('d-none');
+                $('#cart-mobile-loader').removeClass('d-none');
+                var hostname = "{{ request()->getHost() }}"
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                }
+                $.post(url + "/cart/additem", {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    })
+                    .done(function(data) {
+                        $('#cartQuantityLabel').html(
+                            parseInt($('#cartQuantityLabel').html()) + 1
+                        );
+                        if (data != 'false') {
+                            $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) + 1);
+                            $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
+                            $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
+                            $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
+                            $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
+
+                            $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
+                                'price'])).formatMoney(0, '.', ''));
+                            $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data[
+                                    'price'] -
+                                data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                    '')) +
+                                (data['price'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                    '')) +
+                                (data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                                '')) + (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            if ($('#cart-total').html() == 0) {
+                                $(".button-checkout").prop("disabled", true);
+                            } else {
+                                $(".button-checkout").prop("disabled", false);
+                            }
+                        }
+                    })
+                    .fail(function() {
+                        alert('Fail')
+                    })
+                    .always(function() {
+                        console.log("quantity added");
+                        $('#cart-loader').addClass('d-none');
+                        $('#cart-mobile-loader').addClass('d-none');
+                    });
+            }
+
+            function subtractQuantity(id, url) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                if (parseInt($('.quantity-counter' + id).html()) > 0) {
+                    $('#cart-loader').removeClass('d-none');
+                    $('#cart-mobile-loader').removeClass('d-none');
+                    var hostname = "{{ request()->getHost() }}"
+                    if (hostname.includes('www')) {
+                        url = "https://" + hostname
+                    }
+                    $.post(url + "/cart/subtractitem", {
+                            _token: CSRF_TOKEN,
+                            id: id
+                        })
+                        .done(function(data) {
+                            $('#cartQuantityLabel').html(
+                                parseInt($('#cartQuantityLabel').html()) - 1
+                            );
+                            $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) - 1);
+                            $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
+                            $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
+                            $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
+                            $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
+
+                            $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                                'price'])).formatMoney(0, '.', ''));
+                            $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
+                                    'price'] -
+                                data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                    '')) -
+                                (data['price'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                    '')) -
+                                (data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                                '')) - (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            if ($('#cart-total').html() == 0) {
+                                $(".button-checkout").prop("disabled", true);
+                            } else {
+                                $(".button-checkout").prop("disabled", false);
+                            }
+                            if (data['qty'] == 0) {
+                                $('.cart-row' + id).addClass('d-sm-none');
+                                $('.cart-mobile-row' + id).addClass('d-none');
+                            }
+                        })
+                        .fail(function() {
+                            alert('Fail')
+                        })
+                        .always(function() {
+                            console.log("quantity subtracted");
+                            $('#cart-loader').addClass('d-none');
+                            $('#cart-mobile-loader').addClass('d-none');
+                        });
+                }
+            }
+
+            function addQuantityMobile(id, url) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $('#cart-loader').removeClass('d-none');
+                $('#cart-mobile-loader').removeClass('d-none');
+                var hostname = "{{ request()->getHost() }}"
+                if (hostname.includes('www')) {
+                    url = "https://" + hostname
+                }
+                $.post(url + "/cart/additem", {
+                        _token: CSRF_TOKEN,
+                        id: id
+                    })
+                    .done(function(data) {
+                        $('#cartQuantityLabel').html(
+                            parseInt($('#cartQuantityLabel').html()) + 1
+                        );
+                        $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) + 1);
                         $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-
                         $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
                             'price'])).formatMoney(0, '.', ''));
                         $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
                             'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data[
-                                'price'] -
+                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data['price'] -
                             data[
                                 'price_discount'])).formatMoney(0, '.', ''));
                         $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
@@ -381,201 +518,91 @@
                                 '')) +
                             (data[
                                 'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) + (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        if ($('#cart-total').html() == 0) {
-                            $(".button-checkout").prop("disabled", true);
-                        } else {
-                            $(".button-checkout").prop("disabled", false);
-                        }
-                    }
-                })
-                .fail(function() {
-                    alert('Fail')
-                })
-                .always(function() {
-                    console.log("quantity added");
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                });
-        }
-
-        function subtractQuantity(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            if (parseInt($('.quantity-counter' + id).html()) > 0) {
-                $('#cart-loader').removeClass('d-none');
-                $('#cart-mobile-loader').removeClass('d-none');
-                var hostname = "{{ request()->getHost() }}"
-                if (hostname.includes('www')) {
-                    url = "https://" + hostname
-                }
-                $.post(url + "/cart/subtractitem", {
-                        _token: CSRF_TOKEN,
-                        id: id
-                    })
-                    .done(function(data) {
-                        $('.quantity-counter' + id).html(parseInt($('.quantity-counter' + id).html()) - 1);
-                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
-                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
-                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
-                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
-
-                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'])).formatMoney(0, '.', ''));
-                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
-                                'price'] -
+                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) + (
                             data[
+                                'price'] - data[
                                 'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                                '')) -
-                            (data['price'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                                '')) -
-                            (data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) - (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
                         } else {
                             $(".button-checkout").prop("disabled", false);
-                        }
-                        if (data['qty'] == 0) {
-                            $('.cart-row' + id).addClass('d-sm-none');
-                            $('.cart-mobile-row' + id).addClass('d-none');
                         }
                     })
                     .fail(function() {
                         alert('Fail')
                     })
                     .always(function() {
-                        console.log("quantity subtracted");
+                        console.log("quantity added");
                         $('#cart-loader').addClass('d-none');
                         $('#cart-mobile-loader').addClass('d-none');
                     });
             }
-        }
 
-        function addQuantityMobile(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            $('#cart-loader').removeClass('d-none');
-            $('#cart-mobile-loader').removeClass('d-none');
-            var hostname = "{{ request()->getHost() }}"
-            if (hostname.includes('www')) {
-                url = "https://" + hostname
-            }
-            $.post(url + "/cart/additem", {
-                    _token: CSRF_TOKEN,
-                    id: id
-                })
-                .done(function(data) {
-                    $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) + 1);
-                    $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + 1);
-                    $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
-                    $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
-                    $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
-                        'price'])).formatMoney(0, '.', ''));
-                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
-                        'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data['price'] -
-                        data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                            '')) +
-                        (data['price'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                            '')) +
-                        (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) + (
-                        data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                    if ($('#cart-total').html() == 0) {
-                        $(".button-checkout").prop("disabled", true);
-                    } else {
-                        $(".button-checkout").prop("disabled", false);
+            function subtractQuantityMobile(id, url) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                if (parseInt($('.quantity-counter-mobile' + id).html()) > 0) {
+                    $('#cart-loader').removeClass('d-none');
+                    $('#cart-mobile-loader').removeClass('d-none');
+                    var hostname = "{{ request()->getHost() }}"
+                    if (hostname.includes('www')) {
+                        url = "https://" + hostname
                     }
-                })
-                .fail(function() {
-                    alert('Fail')
-                })
-                .always(function() {
-                    console.log("quantity added");
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                });
-        }
+                    $.post(url + "/cart/subtractitem", {
+                            _token: CSRF_TOKEN,
+                            id: id
+                        })
+                        .done(function(data) {
+                            $('#cartQuantityLabel').html(
+                                parseInt($('#cartQuantityLabel').html()) - 1
+                            );
+                            $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) -
+                                1);
+                            $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
+                            $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
+                            $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
+                            $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
 
-        function subtractQuantityMobile(id, url) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            if (parseInt($('.quantity-counter-mobile' + id).html()) > 0) {
-                $('#cart-loader').removeClass('d-none');
-                $('#cart-mobile-loader').removeClass('d-none');
-                var hostname = "{{ request()->getHost() }}"
-                if (hostname.includes('www')) {
-                    url = "https://" + hostname
+                            $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
+                                'price'])).formatMoney(0, '.', ''));
+                            $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
+                                    'price'] -
+                                data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
+                                    '')) -
+                                (data['price'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
+                                    '')) -
+                                (data[
+                                    'price_discount'])).formatMoney(0, '.', ''));
+                            $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
+                                '')) - (data[
+                                'price'] - data[
+                                'price_discount'])).formatMoney(0, '.', ''));
+                            if ($('#cart-total').html() == 0) {
+                                $(".button-checkout").prop("disabled", true);
+                            } else {
+                                $(".button-checkout").prop("disabled", false);
+                            }
+                            if (data['qty'] == 0) {
+                                $('.cart-row' + id).addClass('d-sm-none');
+                                $('.cart-mobile-row' + id).addClass('d-none');
+                            }
+                        })
+                        .fail(function() {
+                            alert('Fail')
+                        })
+                        .always(function() {
+                            console.log("quantity subtracted");
+                            $('#cart-loader').addClass('d-none');
+                            $('#cart-mobile-loader').addClass('d-none');
+                        });
                 }
-                $.post(url + "/cart/subtractitem", {
-                        _token: CSRF_TOKEN,
-                        id: id
-                    })
-                    .done(function(data) {
-                        $('.quantity-counter-mobile' + id).html(parseInt($('.quantity-counter-mobile' + id).html()) -
-                            1);
-                        $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) - 1);
-                        $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - 1);
-                        $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
-                        $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
-
-                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'])).formatMoney(0, '.', ''));
-                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
-                                'price'] -
-                            data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                                '')) -
-                            (data['price'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                                '')) -
-                            (data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) - (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        if ($('#cart-total').html() == 0) {
-                            $(".button-checkout").prop("disabled", true);
-                        } else {
-                            $(".button-checkout").prop("disabled", false);
-                        }
-                        if (data['qty'] == 0) {
-                            $('.cart-row' + id).addClass('d-sm-none');
-                            $('.cart-mobile-row' + id).addClass('d-none');
-                        }
-                    })
-                    .fail(function() {
-                        alert('Fail')
-                    })
-                    .always(function() {
-                        console.log("quantity subtracted");
-                        $('#cart-loader').addClass('d-none');
-                        $('#cart-mobile-loader').addClass('d-none');
-                    });
             }
-        }
-</script>
-@endauth
+    </script>
+@endif
 
 
 <script>

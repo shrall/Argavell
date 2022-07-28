@@ -614,6 +614,9 @@
                     quantity: parseInt($('#quantity').val()),
                 })
                 .done(function(data) {
+                    $('#cartQuantityLabel').html(
+                        parseInt($('#cartQuantityLabel').html()) + 1
+                    );
                     if (data != 'false') {
                         $('#cart-body').append(data);
                         $('#cart-mobile-body').append(data);

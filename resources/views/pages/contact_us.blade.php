@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- desktop header --}}
-    <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
+    <div class="row w-100 m-0 align-items-center d-none d-sm-flex" style="padding-top: 80px;">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
@@ -25,7 +25,9 @@
             <div class="px-2 text-start">Don’t hesitate to contact us and we are always ready to serve your needs!</div>
         </div>
     </div>
-    <div class="row justify-content-center mt-5 pb-5 argan-benefits">
+    <div
+        class="row justify-content-center argan-benefits"
+        style="padding-top: 8rem; padding-bottom: 8rem;">
         <div class="col-xs-6 col-md-2 text-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48.003" viewBox="0 0 48 48.003">
                 <g id="jcIdXC.tif" transform="translate(-2951.716 -3778.086)">
@@ -122,7 +124,9 @@
             <h5>@argavell.id</h5>
         </div>
     </div>
-    <div class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative" style="height:45vh;">
+    <div
+        class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative"
+        style="height:45vh;">
         <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
