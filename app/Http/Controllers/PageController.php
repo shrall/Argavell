@@ -19,8 +19,9 @@ class PageController extends Controller
 {
     public function ourproduct()
     {
-        $products = Product::all();
-        return view('pages.our_product', compact('products'));
+        $products = Product::where('bundle', '!=', '1')->get();
+        $productBundles = Product::where('bundle', '1')->get();
+        return view('pages.our_product', compact('products', 'productBundles'));
     }
     public function arganoil()
     {
