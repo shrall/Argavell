@@ -68,8 +68,17 @@
                 </li>
                 @if (Route::current()->getName() != 'user.cart.index')
                 <li class="nav-item mx-4">
-                    <a href="#" class="text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer" data-bs-toggle="modal" data-bs-target="#cartModal">
+                    <a href="#" class="position-relative text-argavell text-decoration-none font-proxima-nova font-weight-bold cursor-pointer" data-bs-toggle="modal" data-bs-target="#cartModal">
                         <span class="fa fa-fw fa-shopping-cart"></span>
+                        <div
+                            class="d-flex position-absolute rounded-circle"
+                            style="top: -3px; right: -3px; min-width: 14px; height: 14px; background: red;">
+                            <span
+                                class="m-auto text-white"
+                                style="font-size: 8px;">
+                                {{ count(Auth::user()->carts->where('transaction_id', null)) }}
+                            </span>
+                        </div>
                     </a>
                 </li>
                 @endif
