@@ -4,7 +4,7 @@
     <div class="col-md-4 text-center">
         <div class="d-flex justify-content-center align-items-center">
             <img src="{{ asset('images/argan-fruit.png') }}" width="75px">
-            <span class="text-argavell font-bauer font-weight-bold text-4xl">Hello, {{ Auth::user()->first_name }}
+            <span class="text-argavell font-elmessiri font-weight-bold text-4xl">Hello, {{ Auth::user()->first_name }}
                 {{ Auth::user()->last_name }}!</span>
         </div>
         <p class="text-secondary">Welcome back to your personal page, where you can manage your
@@ -18,7 +18,7 @@
     <div class="col-md-4 text-center">
         <div class="d-flex justify-content-center align-items-center">
             <img src="{{ asset('images/argan-fruit.png') }}" width="75px">
-            <span class="text-argavell font-bauer font-weight-bold text-4xl">Hello, {{ Auth::user()->first_name }}
+            <span class="text-argavell font-elmessiri font-weight-bold text-4xl">Hello, {{ Auth::user()->first_name }}
                 {{ Auth::user()->last_name }}!</span>
         </div>
         <p class="text-secondary">Welcome back to your personal page, where you can manage your

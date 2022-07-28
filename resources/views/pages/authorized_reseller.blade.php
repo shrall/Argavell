@@ -6,7 +6,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-            <h1 class="text-argavell font-bauer font-weight-bold">Authorized Reseller</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Authorized Reseller</h1>
             <div class="pe-4">You can find some of our resellers in the nearest location.
             </div>
         </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-            <h1 class="text-argavell font-bauer font-weight-bold text-4xl">Authorized Reseller</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold text-4xl">Authorized Reseller</h1>
             <div class="px-2 text-start">You can find some of our resellers in the nearest location.</div>
         </div>
     </div>
@@ -61,7 +61,7 @@
         <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
-            <h1 class="font-bauer text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
+            <h1 class="font-elmessiri text-white mt-5">Which Argavell Product Made<br>You Fall In Love?</h1>
             <a href="#" class="text-decoration-none d-none d-sm-block">
                 <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Products</div>
             </a>

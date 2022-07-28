@@ -172,7 +172,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="cartModalLabel">
-                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-argavell font-elmessiri fs-3 me-2">Cart</span>
                         <span class="text-secondary fs-6" id="modal-header-qty">{{ $totalqty }}</span>
                         <span class="text-secondary fs-6"> item(s)</span>
                     </h5>
@@ -225,7 +225,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="cartModalMobileLabel">
-                        <span class="text-argavell font-bauer fs-3 me-2">Cart</span>
+                        <span class="text-argavell font-elmessiri fs-3 me-2">Cart</span>
                         <span class="text-secondary fs-6" id="modal-header-mobile-qty">{{ $totalqty }}</span>
                         <span class="text-secondary fs-6"> item(s)</span>
                     </h5>

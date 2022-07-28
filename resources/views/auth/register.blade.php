@@ -6,7 +6,7 @@
             <div class="col-sm-12 col-md-5">
                 <div class="card">
                     <div class="card-body font-proxima-nova mx-4">
-                        <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-4">Register</h1>
+                        <h1 class="font-elmessiri font-weight-bold fs-4 text-center text-argavell mb-4">Register</h1>
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="row font-weight-bold">

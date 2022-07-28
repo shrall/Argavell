@@ -5,7 +5,7 @@
     <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
-            <h1 class="text-argavell font-bauer font-weight-bold">Terms & Conditions</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Terms & Conditions</h1>
             <div class="pe-4 mb-2">These Website Standard Terms and Conditions written on this webpage shall
                 manage your use of our website, Argavell accessible at https://argavell.id/.
             </div>
@@ -26,7 +26,7 @@
             <img src="{{ asset('images/terms-and-conditions.jpg') }}" class="w-100">
         </div>
         <div class="col-md-5">
-            <h1 class="text-argavell font-bauer font-weight-bold text-4xl">Terms & Conditions</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold text-4xl">Terms & Conditions</h1>
             <div class="px-2 mb-2 text-start">These Website Standard Terms and Conditions written on this webpage shall
                 manage your use of our website, Argavell accessible at https://argavell.id/.
             </div>
@@ -45,7 +45,7 @@
             <div class="mb-4">
                 @foreach ($tncs as $tnc)
                     <div class="mb-4">
-                        <h2 class="text-argavell font-bauer font-weight-bold">
+                        <h2 class="text-argavell font-elmessiri font-weight-bold">
                             <span class="fa fa-fw fa-tint me-2"></span>{{ $tnc->title }}
                         </h2>
                         <div class="ms-5">

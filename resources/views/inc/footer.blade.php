@@ -6,7 +6,7 @@
             <div class="col-md-4">
                 <ul class="list-unstyled text-start">
                     <li>
-                        <p class="text-white font-bauer font-weight-bold fs-4">Office Hours</p>
+                        <p class="text-white font-elmessiri font-weight-bold fs-4">Office Hours</p>
                     </li>
                     <li>
                         <div class="row">
@@ -27,7 +27,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
                                 <a href="{{ url('/') }}#our-story" class="text-decoration-none text-white">Our Story</a>
@@ -43,7 +43,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
                                 <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
@@ -62,7 +62,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Contact Us</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Contact Us</p>
                             </li>
                             <li>
                                 <a href="#" class="text-decoration-none text-white"><span
@@ -99,7 +99,7 @@
             <div class="col-md-4">
                 <ul class="list-unstyled text-start">
                     <li>
-                        <p class="text-white font-bauer font-weight-bold fs-4">Office Hours</p>
+                        <p class="text-white font-elmessiri font-weight-bold fs-4">Office Hours</p>
                     </li>
                     <li>
                         <div class="row">
@@ -120,7 +120,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Information</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Information</p>
                             </li>
                             <li>
                                 <a href="{{ url('/') }}#our-story" class="text-decoration-none text-white">Our Story</a>
@@ -136,7 +136,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Help</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Help</p>
                             </li>
                             <li>
                                 <a href="{{route('page.faq')}}" class="text-decoration-none text-white">FAQ</a>
@@ -155,7 +155,7 @@
                     <div class="col-md-4">
                         <ul class="list-unstyled text-start">
                             <li>
-                                <p class="text-white font-bauer font-weight-bold fs-4">Contact Us</p>
+                                <p class="text-white font-elmessiri font-weight-bold fs-4">Contact Us</p>
                             </li>
                             <li>
                                 <a href="#" class="text-decoration-none text-white"><span

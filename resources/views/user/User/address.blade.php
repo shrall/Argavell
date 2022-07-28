@@ -118,7 +118,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header border-0 justify-content-center position-relative">
-                            <h5 class="modal-title text-center text-argavell font-bauer text-4xl"
+                            <h5 class="modal-title text-center text-argavell font-elmessiri text-4xl"
                                 id="addressEditModalLabel">
                                 <img src="{{ asset('images/argan-fruit.png') }}" width="75px">Add New Address
                             </h5>
@@ -240,7 +240,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header border-0 justify-content-center position-relative">
-                        <h5 class="modal-title text-center text-argavell font-bauer text-4xl" id="addressModalLabel"><img
+                        <h5 class="modal-title text-center text-argavell font-elmessiri text-4xl" id="addressModalLabel"><img
                                 src="{{ asset('images/argan-fruit.png') }}" width="75px">Add New Address</h5>
                         <span class="fa fa-fw fa-times position-absolute cursor-pointer fs-2"
                             style="top: 20px; right: 20px; z-index: 20000;" data-bs-dismiss="modal"

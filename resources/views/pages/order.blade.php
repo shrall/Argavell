@@ -7,7 +7,7 @@
             <div class="card mx-2">
                 <div class="card-body font-proxima-nova mx-4 text-center">
                     <span class="far fa-fw fa-check-circle text-argavell text-8xl"></span>
-                    <h1 class="font-bauer font-weight-bold fs-3 text-center text-argavell my-3">We Have Received Your Order!
+                    <h1 class="font-elmessiri font-weight-bold fs-3 text-center text-argavell my-3">We Have Received Your Order!
                     </h1>
                     <p class="text-secondary">After complete the payment, please don’t forget to
                         confirm your payment.</p>

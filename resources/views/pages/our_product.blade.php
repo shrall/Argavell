@@ -16,7 +16,7 @@
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
         <div style="margin-bottom: 5rem">
-            <h1 class="text-argavell font-bauer font-weight-bold text-center">Our Products</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold text-center">Our Products</h1>
             <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
             <div class="row gap-3 justify-content-md-center">
                 @foreach ($products as $product)
@@ -90,7 +90,7 @@
         </div>
         <div>
             <div style="margin-bottom: 3rem">
-                <h1 class="text-argavell font-bauer font-weight-bold text-center">
+                <h1 class="text-argavell font-elmessiri font-weight-bold text-center">
                     Bundle Products
                 </h1>
                 <h5 class="mb-5 text-center text-secondary">
@@ -114,7 +114,7 @@
     </div>
     {{-- product showcase mobile --}}
     <div class="container pt-3 d-block d-sm-none text-center">
-        <h1 class="text-argavell font-bauer font-weight-bold text-center">Our Products</h1>
+        <h1 class="text-argavell font-elmessiri font-weight-bold text-center">Our Products</h1>
         <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
     </div>
     <div class="container px-4 pb-5 mb-5 d-sm-none">

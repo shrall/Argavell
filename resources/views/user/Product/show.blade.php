@@ -9,7 +9,7 @@
                     style="width: 400px; object-fit: cover"/>
                 <div class="ms-5" style="width: 500px;">
                     @if ($product->type == '0')
-                        <h1 class="text-argavell font-bauer font-weight-bold">{{ $product->name }}</h1>
+                        <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }}</h1>
                     @else
                         <h1 class="text-kleanse font-gotham font-weight-bold">{{ $product->name }}</h1>
                     @endif
@@ -168,17 +168,17 @@
                         @if ($product->type == '0')
                             <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active font-bauer fs-5 p-0" id="description-tab" data-bs-toggle="tab"
+                                    <button class="nav-link active font-elmessiri fs-5 p-0" id="description-tab" data-bs-toggle="tab"
                                         data-bs-target="#description" type="button" role="tab" aria-controls="description"
                                         aria-selected="true">Description</button>
                                 </li>
                                 {{-- <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-bauer fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
+                                    <button class="nav-link font-elmessiri fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
                                         data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
                                         aria-selected="true">How To Use</button>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-bauer fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
+                                    <button class="nav-link font-elmessiri fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
                                         data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
                                         aria-selected="false">Ingredients</button>
                                 </li>
@@ -240,7 +240,7 @@
                             <div class="mb-5">
                                 <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
                                     class="mb-2">
-                                <h3 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
+                                <h3 class="text-argavell font-elmessiri font-weight-bold">{{ $benefit->title }}
                                 </h3>
                                 <div>{!! $benefit->content !!}
                                 </div>
@@ -252,7 +252,7 @@
                                 <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
                                 @if ($product->type == 0)
                                     <div
-                                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                        class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                                         {{ $loop->iteration }}</div>
                                 @else
                                     <div
@@ -271,7 +271,7 @@
                                 <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
                                 @if ($product->type == 0)
                                     <div
-                                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                        class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                                         {{ $loop->iteration }}</div>
                                 @else
                                     <div
@@ -286,7 +286,7 @@
                                 <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
                                     class="mb-2">
                                 @if ($product->type == 0)
-                                    <h3 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
+                                    <h3 class="text-argavell font-elmessiri font-weight-bold">{{ $benefit->title }}
                                     </h3>
                                 @else
                                     <h3 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
@@ -306,7 +306,7 @@
                         <div class="position-relative">
                             <img src="{{ asset('uploads/benefits' . '/' . $benefit->banner) }}" class="w-100">
                             <div
-                                class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                                class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                                 {{ $loop->iteration }}</div>
                         </div>
                     </div>
@@ -316,7 +316,7 @@
                             <img src="{{ asset('uploads/benefits' . '/' . $benefit->icon) }}" width="75px"
                                 class="mb-2">
                             @if ($product->type == 0)
-                                <h2 class="text-argavell font-bauer font-weight-bold">{{ $benefit->title }}
+                                <h2 class="text-argavell font-elmessiri font-weight-bold">{{ $benefit->title }}
                                 </h2>
                             @else
                                 <h2 class="text-kleanse font-proxima-nova font-weight-bold">{{ $benefit->title }}
@@ -338,7 +338,7 @@
             </div>
             <div class="col-md-5">
                 <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-                <h1 class="text-argavell font-bauer font-weight-bold">Argan Oil Benefits</h1>
+                <h1 class="text-argavell font-elmessiri font-weight-bold">Argan Oil Benefits</h1>
                 <div class="px-4"><strong>Argan oil is extremely rich in Vitamin E</strong> (more than 2x richer
                     than
                     Olive Oil, for about 620mg/l) with loads of antioxidants, linoleic acid
@@ -355,7 +355,7 @@
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
         @if ($product->type == '0')
-            <h1 class="text-argavell font-bauer font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
         @else
             <h1 class="text-kleanse font-gotham font-weight-bold text-center">Let's Take Our Bundle of Love</h1>
         @endif
@@ -412,7 +412,7 @@
     {{-- product showcase mobile --}}
     <div class="container d-block d-sm-none text-center">
         @if ($product->type == '0')
-            <h1 class="col-8 mx-auto text-argavell font-bauer font-weight-bold text-center text-4xl">Let's Take Our Bundle
+            <h1 class="col-8 mx-auto text-argavell font-elmessiri font-weight-bold text-center text-4xl">Let's Take Our Bundle
                 of
                 Love</h1>
         @else
@@ -477,7 +477,7 @@
         <div class="container text-center py-5">
             @if ($product->type == 0)
                 <img src="{{ asset('images/leaf.png') }}" width="100px">
-                <h1 class="text-argavell font-bauer font-weight-bold">How to Use</h1>
+                <h1 class="text-argavell font-elmessiri font-weight-bold">How to Use</h1>
             @else
                 <img src="{{ asset('images/logo-kleanse.png') }}" width="100px">
                 <h1 class="text-kleanse font-proxima-nova font-weight-bold">How to Use</h1>
@@ -497,7 +497,7 @@
                                 </div>
                                 <div class="col-9 text-start">
                                     @if ($product->type == 0)
-                                        <h2 class="text-argavell font-bauer font-weight-bold">{{ $guide->title }}</h2>
+                                        <h2 class="text-argavell font-elmessiri font-weight-bold">{{ $guide->title }}</h2>
                                     @else
                                         <h2 class="text-kleanse font-proxima-nova font-weight-bold">{{ $guide->title }}
                                         </h2>

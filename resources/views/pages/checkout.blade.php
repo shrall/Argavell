@@ -4,10 +4,10 @@
     <div class="row w-100 p-0 m-0 bg-light">
         <div class="col-md-2"></div>
         <div class="col-md-5">
-            <h1 class="text-argavell font-bauer font-weight-bold pt-5 mt-5 text-4xl d-block d-sm-none">Checkout</h1>
-            <h1 class="text-argavell font-bauer font-weight-bold py-3 d-none d-sm-block">Checkout</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold pt-5 mt-5 text-4xl d-block d-sm-none">Checkout</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold py-3 d-none d-sm-block">Checkout</h1>
             <div class="bg-white rounded px-3 py-2 my-3 d-block d-sm-none">
-                <h2 class="text-argavell font-bauer font-weight-bold">Order Summary</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Order Summary</h2>
                 <div class="row text-secondary">
                     <div class="col-3">Product</div>
                     <div class="col-5"></div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="bg-white rounded px-3 py-2 my-3">
-                <h2 class="text-argavell font-bauer font-weight-bold">Address Details</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Address Details</h2>
                 <p class="text-secondary">Please complete the following data so that your product arrives correctly and
                     safely.</p>
                 <div class="row font-weight-bold">
@@ -135,7 +135,7 @@
                 </div>
             </div>
             <div class="bg-white rounded px-3 py-2 my-3">
-                <h2 class="text-argavell font-bauer font-weight-bold">Address Details</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Address Details</h2>
                 <p class="text-secondary">Choose your shipping method.</p>
                 <div class="mb-3">
                     <div class="form-check">
@@ -155,7 +155,7 @@
                 </div>
             </div>
             <div class="bg-white rounded px-3 py-2 my-3">
-                <h2 class="text-argavell font-bauer font-weight-bold">Payment Method</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Payment Method</h2>
                 <p class="text-secondary">Choose your payment method.</p>
                 <div id="paymentGroup" class="mb-3">
                     <div class="form-check">
@@ -207,9 +207,9 @@
         </div>
         {{-- order summary desktop --}}
         <div class="col-md-3 d-none d-sm-block">
-            <h1 class="text-light font-bauer font-weight-bold py-3">Checkout</h1>
+            <h1 class="text-light font-elmessiri font-weight-bold py-3">Checkout</h1>
             <div class="bg-white rounded px-3 py-2 my-3">
-                <h2 class="text-argavell font-bauer font-weight-bold">Order Summary</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Order Summary</h2>
                 <div class="row text-secondary">
                     <div class="col-3">Product</div>
                     <div class="col-5"></div>

@@ -6,7 +6,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-            <h1 class="text-argavell font-bauer font-weight-bold">Argan Shampoo Benefits</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Argan Shampoo Benefits</h1>
             <div class="pe-4"><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong> It also
                 contains aloe vera & olive oil that will nourish your hair with
                 vitamin E to moisturise & strengthen your hair all day long. Daily use of
@@ -29,7 +29,7 @@
                 <div class="position-relative">
                     <img src="{{ asset('images/argan-shampoo-detail-2.jpg') }}" class="w-100">
                     <div
-                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                         1</div>
                 </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <img src="{{ asset('images/hair-1.png') }}" width="75px" class="mb-2">
-                    <h3 class="text-argavell font-bauer font-weight-bold">Great Care for Hair
+                    <h3 class="text-argavell font-elmessiri font-weight-bold">Great Care for Hair
                     </h3>
                     <div>
                         <ul>
@@ -57,7 +57,7 @@
             <div class="col-md-4">
                 <div class="mb-3">
                     <img src="{{ asset('images/hair-2.png') }}" width="75px" class="mb-2">
-                    <h3 class="text-argavell font-bauer font-weight-bold">Reduces Hairfall</h3>
+                    <h3 class="text-argavell font-elmessiri font-weight-bold">Reduces Hairfall</h3>
                     <div>
                         <ul>
                             <li>Argan Oil <strong>ensures</strong> that one does not lose more follicles than
@@ -76,7 +76,7 @@
                 <div class="position-relative">
                     <img src="{{ asset('images/argan-shampoo-detail-3.jpg') }}" class="w-100">
                     <div
-                        class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                        class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                         2</div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-            <h1 class="text-argavell font-bauer font-weight-bold">Argan Shampoo Benefits</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Argan Shampoo Benefits</h1>
             <div><strong>Our Argan Oil Shampoo contains our own 100% Organic Argan Oil.</strong> It also
                 contains aloe vera & olive oil that will nourish your hair with
                 vitamin E to moisturise & strengthen your hair all day long. Daily use of
@@ -109,7 +109,7 @@
             <div class="position-relative">
                 <img src="{{ asset('images/argan-shampoo-detail-2.jpg') }}" class="w-100">
                 <div
-                    class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                    class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                     1</div>
             </div>
         </div>
@@ -117,7 +117,7 @@
         <div class="col-md-4 px-5 pt-4">
             <div class="mb-3">
                 <img src="{{ asset('images/hair-1.png') }}" width="75px" class="mb-2">
-                <h2 class="text-argavell font-bauer font-weight-bold">Great Care for Hair
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Great Care for Hair
                 </h2>
                 <div>
                     <ul>
@@ -138,7 +138,7 @@
             <div class="position-relative">
                 <img src="{{ asset('images/argan-shampoo-detail-3.jpg') }}" class="w-100">
                 <div
-                    class="position-absolute top-0 start-0 text-argavell font-bauer font-weight-bold text-8xl translate-middle">
+                    class="position-absolute top-0 start-0 text-argavell font-elmessiri font-weight-bold text-8xl translate-middle">
                     2</div>
             </div>
         </div>
@@ -146,7 +146,7 @@
         <div class="col-md-4 px-5 pt-4">
             <div class="mb-3">
                 <img src="{{ asset('images/hair-2.png') }}" width="75px" class="mb-2">
-                <h2 class="text-argavell font-bauer font-weight-bold">Reduces Hairfall</h2>
+                <h2 class="text-argavell font-elmessiri font-weight-bold">Reduces Hairfall</h2>
                 <div>
                     <ul>
                         <li>Argan Oil <strong>ensures</strong> that one does not lose more follicles than
@@ -164,13 +164,13 @@
     </div>
     {{-- product showcase desktop --}}
     <div class="container py-5 mb-5 d-none d-sm-block text-center">
-        <h1 class="text-argavell font-bauer font-weight-bold text-center">Get Yours Now!</h1>
+        <h1 class="text-argavell font-elmessiri font-weight-bold text-center">Get Yours Now!</h1>
         <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
         @include('pages.inc.product_showcase_desktop')
     </div>
     {{-- product showcase mobile --}}
     <div class="container pt-5 d-block d-sm-none text-center">
-        <h1 class="text-argavell font-bauer font-weight-bold text-center">Get Yours Now!</h1>
+        <h1 class="text-argavell font-elmessiri font-weight-bold text-center">Get Yours Now!</h1>
         <h5 class="mb-5 text-center text-secondary">Save up to IDR 20.000 for purchasing bundling promo.</h5>
     </div>
     <div class="container pb-5 mb-5 d-block d-sm-none horizontal-scrollable">

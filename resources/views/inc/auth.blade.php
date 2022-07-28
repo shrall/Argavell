@@ -2,7 +2,7 @@
     <div id="overlay" class="position-absolute inset-0 bg-black-50"></div>
     <div class="position-relative bg-white m-auto py-4 px-5" style="z-index: 100; width: 500px; max-width: 90%;">
         <div id="register-form" class="d-none">
-            <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-4">Register</h1>
+            <h1 class="font-elmessiri font-weight-bold fs-4 text-center text-argavell mb-4">Register</h1>
             <form method="POST" action="{{ route('short.register') }}">
                 @csrf
                 <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
@@ -73,7 +73,7 @@
         </div>
 
         <div id="login-form" class="">
-            <h1 class="font-bauer font-weight-bold fs-4 text-center text-argavell mb-4">Login</h1>
+            <h1 class="font-elmessiri font-weight-bold fs-4 text-center text-argavell mb-4">Login</h1>
             <form method="POST" action="{{ route('short.login') }}">
                 @csrf
                 <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">

@@ -5,7 +5,7 @@
     <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
-            <h1 class="text-argavell font-bauer font-weight-bold">Return Policy</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Return Policy</h1>
             @if (session('Error'))
                 <div class="alert alert-danger">
                     <ul class="mb-0 list-unstyled">
@@ -62,7 +62,7 @@
             <img src="{{ asset('images/argan-oil.jpg') }}" class="w-100">
         </div>
         <div class="col-md-5 mb-4">
-            <h1 class="text-argavell font-bauer font-weight-bold py-4">Return Policy</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold py-4">Return Policy</h1>
             <div class="px-2">
                 <ul class="list-unstyled text-start">
                     @foreach ($policies as $policy)
@@ -101,7 +101,7 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header border-0 justify-content-center position-relative">
-                            <h5 class="modal-title text-center text-argavell font-bauer text-4xl" id="returnModalLabel"><img
+                            <h5 class="modal-title text-center text-argavell font-elmessiri text-4xl" id="returnModalLabel"><img
                                     src="{{ asset('images/argan-fruit.png') }}" width="75px">Return Form</h5>
                             <span class="fa fa-fw fa-times position-absolute cursor-pointer fs-2"
                                 style="top: 20px; right: 20px; z-index: 20000;" data-bs-dismiss="modal"

@@ -146,7 +146,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="transactionModal{{ $transaction->id }}Label"><span
-                                class="text-argavell font-bauer fs-3 me-2">Transaction Details</span></h5>
+                                class="text-argavell font-elmessiri fs-3 me-2">Transaction Details</span></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

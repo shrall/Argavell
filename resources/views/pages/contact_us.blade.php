@@ -6,7 +6,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-            <h1 class="text-argavell font-bauer font-weight-bold">Contact Us</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Contact Us</h1>
             <div class="pe-4">Don’t hesitate to contact us and we are always ready to serve your needs!
             </div>
         </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-            <h1 class="text-argavell font-bauer font-weight-bold text-4xl">Contact Us</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold text-4xl">Contact Us</h1>
             <div class="px-2 text-start">Don’t hesitate to contact us and we are always ready to serve your needs!</div>
         </div>
     </div>
@@ -44,7 +44,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-bauer font-weight-bold my-2">Instagram</h3>
+            <h3 class="text-argavell font-elmessiri font-weight-bold my-2">Instagram</h3>
             <h5>@argavell.id</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -65,7 +65,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-bauer font-weight-bold my-2">Tokopedia</h3>
+            <h3 class="text-argavell font-elmessiri font-weight-bold my-2">Tokopedia</h3>
             <h5>Argavell Indonesia</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -83,7 +83,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-bauer font-weight-bold my-2">Shopee</h3>
+            <h3 class="text-argavell font-elmessiri font-weight-bold my-2">Shopee</h3>
             <h5>Argavell Official Shop</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -102,7 +102,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-bauer font-weight-bold my-2">Whatsapp</h3>
+            <h3 class="text-argavell font-elmessiri font-weight-bold my-2">Whatsapp</h3>
             <h5>0821 4321 1310</h5>
         </div>
         <div class="col-xs-6 col-md-2 text-center">
@@ -120,7 +120,7 @@
                     </g>
                 </g>
             </svg>
-            <h3 class="text-argavell font-bauer font-weight-bold my-2">Line</h3>
+            <h3 class="text-argavell font-elmessiri font-weight-bold my-2">Line</h3>
             <h5>@argavell.id</h5>
         </div>
     </div>
@@ -130,7 +130,7 @@
         <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
-            <h1 class="font-bauer text-white mt-5">Invest in Your Skin & Hair<br>with Argavell</h1>
+            <h1 class="font-elmessiri text-white mt-5">Invest in Your Skin & Hair<br>with Argavell</h1>
             <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-none d-sm-block">
                 <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
             </a>

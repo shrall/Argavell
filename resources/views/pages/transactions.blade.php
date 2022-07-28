@@ -6,7 +6,7 @@
         <div class="col-md-4 text-center">
             <div class="d-flex justify-content-center align-items-center">
                 <img src="{{ asset('images/argan-fruit.png') }}" width="75px">
-                <span class="text-argavell font-bauer font-weight-bold text-4xl">Hello, Jane Doe!</span>
+                <span class="text-argavell font-elmessiri font-weight-bold text-4xl">Hello, Jane Doe!</span>
             </div>
             <p class="text-secondary">Welcome back to your personal page, where you can manage your
                 orders, exchange & accounts right here.</p>
@@ -18,7 +18,7 @@
         <div class="col-md-4 text-center">
             <div class="d-flex justify-content-center align-items-center">
                 <img src="{{ asset('images/argan-fruit.png') }}" width="75px">
-                <span class="text-argavell font-bauer font-weight-bold text-4xl">Hello, Jane Doe!</span>
+                <span class="text-argavell font-elmessiri font-weight-bold text-4xl">Hello, Jane Doe!</span>
             </div>
             <p class="text-secondary">Welcome back to your personal page, where you can manage your
                 orders, exchange & accounts right here.</p>
@@ -95,7 +95,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="transactionModalLabel"><span
-                            class="text-argavell font-bauer fs-3 me-2">Transaction Details</span></h5>
+                            class="text-argavell font-elmessiri fs-3 me-2">Transaction Details</span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

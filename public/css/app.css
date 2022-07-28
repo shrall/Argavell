@@ -1,10 +1,10 @@
 @font-face {
-    font-family: Bauer;
-    src: url(../fonts/Bauer/03922_BAUBODN.ttf);
+    font-family: ElMessiri;
+    src: url(../fonts/ElMessiri/ElMessiri-Regular.ttf);
 }
 @font-face {
-    font-family: Bauer;
-    src: url(../fonts/Bauer/03938_BauerBBd.ttf);
+    font-family: ElMessiri;
+    src: url(../fonts/ElMessiri/ElMessiri-Bold.ttf);
     font-weight: bold;
 }
 @font-face {
@@ -50,8 +50,8 @@ input[type="number"] {
 }
 
 /* font settings */
-.font-bauer {
-    font-family: "Bauer";
+.font-elmessiri {
+    font-family: "ElMessiri";
 }
 
 .font-proxima-nova {

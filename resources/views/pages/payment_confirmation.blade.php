@@ -32,7 +32,7 @@
     <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
-            <h1 class="text-argavell font-bauer font-weight-bold">Payment Confirmation</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">Payment Confirmation</h1>
             @if (session('Error'))
                 <div class="alert alert-danger">
                     <ul class="mb-0 list-unstyled">
@@ -134,7 +134,7 @@
             <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
         </div>
         <div class="col-md-5 mb-4">
-            <h1 class="text-argavell font-bauer font-weight-bold py-4">Payment Confirmation</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold py-4">Payment Confirmation</h1>
             @if (session('Error'))
                 <div class="alert alert-danger">
                     <ul class="mb-0 list-unstyled">
