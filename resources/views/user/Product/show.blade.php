@@ -2,232 +2,228 @@
 @section('content')
     <div class="row w-100 m-0 p-0 py-5 mt-5 align-items-center">
         <div class="col-md-2"></div>
-        <div class="col-md-3">
-            <div class="w-100 product-detail"
-                style="background-image: url({{ asset('uploads/products/' . $product->img) }})">
-            </div>
-        </div>
-        <div class="col-md-5">
-            @if ($product->type == '0')
-                <h1 class="text-argavell font-bauer font-weight-bold">{{ $product->name }}</h1>
-            @else
-                <h1 class="text-kleanse font-gotham font-weight-bold">{{ $product->name }}</h1>
-            @endif
-            <div id="price-text-discount" class="d-none">
-                <p class="my-0 text-danger">SALE!</p>
-                <h2 class="font-proxima-nova mb-4 d-flex">
-                    <div class="position-relative">
-                        <span class="text-secondary cross">IDR <span
-                                class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></span>
-                    </div>
-                    <span class="text-danger font-weight-bold ms-2">IDR
-                        <span
-                            class="product-price-with-discount">{{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}</span></span>
-                </h2>
-            </div>
-            @if ($product->type == '0')
-                <div id="price-text" class="d-none">
-                    <h2 class="text-argavell font-proxima-nova mb-4">IDR <span
-                            class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
-                </div>
-            @else
-                <div id="price-text" class="d-none">
-                    <h2 class="text-kleanse font-proxima-nova mb-4">IDR <span
-                            class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
-                </div>
-            @endif
-            {{-- <p class="font-proxima-nova font-weight-bold">Description</p>
-            <p>{{ $product->description }}</p> --}}
-            {{-- @if ($product->type == '0')
-                <p class="font-proxima-nova font-weight-bold">Argavell Facts</p>
-            @else
-                <p class="font-proxima-nova font-weight-bold">Kleanse Facts</p>
-            @endif
-            <ul class="list-unstyled">
-                @foreach ($product->facts as $fact)
+        <div class="col-md-8 d-flex">
+            <div class="d-flex mx-auto">
+                <img
+                    src="{{ asset('uploads/products/' . $product->img) }}"
+                    style="width: 400px; object-fit: cover"/>
+                <div class="ms-5" style="width: 500px;">
                     @if ($product->type == '0')
-                        <li><span class="fa fa-fw fa-tint text-argavell me-2"></span>{{ $fact }}</li>
+                        <h1 class="text-argavell font-bauer font-weight-bold">{{ $product->name }}</h1>
                     @else
-                        <li><span class="fa fa-fw fa-tint text-kleanse me-2"></span>{{ $fact }}</li>
+                        <h1 class="text-kleanse font-gotham font-weight-bold">{{ $product->name }}</h1>
                     @endif
-                @endforeach
-            </ul> --}}
-            <form action="{{ route('user.cart.store') }}" method="post" id="form-product">
-                @csrf
-                <div class="row mb-3">
-                    <div class="col-8">
-                        <p class="font-proxima-nova font-weight-bold">Size</p>
-                        @if ($product->type == '0')
-                            <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
-                                @if ($product->bundle == '1') disabled @endif name="size">
-                                @foreach ($product->size as $key => $size)
-                                    <option value="{{ $key }}">{{ $size }} ml</option>
-                                @endforeach
-                            </select>
-                        @else
-                            <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
-                                @if ($product->bundle == '1') disabled @endif name="size">
-                                @foreach ($product->size as $key => $size)
-                                    <option value="{{ $key }}">{{ $size }} ml</option>
-                                @endforeach
-                            </select>
-                        @endif
+                    <div id="price-text-discount" class="d-none">
+                        <p class="my-0 text-danger">SALE!</p>
+                        <h2 class="font-proxima-nova mb-4 d-flex">
+                            <div class="position-relative">
+                                <span class="text-secondary cross">IDR <span
+                                        class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></span>
+                            </div>
+                            <span class="text-danger font-weight-bold ms-2">IDR
+                                <span
+                                    class="product-price-with-discount">{{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}</span></span>
+                        </h2>
                     </div>
-                    <div class="col-4">
-                        <p class="font-proxima-nova font-weight-bold">Quantity</p>
-                        <div class="d-flex align-items-center fs-2">
-                            @if ($product->type == '0')
-                                <span
-                                    class="col-4 far fa-fw fa-minus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                    id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                    onclick="subtractProductQuantity()"></span>
-                                <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
-                                    id="quantity-counter">1
-                                </div>
-                                <span
-                                    class="col-4 far fa-fw fa-plus-square text-argavell cursor-pointer ps-0 quantity-button"
-                                    id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                    onclick="addProductQuantity()"></span>
-                            @else
-                                <span
-                                    class="col-4 far fa-fw fa-minus-square text-kleanse cursor-pointer ps-0 quantity-button"
-                                    id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                    onclick="subtractProductQuantity()"></span>
-                                <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
-                                    id="quantity-counter">1
-                                </div>
-                                <span
-                                    class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
-                                    id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                    onclick="addProductQuantity()"></span>
-                            @endif
-                            <input type="hidden" name="quantity" id="quantity" value=1>
-                            <input type="hidden" name="id" id="id" value={{ $product->id }}>
-                            <input type="hidden" name="price" id="price" value={{ $product->price[0] }}>
-                            <input type="hidden" name="price_discount" id="price_discount"
-                                value={{ $product->price_discount[0] }}>
+                    @if ($product->type == '0')
+                        <div id="price-text" class="d-none">
+                            <h2 class="text-argavell font-proxima-nova mb-4">IDR <span
+                                    class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
                         </div>
-                    </div>
-                </div>
-                <div class="my-3">
-                    @auth
-                        @if ($product->type == '0')
-                            <button type="submit"
-                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
-                            @else onclick="event.preventDefault(); addToCart({{ $product->id }},
-                                '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
-                                to Cart
-                            </button>
-                            <button type="submit"
-                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                                @if (Auth::user()->role != '0') onclick="event.preventDefault();
-                            alert('Kamu sedang login sebagai admin!');"
-                        @else onclick="event.preventDefault(); addToCart({{ $product->id }},
-                            '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
-                                to Cart
-                            </button>
-                        @else
-                            <button type="submit"
-                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
-                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
-                        @else
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
-                                to Cart</button>
-                            <button type="submit"
-                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
-                                @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
-                        @else
-                            onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
-                            data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
-                                to Cart</button>
-                        @endif
-                    @endauth
-                    @guest
-                        @if ($product->type == '0')
-                            <a onclick="event.preventDefault(); showAuthPopup()"
-                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
-                                Add to Cart</a>
-                            <a onclick="event.preventDefault(); showAuthPopup()"
-                                class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
-                                Add to Cart</a>
-                        @else
-                            <a onclick="event.preventDefault(); showAuthPopup()"
-                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
-                                Add to Cart</a>
-                            <a onclick="event.preventDefault(); showAuthPopup()"
-                                class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
-                                Add to Cart</a>
-                        @endif
-                    @endguest
-                </div>
-            </form>
-            @guest
-                <form action="{{ route('redirect.login') }}" method="post" id="redirect-form">
-                    @csrf
-                    <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
-                    <input type="hidden" name="product_slug" value="{{ $product->slug }}">
-                </form>
-            @endguest
-            <div class="card border-0">
-                @if ($product->type == '0')
-                    <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active font-bauer fs-4 p-0" id="description-tab" data-bs-toggle="tab"
-                                data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                aria-selected="true">Description</button>
-                        </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <button class="nav-link font-bauer fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
-                                data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
-                                aria-selected="true">How To Use</button>
-                        </li> --}}
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link font-bauer fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
-                                data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
-                                aria-selected="false">Ingredients</button>
-                        </li>
-                    </ul>
-                @else
-                    <ul class="nav nav-kleanse nav-fill" id="detailTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active font-gotham fs-4 p-0" id="description-tab"
-                                data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
-                                aria-controls="description" aria-selected="true">Description</button>
-                        </li>
-                        {{-- <li class="nav-item" role="presentation">
-                            <button class="nav-link font-gotham fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
-                                data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
-                                aria-selected="true">How To Use</button>
-                        </li> --}}
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link font-gotham fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
-                                data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
-                                aria-selected="false">Ingredients</button>
-                        </li>
-                    </ul>
-                @endif
-                <div class="card-body">
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            {{ $product->description }}</div>
-                        {{-- <div class="tab-pane" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
-                            <p class="font-proxima-nova font-weight-bold">HOW TO USE ARGAN OIL</p>
-                            <ul class="list-unstyled">
-                                @foreach ($product->howtouse as $htu)
+                    @else
+                        <div id="price-text" class="d-none">
+                            <h2 class="text-kleanse font-proxima-nova mb-4">IDR <span
+                                    class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></h2>
+                        </div>
+                    @endif
+                    <form action="{{ route('user.cart.store') }}" method="post" id="form-product">
+                        @csrf
+                        <div class="row mb-3">
+                            <div class="col-8">
+                                <p class="font-proxima-nova font-weight-bold">Size</p>
+                                @if ($product->type == '0')
+                                    <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
+                                        @if ($product->bundle == '1') disabled @endif name="size">
+                                        @foreach ($product->size as $key => $size)
+                                            <option value="{{ $key }}">{{ $size }} ml</option>
+                                        @endforeach
+                                    </select>
+                                @else
+                                    <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
+                                        @if ($product->bundle == '1') disabled @endif name="size">
+                                        @foreach ($product->size as $key => $size)
+                                            <option value="{{ $key }}">{{ $size }} ml</option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            </div>
+                            <div class="col-4">
+                                <p class="font-proxima-nova font-weight-bold">Quantity</p>
+                                <div class="d-flex align-items-center fs-2">
                                     @if ($product->type == '0')
-                                        <li><span class="fa fa-fw fa-tint text-argavell me-2"></span>{{ $htu }}
-                                        </li>
+                                        <span
+                                            class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
+                                            id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                            onclick="subtractProductQuantity()">
+                                            <img
+                                                src="{{ asset('images/squared-minus-icon-brown.png') }}"
+                                                width="28"
+                                                height="28"/>  
+                                        </span>
+                                        <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
+                                            id="quantity-counter">1
+                                        </div>
+                                        <span
+                                            class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
+                                            id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                            onclick="addProductQuantity()">
+                                            <img
+                                                src="{{ asset('images/squared-plus-icon-brown.png') }}"
+                                                width="28"
+                                                height="28"/>    
+                                        </span>
                                     @else
-                                        <li><span class="fa fa-fw fa-tint text-kleanse me-2"></span>{{ $htu }}
-                                        </li>
+                                        <span
+                                            class="col-4 far fa-fw fa-minus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                            id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                            onclick="subtractProductQuantity()"></span>
+                                        <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
+                                            id="quantity-counter">1
+                                        </div>
+                                        <span
+                                            class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                            id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
+                                            onclick="addProductQuantity()"></span>
                                     @endif
-                                @endforeach
+                                    <input type="hidden" name="quantity" id="quantity" value=1>
+                                    <input type="hidden" name="id" id="id" value={{ $product->id }}>
+                                    <input type="hidden" name="price" id="price" value={{ $product->price[0] }}>
+                                    <input type="hidden" name="price_discount" id="price_discount"
+                                        value={{ $product->price_discount[0] }}>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="my-3">
+                            @auth
+                                @if ($product->type == '0')
+                                    <button type="submit"
+                                        class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                        @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                                    @else onclick="event.preventDefault(); addToCart({{ $product->id }},
+                                        '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
+                                        to Cart
+                                    </button>
+                                    <button type="submit"
+                                        class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                        @if (Auth::user()->role != '0') onclick="event.preventDefault();
+                                    alert('Kamu sedang login sebagai admin!');"
+                                @else onclick="event.preventDefault(); addToCart({{ $product->id }},
+                                    '{{ config('app.url') }}');" data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
+                                        to Cart
+                                    </button>
+                                @else
+                                    <button type="submit"
+                                        class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button"
+                                        @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                                @else
+                                    onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                    data-bs-toggle="modal" data-bs-target="#cartModal" @endif>Add
+                                        to Cart</button>
+                                    <button type="submit"
+                                        class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button"
+                                        @if (Auth::user()->role != '0') onclick="event.preventDefault(); alert('Kamu sedang login sebagai admin!');"
+                                @else
+                                    onclick="event.preventDefault(); addToCart({{ $product->id }}, '{{ config('app.url') }}');"
+                                    data-bs-toggle="modal" data-bs-target="#cartModalMobile" @endif>Add
+                                        to Cart</button>
+                                @endif
+                            @endauth
+                            @guest
+                                @if ($product->type == '0')
+                                    <a onclick="event.preventDefault(); showAuthPopup()"
+                                        class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                        Add to Cart</a>
+                                    <a onclick="event.preventDefault(); showAuthPopup()"
+                                        class="btn btn-argavell text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                        Add to Cart</a>
+                                @else
+                                    <a onclick="event.preventDefault(); showAuthPopup()"
+                                        class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-none d-sm-block add-to-cart-button">
+                                        Add to Cart</a>
+                                    <a onclick="event.preventDefault(); showAuthPopup()"
+                                        class="btn btn-kleanse text-center w-100 my-2 py-2 cursor-pointer d-block d-sm-none add-to-cart-button">
+                                        Add to Cart</a>
+                                @endif
+                            @endguest
+                        </div>
+                    </form>
+                    @guest
+                        <form action="{{ route('redirect.login') }}" method="post" id="redirect-form">
+                            @csrf
+                            <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
+                            <input type="hidden" name="product_slug" value="{{ $product->slug }}">
+                        </form>
+                    @endguest
+                    <div class="card border-0">
+                        @if ($product->type == '0')
+                            <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active font-bauer fs-5 p-0" id="description-tab" data-bs-toggle="tab"
+                                        data-bs-target="#description" type="button" role="tab" aria-controls="description"
+                                        aria-selected="true">Description</button>
+                                </li>
+                                {{-- <li class="nav-item" role="presentation">
+                                    <button class="nav-link font-bauer fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
+                                        data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
+                                        aria-selected="true">How To Use</button>
+                                </li> --}}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link font-bauer fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
+                                        data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
+                                        aria-selected="false">Ingredients</button>
+                                </li>
                             </ul>
-                        </div> --}}
-                        <div class="tab-pane" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
-                            {{ $product->ingredients }}</div>
+                        @else
+                            <ul class="nav nav-kleanse nav-fill" id="detailTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active font-gotham fs-4 p-0" id="description-tab"
+                                        data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
+                                        aria-controls="description" aria-selected="true">Description</button>
+                                </li>
+                                {{-- <li class="nav-item" role="presentation">
+                                    <button class="nav-link font-gotham fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
+                                        data-bs-target="#how-to-use" type="button" role="tab" aria-controls="how-to-use"
+                                        aria-selected="true">How To Use</button>
+                                </li> --}}
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link font-gotham fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
+                                        data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
+                                        aria-selected="false">Ingredients</button>
+                                </li>
+                            </ul>
+                        @endif
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                    {{ $product->description }}</div>
+                                {{-- <div class="tab-pane" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
+                                    <p class="font-proxima-nova font-weight-bold">HOW TO USE ARGAN OIL</p>
+                                    <ul class="list-unstyled">
+                                        @foreach ($product->howtouse as $htu)
+                                            @if ($product->type == '0')
+                                                <li><span class="fa fa-fw fa-tint text-argavell me-2"></span>{{ $htu }}
+                                                </li>
+                                            @else
+                                                <li><span class="fa fa-fw fa-tint text-kleanse me-2"></span>{{ $htu }}
+                                                </li>
+                                            @endif
+                                        @endforeach
+                                    </ul>
+                                </div> --}}
+                                <div class="tab-pane" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                                    {{ $product->ingredients }}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
