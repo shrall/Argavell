@@ -203,8 +203,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <label for="address_type" class="col-form-label font-weight-bold">Address Type<span
-                                            class="text-danger">*</span>
+                                    <label for="address_type" class="col-form-label font-weight-bold">Address Type
                                     </label>
                                 </div>
                                 <div class="col-6">
@@ -216,8 +215,7 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <input type="text" class="form-control" id="address_type" name="address_type"
-                                        placeholder="e.g Home, Office, etc" value="{{ $address->address_type }}"
-                                        required>
+                                        placeholder="e.g Home, Office, etc" value="{{ $address->address_type }}">
                                 </div>
                                 <div class="col-6">
                                     <input type="text" class="form-control" id="postal_code" name="postal_code"
@@ -322,8 +320,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <label for="address_type" class="col-form-label font-weight-bold">Address Type<span
-                                        class="text-danger">*</span>
+                                <label for="address_type" class="col-form-label font-weight-bold">Address Type
                                 </label>
                             </div>
                             <div class="col-6">
@@ -335,7 +332,7 @@
                         <div class="row mb-3">
                             <div class="col-6">
                                 <input type="text" class="form-control" id="address_type" name="address_type"
-                                    placeholder="e.g Home, Office, etc" required>
+                                    placeholder="e.g Home, Office, etc">
                             </div>
                             <div class="col-6">
                                 <input type="text" class="form-control" id="postal_code" name="postal_code"
