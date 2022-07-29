@@ -136,7 +136,7 @@
         <a class="navbar-brand w-25 text-center" href="{{ url('/') }}">
             <img src="{{ asset('images/logo-argavell.png') }}" alt="" width="50" height="50" class="d-inline-block align-text-top">
         </a>
-        <div class="w-25 text-center">
+        <div class="d-flex w-25 text-center">
             @guest
             @if (Route::has('login'))
             <a class="text-argavell text-decoration-none font-proxima-nova font-weight-bold mx-1" href="{{ route('login') }}">
@@ -148,7 +148,23 @@
                 <span class="text-argavell fa fa-fw fa-user fs-2"></span>
             </a>
             @if (Route::current()->getName() != 'user.cart.index')
-            <span class="text-argavell fa fa-fw fa-shopping-cart fs-2" data-bs-toggle="modal" data-bs-target="#cartModalMobile"></span>
+                <div class="position-relative">
+                    <span
+                        class="text-argavell fa fa-fw fa-shopping-cart fs-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#cartModalMobile">
+                    </span>
+                    <div
+                        class="d-flex position-absolute rounded-circle"
+                        style="top: -3px; right: -3px; min-width: 14px; height: 14px; background: red;">
+                        <span
+                            id="cartQuantityLabel"
+                            class="m-auto text-white"
+                            style="font-size: 8px;">
+                            {{ $totalqty }}
+                        </span>
+                    </div>
+                </div>
             @endif
             @endguest
         </div>
