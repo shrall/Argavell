@@ -14,13 +14,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use Carbon\Carbon;
 
 class PageController extends Controller
 {
     public function ourproduct()
     {
         $products = Product::where('bundle', '!=', '1')->get();
-        $productBundles = Product::where('bundle', '1')->get();
+        $productBundles = Product::where('bundle', '1')
+            ->where('bundle_start', '<=', Carbon::now())
+            ->where('bundle_end', '>=', Carbon::now())
+            ->get();
         return view('pages.our_product', compact('products', 'productBundles'));
     }
     public function arganoil()
