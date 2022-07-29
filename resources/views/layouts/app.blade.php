@@ -47,7 +47,7 @@
                 @yield('content')
             </main>
         @else
-            <main>
+            <main style="margin-top: 80px">
                 @yield('content')
             </main>
         @endif

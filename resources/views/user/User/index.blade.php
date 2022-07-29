@@ -2,7 +2,9 @@
 
 @section('content')
     @include('user.User.inc.header')
-    <div class="row w-100 m-0 p-0">
+    <div
+        class="row w-100 m-0"
+        style="padding-bottom: 3rem">
         <div class="col-md-2"></div>
         <div class="col-md-2 px-5 d-none d-sm-block">
             @include('user.User.inc.sidebar')

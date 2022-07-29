@@ -13,7 +13,9 @@
     <div class="col-md-4"></div>
 </div>
 {{-- desktop --}}
-<div class="row w-100 my-4 p-0 align-items-center d-none d-sm-flex">
+<div
+    class="row w-100 my-4 align-items-center d-none d-sm-flex"
+    style="padding-top: 3rem;">
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <div class="d-flex justify-content-center align-items-center">

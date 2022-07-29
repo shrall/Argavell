@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- desktop header --}}
-    <div class="row w-100 m-0 align-items-center d-none d-sm-flex" style="padding-top: 80px;">
+    <div class="row w-100 m-0 align-items-center d-none d-sm-flex"">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
