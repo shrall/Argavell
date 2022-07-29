@@ -3,11 +3,12 @@
     <div class="row w-100 m-0 p-0 py-5 mt-5 align-items-center">
         <div class="col-md-2"></div>
         <div class="col-md-8 d-flex">
-            <div class="d-flex mx-auto">
+            <div class="d-flex flex-column flex-md-row mx-auto">
                 <img
+                    class="product-image mb-4 mb-md-0"
                     src="{{ asset('uploads/products/' . $product->img) }}"
-                    style="width: 400px; object-fit: cover"/>
-                <div class="ms-5" style="width: 500px;">
+                    style="object-fit: cover"/>
+                <div class="mx-0 ms-md-5" style="max-width: 500px;">
                     @if ($product->type == '0')
                         <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }}</h1>
                     @else
