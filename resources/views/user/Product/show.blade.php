@@ -50,9 +50,14 @@
                                 @if ($product->type == '0')
                                     <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
                                         @if ($product->bundle == '1') disabled @endif name="size">
-                                        @foreach ($product->size as $key => $size)
-                                            <option value="{{ $key }}">{{ $size }} ml</option>
-                                        @endforeach
+                                        @if ($product->bundle)
+                                            <option value="{{ $bundledSize }}">{{ $bundledSize }}</option>
+                                            
+                                        @else
+                                            @foreach ($product->size as $key => $size)
+                                                <option value="{{ $key }}">{{ $size }} ml</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 @else
                                     <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
@@ -220,24 +225,48 @@
                         @endif
                         <div class="card-body">
                             <div class="tab-content">
-                                <div class="tab-pane active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                                    {{ $product->description }}</div>
-                                {{-- <div class="tab-pane" id="how-to-use" role="tabpanel" aria-labelledby="how-to-use-tab">
-                                    <p class="font-proxima-nova font-weight-bold">HOW TO USE ARGAN OIL</p>
-                                    <ul class="list-unstyled">
-                                        @foreach ($product->howtouse as $htu)
-                                            @if ($product->type == '0')
-                                                <li><span class="fa fa-fw fa-tint text-argavell me-2"></span>{{ $htu }}
-                                                </li>
-                                            @else
-                                                <li><span class="fa fa-fw fa-tint text-kleanse me-2"></span>{{ $htu }}
-                                                </li>
-                                            @endif
+                                <div
+                                    id="description" 
+                                    class="d-flex flex-column gap-4 py-3 tab-pane overflow-auto active"
+                                    role="tabpanel"
+                                    aria-labelledby="description-tab"
+                                    style="height: 250px;">
+                                    @if($product->bundle)
+                                        @foreach($bundledProducts as $bundledProduct)
+                                            <div>
+                                                <h5 class="font-weight-bold text-uppercase">
+                                                    {{ $bundledProduct->product->name }}
+                                                </h5>
+                                                <p>
+                                                    {{ $bundledProduct->product->description }}
+                                                </p>
+                                            </div>
                                         @endforeach
-                                    </ul>
-                                </div> --}}
-                                <div class="tab-pane" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
-                                    {{ $product->ingredients }}</div>
+                                    @else
+                                        {{ $product->description }}
+                                    @endif
+                                </div>
+                                <div
+                                    id="ingredients" 
+                                    class="d-flex d-none flex-column gap-4 py-3 tab-pane overflow-auto active"
+                                    role="tabpanel"
+                                    aria-labelledby="ingredients-tab"
+                                    style="height: 250px;">
+                                    @if($product->bundle)
+                                        @foreach($bundledProducts as $bundledProduct)
+                                            <div>
+                                                <h5 class="font-weight-bold text-uppercase">
+                                                    {{ $bundledProduct->product->name }}
+                                                </h5>
+                                                <p>
+                                                    {{ $bundledProduct->product->ingredients }}
+                                                </p>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        {{ $product->ingredients }}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -708,6 +737,22 @@
             $('#auth-popup').addClass("d-none");
             $('body').removeClass("overflow-hidden");
         })
+
+        $(document).ready(function() {
+            setupTabButtons();
+        });
+        
+        function setupTabButtons() {
+            $('#description-tab').on('click', function() {
+                $('#ingredients').addClass("d-none");
+                $('#description').removeClass("d-none");
+            });
+
+            $('#ingredients-tab').on('click', function() {
+                $('#description').addClass("d-none");
+                $('#ingredients').removeClass("d-none");
+            });
+        }
 
         function showAuthPopup() {
             $('#auth-popup').removeClass("d-none");

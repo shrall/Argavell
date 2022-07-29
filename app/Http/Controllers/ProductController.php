@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bundle;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,13 +55,17 @@ class ProductController extends Controller
             ->whereHas('bundles', function (Builder $query)  use ($product) {
                 $query->where('product_id',  $product->id);
             })->get();
-
-        if ($product->bundle == '1') {
-            if ($product->bundle_start <= Carbon::now() && $product->bundle_end >= Carbon::now()) {
-                return view('user.Product.show', compact('product', 'bundles'));
-            } else {
-                return redirect()->route('home');
-            }
+        if ($product->bundle) {
+            $bundledProducts = Bundle::where('bundle_id', $product->id)
+                ->with('product')
+                ->get();
+            $bundledSize = join(
+                " + ",
+                array_map(function($bundledProduct) {
+                    return $bundledProduct['size']."ml"." ".$bundledProduct['product']['name'];
+                }, $bundledProducts->toArray())
+            );
+            return view('user.Product.show', compact('product', 'bundles', 'bundledProducts', 'bundledSize'));
         } else {
             return view('user.Product.show', compact('product', 'bundles'));
         }
