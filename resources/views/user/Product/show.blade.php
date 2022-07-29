@@ -15,15 +15,21 @@
                     @endif
                     <div id="price-text-discount" class="d-none">
                         <p class="my-0 text-danger">SALE!</p>
-                        <h2 class="font-proxima-nova mb-4 d-flex">
+                        <div class="font-proxima-nova mb-4 d-flex">
                             <div class="position-relative">
-                                <span class="text-secondary cross">IDR <span
-                                        class="product-price">{{ number_format($product->price[0], 0, ',', '.') }}</span></span>
-                            </div>
-                            <span class="text-danger font-weight-bold ms-2">IDR
                                 <span
-                                    class="product-price-with-discount">{{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}</span></span>
-                        </h2>
+                                    class="text-secondary cross"
+                                    style="font-size: 21px;">
+                                    IDR <span class="product-price">500000</span>
+                                </span>
+                            </div>
+                            <h3 class="text-danger font-weight-bold ms-2">
+                                IDR 
+                                <span class="product-price-with-discount">
+                                    {{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}
+                                </span>
+                            </span>
+                        </div>
                     </div>
                     @if ($product->type == '0')
                         <div id="price-text" class="d-none">
@@ -84,16 +90,26 @@
                                         </span>
                                     @else
                                         <span
-                                            class="col-4 far fa-fw fa-minus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                            class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
                                             id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="subtractProductQuantity()"></span>
+                                            onclick="subtractProductQuantity()">
+                                            <img
+                                                src="{{ asset('images/squared-minus-icon-blue.png') }}"
+                                                width="28"
+                                                height="28"/>       
+                                        </span>
                                         <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
                                             id="quantity-counter">1
                                         </div>
                                         <span
-                                            class="col-4 far fa-fw fa-plus-square text-kleanse cursor-pointer ps-0 quantity-button"
+                                            class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
                                             id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="addProductQuantity()"></span>
+                                            onclick="addProductQuantity()">
+                                            <img
+                                                src="{{ asset('images/squared-plus-icon-blue.png') }}"
+                                                width="28"
+                                                height="28"/>     
+                                        </span>
                                     @endif
                                     <input type="hidden" name="quantity" id="quantity" value=1>
                                     <input type="hidden" name="id" id="id" value={{ $product->id }}>
@@ -186,7 +202,7 @@
                         @else
                             <ul class="nav nav-kleanse nav-fill" id="detailTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active font-gotham fs-4 p-0" id="description-tab"
+                                    <button class="nav-link active font-gotham fs-5 p-0" id="description-tab"
                                         data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
                                         aria-controls="description" aria-selected="true">Description</button>
                                 </li>
@@ -196,7 +212,7 @@
                                         aria-selected="true">How To Use</button>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-gotham fs-4 p-0" id="ingredients-tab" data-bs-toggle="tab"
+                                    <button class="nav-link font-gotham fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
                                         data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
                                         aria-selected="false">Ingredients</button>
                                 </li>
