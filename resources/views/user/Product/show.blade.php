@@ -21,7 +21,10 @@
                                 <span
                                     class="text-secondary cross"
                                     style="font-size: 21px;">
-                                    IDR <span class="product-price">500000</span>
+                                    IDR
+                                    <span class="product-price">
+                                        {{ number_format($product->price[0], 0, ',', '.') }}
+                                    </span>
                                 </span>
                             </div>
                             <h3 class="text-danger font-weight-bold ms-2">
