@@ -211,7 +211,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="text-secondary"></div>
-                                <div class="font-weight-bold">a.n Filbert Hartawan -
+                                <div class="font-weight-bold">a.n Louis Yuwono -
                                     {{ $transaction->payment->account_number }}</div>
                             </div>
                             <div class="d-flex justify-content-between">
