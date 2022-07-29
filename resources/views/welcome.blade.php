@@ -9,7 +9,7 @@
                     style="height: 95vh;object-fit: cover;">
                 <div class="carousel-overlay position-absolute w-100"></div>
                 <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%); z-index:11;">
-                    <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
+                    <img style="margin-bottom: 1.5rem" src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-elmessiri text-8xl mb-3">Argan Oil</h1>
                     <p class="mb-3">Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
@@ -22,7 +22,7 @@
                     style="height: 95vh;object-fit: cover;">
                 <div class="carousel-overlay position-absolute w-100"></div>
                 <div class="carousel-caption d-none d-md-block" style="top: 55%; transform: translateY(-55%); z-index:11;">
-                    <img src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
+                    <img style="margin-bottom: 1.5rem" src="{{ asset('images/logo-argavell-white.png') }}" width="100" alt="" srcset="">
                     <h1 class="font-elmessiri text-8xl mb-3">Argan Shampoo</h1>
                     <p class="mb-3">Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
