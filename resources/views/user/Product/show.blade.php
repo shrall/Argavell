@@ -28,7 +28,7 @@
                                 </span>
                             </div>
                             <h3 class="text-danger font-weight-bold ms-2">
-                                IDR 
+                                IDR
                                 <span class="product-price-with-discount">
                                     {{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}
                                 </span>
@@ -55,8 +55,8 @@
                                     <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
                                         @if ($product->bundle == '1') disabled @endif name="size">
                                         @if ($product->bundle)
-                                            <option value="{{ $bundledSize }}">{{ $bundledSize }}</option>
-                                            
+                                            <option value="0">{{ $bundledSize }}</option>
+
                                         @else
                                             @foreach ($product->size as $key => $size)
                                                 <option value="{{ $key }}">{{ $size }} ml</option>
@@ -83,7 +83,7 @@
                                             <img
                                                 src="{{ asset('images/squared-minus-icon-brown.png') }}"
                                                 width="28"
-                                                height="28"/>  
+                                                height="28"/>
                                         </span>
                                         <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
                                             id="quantity-counter">1
@@ -95,7 +95,7 @@
                                             <img
                                                 src="{{ asset('images/squared-plus-icon-brown.png') }}"
                                                 width="28"
-                                                height="28"/>    
+                                                height="28"/>
                                         </span>
                                     @else
                                         <span
@@ -105,7 +105,7 @@
                                             <img
                                                 src="{{ asset('images/squared-minus-icon-blue.png') }}"
                                                 width="28"
-                                                height="28"/>       
+                                                height="28"/>
                                         </span>
                                         <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
                                             id="quantity-counter">1
@@ -117,7 +117,7 @@
                                             <img
                                                 src="{{ asset('images/squared-plus-icon-blue.png') }}"
                                                 width="28"
-                                                height="28"/>     
+                                                height="28"/>
                                         </span>
                                     @endif
                                     <input type="hidden" name="quantity" id="quantity" value=1>
@@ -230,7 +230,7 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div
-                                    id="description" 
+                                    id="description"
                                     class="d-flex flex-column gap-4 py-3 tab-pane overflow-auto active"
                                     role="tabpanel"
                                     aria-labelledby="description-tab"
@@ -251,7 +251,7 @@
                                     @endif
                                 </div>
                                 <div
-                                    id="ingredients" 
+                                    id="ingredients"
                                     class="d-flex d-none flex-column gap-4 py-3 tab-pane overflow-auto active"
                                     role="tabpanel"
                                     aria-labelledby="ingredients-tab"
@@ -380,20 +380,6 @@
             @endforeach
         @endif
     </div>
-    {{-- mobile
-        <div class="row w-100 m-0 align-items-center pt-5 d-block d-sm-none text-center">
-            <div class="col-12 p-0">
-                <img src="{{ asset('images/argan-oil-detail-1.jpg') }}" class="w-100">
-            </div>
-            <div class="col-md-5">
-                <img src="{{ asset('images/argan-fruit.png') }}" width="100px">
-                <h1 class="text-argavell font-elmessiri font-weight-bold">Argan Oil Benefits</h1>
-                <div class="px-4"><strong>Argan oil is extremely rich in Vitamin E</strong> (more than 2x richer
-                    than
-                    Olive Oil, for about 620mg/l) with loads of antioxidants, linoleic acid
-                    (omega-6) that are known for its calming & healing properties on skin.</div>
-            </div>
-        </div> --}}
     @if ($product->banner)
         <div class="row w-100 p-0 m-0 mb-5">
             <img src="{{ asset('uploads/products/') . '/' . $product->banner }}" class="w-100 p-0"
@@ -745,7 +731,7 @@
         $(document).ready(function() {
             setupTabButtons();
         });
-        
+
         function setupTabButtons() {
             $('#description-tab').on('click', function() {
                 $('#ingredients').addClass("d-none");
