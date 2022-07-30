@@ -13,7 +13,7 @@
                     <h1 class="font-elmessiri text-8xl mb-3">Argan Oil</h1>
                     <p class="mb-3">Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
-                    <a href="{{ route('page.arganoil') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
+                    <a href="{{ route('page.ourproduct') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
                             Product</span></a>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     <h1 class="font-elmessiri text-8xl mb-3">Argan Shampoo</h1>
                     <p class="mb-3">Argan Oil is produced from the nut of the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
-                    <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
+                    <a href="{{ route('page.ourproduct') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
                             Product</span></a>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     <h1 class="font-elmessiri text-6xl">Argan Oil</h1>
                     <p>Argan Oil is produced from the nut og the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
-                    <a href="{{ route('page.arganoil') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
+                    <a href="{{ route('page.ourproduct') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
                             Product</span></a>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                     <h1 class="font-elmessiri text-6xl">Argan Shampoo</h1>
                     <p>Argan Oil is produced from the nut og the Argan tree. It's natural and organic,<br>safe to use on any
                         problem area of the skin and hair, for more healthy hair.</p>
-                    <a href="{{ route('page.arganshampoo') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
+                    <a href="{{ route('page.ourproduct') }}" class="text-decoration-none"><span class="btn-argavell-light px-4 py-2">Browse
                             Product</span></a>
                 </div>
             </div>
@@ -140,11 +140,11 @@
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
             <h1 class="font-elmessiri text-white mt-5">Invest in Your Skin & Hair<br>with Argavell</h1>
-            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-none d-sm-block">
-                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
+            <a href="{{ route('page.ourproduct') }}" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Product</div>
             </a>
-            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-block d-sm-none">
-                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
+            <a href="{{ route('page.ourproduct') }}" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Product</div>
             </a>
         </div>
     </div>

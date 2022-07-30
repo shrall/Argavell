@@ -131,11 +131,11 @@
             style="height: 100%;object-fit: cover;">
         <div class="position-absolute top-50 start-50 translate-middle" style="z-index: 11;">
             <h1 class="font-elmessiri text-white mt-5">Invest in Your Skin & Hair<br>with Argavell</h1>
-            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-none d-sm-block">
-                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
+            <a href="{{ route('page.ourproduct') }}" class="text-decoration-none d-none d-sm-block">
+                <div class="btn-argavell-light text-center w-25 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Product</div>
             </a>
-            <a href="{{ route('page.arganoil') }}" class="text-decoration-none d-block d-sm-none">
-                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Learn More</div>
+            <a href="{{ route('page.ourproduct') }}" class="text-decoration-none d-block d-sm-none">
+                <div class="btn-argavell-light text-center w-50 py-2 cursor-pointer mx-auto mb-5 font-weight-bold">Browse Product</div>
             </a>
         </div>
     </div>
