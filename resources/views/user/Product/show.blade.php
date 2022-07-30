@@ -4,10 +4,8 @@
         <div class="col-md-2"></div>
         <div class="col-md-8 d-flex">
             <div class="d-flex flex-column flex-md-row mx-auto">
-                <img
-                    class="product-image mb-4 mb-md-0"
-                    src="{{ asset('uploads/products/' . $product->img) }}"
-                    style="object-fit: cover"/>
+                <img class="product-image mb-4 mb-md-0" src="{{ asset('uploads/products/' . $product->img) }}"
+                    style="object-fit: cover" />
                 <div class="mx-0 ms-md-5" style="max-width: 500px;">
                     @if ($product->type == '0')
                         <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }}</h1>
@@ -18,9 +16,7 @@
                         <p class="my-0 text-danger">SALE!</p>
                         <div class="font-proxima-nova mb-4 d-flex">
                             <div class="position-relative">
-                                <span
-                                    class="text-secondary cross"
-                                    style="font-size: 21px;">
+                                <span class="text-secondary cross" style="font-size: 21px;">
                                     IDR
                                     <span class="product-price">
                                         {{ number_format($product->price[0], 0, ',', '.') }}
@@ -32,7 +28,7 @@
                                 <span class="product-price-with-discount">
                                     {{ number_format($product->price[0] - $product->price_discount[0], 0, ',', '.') }}
                                 </span>
-                            </span>
+                                </span>
                         </div>
                     </div>
                     @if ($product->type == '0')
@@ -52,11 +48,10 @@
                             <div class="col-8">
                                 <p class="font-proxima-nova font-weight-bold">Size</p>
                                 @if ($product->type == '0')
-                                    <select class="form-select border-argavell font-proxima-nova font-weight-bold" id="size"
-                                        @if ($product->bundle == '1') disabled @endif name="size">
+                                    <select class="form-select border-argavell font-proxima-nova font-weight-bold"
+                                        id="size" @if ($product->bundle == '1') disabled @endif name="size">
                                         @if ($product->bundle)
                                             <option value="0">{{ $bundledSize }}</option>
-
                                         @else
                                             @foreach ($product->size as $key => $size)
                                                 <option value="{{ $key }}">{{ $size }} ml</option>
@@ -64,8 +59,8 @@
                                         @endif
                                     </select>
                                 @else
-                                    <select class="form-select border-kleanse font-proxima-nova font-weight-bold" id="size"
-                                        @if ($product->bundle == '1') disabled @endif name="size">
+                                    <select class="form-select border-kleanse font-proxima-nova font-weight-bold"
+                                        id="size" @if ($product->bundle == '1') disabled @endif name="size">
                                         @foreach ($product->size as $key => $size)
                                             <option value="{{ $key }}">{{ $size }} ml</option>
                                         @endforeach
@@ -76,48 +71,36 @@
                                 <p class="font-proxima-nova font-weight-bold">Quantity</p>
                                 <div class="d-flex align-items-center fs-2">
                                     @if ($product->type == '0')
-                                        <span
-                                            class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
-                                            id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="subtractProductQuantity()">
-                                            <img
-                                                src="{{ asset('images/squared-minus-icon-brown.png') }}"
-                                                width="28"
-                                                height="28"/>
+                                        <span class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
+                                            id="minusQuantity" onmouseover="overQuantity(this)"
+                                            onmouseout="outQuantity(this)" onclick="subtractProductQuantity()">
+                                            <img src="{{ asset('images/squared-minus-icon-brown.png') }}" width="28"
+                                                height="28" />
                                         </span>
                                         <div class="col-4 font-proxima-nova text-argavell text-center ps-0 fs-4"
                                             id="quantity-counter">1
                                         </div>
-                                        <span
-                                            class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
-                                            id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="addProductQuantity()">
-                                            <img
-                                                src="{{ asset('images/squared-plus-icon-brown.png') }}"
-                                                width="28"
-                                                height="28"/>
+                                        <span class="col-4 far fa-fw text-argavell cursor-pointer ps-0 quantity-button"
+                                            id="plusQuantity" onmouseover="overQuantity(this)"
+                                            onmouseout="outQuantity(this)" onclick="addProductQuantity()">
+                                            <img src="{{ asset('images/squared-plus-icon-brown.png') }}" width="28"
+                                                height="28" />
                                         </span>
                                     @else
-                                        <span
-                                            class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
-                                            id="minusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="subtractProductQuantity()">
-                                            <img
-                                                src="{{ asset('images/squared-minus-icon-blue.png') }}"
-                                                width="28"
-                                                height="28"/>
+                                        <span class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
+                                            id="minusQuantity" onmouseover="overQuantity(this)"
+                                            onmouseout="outQuantity(this)" onclick="subtractProductQuantity()">
+                                            <img src="{{ asset('images/squared-minus-icon-blue.png') }}" width="28"
+                                                height="28" />
                                         </span>
                                         <div class="col-4 font-proxima-nova text-kleanse text-center ps-0 fs-4"
                                             id="quantity-counter">1
                                         </div>
-                                        <span
-                                            class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
-                                            id="plusQuantity" onmouseover="overQuantity(this)" onmouseout="outQuantity(this)"
-                                            onclick="addProductQuantity()">
-                                            <img
-                                                src="{{ asset('images/squared-plus-icon-blue.png') }}"
-                                                width="28"
-                                                height="28"/>
+                                        <span class="col-4 far fa-fw text-kleanse cursor-pointer ps-0 quantity-button"
+                                            id="plusQuantity" onmouseover="overQuantity(this)"
+                                            onmouseout="outQuantity(this)" onclick="addProductQuantity()">
+                                            <img src="{{ asset('images/squared-plus-icon-blue.png') }}" width="28"
+                                                height="28" />
                                         </span>
                                     @endif
                                     <input type="hidden" name="quantity" id="quantity" value=1>
@@ -193,9 +176,9 @@
                         @if ($product->type == '0')
                             <ul class="nav nav-argavell nav-fill" id="detailTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active font-elmessiri fs-5 p-0" id="description-tab" data-bs-toggle="tab"
-                                        data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                        aria-selected="true">Description</button>
+                                    <button class="nav-link active font-elmessiri fs-5 p-0" id="description-tab"
+                                        data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
+                                        aria-controls="description" aria-selected="true">Description</button>
                                 </li>
                                 {{-- <li class="nav-item" role="presentation">
                                     <button class="nav-link font-elmessiri fs-4 p-0" id="how-to-use-tab" data-bs-toggle="tab"
@@ -203,9 +186,9 @@
                                         aria-selected="true">How To Use</button>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-elmessiri fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
-                                        data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
-                                        aria-selected="false">Ingredients</button>
+                                    <button class="nav-link font-elmessiri fs-5 p-0" id="ingredients-tab"
+                                        data-bs-toggle="tab" data-bs-target="#ingredients" type="button" role="tab"
+                                        aria-controls="ingredients" aria-selected="false">Ingredients</button>
                                 </li>
                             </ul>
                         @else
@@ -221,22 +204,18 @@
                                         aria-selected="true">How To Use</button>
                                 </li> --}}
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link font-gotham fs-5 p-0" id="ingredients-tab" data-bs-toggle="tab"
-                                        data-bs-target="#ingredients" type="button" role="tab" aria-controls="ingredients"
-                                        aria-selected="false">Ingredients</button>
+                                    <button class="nav-link font-gotham fs-5 p-0" id="ingredients-tab"
+                                        data-bs-toggle="tab" data-bs-target="#ingredients" type="button" role="tab"
+                                        aria-controls="ingredients" aria-selected="false">Ingredients</button>
                                 </li>
                             </ul>
                         @endif
                         <div class="card-body">
                             <div class="tab-content">
-                                <div
-                                    id="description"
-                                    class="d-flex flex-column gap-4 py-3 tab-pane overflow-auto active"
-                                    role="tabpanel"
-                                    aria-labelledby="description-tab"
-                                    style="height: 250px;">
-                                    @if($product->bundle)
-                                        @foreach($bundledProducts as $bundledProduct)
+                                <div id="description" class="d-flex flex-column gap-4 py-3 tab-pane overflow-auto active"
+                                    role="tabpanel" aria-labelledby="description-tab" style="height: 250px;">
+                                    @if ($product->bundle)
+                                        @foreach ($bundledProducts as $bundledProduct)
                                             <div>
                                                 <h5 class="font-weight-bold text-uppercase">
                                                     {{ $bundledProduct->product->name }}
@@ -250,14 +229,11 @@
                                         {{ $product->description }}
                                     @endif
                                 </div>
-                                <div
-                                    id="ingredients"
+                                <div id="ingredients"
                                     class="d-flex d-none flex-column gap-4 py-3 tab-pane overflow-auto active"
-                                    role="tabpanel"
-                                    aria-labelledby="ingredients-tab"
-                                    style="height: 250px;">
-                                    @if($product->bundle)
-                                        @foreach($bundledProducts as $bundledProduct)
+                                    role="tabpanel" aria-labelledby="ingredients-tab" style="height: 250px;">
+                                    @if ($product->bundle)
+                                        @foreach ($bundledProducts as $bundledProduct)
                                             <div>
                                                 <h5 class="font-weight-bold text-uppercase">
                                                     {{ $bundledProduct->product->name }}
@@ -447,7 +423,8 @@
     {{-- product showcase mobile --}}
     <div class="container d-block d-sm-none text-center">
         @if ($product->type == '0')
-            <h1 class="col-8 mx-auto text-argavell font-elmessiri font-weight-bold text-center text-4xl">Let's Take Our Bundle
+            <h1 class="col-8 mx-auto text-argavell font-elmessiri font-weight-bold text-center text-4xl">Let's Take Our
+                Bundle
                 of
                 Love</h1>
         @else
@@ -650,11 +627,12 @@
                 })
                 .done(function(data) {
                     $('#cartQuantityLabel').html(
-                        parseInt($('#cartQuantityLabel').html()) + 1
+                        parseInt($('#cartQuantityLabel').html()) + parseInt($('#quantity').val())
                     );
                     if (data != 'false') {
-                        $('#cart-body').append(data);
-                        $('#cart-mobile-body').append(data);
+                        carts = @json(Auth::user()->carts->where('transaction_id', null));
+                        $('#cart-body').html(data);
+                        $('#cart-mobile-body').html(data);
                         $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
                             .val()));
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + parseInt($(

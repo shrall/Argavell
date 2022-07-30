@@ -106,34 +106,38 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = Product::find($request->id);
-        if (Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->where('size', '=', $product['size'][$request->size] . "ml")->first()) {
-            return 'false';
-        }
-        if ($product['stock'][$request->size] > $request->quantity) {
-            $cart = Cart::create([
-                'qty' => $request->quantity,
-                'size' => $product['size'][$request->size] . "ml",
-                'key' => $request->size,
-                'price' => $product['price'][$request->size],
-                'price_discount' => $product['price_discount'][$request->size],
-                'product_id' => $request->id,
-                'user_id' => Auth::id(),
-                'transaction_id' => null
+        $cart = Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->where('size', '=', $product['size'][$request->size] . "ml")->first();
+        if ($cart) {
+            $cart->update([
+                'qty' => $cart->qty + $request->quantity
             ]);
         } else {
-            $cart = Cart::create([
-                'qty' => $product['stock'][$request->size],
-                'size' => $product['size'][$request->size] . "ml",
-                'key' => $request->size,
-                'price' => $product['price'][$request->size],
-                'price_discount' => $product['price_discount'][$request->size],
-                'product_id' => $request->id,
-                'user_id' => Auth::id(),
-                'transaction_id' => null
-            ]);
+            if ($product['stock'][$request->size] > $request->quantity) {
+                $cart = Cart::create([
+                    'qty' => $request->quantity,
+                    'size' => $product['size'][$request->size] . "ml",
+                    'key' => $request->size,
+                    'price' => $product['price'][$request->size],
+                    'price_discount' => $product['price_discount'][$request->size],
+                    'product_id' => $request->id,
+                    'user_id' => Auth::id(),
+                    'transaction_id' => null
+                ]);
+            } else {
+                $cart = Cart::create([
+                    'qty' => $product['stock'][$request->size],
+                    'size' => $product['size'][$request->size] . "ml",
+                    'key' => $request->size,
+                    'price' => $product['price'][$request->size],
+                    'price_discount' => $product['price_discount'][$request->size],
+                    'product_id' => $request->id,
+                    'user_id' => Auth::id(),
+                    'transaction_id' => null
+                ]);
+            }
         }
-        $item = $cart;
-        return view('inc.cart.product', compact('item'));
+        $items = Auth::user()->carts->where('transaction_id', null);
+        return view('inc.cart.product', compact('items'));
     }
 
     /**
