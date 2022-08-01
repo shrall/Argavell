@@ -13,7 +13,8 @@ class CustomerMiddleware
         Request $request,
         Closure $next
     ) {
-        View::share('allProducts', Product::all());
+        $products =  Product::where('bundle', "0")->get();
+        View::share('allProducts', $products);
         return $next($request);
     }
 }
