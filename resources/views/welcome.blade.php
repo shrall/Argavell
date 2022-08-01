@@ -131,9 +131,12 @@
     </div>
     <div class="container py-5 my-5 text-center">
         <img src="{{ asset('images/argan-fruit.png') }}" width="150px">
-        <h3 class="text-argavell font-elmessiri">Our business is not just about selling skincare.
-            It’s about giving people <strong>a solution & an opportunity</strong>
-            to appear outstanding amongst their peers.</h3>
+        <h3 class="text-argavell font-elmessiri">
+        Our business is not just about selling skincare.
+        <br>
+        It’s about giving people <strong>a solution & an opportunity</strong>
+        <br>
+        to appear outstanding amongst their peers.</h3>
     </div>
     <div class="row w-100 landing-showcase-background text-center py-5 m-0 position-relative" style="height:45vh;">
         <img src="{{ asset('images/landing-argan-oil.jpg') }}" class="d-block w-100 position-absolute top-0 p-0"
