@@ -193,6 +193,82 @@
                 @include('admin.product.inc.modal.product_image_preview')
                 @include('admin.product.inc.modal.product_banner_preview')
                 @include('admin.product.inc.modal.product_video_preview')
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Benefit</label>
+                            <div class="col-12">
+                                <textarea id="benefit_desc" type="text" class="form-control" name="benefit_desc" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-6 text-start font-weight-bold">Icon
+                                <div style="color: red;" id="alert-benefiticon" class="d-none">Required</div>
+                            </label>
+                            <label class="col-6 text-start font-weight-bold">Gambar
+                                <div style="color: red;" id="alert-benefitimage" class="d-none">Required</div>
+                            </label>
+                            <div class="col-6 text-argavell">
+                                @if ($product->benefit_icon)
+                                    <div id="benefiticon-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline;" data-bs-toggle="modal"
+                                        data-bs-target="#productbenefiticonModal"><span
+                                            class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @else
+                                    <div id="benefiticon-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline; display:none;" data-bs-toggle="modal"
+                                        data-bs-target="#productbenefiticonModal"><span
+                                            class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @endif
+                            </div>
+                            <div class="col-6 text-argavell">
+                                @if ($product->benefit_image)
+                                    <div id="benefitimage-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline;" data-bs-toggle="modal"
+                                        data-bs-target="#productbenefitimageModal"><span
+                                            class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @else
+                                    <div id="benefitimage-upload-preview" class="cursor-pointer"
+                                        style="text-decoration: underline; display:none;" data-bs-toggle="modal"
+                                        data-bs-target="#productbenefitimageModal"><span
+                                            class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                                @endif
+                            </div>
+                        </div>
+                        <input type="hidden" name="benefitimage_delete" id="benefitimage-delete" value='0'>
+                        <input type="hidden" name="benefiticon_delete" id="benefiticon-delete" value='0'>
+                        <div class="row mb-3">
+                            <div class="col-6 d-block" id="benefiticon-upload-button">
+                                <div class="btn btn-admin-argavell" id="benefiticon-act-button"
+                                    @if ($product->benefit_icon) style="display:none;" @endif>
+                                    <label for="benefiticon" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="benefiticon" id="benefiticon" class="d-none"
+                                        accept="image/*" required onchange="loadFile(event, 'benefiticon')">
+                                </div>
+                                <div class="btn btn-admin-argavell-red" id="benefiticon-delete-button"
+                                    onclick="deleteMedia('benefiticon');"
+                                    @if (!$product->benefit_icon) style="display:none;" @endif>
+                                    <label class="cursor-pointer">Hapus Gambar</label>
+                                </div>
+                            </div>
+                            <div class="col-6 d-block" id="benefitimage-upload-button">
+                                <div class="btn btn-admin-argavell" id="benefitimage-act-button"
+                                    @if ($product->benefit_image) style="display:none;" @endif>
+                                    <label for="benefitimage" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="benefitimage" id="benefitimage" class="d-none"
+                                        accept="image/*" required onchange="loadFile(event, 'benefitimage')">
+                                </div>
+                                <div class="btn btn-admin-argavell-red" id="benefitimage-delete-button"
+                                    onclick="deleteMedia('benefitimage');"
+                                    @if (!$product->benefit_image) style="display:none;" @endif>
+                                    <label class="cursor-pointer">Hapus Gambar</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @include('admin.product.inc.modal.product_benefiticon_preview')
+                @include('admin.product.inc.modal.product_benefitimage_preview')
             </div>
             <div class="col-6">
                 <div class="card shadow-sm border-0 mb-2">
@@ -319,8 +395,7 @@
                                 @foreach ($product->guides as $key => $guide)
                                     <div id="product-guide-{{ $key }}" class="row">
                                         <div class="col-2 mb-2">
-                                            <a target="_blank"
-                                                href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
+                                            <a target="_blank" href="{{ asset('uploads/guides') . '/' . $guide->logo }}"
                                                 class="text-argavell" style="text-decoration: underline;">Lihat Gambar</a>
                                         </div>
                                         <div class="col-2 mb-2">
@@ -450,8 +525,6 @@
         function changeSize(index, order) {
             sizes[order][index] = parseInt($('#size-' + index + order).val());
             $('#item-sizes').val(sizes);
-            console.log(sizes);
-            console.log($('#item-sizes').val());
         }
 
         function addSize() {
@@ -971,5 +1044,26 @@
             $('#benefitbanner').val(null)
             $('#benefitbanner-imaged').attr('src', @json(asset('images/argan-oil-detail-3.jpg')));
         }
+    </script>
+    <script>
+        var editort;
+        ClassicEditor.create(document.querySelector('#benefit_desc'), {
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle',
+                    'ImageToolbar', 'ImageUpload', 'MediaEmbed', 'Table'
+                ],
+            }).then(editor => {
+                editort = editor;
+                editort.setData(@json($product->benefit))
+            })
+            .catch(error => {
+                console.error(error);
+                console.error(error.stack);
+            });
+        ClassicEditor.editorConfig = function(config) {
+            config.height = '350px';
+        };
     </script>
 @endsection

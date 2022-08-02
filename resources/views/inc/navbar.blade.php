@@ -340,10 +340,7 @@ if (Auth::user()) {
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
-                    console.log(data['price'] * data['qty'])
-                    console.log(subtotal)
                     subtotal -= parseInt(data['price'] * data['qty']);
-                    console.log(subtotal)
                     discount -= parseInt(data['price_discount'] * data['qty']);
                     $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
                     $('#cart-discount').html((discount).formatMoney(0, '.', ''));
@@ -361,7 +358,6 @@ if (Auth::user()) {
                     alert('Fail')
                 })
                 .always(function() {
-                    console.log("quantity added");
                     $('#cart-loader').addClass('d-none');
                     $('#cart-mobile-loader').addClass('d-none');
                 });
@@ -411,7 +407,6 @@ if (Auth::user()) {
                     alert('Fail')
                 })
                 .always(function() {
-                    console.log("quantity added");
                     $('#cart-loader').addClass('d-none');
                     $('#cart-mobile-loader').addClass('d-none');
                 });
@@ -462,7 +457,6 @@ if (Auth::user()) {
                         alert('Fail')
                     })
                     .always(function() {
-                        console.log("quantity subtracted");
                         $('#cart-loader').addClass('d-none');
                         $('#cart-mobile-loader').addClass('d-none');
                     });
@@ -508,7 +502,6 @@ if (Auth::user()) {
                     alert('Fail')
                 })
                 .always(function() {
-                    console.log("quantity added");
                     $('#cart-loader').addClass('d-none');
                     $('#cart-mobile-loader').addClass('d-none');
                 });
@@ -560,7 +553,6 @@ if (Auth::user()) {
                         alert('Fail')
                     })
                     .always(function() {
-                        console.log("quantity subtracted");
                         $('#cart-loader').addClass('d-none');
                         $('#cart-mobile-loader').addClass('d-none');
                     });

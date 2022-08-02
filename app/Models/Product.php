@@ -21,7 +21,8 @@ class Product extends Model
         'description', 'size', 'facts', 'howtouse', 'ingredients',
         'img', 'type', 'weight',
         'bundle', 'bundle_start', 'bundle_end',
-        'banner', 'link_video'
+        'banner', 'link_video',
+        'benefit', 'benefit_image', 'benefit_icon'
     ];
 
     protected $casts = [

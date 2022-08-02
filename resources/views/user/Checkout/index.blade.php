@@ -315,7 +315,6 @@ function rupiah($angka)
         };
 
         function refreshSummary() {
-            console.log($('input[name=shipping_method]:checked').data("order"))
             $('.summary_shipping_cost').html($('#shipping_cost_' + $('input[name=shipping_method]:checked').data("order"))
                 .html())
             $('.summary_total').html(
@@ -334,7 +333,6 @@ function rupiah($angka)
 
         $('input[type=radio][name=shipping_method]').on('change', function() {
             refreshSummary();
-            console.log($("#form-checkout").serializeArray());
         });
 
         function newTransactionOnline(token, status, snaptoken) {
@@ -363,14 +361,10 @@ function rupiah($angka)
                     postal_code: $('#postal_code').val(),
                 })
                 .done(function(data) {
-                    console.log(data);
                     window.location.href = '{{ config('app.url') }}' + "/transaction"
                 })
                 .fail(function(e) {
                     console.log(e);
-                })
-                .always(function() {
-                    console.log("always");
                 });
         }
 
@@ -403,7 +397,6 @@ function rupiah($angka)
                             onError: function(result) {
                                 /* You may add your own implementation here */
                                 alert("payment failed!");
-                                console.log(result);
                             }
                         })
                     })

@@ -70,6 +70,18 @@ class ProductController extends Controller
         } else {
             $video = null;
         }
+        if ($request->benefiticon) {
+            $benefiticon = time() . '-' . $request['benefiticon']->getClientOriginalName();
+            $request->benefiticon->move(public_path('uploads/products'), $benefiticon);
+        } else {
+            $benefiticon = null;
+        }
+        if ($request->benefitimage) {
+            $benefitimage = time() . '-' . $request['benefitimage']->getClientOriginalName();
+            $request->benefitimage->move(public_path('uploads/products'), $benefitimage);
+        } else {
+            $benefitimage = null;
+        }
         if ($request->bundle == '0') {
             $the_sizes = array_chunk(explode(",", $request->item_sizes), 4);
             $stocks = [];
@@ -98,7 +110,10 @@ class ProductController extends Controller
                 'size' => $sizes,
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
-                'ingredients' => $request->ingredients
+                'ingredients' => $request->ingredients,
+                'benefit_icon' => $benefiticon,
+                'benefit_image' => $benefitimage,
+                'benefit' => $request->benefit_desc
             ]);
         } else {
             $bundle_items = explode(",", $request->bundle_items);
@@ -122,7 +137,10 @@ class ProductController extends Controller
                 'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
-                'ingredients' => $request->ingredients
+                'ingredients' => $request->ingredients,
+                'benefit_icon' => $benefiticon,
+                'benefit_image' => $benefitimage,
+                'benefit' => $request->benefit_desc
             ]);
             foreach ($bundle_items as $key => $item) {
                 Bundle::create([
@@ -225,6 +243,26 @@ class ProductController extends Controller
                 $video = $product->video;
             }
         }
+        if ($request->benefiticon) {
+            $benefiticon = time() . '-' . $request['benefiticon']->getClientOriginalName();
+            $request->benefiticon->move(public_path('uploads/products'), $benefiticon);
+        } else {
+            if ($request->benefiticon_delete == '1') {
+                $benefiticon = null;
+            } else {
+                $benefiticon = $product->benefit_icon;
+            }
+        }
+        if ($request->benefitimage) {
+            $benefitimage = time() . '-' . $request['benefitimage']->getClientOriginalName();
+            $request->benefitimage->move(public_path('uploads/products'), $benefitimage);
+        } else {
+            if ($request->benefitimage_delete == '1') {
+                $benefitimage = null;
+            } else {
+                $benefitimage = $product->benefit_image;
+            }
+        }
         $images = explode(",", $request->item_guide_images);
         $titles = explode(",", $request->item_guide_titles);
         $descriptions = json_decode($request->item_guide_descriptions, true);
@@ -297,6 +335,9 @@ class ProductController extends Controller
                 'img' => $image,
                 'banner' => $banner,
                 'link_video' => $video,
+                'benefit_icon' => $benefiticon,
+                'benefit_image' => $benefitimage,
+                'benefit' => $request->benefit_desc
             ]);
         } else {
             $bundle_items = explode(",", $request->bundle_items);
@@ -317,7 +358,10 @@ class ProductController extends Controller
                 'size' => [0],
                 'facts' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
                 'howtouse' => ["Suitable for Sensitive Skin", "Dermatologist Tested", "Non-Comedogenic Certified"],
-                'ingredients' => $request->ingredients
+                'ingredients' => $request->ingredients,
+                'benefit_icon' => $benefiticon,
+                'benefit_image' => $benefitimage,
+                'benefit' => $request->benefit_desc
             ]);
             Bundle::where('bundle_id', $product->id)->delete();
             foreach ($bundle_items as $key => $item) {

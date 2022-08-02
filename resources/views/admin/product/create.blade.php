@@ -67,8 +67,7 @@
                             <label class="col-12 text-start font-weight-bold">Jangka Waktu</label>
                             <div class="col-12">
                                 <input type="text" name="date" id="date" class="form-control" required />
-                                <input type="hidden" name="date_start" id="date-start"
-                                    value="{{ \Carbon\Carbon::now() }}">
+                                <input type="hidden" name="date_start" id="date-start" value="{{ \Carbon\Carbon::now() }}">
                                 <input type="hidden" name="date_end" id="date-end" value="{{ \Carbon\Carbon::now() }}">
                             </div>
                         </div>
@@ -141,6 +140,54 @@
                 @include('admin.product.inc.modal.product_image_preview')
                 @include('admin.product.inc.modal.product_banner_preview')
                 @include('admin.product.inc.modal.product_video_preview')
+                <div class="card shadow-sm border-0 mb-3">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <label class="col-12 text-start font-weight-bold">Benefit</label>
+                            <div class="col-12">
+                                <textarea id="benefit_desc" type="text" class="form-control" name="benefit_desc" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-6 text-start font-weight-bold">Icon
+                                <div style="color: red;" id="alert-benefiticon" class="d-none">Required</div>
+                            </label>
+                            <label class="col-6 text-start font-weight-bold">Gambar
+                                <div style="color: red;" id="alert-benefitimage" class="d-none">Required</div>
+                            </label>
+                            <div class="col-6 text-argavell">
+                                <div id="benefiticon-upload-preview" class="cursor-pointer d-none"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productbenefiticonModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                            </div>
+                            <div class="col-6 text-argavell">
+                                <div id="benefitimage-upload-preview" class="cursor-pointer d-none"
+                                    style="text-decoration: underline;" data-bs-toggle="modal"
+                                    data-bs-target="#productbenefitimageModal"><span
+                                        class="fas fa-fw fa-paperclip me-2"></span>Lihat Gambar</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6 d-block" id="benefiticon-upload-button">
+                                <div class="btn btn-admin-argavell" id="benefiticon-act-button">
+                                    <label for="benefiticon" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="benefiticon" id="benefiticon" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event, 'benefiticon')">
+                                </div>
+                            </div>
+                            <div class="col-6 d-block" id="benefitimage-upload-button">
+                                <div class="btn btn-admin-argavell" id="banner-act-button">
+                                    <label for="benefitimage" class="cursor-pointer">Upload Gambar</label>
+                                    <input type="file" name="benefitimage" id="benefitimage" class="d-none" accept="image/*"
+                                        required onchange="loadFile(event, 'benefitimage')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @include('admin.product.inc.modal.product_benefiticon_preview')
+                @include('admin.product.inc.modal.product_benefitimage_preview')
             </div>
             <div class="col-6">
                 <div class="card shadow-sm border-0 mb-2">
@@ -383,11 +430,6 @@
                 $(`#${type}`).val(null);
             } else {
                 $(`.product-${type}-preview`).attr('src', URL.createObjectURL(event.target.files[0]));
-                // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
-                //     .files[0][
-                //         'name'
-                //     ])
-                // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
                 $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
                 $('#alert-' + type).removeClass('d-block').addClass('d-none');
                 $('#' + type + '-act-button').removeClass('empty-input');
@@ -397,11 +439,6 @@
             let file = event.target.files[0];
             let blobURL = URL.createObjectURL(file);
             document.querySelector("video").src = blobURL;
-            // $(`#${type}-upload-preview`).html('<span class="fas fa-fw fa-paperclip me-2"></span>' + event.target
-            //     .files[0][
-            //         'name'
-            //     ])
-            // $(`#${type}-upload-button`).removeClass('d-block').addClass('d-none');
             $(`#${type}-upload-preview`).removeClass('d-none').addClass('d-block');
         };
     </script>
@@ -525,7 +562,6 @@
 
         function addGuide() {
             guidetitles[guideIndex] = $('#guide_title').val()
-            // guidedescriptions[guideIndex] = $('#guide_description').val()
             $('#guide-title').val(guidetitles)
             $('#guide-description').val(JSON.stringify(guidedescriptions))
             var hostname = "{{ request()->getHost() }}"
@@ -671,5 +707,25 @@
             $('#item-benefit-banners').val(benefitbanners)
             benefitIndex--;
         }
+    </script>
+    <script>
+        var editort;
+        ClassicEditor.create(document.querySelector('#benefit_desc'), {
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                removePlugins: ['CKFinderUploadAdapter', 'CKFinder', 'EasyImage', 'Image', 'ImageCaption', 'ImageStyle',
+                    'ImageToolbar', 'ImageUpload', 'MediaEmbed', 'Table'
+                ],
+            }).then(editor => {
+                editort = editor;
+            })
+            .catch(error => {
+                console.error(error);
+                console.error(error.stack);
+            });
+        ClassicEditor.editorConfig = function(config) {
+            config.height = '350px';
+        };
     </script>
 @endsection

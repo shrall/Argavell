@@ -37,7 +37,6 @@
                             <label class="col-6 text-start font-weight-bold">Minimum Charge</label>
                             <div class="col-6">
                                 <input type="date" name="expired_date" id="expired-date" class="form-control"
-                                    onchange="console.log(this.value)"
                                     value="{{ date('Y-m-d', strtotime($voucher->expired_date)) }}">
                             </div>
                             <div class="col-6">
