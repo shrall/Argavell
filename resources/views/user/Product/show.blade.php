@@ -631,6 +631,9 @@
                     );
                     if (data != 'false') {
                         carts = @json(Auth::user()->carts->where('transaction_id', null));
+                        subtotal += (parseInt($('#price').val()) * parseInt($('#quantity').val()));
+                        discount += (parseInt(product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
+                            .val()));
                         $('#cart-body').html(data);
                         $('#cart-mobile-body').html(data);
                         $('#modal-header-qty').html(parseInt($('#modal-header-qty').html()) + parseInt($('#quantity')
@@ -642,36 +645,14 @@
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + parseInt($(
                             '#quantity').val()));
 
-                        $('#cart-subtotal').html((parseInt($('#cart-subtotal').html().replace('.', '')) + (parseInt($(
-                                '#price').val()) *
-                            parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
-                        $('#cart-discount').html((parseInt($('#cart-discount').html().replace('.', '')) + (parseInt(
-                                product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
-                                .val())))
+                        $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((discount)
                             .formatMoney(0, '.', ''));
-                        $('#cart-total').html((parseInt($('#cart-total').html().replace('.', '')) + ((parseInt($(
-                                '#price').val()) *
-                            parseInt(
-                                $('#quantity').val())) - (parseInt(
-                                product['price_discount'][$('#size').val()]) *
-                            parseInt(
-                                $('#quantity').val())))).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html((parseInt($('#cart-mobile-subtotal').html().replace('.', '')) +
-                            (
-                                parseInt($(
-                                        '#price')
-                                    .val()) * parseInt($('#quantity').val()))).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html((parseInt($('#cart-mobile-discount').html().replace('.', '')) +
-                                (
-                                    parseInt(
-                                        product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
-                                        .val())))
+                        $('#cart-total').html((subtotal - discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((discount)
                             .formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html((parseInt($('#cart-mobile-total').html().replace('.', '')) + ((
-                            parseInt($('#price')
-                                .val()) * parseInt($('#quantity').val())) - (parseInt(
-                            product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
-                            .val())))).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html((subtotal - discount).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
                         } else {

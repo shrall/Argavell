@@ -108,9 +108,15 @@ class CartController extends Controller
         $product = Product::find($request->id);
         $cart = Auth::user()->carts->where('transaction_id', null)->where('product_id', $product->id)->where('size', '=', $product['size'][$request->size] . "ml")->first();
         if ($cart) {
-            $cart->update([
-                'qty' => $cart->qty + $request->quantity
-            ]);
+            if ($product['stock'][$request->size] > $request->quantity) {
+                $cart->update([
+                    'qty' => $cart->qty + $request->quantity
+                ]);
+            } else {
+                $cart->update([
+                    'qty' => $product['stock'][$request->size],
+                ]);
+            }
         } else {
             if ($product['stock'][$request->size] > $request->quantity) {
                 $cart = Cart::create([
@@ -136,7 +142,7 @@ class CartController extends Controller
                 ]);
             }
         }
-        $items = Auth::user()->carts->where('transaction_id', null);
+        $items = Cart::where('transaction_id', null)->where('user_id', Auth::id())->get();
         return view('inc.cart.product', compact('items'));
     }
 
@@ -190,7 +196,7 @@ class CartController extends Controller
     public function add_item(Request $request)
     {
         $item = Cart::find($request->id);
-        if ($item['product']['stock'] >= $item['qty'] + 1) {
+        if ($item->product->stock[$item->key] >= $item['qty'] + 1) {
             $item->update([
                 'qty' => $item['qty'] + 1
             ]);

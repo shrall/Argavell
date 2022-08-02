@@ -340,30 +340,17 @@ if (Auth::user()) {
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) - data['qty']);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - data['qty']);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - data['qty']);
-
-                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'] *
-                        data['qty'])).formatMoney(0, '.', ''));
-                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                        'price_discount'] * data[
-                        'qty'])).formatMoney(0, '.', ''));
-                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - ((data[
-                        'price'] * data[
-                        'qty']) - (data[
-                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
-                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                        '')) - (
-                        data['price'] * data[
-                            'qty'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                        '')) - (
-                        data[
-                            'price_discount'] * data['qty'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) - ((
-                        data[
-                            'price'] * data[
-                            'qty']) - (data[
-                        'price_discount'] * data['qty']))).formatMoney(0, '.', ''));
+                    console.log(data['price'] * data['qty'])
+                    console.log(subtotal)
+                    subtotal -= parseInt(data['price'] * data['qty']);
+                    console.log(subtotal)
+                    discount -= parseInt(data['price_discount'] * data['qty']);
+                    $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                    $('#cart-discount').html((discount).formatMoney(0, '.', ''));
+                    $('#cart-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
+                    $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                    $('#cart-mobile-discount').html((discount).formatMoney(0, '.', ''));
+                    $('#cart-mobile-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
                     if ($('#cart-total').html() == 0) {
                         $(".button-checkout").prop("disabled", true);
                     } else {
@@ -379,6 +366,9 @@ if (Auth::user()) {
                     $('#cart-mobile-loader').addClass('d-none');
                 });
         }
+
+        var subtotal = @json($subtotal);
+        var discount = @json($discount);
 
         function addQuantity(id, url) {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -402,26 +392,14 @@ if (Auth::user()) {
                         $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-
-                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
-                            'price'])).formatMoney(0, '.', ''));
-                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data[
-                                'price'] -
-                            data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                                '')) +
-                            (data['price'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                                '')) +
-                            (data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) + (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
+                        subtotal += parseInt(data['price']);
+                        discount += parseInt(data['price_discount']);
+                        $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
                         } else {
@@ -462,25 +440,14 @@ if (Auth::user()) {
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
 
-                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'])).formatMoney(0, '.', ''));
-                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
-                                'price'] -
-                            data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                                '')) -
-                            (data['price'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                                '')) -
-                            (data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) - (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
+                        subtotal -= parseInt(data['price']);
+                        discount -= parseInt(data['price_discount']);
+                        $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
                         } else {
@@ -523,24 +490,14 @@ if (Auth::user()) {
                     $('#modal-header-mobile-qty').html(parseInt($('#modal-header-mobile-qty').html()) + 1);
                     $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) + 1);
                     $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) + 1);
-                    $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) + (data[
-                        'price'])).formatMoney(0, '.', ''));
-                    $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) + (data[
-                        'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) + (data['price'] -
-                        data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                            '')) +
-                        (data['price'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                            '')) +
-                        (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                    $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.', '')) + (
-                        data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
+                    subtotal += parseInt(data['price']);
+                    discount += parseInt(data['price_discount']);
+                    $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                    $('#cart-discount').html((discount).formatMoney(0, '.', ''));
+                    $('#cart-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
+                    $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                    $('#cart-mobile-discount').html((discount).formatMoney(0, '.', ''));
+                    $('#cart-mobile-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
                     if ($('#cart-total').html() == 0) {
                         $(".button-checkout").prop("disabled", true);
                     } else {
@@ -581,25 +538,14 @@ if (Auth::user()) {
                         $('#modal-footer-qty').html(parseInt($('#modal-footer-qty').html()) - 1);
                         $('#modal-footer-mobile-qty').html(parseInt($('#modal-footer-mobile-qty').html()) - 1);
 
-                        $('#cart-subtotal').html(parseInt(parseInt($('#cart-subtotal').html().replace('.', '')) - (data[
-                            'price'])).formatMoney(0, '.', ''));
-                        $('#cart-discount').html(parseInt(parseInt($('#cart-discount').html().replace('.', '')) - (data[
-                            'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-total').html(parseInt(parseInt($('#cart-total').html().replace('.', '')) - (data[
-                                'price'] -
-                            data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-subtotal').html(parseInt(parseInt($('#cart-mobile-subtotal').html().replace('.',
-                                '')) -
-                            (data['price'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-discount').html(parseInt(parseInt($('#cart-mobile-discount').html().replace('.',
-                                '')) -
-                            (data[
-                                'price_discount'])).formatMoney(0, '.', ''));
-                        $('#cart-mobile-total').html(parseInt(parseInt($('#cart-mobile-total').html().replace('.',
-                            '')) - (data[
-                            'price'] - data[
-                            'price_discount'])).formatMoney(0, '.', ''));
+                        subtotal -= parseInt(data['price']);
+                        discount -= parseInt(data['price_discount']);
+                        $('#cart-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-subtotal').html((subtotal).formatMoney(0, '.', ''));
+                        $('#cart-mobile-discount').html((discount).formatMoney(0, '.', ''));
+                        $('#cart-mobile-total').html(parseInt(subtotal - discount).formatMoney(0, '.', ''));
                         if ($('#cart-total').html() == 0) {
                             $(".button-checkout").prop("disabled", true);
                         } else {
