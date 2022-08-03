@@ -255,29 +255,31 @@
         </div>
         <div class="col-md-2"></div>
     </div>
-    {{-- desktop benefit --}}
-    <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
-        <div class="col-md-2"></div>
-        <div class="col-md-5 pe-5">
-            <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="150px" class="mb-3">
-            <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
-            <div class="pe-4">{!! $product->benefit !!}</div>
+    @if ($product->benefit && $product->benefit_icon && $product->benefit_image)
+        {{-- desktop benefit --}}
+        <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
+            <div class="col-md-2"></div>
+            <div class="col-md-5 pe-5">
+                <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="150px" class="mb-3">
+                <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
+                <div class="pe-4">{!! $product->benefit !!}</div>
+            </div>
+            <div class="col-md-5 p-0">
+                <img src="{{ asset('uploads/products' . '/' . $product->benefit_image) }}" class="w-100">
+            </div>
         </div>
-        <div class="col-md-5 p-0">
-            <img src="{{ asset('uploads/products' . '/' . $product->benefit_image) }}" class="w-100">
+        {{-- mobile benefit --}}
+        <div class="row w-100 m-0 align-items-center pb-5 d-block d-sm-none text-center">
+            <div class="col-12 p-0">
+                <img src="{{ asset('uploads/products' . '/' . $product->benefit_image) }}" class="w-100">
+            </div>
+            <div class="col-md-5">
+                <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="100px">
+                <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
+                <div class="px-4">{!! $product->benefit !!}</div>
+            </div>
         </div>
-    </div>
-    {{-- mobile benefit --}}
-    <div class="row w-100 m-0 align-items-center pb-5 d-block d-sm-none text-center">
-        <div class="col-12 p-0">
-            <img src="{{ asset('uploads/products' . '/' . $product->benefit_image) }}" class="w-100">
-        </div>
-        <div class="col-md-5">
-            <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="100px">
-            <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
-            <div class="px-4">{!! $product->benefit !!}</div>
-        </div>
-    </div>
+    @endif
     <div @if ($product->type == 0) class="argan-benefits" @else class="kleanse-benefits" @endif>
         @if (count($product->benefits) > 0)
             @foreach ($product->benefits as $benefit)
