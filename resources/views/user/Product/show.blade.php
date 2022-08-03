@@ -260,7 +260,7 @@
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
             <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="150px">
-            <h1 class="text-argavell font-elmessiri font-weight-bold">{{$product->name}} Benefits</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
             <div class="pe-4">{!! $product->benefit !!}</div>
         </div>
         <div class="col-md-5 p-0">
@@ -274,7 +274,7 @@
         </div>
         <div class="col-md-5">
             <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="100px">
-            <h1 class="text-argavell font-elmessiri font-weight-bold">{{$product->name}} Benefits</h1>
+            <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
             <div class="px-4">{!! $product->benefit !!}</div>
         </div>
     </div>
@@ -649,11 +649,13 @@
                     quantity: parseInt($('#quantity').val()),
                 })
                 .done(function(data) {
-                    $('#cartQuantityLabel').html(
-                        parseInt($('#cartQuantityLabel').html()) + parseInt($('#quantity').val())
-                    );
-                    if (data != 'false') {
-                        carts = @json(Auth::user()->carts->where('transaction_id', null));
+                        $('#cartQuantityLabel').html(
+                            parseInt($('#cartQuantityLabel').html()) + parseInt($('#quantity').val())
+                        );
+                        if (data != 'false') {
+                            @auth
+                            carts = @json(Auth::user()->carts->where('transaction_id', null));
+                        @endauth
                         subtotal += (parseInt($('#price').val()) * parseInt($('#quantity').val()));
                         discount += (parseInt(product['price_discount'][$('#size').val()]) * parseInt($('#quantity')
                             .val()));
@@ -683,13 +685,13 @@
                         }
                     }
                 })
-                .fail(function(error) {
-                    console.log(error);
-                })
-                .always(function() {
-                    $('#cart-loader').addClass('d-none');
-                    $('#cart-mobile-loader').addClass('d-none');
-                });
+        .fail(function(error) {
+                console.log(error);
+            })
+            .always(function() {
+                $('#cart-loader').addClass('d-none');
+                $('#cart-mobile-loader').addClass('d-none');
+            });
         }
     </script>
     <script>
