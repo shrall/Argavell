@@ -64,8 +64,8 @@ class TransactionController extends Controller
                 ]);
 
                 $address = Address::create([
-                    'first_name' => Auth::user()->first_name,
-                    'last_name' => Auth::user()->last_name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
                     'phone' => $request->phone_number,
                     'address' => $request->address,
                     'address_type' => 'Home',
@@ -116,7 +116,7 @@ class TransactionController extends Controller
                 }
             }
             Session::put('transaction.id', $transaction->order_number);
-            Mail::to($transaction->user->email)->send(new InvoiceMail($transaction, route('page.paymentconfirmation')));
+            // Mail::to($transaction->user->email)->send(new InvoiceMail($transaction, route('page.paymentconfirmation')));
         }
         return view('pages.order');
     }
