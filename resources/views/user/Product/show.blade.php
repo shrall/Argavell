@@ -259,7 +259,7 @@
     <div class="row w-100 m-0 align-items-center d-none d-sm-flex">
         <div class="col-md-2"></div>
         <div class="col-md-5 pe-5">
-            <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="150px">
+            <img src="{{ asset('uploads/products' . '/' . $product->benefit_icon) }}" width="150px" class="mb-3">
             <h1 class="text-argavell font-elmessiri font-weight-bold">{{ $product->name }} Benefits</h1>
             <div class="pe-4">{!! $product->benefit !!}</div>
         </div>
