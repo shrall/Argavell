@@ -42,7 +42,9 @@ function rupiah($angka)
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}
-                            @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
+                            @if ($item->product->bundle == '0')
+                                <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                            @endif
                         </div>
                         <div class="col-4">IDR {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}
                         </div>
@@ -53,8 +55,7 @@ function rupiah($angka)
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span
-                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
+                    <div class="col-4">IDR <span class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
                     </div>
                 </div>
                 <div class="row my-2">
@@ -91,6 +92,14 @@ function rupiah($angka)
                             </ul>
                         </div>
                     @endif
+                    <div class="alert alert-danger d-none" id="alert">
+                        <ul class="mb-0 list-unstyled">
+                            <li class="d-none" id="alert-city">The city field is required.</li>
+                            <li class="d-none" id="alert-postal-code">The postal code field is required.</li>
+                            <li class="d-none" id="alert-phone">The phone number field is required.</li>
+                            <li class="d-none" id="alert-address">The address field is required.</li>
+                        </ul>
+                    </div>
                     <div class="row font-weight-bold">
                         <label class="col-6">First Name<span class="text-danger">*</span></label>
                         <label class="col-6">Last Name<span class="text-danger">*</span></label>
@@ -98,13 +107,13 @@ function rupiah($angka)
                     <div class="row mb-3">
                         <div class="col-6">
                             <input id="first_name" type="text" class="form-control" name="first_name" required
-                                @if (Auth::user()->first_name) disabled @endif autocomplete="first_name" placeholder="Enter your first name"
-                                value="{{ Auth::user()->first_name }}">
+                                @if (Auth::user()->first_name) disabled @endif autocomplete="first_name"
+                                placeholder="Enter your first name" value="{{ Auth::user()->first_name }}">
                         </div>
                         <div class="col-6">
                             <input id="last_name" type="text" class="form-control" name="last_name" required
-                                @if (Auth::user()->last_name) disabled @endif autocomplete="last_name" placeholder="Enter your last name"
-                                value="{{ Auth::user()->last_name }}">
+                                @if (Auth::user()->last_name) disabled @endif autocomplete="last_name"
+                                placeholder="Enter your last name" value="{{ Auth::user()->last_name }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -113,8 +122,8 @@ function rupiah($angka)
                     <div class="row mb-3">
                         <div class="col-12">
                             <input id="address" type="text" class="form-control" name="address" required
-                                @if (Auth::user()->address_id) disabled @endif autocomplete="address" placeholder="Enter your address"
-                                value="{{ Auth::user()->address->address ?? null }}">
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="address"
+                                placeholder="Enter your address" value="{{ Auth::user()->address->address ?? null }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -123,8 +132,8 @@ function rupiah($angka)
                     <div class="row mb-3">
                         <div class="col-12">
                             <input id="phone_number" type="number" class="form-control" name="phone_number" required
-                                @if (Auth::user()->address_id) disabled @endif autocomplete="phone_number" placeholder="Enter your phone number"
-                                value="{{ Auth::user()->address->phone ?? null }}">
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="phone_number"
+                                placeholder="Enter your phone number" value="{{ Auth::user()->address->phone ?? null }}">
                         </div>
                     </div>
                     <div class="row font-weight-bold">
@@ -138,7 +147,9 @@ function rupiah($angka)
                                     <option class="tempprovince" selected>Please select your province</option>
                                 @endif
                                 @foreach ($provinces as $province)
-                                    <option value="{{ $province['province'] }}" @if (Auth::user()->address_id) @if ($province['province'] == Auth::user()->address->province) selected @endif @endif>
+                                    <option value="{{ $province['province'] }}"
+                                        @if (Auth::user()->address_id) @if ($province['province'] == Auth::user()->address->province) selected @endif
+                                        @endif>
                                         {{ $province['province'] }}
                                     </option>
                                 @endforeach
@@ -150,10 +161,12 @@ function rupiah($angka)
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
-                            <select class="form-select font-proxima-nova" id="city" name="city" required disabled>
+                            <select class="form-select font-proxima-nova" id="city" name="city" required
+                                disabled>
                                 @if (Auth::user()->address_id)
                                     @foreach ($cities as $city)
-                                        <option value="{{ $city['city_name'] }}" @if ($city['city_name'] == Auth::user()->address->city) selected @endif>
+                                        <option value="{{ $city['city_name'] }}"
+                                            @if ($city['city_name'] == Auth::user()->address->city) selected @endif>
                                             {{ $city['city_name'] }}</option>
                                     @endforeach
                                 @endif
@@ -166,7 +179,8 @@ function rupiah($angka)
                     <div class="row mb-3">
                         <div class="col-12">
                             <input id="postal_code" type="number" class="form-control" name="postal_code" required
-                                @if (Auth::user()->address_id) disabled @endif autocomplete="postal_code" placeholder="Enter your postal code"
+                                @if (Auth::user()->address_id) disabled @endif autocomplete="postal_code"
+                                placeholder="Enter your postal code"
                                 value="{{ Auth::user()->address->postal_code ?? null }}">
                         </div>
                     </div>
@@ -190,7 +204,8 @@ function rupiah($angka)
                                     <input class="form-check-input" type="radio" name="shipping_method"
                                         data-order={{ $loop->iteration }}
                                         value="{{ $shipments['name'] . ' - ' . $shipment['service'] }}"
-                                        id="shipping_radio_{{ $loop->iteration }}" @if ($loop->iteration == 1) checked @endif>
+                                        id="shipping_radio_{{ $loop->iteration }}"
+                                        @if ($loop->iteration == 1) checked @endif>
                                     <input class="form-check-input" type="hidden" name="shipping_etd"
                                         value="{{ $shipment['cost'][0]['etd'] }}">
                                     <label class="form-check-label" for="shipping_radio_{{ $loop->iteration }}">
@@ -218,8 +233,8 @@ function rupiah($angka)
                                 <label class="form-check-label" for="payment_radio_{{ $payment->id }}">
                                     {{ $payment->name }}
                                 </label>
-                                <div class="collapse @if ($loop->iteration == 1) show @endif" id="collapse{{ $payment->id }}"
-                                    data-bs-parent="#paymentGroup">
+                                <div class="collapse @if ($loop->iteration == 1) show @endif"
+                                    id="collapse{{ $payment->id }}" data-bs-parent="#paymentGroup">
                                     <div class="row mb-2">
                                         <div class="col-md-7 bg-light font-weight-bold rounded py-2 px-3">
                                             Account Number : {{ $payment->account_number }} - a/n Louis Yuwono
@@ -266,7 +281,9 @@ function rupiah($angka)
                         </div>
                         <div class="col-5 font-weight-bold">
                             {{ $item->qty }}x {{ $item->product->name }}
-                            @if ($item->product->bundle == '0') <span class="ms-1 text-secondary">({{ $item->size }})</span> @endif
+                            @if ($item->product->bundle == '0')
+                                <span class="ms-1 text-secondary">({{ $item->size }})</span>
+                            @endif
                         </div>
                         <div class="col-4">IDR
                             {{ rupiah(($item->price - $item->price_discount) * $item->qty) }}</div>
@@ -277,8 +294,7 @@ function rupiah($angka)
                     <div class="col-8 font-weight-bold">
                         Subtotal <span class="text-secondary">{{ $totalqty }} item(s)</span>
                     </div>
-                    <div class="col-4">IDR <span
-                            class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
+                    <div class="col-4">IDR <span class="summary_subtotal">{{ rupiah($subtotal - $discount) }}</span>
                     </div>
                 </div>
                 <div class="row my-2">
@@ -373,40 +389,65 @@ function rupiah($angka)
         $('#pay-button').click(function() {
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             var price = parseInt($('#summary_total').val());
-            if ($('#payment_radio_1001').is(':checked')) {
-                var hostname = "{{ request()->getHost() }}"
-                var url = ""
-                if (hostname.includes('www')) {
-                    url = "https://" + hostname
+            if (!$('#city').val() || !$('#address').val() || !$('#postal_code').val() || !$('#phone_number').val()) {
+                $('#alert').removeClass('d-none').addClass('d-block')
+                if (!$('#city').val()) {
+                    $('#alert-city').removeClass('d-none').addClass('d-block')
                 } else {
-                    url = "{{ config('app.url') }}"
+                    $('#alert-city').removeClass('d-block').addClass('d-none')
                 }
-                $.post(url + "/transaction/getsnap", {
-                        _token: CSRF_TOKEN,
-                        price: price,
-                        phone: $('#phone_number').val()
-                    })
-                    .done(function(data) {
-                        window.snap.pay(data, {
-                            onSuccess: function(result) {
-                                newTransactionOnline(CSRF_TOKEN, '5', data);
-                            },
-                            onPending: function(result) {
-                                newTransactionOnline(CSRF_TOKEN, '0', data);
-                            },
-                            onError: function(result) {
-                                /* You may add your own implementation here */
-                                alert("payment failed!");
-                            }
-                        })
-                    })
-                    .fail(function(e) {
-                        console.log(e);
-                    });
+                if (!$('#address').val()) {
+                    $('#alert-address').removeClass('d-none').addClass('d-block')
+                } else {
+                    $('#alert-address').removeClass('d-block').addClass('d-none')
+                }
+                if (!$('#postal_code').val()) {
+                    $('#alert-postal-code').removeClass('d-none').addClass('d-block')
+                } else {
+                    $('#alert-postal_code').removeClass('d-block').addClass('d-none')
+                }
+                if (!$('#phone_number').val()) {
+                    $('#alert-phone').removeClass('d-none').addClass('d-block')
+                } else {
+                    $('#alert-phone').removeClass('d-block').addClass('d-none')
+                }
             } else {
-                if (!payButtonClicked) {
-                    document.getElementById('form-checkout').submit();
-                    payButtonClicked = true;
+                $('#alert').removeClass('d-block').addClass('d-none')
+                if ($('#payment_radio_1001').is(':checked')) {
+                    var hostname = "{{ request()->getHost() }}"
+                    var url = ""
+                    if (hostname.includes('www')) {
+                        url = "https://" + hostname
+                    } else {
+                        url = "{{ config('app.url') }}"
+                    }
+                    $.post(url + "/transaction/getsnap", {
+                            _token: CSRF_TOKEN,
+                            price: price,
+                            phone: $('#phone_number').val()
+                        })
+                        .done(function(data) {
+                            window.snap.pay(data, {
+                                onSuccess: function(result) {
+                                    newTransactionOnline(CSRF_TOKEN, '5', data);
+                                },
+                                onPending: function(result) {
+                                    newTransactionOnline(CSRF_TOKEN, '0', data);
+                                },
+                                onError: function(result) {
+                                    /* You may add your own implementation here */
+                                    alert("payment failed!");
+                                }
+                            })
+                        })
+                        .fail(function(e) {
+                            console.log(e);
+                        });
+                } else {
+                    if (!payButtonClicked) {
+                        document.getElementById('form-checkout').submit();
+                        payButtonClicked = true;
+                    }
                 }
             }
         });
