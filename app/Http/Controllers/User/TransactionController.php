@@ -81,7 +81,7 @@ class TransactionController extends Controller
             }
 
             $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
-            $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
+            $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1)). '-' . Auth::id();
 
             $transaction = Transaction::create([
                 'status' => '0',
@@ -275,7 +275,7 @@ class TransactionController extends Controller
             ]);
         }
         $transactions = Transaction::where('date', Carbon::now()->format('Y-m-d'))->get();
-        $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1));
+        $ordernumber = 'INV' . Carbon::now()->format('Ymd') . '-' . strval(sprintf("%04s", count($transactions) + 1)). '-' . Auth::id();
 
         $transaction = Transaction::create([
             'status' => $request->status,
