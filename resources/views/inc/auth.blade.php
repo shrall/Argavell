@@ -8,6 +8,50 @@
                 <input type="hidden" name="prev_route" value="{{ Route::current()->getName() }}">
                 <input type="hidden" name="product_slug" value="{{ $product->slug ?? '' }}">
                 <div class="row font-weight-bold">
+                    <label class="col-6">First Name<span class="text-danger">*</span> </label>
+                    <label class="col-6">Last Name<span class="text-danger">*</span> </label>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <input id="first_name" type="text"
+                            class="form-control @error('first_name') is-invalid @enderror" name="first_name"
+                            value="{{ old('first_name') }}" required autocomplete="first_name"
+                            placeholder="Enter your first name">
+                        @error('first_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="col-6">
+                        <input id="last_name" type="text"
+                            class="form-control @error('last_name') is-invalid @enderror" name="last_name"
+                            value="{{ old('last_name') }}" required autocomplete="last_name"
+                            placeholder="Enter your last name">
+                        @error('last_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row font-weight-bold">
+                    <label class="col-12">Username<span class="text-danger">*</span> </label>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <input id="username" type="text"
+                            class="form-control @error('username') is-invalid @enderror" name="username"
+                            value="{{ old('username') }}" required autocomplete="username"
+                            placeholder="Enter your username">
+                        @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="row font-weight-bold">
                     <label class="col-12">E-Mail<span class="text-danger">*</span> </label>
                 </div>
                 <div class="row mb-3">
@@ -126,7 +170,7 @@
                 </div>
             </form>
             <div class="row py-3">
-                <span class="text-center">Don't have an account? 
+                <span class="text-center">Don't have an account?
                     <button class="btn text-dark align-baseline font-weight-bold p-0" onclick="moveToRegister()">
                         <u>{{ __('Sign up now') }}</u>
                     </button>

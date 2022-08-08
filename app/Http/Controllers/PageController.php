@@ -177,6 +177,9 @@ class PageController extends Controller
         $params = [
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'username' => $request->username
         ];
         User::create($params);
         return $this->short_login($request);
